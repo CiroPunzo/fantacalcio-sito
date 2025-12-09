@@ -42,13 +42,10 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 22px 0;   /* prima era 15px, aumentiamo l’altezza */
+    padding: 26px 0;   /* aumenta da 15–22px a 26px */
     position: relative;
     width: 100%;
 }
-
-
-
 
 .logo {
     display: flex;
@@ -61,7 +58,7 @@ html, body {
 }
 
 .logo-image {
-    height: 40px;
+    height: 46px;
     width: auto;
     display: block;
     border-radius: 6px;            /* ammorbidisce eventuali bordi netti */
@@ -545,12 +542,21 @@ html, body {
     .navbar-inner {
         justify-content: center;
         width: 100%;
+        padding: 28px 0; 
     }
 
     .logo {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
+    }
+    
+    .logo-image {
+        height: 40px;
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
     }
 
     .nav-toggle {
@@ -579,6 +585,7 @@ html, body {
     
     .hero {
         padding: 100px 16px 50px;
+         padding-top: 130px;
     }
 
     .hero-content h1 {
