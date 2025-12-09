@@ -546,7 +546,7 @@ body {
     }
 
     .nav-toggle {
-        display: flex;          /* visibile solo mobile */
+        display: flex;
         position: absolute;
         right: 0;
     }
@@ -562,10 +562,11 @@ body {
         gap: 16px;
         padding: 16px 0;
         border-top: 1px solid rgba(212, 175, 55, 0.25);
-        display: none;          /* chiuso di default */
+        display: none;
     }
 
     .nav-links.nav-open {
-        display: flex;          /* aperto quando clicchi hamburger */
+        display: flex;
     }
 }
+
