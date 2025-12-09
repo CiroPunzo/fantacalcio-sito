@@ -542,13 +542,14 @@ html, body {
     .navbar-inner {
         justify-content: center;
         width: 100%;
-        padding: 28px 0; 
+        padding: 32px 0;  /* navbar più alta su mobile */
     }
 
     .logo {
         position: absolute;
         left: 50%;
-        transform: translateX(-50%);
+        top: 50%;
+        transform: translate(-50%, -50%);  /* centro perfetto verticale + orizzontale */
     }
     
     .logo-image {
@@ -562,7 +563,9 @@ html, body {
     .nav-toggle {
         display: flex;
         position: absolute;
-        right: 0;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);       /* centra verticalmente l’hamburger */
     }
 
     .nav-links {
@@ -584,12 +587,11 @@ html, body {
     }
     
     .hero {
-        padding: 100px 16px 50px;
-         padding-top: 130px;
+        padding: 140px 16px 50px;  /* sposto l’hero più in basso, così non tocca la navbar */
     }
 
     .hero-content h1 {
-        font-size: 2rem;          /* invece di 3rem */
+        font-size: 2rem;
         line-height: 1.15;
     }
 
