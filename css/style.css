@@ -57,6 +57,15 @@ html, body {
     letter-spacing: 0.05em;
 }
 
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+
 .logo-image {
     height: 46px;
     width: auto;
@@ -549,15 +558,15 @@ html, body {
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);  /* centro perfetto verticale + orizzontale */
+        transform: translate(-50%, -50%);
     }
-    
+
     .logo-image {
-        height: 40px;
+        height: 42px;      /* logo ben visibile su mobile */
     }
 
     .logo-text {
-        font-size: 1.5rem;
+        display: none;     /* NASCONDI il testo "Profantasy" solo su mobile */
     }
 
     .nav-toggle {
@@ -565,7 +574,7 @@ html, body {
         position: absolute;
         right: 20px;
         top: 50%;
-        transform: translateY(-50%);       /* centra verticalmente l’hamburger */
+        transform: translateY(-50%);  /* allineato verticalmente al logo */
     }
 
     .nav-links {
@@ -585,9 +594,9 @@ html, body {
     .nav-links.nav-open {
         display: flex;
     }
-    
+
     .hero {
-        padding: 140px 16px 50px;  /* sposto l’hero più in basso, così non tocca la navbar */
+        padding: 140px 16px 50px;  /* spazio extra sotto la navbar */
     }
 
     .hero-content h1 {
@@ -610,4 +619,5 @@ html, body {
         padding: 14px 20px;
     }
 }
+
 
