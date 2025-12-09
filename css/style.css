@@ -576,5 +576,30 @@ html, body {
     .nav-links.nav-open {
         display: flex;
     }
+    
+     .hero {
+        padding: 80px 16px 50px;   /* più spazio sopra per la status bar, meno sotto */
+        text-align: left;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;          /* invece di 3rem */
+        line-height: 1.15;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .hero-highlight {
+        font-size: 0.8rem;
+        letter-spacing: 0.10em;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+        padding: 14px 20px;
+    }
 }
 
