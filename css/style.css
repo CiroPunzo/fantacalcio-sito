@@ -42,10 +42,11 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 0;
+    padding: 22px 0;   /* prima era 15px, aumentiamo l’altezza */
     position: relative;
     width: 100%;
 }
+
 
 
 
