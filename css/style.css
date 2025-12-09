@@ -123,7 +123,7 @@ html, body {
 .hero {
     position: relative;
     min-height: 560px;
-    background-image: url("img/hero-background.png");
+    background-image: url("img/hero-background.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
