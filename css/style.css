@@ -122,7 +122,7 @@ html, body {
 /* HERO: FULL IMAGE */
 .hero {
     position: relative;
-    min-height: 560px;
+    min-height: 560px;  /* invece di 420px */
     background-image: url("img/hero-background.jpg");
     background-size: cover;
     background-position: center;
@@ -130,8 +130,9 @@ html, body {
     color: #ffffff;
     display: flex;
     align-items: flex-end;
-    padding: 140px 20px 80px;
+    padding: 160px 20px 90px; /* un po' più spazio top e bottom */
 }
+
 
 .hero .container {
     max-width: 1100px;
