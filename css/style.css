@@ -548,12 +548,19 @@ html, body {
 }
 
 @media (max-width: 768px) {
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+    
     .navbar-inner {
         justify-content: center;
         width: 100%;
-        padding: 18px 0;       /* un po’ meno padding, gestiamo noi la posizione verticale */
+        padding: 18px 0;
         position: relative;
-        height: 70px;          /* altezza fissa della navbar su mobile */
+        height: 70px;
     }
 
 
@@ -599,8 +606,9 @@ html, body {
     }
 
     .hero {
-        padding: 130px 16px 50px;  /* parte un po’ sotto la navbar */
-    }
+    padding: 130px 16px 50px;
+}
+
 
     .hero-content h1 {
         font-size: 2rem;
