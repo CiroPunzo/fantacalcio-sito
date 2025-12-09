@@ -48,7 +48,11 @@ body {
 .logo-image {
     height: 40px;
     width: auto;
+    display: block;
+    border-radius: 6px;            /* ammorbidisce eventuali bordi netti */
+    background-color: transparent; /* forza trasparenza */
 }
+
 
 .logo-text {
     font-family: 'Anton', sans-serif;
