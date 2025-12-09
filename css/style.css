@@ -128,11 +128,8 @@ html, body {
     color: #ffffff;
     display: flex;
     align-items: flex-end;
-    padding: 140px 20px 90px; /* da 160 a 140 per non schiacciare troppo */
+    padding: 140px 20px 90px;
 }
-
-
-
 
 .hero .container {
     max-width: 1100px;
@@ -392,6 +389,7 @@ html, body {
         padding: 130px 16px 60px;
         min-height: 380px;
         align-items: flex-end;
+        background-position: center top;
     }
 
     .hero-content h1 {
@@ -412,10 +410,6 @@ html, body {
         width: 100%;
         text-align: center;
         padding: 14px 20px;
-    }
-
-    .nav-links {
-        gap: 15px;
     }
 
     .features-grid {
@@ -573,7 +567,7 @@ html, body {
 /* NAVBAR MOBILE SPECIFICA */
 @media (max-width: 768px) {
     .navbar {
-        position: sticky;   /* invece di fixed */
+        position: sticky;
         top: 0;
         left: 0;
         right: 0;
@@ -627,13 +621,7 @@ html, body {
     .nav-links.nav-open {
         display: flex;
     }
-
-    .hero {
-        padding: 130px 16px 60px;
-        min-height: 380px;
-        align-items: flex-end;
-        background-position: center top;
-    }
 }
+
 
 
