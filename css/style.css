@@ -11,6 +11,10 @@ body {
     background-color: #020041;
 }
 
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
 
 .container {
     max-width: 1200px;
@@ -40,7 +44,9 @@ body {
     justify-content: space-between;
     padding: 15px 0;
     position: relative;
+    width: 100%;
 }
+
 
 
 .logo {
@@ -537,6 +543,7 @@ body {
 @media (max-width: 768px) {
     .navbar-inner {
         justify-content: center;
+        width: 100%;
     }
 
     .logo {
