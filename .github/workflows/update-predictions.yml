@@ -25,11 +25,3 @@ jobs:
         AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
         AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
       run: node scripts/update-predictions.js
-    
-    - name: Commit and push changes
-      run: |
-        git config --global user.email "bot@github.com"
-        git config --global user.name "GitHub Bot"
-        git add predictions.html
-        git commit -m "Update predictions from Airtable" || echo "No changes to commit"
-        git push
