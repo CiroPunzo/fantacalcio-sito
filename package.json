@@ -1,0 +1,10 @@
+{
+  "name": "fantacalcio-sito",
+  "version": "1.0.0",
+  "scripts": {
+    "update-predictions": "node scripts/update-predictions.js"
+  },
+  "dependencies": {
+    "airtable": "^0.12.2"
+  }
+}
