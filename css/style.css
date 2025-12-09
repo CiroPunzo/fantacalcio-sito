@@ -203,6 +203,7 @@ html, body {
 .carousel-wrapper {
     position: relative;
     width: 100%;
+    overflow: hidden;
 }
 
 .carousel {
@@ -211,16 +212,28 @@ html, body {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    padding-bottom: 40px;
+    padding: 0 0 40px 0;
     -webkit-overflow-scrolling: touch;
+    margin: 0 -20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .carousel::-webkit-scrollbar {
-    height: 0;
+    height: 6px;
+}
+
+.carousel::-webkit-scrollbar-track {
+    background: rgba(184, 149, 107, 0.1);
+}
+
+.carousel::-webkit-scrollbar-thumb {
+    background: rgba(184, 149, 107, 0.3);
+    border-radius: 3px;
 }
 
 .card-vertical {
-    flex: 0 0 calc(90vw - 24px);
+    flex: 0 0 calc(100vw - 40px);
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
@@ -352,7 +365,6 @@ html, body {
     box-shadow: 0 2px 12px rgba(184, 149, 107, 0.25);
 }
 
-
 .carousel-dots {
     display: flex;
     justify-content: center;
@@ -382,8 +394,13 @@ html, body {
 }
 
 @media (min-width: 1200px) {
+    .carousel {
+        margin: 0;
+        padding: 0 0 40px 0;
+    }
+
     .card-vertical {
-        flex: 0 0 calc(25% - 18px);
+        flex: 0 0 calc(22% - 18px);
     }
 
     .card-title {
@@ -694,33 +711,7 @@ html, body {
 }
 
 /* RESPONSIVE GENERALE */
-/* RESPONSIVE GENERALE */
 @media (max-width: 768px) {
-    .featured-cards {
-        padding: 40px 20px;
-    }
-
-    .carousel {
-        gap: 20px;
-        padding-bottom: 35px;
-    }
-
-    .card-vertical {
-        flex: 0 0 calc(100vw - 40px);
-    }
-
-    .card-title {
-        font-size: 1.4rem;
-    }
-
-    .card-description {
-        font-size: 0.9rem;
-    }
-
-    .card-content {
-        padding: 24px 20px;
-    }
-
     .hero {
         padding: 130px 16px 60px;
         min-height: 380px;
@@ -759,8 +750,15 @@ html, body {
     .predictions-grid {
         grid-template-columns: 1fr;
     }
-}
 
+    .card-title {
+        font-size: 1.4rem;
+    }
+
+    .card-description {
+        font-size: 0.9rem;
+    }
+}
 
 /* NAVBAR MOBILE SPECIFICA */
 @media (max-width: 768px) {
@@ -823,7 +821,6 @@ html, body {
         display: flex;
     }
 }
-
 
 
 
