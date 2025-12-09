@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previsioni Giornaliere - Fantacalcio Insights</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">📊 Fantacalcio Insights</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="predictions.html" class="active">Previsioni</a></li>
+                <li><a href="track-record.html">Risultati</a></li>
+                <li><a href="chi-sono.html">Chi Sono</a></li>
+                <li><a href="contatti.html">Contatti</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>📅 Previsioni della Giornata</h1>
+        
+        <div class="predictions-filter">
+            <select id="filterGiornata" onchange="filterByGiornata()">
+                <option value="">Tutte le giornate</option>
+                <option value="1">Giornata 1</option>
+                <option value="2">Giornata 2</option>
+                <option value="3">Giornata 3</option>
+                <!-- Aggiungi altre giornate -->
+            </select>
+        </div>
+
+        <div id="predictions-container" class="predictions-grid">
+            <!-- QUESTO VIENE GENERATO AUTOMATICAMENTE DA AIRTABLE -->
+            <!-- I dati verranno poppolati automaticamente dal GitHub Action -->
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Fantacalcio Insights</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Dati injectati dal build system
+        const PREDICTIONS_DATA = window.PREDICTIONS_DATA || [];
+        
+        function filterByGiornata() {
+            const select = document.getElementById('filterGiornata');
+            const value = select.value;
