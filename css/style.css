@@ -24,11 +24,9 @@ html, body {
 
 /* NAVBAR */
 .navbar {
-    background-color: #020041;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.45);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background-color: rgba(2, 0, 65, 0.96);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
 }
 
 .navbar .container {
@@ -123,15 +121,16 @@ html, body {
 .hero {
     position: relative;
     min-height: 560px;
-    background-image: url("../img/hero-background.jpg");  /* <<< cambia così */
+    background-image: url("../img/hero-background.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     color: #ffffff;
     display: flex;
     align-items: flex-end;
-    padding: 160px 20px 90px;
+    padding: 140px 20px 90px; /* da 160 a 140 per non schiacciare troppo */
 }
+
 
 
 
