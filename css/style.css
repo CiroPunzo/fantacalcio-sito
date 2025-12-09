@@ -194,7 +194,6 @@ html, body {
     color: #020041;
 }
 
-/* FEATURED CARDS CAROUSEL */
 /* FEATURED CARDS CAROUSEL - PREMIUM UPGRADE */
 .featured-cards {
     background: #010020;
@@ -697,11 +696,16 @@ html, body {
 /* RESPONSIVE GENERALE */
 @media (max-width: 768px) {
     .featured-cards {
-        padding: 40px 16px;
+        padding: 40px 12px;
+    }
+
+    .carousel {
+        gap: 16px;
+        padding-bottom: 35px;
     }
 
     .card-vertical {
-        flex: 0 0 calc(100vw - 32px);
+        flex: 0 0 calc(100vw - 24px);
     }
 
     .card-title {
@@ -710,6 +714,10 @@ html, body {
 
     .card-description {
         font-size: 0.9rem;
+    }
+
+    .card-content {
+        padding: 24px 20px;
     }
 
     .hero {
