@@ -133,11 +133,13 @@ html, body {
 }
 
 .hero-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
     align-items: center;
-    justify-content: center;
-    max-width: 1000px;
+    gap: 40px;
+    max-width: 1100px;
 }
+
 
 .hero-content h1 {
     font-family: 'Anton', sans-serif;
@@ -160,6 +162,27 @@ html, body {
     letter-spacing: 0.12em;
     margin-bottom: 30px;
 }
+
+.hero-player-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.hero-player {
+    max-height: 360px;
+    width: auto;
+    filter: drop-shadow(0 18px 40px rgba(0,0,0,0.7));
+    animation: heroFloat 6s ease-in-out infinite;
+}
+
+/* movimento leggero */
+@keyframes heroFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
 
 
 /* BUTTONS */
@@ -606,10 +629,24 @@ html, body {
     }
 
     .hero {
-    padding: 130px 16px 50px;
-}
+    padding: 130px 16px 40px;
+    }
+    
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
 
+    .hero-player-wrapper {
+        justify-content: center;
+        align-items: center;
+        margin-top: 8px;
+    }
 
+    .hero-player {
+        max-height: 260px;
+    }
+    
     .hero-content h1 {
         font-size: 2rem;
         line-height: 1.15;
