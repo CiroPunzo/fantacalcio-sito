@@ -134,11 +134,12 @@ html, body {
 
 .hero-grid {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
+    grid-template-columns: 1.4fr 0.6fr;  /* più spazio al testo, meno al player */
     align-items: center;
     gap: 40px;
     max-width: 1100px;
 }
+
 
 
 .hero-content h1 {
@@ -168,14 +169,19 @@ html, body {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    overflow: visible;
+    margin-right: -40px;    /* lo facciamo “uscire” un po’ dal frame a destra */
 }
 
+
 .hero-player {
-    max-height: 360px;
+    max-height: 250px;      /* prima 360px */
     width: auto;
     filter: drop-shadow(0 18px 40px rgba(0,0,0,0.7));
     animation: heroFloat 6s ease-in-out infinite;
+    transform-origin: bottom right;
 }
+
 
 /* movimento leggero */
 @keyframes heroFloat {
@@ -644,7 +650,7 @@ html, body {
     }
 
     .hero-player {
-        max-height: 260px;
+        max-height: 220px;
     }
     
     .hero-content h1 {
