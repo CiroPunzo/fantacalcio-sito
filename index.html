@@ -54,26 +54,74 @@
         </div>
     </header>
 
-    <section class="stats">
-        <div class="container">
-            <div class="stat-box">
-                <h3>60%</h3>
-                <p>Accuracy marcatori</p>
+    <section class="featured-cards">
+    <div class="container">
+        <div class="carousel-wrapper">
+            <div class="carousel">
+                <!-- CARD 1: Analisi Partite -->
+                <div class="card-vertical">
+                    <div class="card-image">
+                        <img src="../img/card-analisi-partite.jpg" alt="Analisi partite fantacalcio">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Giornata 15</h3>
+                        <p class="card-description">Analisi fantacalcistica partita per partita. Chi schierare, chi evitare.</p>
+                        <a href="statistics.html#analisi-partite" class="card-btn">Scopri chi schierare</a>
+                    </div>
+                </div>
+
+                <!-- CARD 2: Pronostici Betting -->
+                <div class="card-vertical">
+                    <div class="card-image">
+                        <img src="../img/card-pronostici.jpg" alt="Pronostici betting">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Pronostici</h3>
+                        <p class="card-description">Analisi su marcatori, quote e scommesse della giornata.</p>
+                        <a href="statistics.html#betting" class="card-btn">Leggi i pronostici</a>
+                    </div>
+                </div>
+
+                <!-- CARD 3: Infortunati -->
+                <div class="card-vertical">
+                    <div class="card-image">
+                        <img src="../img/card-indisponibili.jpg" alt="Giocatori indisponibili">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Indisponibili</h3>
+                        <p class="card-description">Giocatori fuori, squalifiche, dubbi. Aggiornato ogni giornata.</p>
+                        <a href="indisponibili.html" class="card-btn">Vedi elenco completo</a>
+                    </div>
+                </div>
+
+                <!-- CARD 4: Telegram -->
+                <div class="card-vertical">
+                    <div class="card-image">
+                        <img src="../img/card-telegram.jpg" alt="Unisciti a Telegram">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Community</h3>
+                        <p class="card-description">Accedi alle analisi in tempo reale, live, senza filtri.</p>
+                        <a href="https://t.me/tuocanaleTelegram" class="card-btn">Unisciti ora</a>
+                    </div>
+                </div>
             </div>
-            <div class="stat-box">
-                <h3>10.2K</h3>
-                <p>Follower TikTok</p>
-            </div>
-            <div class="stat-box">
-                <h3>50K-300K</h3>
-                <p>Visualizzazioni per contenuto</p>
-            </div>
-            <div class="stat-box">
-                <h3>300+</h3>
-                <p>Utenti in live</p>
+
+            <!-- Paginazione pallini -->
+            <div class="carousel-dots">
+                <span class="dot active" onclick="goToCard(0)"></span>
+                <span class="dot" onclick="goToCard(1)"></span>
+                <span class="dot" onclick="goToCard(2)"></span>
+                <span class="dot" onclick="goToCard(3)"></span>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <section class="features">
         <div class="container">
