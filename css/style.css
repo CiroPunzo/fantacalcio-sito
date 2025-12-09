@@ -122,8 +122,8 @@ html, body {
 /* HERO: FULL IMAGE */
 .hero {
     position: relative;
-    min-height: 420px;
-    background-image: url("img/hero-player.png");
+    min-height: 560px;
+    background-image: url("img/hero-background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
