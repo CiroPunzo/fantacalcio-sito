@@ -337,7 +337,7 @@ html, body {
     transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
     border: none;
     cursor: pointer;
-    align-self: flex-start;
+    align-self: center;
     box-shadow: 0 4px 16px rgba(184, 149, 107, 0.3);
     min-height: 48px;
 }
@@ -352,6 +352,7 @@ html, body {
     transform: translateY(0);
     box-shadow: 0 2px 12px rgba(184, 149, 107, 0.25);
 }
+
 
 .carousel-dots {
     display: flex;
