@@ -694,18 +694,19 @@ html, body {
 }
 
 /* RESPONSIVE GENERALE */
+/* RESPONSIVE GENERALE */
 @media (max-width: 768px) {
     .featured-cards {
-        padding: 40px 12px;
+        padding: 40px 20px;
     }
 
     .carousel {
-        gap: 16px;
+        gap: 20px;
         padding-bottom: 35px;
     }
 
     .card-vertical {
-        flex: 0 0 calc(100vw - 24px);
+        flex: 0 0 calc(100vw - 40px);
     }
 
     .card-title {
@@ -759,6 +760,7 @@ html, body {
         grid-template-columns: 1fr;
     }
 }
+
 
 /* NAVBAR MOBILE SPECIFICA */
 @media (max-width: 768px) {
