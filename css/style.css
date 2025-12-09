@@ -577,9 +577,8 @@ html, body {
         display: flex;
     }
     
-     .hero {
-        padding: 80px 16px 50px;   /* più spazio sopra per la status bar, meno sotto */
-        text-align: left;
+    .hero {
+        padding: 100px 16px 50px;
     }
 
     .hero-content h1 {
