@@ -78,14 +78,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // FORMAT: https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:json&sheet={SHEET_NAME}
 
-const SHEET_ID = 'TUO_SHEET_ID_QUI'; // Sostituisci con il tuo ID
+const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48'; // Uno solo
 
 const SHEET_NAMES = {
     classifica: 'Classifica',
     marcatori: 'Marcatori',
-    prezzi: 'Prezzi',
+    prezzi: 'FVP', // Nota: il tuo sheet si chiama "FVP" non "Prezzi"
     infortunati: 'Infortunati'
 };
+
 
 // Fetch data da Google Sheets
 async function fetchSheetDataJson(sheetName) {
