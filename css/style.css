@@ -998,6 +998,28 @@ html, body {
     color: #B8956B;
 }
 
+/* LOGHI IN TABELLE */
+.table-team {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.table-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    filter: brightness(1.1);
+}
+
+@media (max-width: 768px) {
+    .table-logo {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+
 /* RESPONSIVE */
 @media (max-width: 1200px) {
     .dashboard-cards-carousel {
