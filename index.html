@@ -135,6 +135,122 @@
   </div>
 </header>
 
+<!-- DASHBOARD ANALITICA -->
+<section class="dashboard-section">
+    <div class="container">
+        <h2 class="dashboard-title">Live Data della Giornata</h2>
+        
+        <!-- TABS -->
+        <div class="dashboard-tabs">
+            <button class="tab-btn active" data-tab="classifica">Classifica</button>
+            <button class="tab-btn" data-tab="marcatori">Marcatori</button>
+            <button class="tab-btn" data-tab="prezzi">Prezzi Consigliati</button>
+            <button class="tab-btn" data-tab="infortunati">Indisponibili</button>
+        </div>
+
+        <!-- TAB CONTENT -->
+        <div class="dashboard-content">
+            <!-- CLASSIFICA -->
+            <div id="classifica" class="tab-content active">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th>Squadra</th>
+                            <th>Pts</th>
+                            <th>Match</th>
+                            <th>xG</th>
+                        </tr>
+                    </thead>
+                    <tbody id="classifica-body">
+                        <!-- JS populate -->
+                    </tbody>
+                </table>
+                <a href="#" class="dashboard-link">Vedi tutte le squadre →</a>
+            </div>
+
+            <!-- MARCATORI -->
+            <div id="marcatori" class="tab-content">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th>Giocatore</th>
+                            <th>Club</th>
+                            <th>Gol</th>
+                            <th>xG</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marcatori-body">
+                        <!-- JS populate -->
+                    </tbody>
+                </table>
+                <a href="#" class="dashboard-link">Vedi la classifica completa →</a>
+            </div>
+
+            <!-- PREZZI -->
+            <div id="prezzi" class="tab-content">
+                <div class="prezzi-carousel">
+                    <!-- JS populate card carousel -->
+                </div>
+                <a href="predictions.html" class="dashboard-link">Vai all'analisi dettagliata →</a>
+            </div>
+
+            <!-- INFORTUNATI -->
+            <div id="infortunati" class="tab-content">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Giocatore</th>
+                            <th>Club</th>
+                            <th>Status</th>
+                            <th>Ritorno</th>
+                        </tr>
+                    </thead>
+                    <tbody id="infortunati-body">
+                        <!-- JS populate -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4 CARD CAROUSEL (sotto i tab) -->
+        <div class="dashboard-cards-carousel">
+            <div class="dashboard-card">
+                <h3>Top 5 Marcatori</h3>
+                <div id="top5-marcatori"><!-- JS populate --></div>
+            </div>
+            <div class="dashboard-card">
+                <h3>Quotazioni Consigliate</h3>
+                <div id="top5-prezzi"><!-- JS populate --></div>
+            </div>
+            <div class="dashboard-card">
+                <h3>Senza / Dubbi</h3>
+                <div id="dubbi-status"><!-- JS populate --></div>
+            </div>
+            <div class="dashboard-card">
+                <h3>Ultimi Risultati</h3>
+                <div id="risultati"><!-- JS populate --></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MODAL INFORTUNIO (popup elegante) -->
+<div id="infortunio-modal" class="modal">
+    <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-body">
+            <h3 id="modal-giocatore"></h3>
+            <p id="modal-club"></p>
+            <div class="modal-details">
+                <p><strong>Status:</strong> <span id="modal-status"></span></p>
+                <p><strong>Tipo Infortunio:</strong> <span id="modal-infortunio"></span></p>
+                <p><strong>Ritorno previsto:</strong> <span id="modal-ritorno"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <section class="features">
