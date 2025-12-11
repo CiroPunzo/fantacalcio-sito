@@ -116,7 +116,7 @@ async function fetchSheetDataJson(sheetName) {
     }
 }
 
-// Popola CLASSIFICA
+// Popola CLASSIFICA con LOGHI
 async function populateClassifica() {
     const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
     const tbody = document.getElementById('classifica-body');
@@ -130,9 +130,21 @@ async function populateClassifica() {
     
     data.slice(0, 10).forEach(row => {
         const tr = document.createElement('tr');
+        
+        // Se hai colonna "Logo", mostra logo + squadra insieme
+        let squadraHTML = `<strong>${row['Squadra'] || '-'}</strong>`;
+        if (row['Logo']) {
+            squadraHTML = `
+                <div class="table-team">
+                    <img src="${row['Logo']}" alt="${row['Squadra']}" class="table-logo">
+                    <strong>${row['Squadra'] || '-'}</strong>
+                </div>
+            `;
+        }
+        
         tr.innerHTML = `
             <td>${row['Posizione'] || '-'}</td>
-            <td><strong>${row['Squadra'] || '-'}</strong></td>
+            <td>${squadraHTML}</td>
             <td>${row['Punti'] || '-'}</td>
             <td>${row['Partite'] || '-'}</td>
             <td>${row['xG'] || '-'}</td>
@@ -143,7 +155,7 @@ async function populateClassifica() {
     console.log('Classifica populated');
 }
 
-// Popola MARCATORI
+// Popola MARCATORI con LOGHI
 async function populateMarcatori() {
     const data = await fetchSheetDataJson(SHEET_NAMES.marcatori);
     const tbody = document.getElementById('marcatori-body');
@@ -157,10 +169,22 @@ async function populateMarcatori() {
     
     data.slice(0, 10).forEach(row => {
         const tr = document.createElement('tr');
+        
+        // Se hai colonna "Logo", mostra logo + club insieme
+        let clubHTML = `${row['Club'] || '-'}`;
+        if (row['Logo']) {
+            clubHTML = `
+                <div class="table-team">
+                    <img src="${row['Logo']}" alt="${row['Club']}" class="table-logo">
+                    <span>${row['Club'] || '-'}</span>
+                </div>
+            `;
+        }
+        
         tr.innerHTML = `
             <td>${row['Posizione'] || '-'}</td>
             <td><strong>${row['Giocatore'] || '-'}</strong></td>
-            <td>${row['Club'] || '-'}</td>
+            <td>${clubHTML}</td>
             <td>${row['Gol'] || '-'}</td>
             <td>${row['xG'] || '-'}</td>
         `;
@@ -170,7 +194,7 @@ async function populateMarcatori() {
     console.log('Marcatori populated');
 }
 
-// Popola INFORTUNATI con POPUP
+// Popola INFORTUNATI con LOGHI (opzionale)
 async function populateInfortunati() {
     const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
     const tbody = document.getElementById('infortunati-body');
@@ -185,9 +209,21 @@ async function populateInfortunati() {
     data.forEach(row => {
         const tr = document.createElement('tr');
         tr.className = 'clickable';
+        
+        // Se hai colonna "Logo"
+        let clubHTML = `${row['Club'] || '-'}`;
+        if (row['Logo']) {
+            clubHTML = `
+                <div class="table-team">
+                    <img src="${row['Logo']}" alt="${row['Club']}" class="table-logo">
+                    <span>${row['Club'] || '-'}</span>
+                </div>
+            `;
+        }
+        
         tr.innerHTML = `
             <td><strong>${row['Giocatore'] || '-'}</strong></td>
-            <td>${row['Club'] || '-'}</td>
+            <td>${clubHTML}</td>
             <td>${row['Status'] || '-'}</td>
             <td>${row['Giorni Recupero'] || '-'} gg</td>
         `;
