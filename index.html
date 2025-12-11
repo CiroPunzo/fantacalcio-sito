@@ -44,107 +44,102 @@
     </nav>
 
     <!-- HERO: NEWS CAROUSEL -->
-<header class="hero-news">
-    <div class="news-carousel-wrapper">
-        <button class="carousel-arrow carousel-arrow-prev" onclick="prevNews()">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-        </button>
+<header class="hero-slider">
+  <div class="hero-slider-inner">
 
-        <div class="news-carousel">
-            <!-- NEWS 1: Chi schierare -->
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="../img/news-chi-schierare.jpg" alt="Chi schierare questa giornata">
-                    <div class="news-overlay"></div>
-                </div>
-                <div class="news-content">
-                    <span class="news-badge">Analisi</span>
-                    <h2 class="news-title">Chi schierare questa giornata</h2>
-                    <p class="news-excerpt">Analisi fantacalcistica partita per partita. Scopri chi schierare e chi evitare squadra per squadra.</p>
-                    <a href="statistics.html#analisi-partite" class="news-btn">Leggi di più</a>
-                </div>
-            </div>
-
-            <!-- NEWS 2: Tips fantacalcio -->
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="../img/news-tips-fantacalcio.jpg" alt="Tips fantacalcio della settimana">
-                    <div class="news-overlay"></div>
-                </div>
-                <div class="news-content">
-                    <span class="news-badge">Strategie</span>
-                    <h2 class="news-title">Tips fantacalcio della settimana</h2>
-                    <p class="news-excerpt">Consigli strategici e tattiche vincenti per dominare la tua lega. Le mosse giuste per questa giornata.</p>
-                    <a href="predictions.html" class="news-btn">Leggi di più</a>
-                </div>
-            </div>
-
-            <!-- NEWS 3: Pronostici -->
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="../img/news-pronostici.jpg" alt="Analisi pronostici betting">
-                    <div class="news-overlay"></div>
-                </div>
-                <div class="news-content">
-                    <span class="news-badge">Betting</span>
-                    <h2 class="news-title">Analisi pronostici e quote</h2>
-                    <p class="news-excerpt">Analisi approfondita su marcatori, quote e scommesse della giornata. Gioco vietato ai minori.</p>
-                    <a href="statistics.html#betting" class="news-btn">Leggi di più</a>
-                </div>
-            </div>
-
-            <!-- NEWS 4: Giocatore settimana -->
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="../img/news-giocatore-settimana.jpg" alt="Giocatore della settimana">
-                    <div class="news-overlay"></div>
-                </div>
-                <div class="news-content">
-                    <span class="news-badge">In Forma</span>
-                    <h2 class="news-title">Giocatore della settimana</h2>
-                    <p class="news-excerpt">Chi sta brillando maggiormente? Statistiche, dati e analisi del miglior giocatore in questo momento.</p>
-                    <a href="predictions.html" class="news-btn">Leggi di più</a>
-                </div>
-            </div>
-
-            <!-- NEWS 5: Trend marcatori -->
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="../img/news-trend-marcatori.jpg" alt="Trend marcatori">
-                    <div class="news-overlay"></div>
-                </div>
-                <div class="news-content">
-                    <span class="news-badge">Statistiche</span>
-                    <h2 class="news-title">Trend marcatori della giornata</h2>
-                    <p class="news-excerpt">I marcatori più caldi, i trend in rialzo e le opportunità che non puoi perdere questa settimana.</p>
-                    <a href="statistics.html" class="news-btn">Leggi di più</a>
-                </div>
-            </div>
-
-            <!-- NEWS 6: Infortunati -->
-            <div class="news-card">
-                <div class="news-image">
-                    <img src="../img/news-infortunati.jpg" alt="Squalifiche e infortunati">
-                    <div class="news-overlay"></div>
-                </div>
-                <div class="news-content">
-                    <span class="news-badge">Attenzione</span>
-                    <h2 class="news-title">Squalifiche e infortunati</h2>
-                    <p class="news-excerpt">Aggiornamento giornaliero su giocatori indisponibili, squalifiche e dubbi per le tue scelte di formazione.</p>
-                    <a href="indisponibili.html" class="news-btn">Leggi di più</a>
-                </div>
-            </div>
+    <!-- SLIDE 1 -->
+    <article class="hero-slide active">
+      <img src="img/hero-slide-1.jpg" alt="Tips fantacalcio della settimana" class="hero-slide-image">
+      <div class="hero-slide-overlay">
+        <div class="hero-slide-content">
+          <span class="hero-slide-tag">Tips</span>
+          <h1 class="hero-slide-title">Tips fantacalcio della settimana</h1>
+          <p class="hero-slide-subtitle">Strategie avanzate per battere la tua lega in questa giornata.</p>
         </div>
+        <a href="predictions.html" class="hero-slide-cta">Scopri le previsioni</a>
+      </div>
+    </article>
 
-        <button class="carousel-arrow carousel-arrow-next" onclick="nextNews()">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-        </button>
-    </div>
-</header>
+    <!-- SLIDE 2 -->
+    <article class="hero-slide">
+      <img src="img/hero-slide-2.jpg" alt="Chi schierare oggi" class="hero-slide-image">
+      <div class="hero-slide-overlay">
+        <div class="hero-slide-content">
+          <span class="hero-slide-tag">Formazioni</span>
+          <h1 class="hero-slide-title">Chi schierare oggi</h1>
+          <p class="hero-slide-subtitle">Consigli ruolo per ruolo per massimizzare il punteggio.</p>
+        </div>
+        <a href="predictions.html" class="hero-slide-cta">Vedi la lista</a>
+      </div>
+    </article>
+
+    <!-- SLIDE 3 -->
+    <article class="hero-slide">
+      <img src="img/hero-slide-3.jpg" alt="Pronostici marcatori" class="hero-slide-image">
+      <div class="hero-slide-overlay">
+        <div class="hero-slide-content">
+          <span class="hero-slide-tag">Marcatori</span>
+          <h1 class="hero-slide-title">Pronostici marcatori</h1>
+          <p class="hero-slide-subtitle">I nomi più caldi per bonus e gol decisivi.</p>
+        </div>
+        <a href="predictions.html" class="hero-slide-cta">Guarda i marcatori</a>
+      </div>
+    </article>
+
+    <!-- SLIDE 4 -->
+    <article class="hero-slide">
+      <img src="img/hero-slide-4.jpg" alt="Trend di giornata" class="hero-slide-image">
+      <div class="hero-slide-overlay">
+        <div class="hero-slide-content">
+          <span class="hero-slide-tag">Trend</span>
+          <h1 class="hero-slide-title">Trend di giornata</h1>
+          <p class="hero-slide-subtitle">Dati, xG e momentum per anticipare il mercato.</p>
+        </div>
+        <a href="predictions.html" class="hero-slide-cta">Analizza i trend</a>
+      </div>
+    </article>
+
+    <!-- SLIDE 5 -->
+    <article class="hero-slide">
+      <img src="img/hero-slide-5.jpg" alt="Giocatori in forma" class="hero-slide-image">
+      <div class="hero-slide-overlay">
+        <div class="hero-slide-content">
+          <span class="hero-slide-tag">Stato di forma</span>
+          <h1 class="hero-slide-title">Giocatori più in forma</h1>
+          <p class="hero-slide-subtitle">Chi sta overperformando e non puoi permetterti di sbagliare.</p>
+        </div>
+        <a href="predictions.html" class="hero-slide-cta">Vedi i profili</a>
+      </div>
+    </article>
+
+    <!-- SLIDE 6 -->
+    <article class="hero-slide">
+      <img src="img/hero-slide-6.jpg" alt="Lista infortunati aggiornata" class="hero-slide-image">
+      <div class="hero-slide-overlay">
+        <div class="hero-slide-content">
+          <span class="hero-slide-tag">Infortunati</span>
+          <h1 class="hero-slide-title">Lista infortunati aggiornata</h1>
+          <p class="hero-slide-subtitle">Aggiornamento quotidiano su indisponibili e ballottaggi.</p>
+        </div>
+        <a href="predictions.html" class="hero-slide-cta">Controlla la lista</a>
+      </div>
+    </article>
+
+    <!-- FRECCE -->
+    <button class="hero-arrow hero-arrow-prev" onclick="prevHeroSlide()">
+      <span></span>
+    </button>
+    <button class="hero-arrow hero-arrow-next" onclick="nextHeroSlide()">
+      <span></span>
+    </button>
+
+    <!-- PUNTINI -->
+    <div class="hero-dots">
+      <span class="hero-dot active" data-index="0" onclick="goToHeroSlide(0)"></span>
+      <span class="hero-dot" data-index="1" onclick="goToHeroSlide(1)"></span>
+      <span class="hero-dot" data-index="2" onclick="goToHeroSlide(2)"></span>
+      <span class="hero-dot" data-index="3"
+
 
 
             <!-- Paginazione pallini -->
