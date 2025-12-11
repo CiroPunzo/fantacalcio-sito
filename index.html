@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="container navbar-inner">
             <div class="logo">
@@ -43,219 +44,267 @@
         </div>
     </nav>
 
-    <!-- HERO: NEWS CAROUSEL -->
-<!-- HERO SLIDER - 6 SLIDE FULL IMAGE -->
-<header class="hero-slider">
-  <div class="hero-slide active" data-index="0">
-    <img src="img/hero-slide-1.jpg" alt="Tips fantacalcio della settimana" class="hero-slide-image">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="hero-tag">Tips</span>
-      <h1 class="hero-title">Tips fantacalcio della settimana</h1>
-      <p class="hero-text">Strategie avanzate per battere la tua lega.</p>
-    </div>
-    <a href="predictions.html" class="hero-cta">Scopri</a>
-  </div>
-
-  <div class="hero-slide" data-index="1">
-    <img src="img/hero-slide-2.jpg" alt="Chi schierare oggi" class="hero-slide-image">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="hero-tag">Formazioni</span>
-      <h1 class="hero-title">Chi schierare oggi</h1>
-      <p class="hero-text">Consigli ruolo per ruolo.</p>
-    </div>
-    <a href="predictions.html" class="hero-cta">Vedi lista</a>
-  </div>
-
-  <div class="hero-slide" data-index="2">
-    <img src="img/hero-slide-3.jpg" alt="Pronostici marcatori" class="hero-slide-image">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="hero-tag">Marcatori</span>
-      <h1 class="hero-title">Pronostici marcatori</h1>
-      <p class="hero-text">I nomi più caldi della giornata.</p>
-    </div>
-    <a href="predictions.html" class="hero-cta">Guarda</a>
-  </div>
-
-  <div class="hero-slide" data-index="3">
-    <img src="img/hero-slide-4.jpg" alt="Trend di giornata" class="hero-slide-image">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="hero-tag">Trend</span>
-      <h1 class="hero-title">Trend di giornata</h1>
-      <p class="hero-text">Dati, xG e momentum.</p>
-    </div>
-    <a href="predictions.html" class="hero-cta">Analizza</a>
-  </div>
-
-  <div class="hero-slide" data-index="4">
-    <img src="img/hero-slide-5.jpg" alt="Giocatori in forma" class="hero-slide-image">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="hero-tag">Forma</span>
-      <h1 class="hero-title">Giocatori più in forma</h1>
-      <p class="hero-text">Chi sta overperformando.</p>
-    </div>
-    <a href="predictions.html" class="hero-cta">Profili</a>
-  </div>
-
-  <div class="hero-slide" data-index="5">
-    <img src="img/hero-slide-6.jpg" alt="Lista infortunati" class="hero-slide-image">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="hero-tag">Infortunati</span>
-      <h1 class="hero-title">Lista infortunati aggiornata</h1>
-      <p class="hero-text">Ballottaggi e indisponibili.</p>
-    </div>
-    <a href="predictions.html" class="hero-cta">Controlla</a>
-  </div>
-
-  <!-- FRECCE -->
-  <button class="hero-arrow hero-arrow-prev" onclick="prevHeroSlide()" aria-label="Slide precedente">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <polyline points="15 18 9 12 15 6"></polyline>
-    </svg>
-  </button>
-  <button class="hero-arrow hero-arrow-next" onclick="nextHeroSlide()" aria-label="Slide successiva">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <polyline points="9 18 15 12 9 6"></polyline>
-    </svg>
-  </button>
-
-  <!-- PUNTINI -->
-  <div class="hero-dots">
-    <span class="hero-dot active" onclick="goToHeroSlide(0)"></span>
-    <span class="hero-dot" onclick="goToHeroSlide(1)"></span>
-    <span class="hero-dot" onclick="goToHeroSlide(2)"></span>
-    <span class="hero-dot" onclick="goToHeroSlide(3)"></span>
-    <span class="hero-dot" onclick="goToHeroSlide(4)"></span>
-    <span class="hero-dot" onclick="goToHeroSlide(5)"></span>
-  </div>
-</header>
-
-<!-- DASHBOARD ANALITICA -->
-<section class="dashboard-section">
-    <div class="container">
-        <h2 class="dashboard-title">Live Data della Giornata</h2>
-        
-        <!-- TABS -->
-        <div class="dashboard-tabs">
-            <button class="tab-btn active" data-tab="classifica">Classifica</button>
-            <button class="tab-btn" data-tab="marcatori">Marcatori</button>
-            <button class="tab-btn" data-tab="prezzi">Prezzi Consigliati</button>
-            <button class="tab-btn" data-tab="infortunati">Indisponibili</button>
+    <!-- HERO SLIDER -->
+    <header class="hero-slider">
+        <div class="hero-slide active" data-index="0">
+            <img src="img/hero-slide-1.jpg" alt="Tips fantacalcio della settimana" class="hero-slide-image">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="hero-tag">Tips</span>
+                <h1 class="hero-title">Tips fantacalcio della settimana</h1>
+                <p class="hero-text">Strategie avanzate per battere la tua lega.</p>
+            </div>
+            <a href="predictions.html" class="hero-cta">Scopri</a>
         </div>
 
-        <!-- TAB CONTENT -->
-        <div class="dashboard-content">
-            <!-- CLASSIFICA -->
-<div id="classifica" class="tab-content active">
-    <table class="dashboard-table">
-        <thead>
-            <tr>
-                <th>Pos</th>
-                <th>Squadra</th>
-                <th>Pts</th>
-                <th>Match</th>
-                <th>xG</th>
-            </tr>
-        </thead>
-        <tbody id="classifica-body">
-            <!-- JS populate -->
-        </tbody>
-    </table>
-    <a href="#" class="dashboard-link">Vedi tutte le squadre →</a>
-</div>
+        <div class="hero-slide" data-index="1">
+            <img src="img/hero-slide-2.jpg" alt="Chi schierare oggi" class="hero-slide-image">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="hero-tag">Formazioni</span>
+                <h1 class="hero-title">Chi schierare oggi</h1>
+                <p class="hero-text">Consigli ruolo per ruolo.</p>
+            </div>
+            <a href="predictions.html" class="hero-cta">Vedi lista</a>
+        </div>
 
+        <div class="hero-slide" data-index="2">
+            <img src="img/hero-slide-3.jpg" alt="Pronostici marcatori" class="hero-slide-image">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="hero-tag">Marcatori</span>
+                <h1 class="hero-title">Pronostici marcatori</h1>
+                <p class="hero-text">I nomi più caldi della giornata.</p>
+            </div>
+            <a href="predictions.html" class="hero-cta">Guarda</a>
+        </div>
 
-            <!-- MARCATORI -->
-            <<!-- MARCATORI -->
-<div id="marcatori" class="tab-content">
-    <table class="dashboard-table">
-        <thead>
-            <tr>
-                <th>Pos</th>
-                <th>Giocatore</th>
-                <th>Club</th>
-                <th>Gol</th>
-                <th>xG</th>
-            </tr>
-        </thead>
-        <tbody id="marcatori-body">
-            <!-- JS populate -->
-        </tbody>
-    </table>
-    <a href="#" class="dashboard-link">Vedi la classifica completa →</a>
-</div>
+        <div class="hero-slide" data-index="3">
+            <img src="img/hero-slide-4.jpg" alt="Trend di giornata" class="hero-slide-image">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="hero-tag">Trend</span>
+                <h1 class="hero-title">Trend di giornata</h1>
+                <p class="hero-text">Dati, xG e momentum.</p>
+            </div>
+            <a href="predictions.html" class="hero-cta">Analizza</a>
+        </div>
 
+        <div class="hero-slide" data-index="4">
+            <img src="img/hero-slide-5.jpg" alt="Giocatori in forma" class="hero-slide-image">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="hero-tag">Forma</span>
+                <h1 class="hero-title">Giocatori più in forma</h1>
+                <p class="hero-text">Chi sta overperformando.</p>
+            </div>
+            <a href="predictions.html" class="hero-cta">Profili</a>
+        </div>
 
-            <!-- PREZZI -->
-            <div id="prezzi" class="tab-content">
-                <div class="prezzi-carousel">
-                    <!-- JS populate card carousel -->
+        <div class="hero-slide" data-index="5">
+            <img src="img/hero-slide-6.jpg" alt="Lista infortunati" class="hero-slide-image">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="hero-tag">Infortunati</span>
+                <h1 class="hero-title">Lista infortunati aggiornata</h1>
+                <p class="hero-text">Ballottaggi e indisponibili.</p>
+            </div>
+            <a href="predictions.html" class="hero-cta">Controlla</a>
+        </div>
+
+        <!-- FRECCE -->
+        <button class="hero-arrow hero-arrow-prev" onclick="prevHeroSlide()" aria-label="Slide precedente">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <button class="hero-arrow hero-arrow-next" onclick="nextHeroSlide()" aria-label="Slide successiva">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+
+        <!-- PUNTINI -->
+        <div class="hero-dots">
+            <span class="hero-dot active" onclick="goToHeroSlide(0)"></span>
+            <span class="hero-dot" onclick="goToHeroSlide(1)"></span>
+            <span class="hero-dot" onclick="goToHeroSlide(2)"></span>
+            <span class="hero-dot" onclick="goToHeroSlide(3)"></span>
+            <span class="hero-dot" onclick="goToHeroSlide(4)"></span>
+            <span class="hero-dot" onclick="goToHeroSlide(5)"></span>
+        </div>
+    </header>
+
+    <!-- DASHBOARD ANALITICA -->
+    <section class="dashboard-section">
+        <div class="container">
+            <h2 class="dashboard-title">Live Data della Giornata</h2>
+            
+            <!-- TABS -->
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-tab="classifica">Classifica</button>
+                <button class="tab-btn" data-tab="marcatori">Marcatori</button>
+                <button class="tab-btn" data-tab="prezzi">Prezzi Consigliati</button>
+                <button class="tab-btn" data-tab="infortunati">Indisponibili</button>
+            </div>
+
+            <!-- TAB CONTENT -->
+            <div class="dashboard-content">
+                <!-- CLASSIFICA -->
+                <div id="classifica" class="tab-content active">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Pos</th>
+                                <th>Squadra</th>
+                                <th>Pts</th>
+                                <th>Match</th>
+                                <th>xG</th>
+                            </tr>
+                        </thead>
+                        <tbody id="classifica-body">
+                            <!-- JS populate -->
+                        </tbody>
+                    </table>
+                    <a href="#" class="dashboard-link">Vedi tutte le squadre →</a>
                 </div>
-                <a href="predictions.html" class="dashboard-link">Vai all'analisi dettagliata →</a>
-            </div>
 
-            <!-- INFORTUNATI -->
-            <div id="infortunati" class="tab-content">
-                <table class="dashboard-table">
-                    <thead>
-                        <tr>
-                            <th>Giocatore</th>
-                            <th>Club</th>
-                            <th>Status</th>
-                            <th>Ritorno</th>
-                        </tr>
-                    </thead>
-                    <tbody id="infortunati-body">
-                        <!-- JS populate -->
-                    </tbody>
-                </table>
+                <!-- MARCATORI -->
+                <div id="marcatori" class="tab-content">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Pos</th>
+                                <th>Giocatore</th>
+                                <th>Club</th>
+                                <th>Gol</th>
+                                <th>xG</th>
+                            </tr>
+                        </thead>
+                        <tbody id="marcatori-body">
+                            <!-- JS populate -->
+                        </tbody>
+                    </table>
+                    <a href="#" class="dashboard-link">Vedi la classifica completa →</a>
+                </div>
+
+                <!-- PREZZI -->
+                <div id="prezzi" class="tab-content">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Giocatore</th>
+                                <th>Ruolo</th>
+                                <th>Prezzo Attuale</th>
+                                <th>Consigliato</th>
+                                <th>Nota</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prezzi-body">
+                            <!-- JS populate -->
+                        </tbody>
+                    </table>
+                    <a href="predictions.html" class="dashboard-link">Vai all'analisi dettagliata →</a>
+                </div>
+
+                <!-- INFORTUNATI -->
+                <div id="infortunati" class="tab-content">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Giocatore</th>
+                                <th>Club</th>
+                                <th>Status</th>
+                                <th>Ritorno</th>
+                            </tr>
+                        </thead>
+                        <tbody id="infortunati-body">
+                            <!-- JS populate -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+    </section>
 
-        <!-- 4 CARD CAROUSEL (sotto i tab) -->
-        <div class="dashboard-cards-carousel">
-            <div class="dashboard-card">
-                <h3>Top 5 Marcatori</h3>
-                <div id="top5-marcatori"><!-- JS populate --></div>
-            </div>
-            <div class="dashboard-card">
-                <h3>Quotazioni Consigliate</h3>
-                <div id="top5-prezzi"><!-- JS populate --></div>
-            </div>
-            <div class="dashboard-card">
-                <h3>Senza / Dubbi</h3>
-                <div id="dubbi-status"><!-- JS populate --></div>
-            </div>
-            <div class="dashboard-card">
-                <h3>Ultimi Risultati</h3>
-                <div id="risultati"><!-- JS populate --></div>
+    <!-- NEWS CARDS SECTION -->
+    <section class="news-cards-section">
+        <div class="container">
+            <h2 class="news-title">Ultime Notizie</h2>
+            
+            <div class="news-cards-grid">
+                <!-- NEWS CARD 1 -->
+                <article class="news-card" onclick="openNewsModal({
+                    title: 'Notizia 1',
+                    subtitle: 'Sottotitolo 1',
+                    image: 'https://via.placeholder.com/500x300?text=News+1',
+                    content: 'Contenuto della notizia 1. Qui va il testo completo della notizia che vuoi condividere con i tuoi utenti.'
+                })">
+                    <div class="news-card-image">
+                        <img src="https://via.placeholder.com/500x300?text=News+1" alt="Notizia 1">
+                    </div>
+                    <div class="news-card-overlay"></div>
+                    <div class="news-card-content">
+                        <h3 class="news-card-title">Notizia 1</h3>
+                        <p class="news-card-subtitle">Sottotitolo 1</p>
+                    </div>
+                </article>
+
+                <!-- NEWS CARD 2 -->
+                <article class="news-card" onclick="openNewsModal({
+                    title: 'Notizia 2',
+                    subtitle: 'Sottotitolo 2',
+                    image: 'https://via.placeholder.com/500x300?text=News+2',
+                    content: 'Contenuto della notizia 2. Qui va il testo completo della notizia che vuoi condividere con i tuoi utenti.'
+                })">
+                    <div class="news-card-image">
+                        <img src="https://via.placeholder.com/500x300?text=News+2" alt="Notizia 2">
+                    </div>
+                    <div class="news-card-overlay"></div>
+                    <div class="news-card-content">
+                        <h3 class="news-card-title">Notizia 2</h3>
+                        <p class="news-card-subtitle">Sottotitolo 2</p>
+                    </div>
+                </article>
+
+                <!-- NEWS CARD 3 -->
+                <article class="news-card" onclick="openNewsModal({
+                    title: 'Notizia 3',
+                    subtitle: 'Sottotitolo 3',
+                    image: 'https://via.placeholder.com/500x300?text=News+3',
+                    content: 'Contenuto della notizia 3. Qui va il testo completo della notizia che vuoi condividere con i tuoi utenti.'
+                })">
+                    <div class="news-card-image">
+                        <img src="https://via.placeholder.com/500x300?text=News+3" alt="Notizia 3">
+                    </div>
+                    <div class="news-card-overlay"></div>
+                    <div class="news-card-content">
+                        <h3 class="news-card-title">Notizia 3</h3>
+                        <p class="news-card-subtitle">Sottotitolo 3</p>
+                    </div>
+                </article>
+
+                <!-- NEWS CARD 4 -->
+                <article class="news-card" onclick="openNewsModal({
+                    title: 'Notizia 4',
+                    subtitle: 'Sottotitolo 4',
+                    image: 'https://via.placeholder.com/500x300?text=News+4',
+                    content: 'Contenuto della notizia 4. Qui va il testo completo della notizia che vuoi condividere con i tuoi utenti.'
+                })">
+                    <div class="news-card-image">
+                        <img src="https://via.placeholder.com/500x300?text=News+4" alt="Notizia 4">
+                    </div>
+                    <div class="news-card-overlay"></div>
+                    <div class="news-card-content">
+                        <h3 class="news-card-title">Notizia 4</h3>
+                        <p class="news-card-subtitle">Sottotitolo 4</p>
+                    </div>
+                </article>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- MODAL INFORTUNIO (popup elegante) -->
-<div id="infortunio-modal" class="modal">
-    <div class="modal-content">
-        <button class="modal-close">&times;</button>
-        <div class="modal-body">
-            <h3 id="modal-giocatore"></h3>
-            <p id="modal-club"></p>
-            <div class="modal-details">
-                <p><strong>Status:</strong> <span id="modal-status"></span></p>
-                <p><strong>Tipo Infortunio:</strong> <span id="modal-infortunio"></span></p>
-                <p><strong>Ritorno previsto:</strong> <span id="modal-ritorno"></span></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+    <!-- FEATURES -->
     <section class="features">
         <div class="container">
             <h2>Cosa trovi sulla piattaforma</h2>
@@ -280,6 +329,7 @@
         </div>
     </section>
 
+    <!-- TELEGRAM SECTION -->
     <section id="telegram-cta" class="telegram-section">
         <div class="container">
             <h2>Community Telegram gratuita</h2>
@@ -291,6 +341,7 @@
         </div>
     </section>
 
+    <!-- RECENT PREDICTIONS -->
     <section class="recent-predictions">
         <div class="container">
             <h2>Ultime previsioni pubblicate</h2>
@@ -298,6 +349,7 @@
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 Ciro Profantasy. Tutti i diritti riservati.</p>
@@ -308,7 +360,35 @@
         </div>
     </footer>
 
+    <!-- NEWS MODAL -->
+    <div id="news-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeNewsModal()">&times;</button>
+            <img id="modal-image" src="" alt="" class="modal-image">
+            <div class="modal-body">
+                <h2 id="modal-title"></h2>
+                <p id="modal-subtitle" class="modal-subtitle"></p>
+                <p id="modal-content" class="modal-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INFORTUNIO MODAL -->
+    <div id="infortunio-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeInjuryModal()">&times;</button>
+            <div class="modal-body">
+                <h3 id="modal-giocatore"></h3>
+                <p id="modal-club"></p>
+                <div class="modal-details">
+                    <p><strong>Status:</strong> <span id="modal-status"></span></p>
+                    <p><strong>Tipo Infortunio:</strong> <span id="modal-infortunio"></span></p>
+                    <p><strong>Ritorno previsto:</strong> <span id="modal-ritorno"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/main.js"></script>
 </body>
 </html>
-
