@@ -17,3 +17,37 @@ function toggleMobileMenu() {
     }
 }
 
+/* NEWS CAROUSEL AUTO-ROTATE */
+const newsCarousel = document.querySelector('.news-carousel');
+let currentNewsIndex = 0;
+const newsCards = document.querySelectorAll('.news-card');
+const newsCardWidth = newsCards[0]?.offsetWidth || 400;
+const newsGap = 24;
+
+// Auto-rotate ogni 5 secondi
+setInterval(() => {
+    nextNews();
+}, 5000);
+
+function nextNews() {
+    if (!newsCarousel) return;
+    currentNewsIndex = (currentNewsIndex + 1) % newsCards.length;
+    scrollToNews(currentNewsIndex);
+}
+
+function prevNews() {
+    if (!newsCarousel) return;
+    currentNewsIndex = (currentNewsIndex - 1 + newsCards.length) % newsCards.length;
+    scrollToNews(currentNewsIndex);
+}
+
+function scrollToNews(index) {
+    if (!newsCarousel) return;
+    const scrollPosition = index * (newsCardWidth + newsGap);
+    newsCarousel.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+    });
+}
+
+
