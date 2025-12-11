@@ -1,4 +1,4 @@
-// ===== HERO SLIDER - FUNZIONANTE =====
+// ===== HERO SLIDER =====
 let currentHeroSlide = 0;
 let autoRotateInterval;
 
@@ -8,11 +8,9 @@ function initHeroSlider() {
     
     if (slides.length === 0) return;
     
-    // Mostra la prima slide
     slides[0].classList.add('active');
     dots[0].classList.add('active');
     
-    // Auto-rotate ogni 5 secondi
     autoRotateInterval = setInterval(() => {
         nextHeroSlide();
     }, 5000);
@@ -23,17 +21,14 @@ function showHeroSlide(index) {
     const dots = document.querySelectorAll('.hero-dot');
     const totalSlides = slides.length;
     
-    // Normalizza index
     if (index >= totalSlides) index = 0;
     if (index < 0) index = totalSlides - 1;
     
     currentHeroSlide = index;
     
-    // Rimuovi active da tutti
     slides.forEach(slide => slide.classList.remove('active'));
     dots.forEach(dot => dot.classList.remove('active'));
     
-    // Aggiungi active al corrente
     slides[index].classList.add('active');
     dots[index].classList.add('active');
 }
@@ -60,46 +55,41 @@ function goToHeroSlide(index) {
     }, 5000);
 }
 
-// ===== MOBILE MENU =====
-function toggleMobileMenu() {
-    const navLinks = document.querySelector('.nav-links');
-    if (navLinks) {
-        navLinks.classList.toggle('nav-open');
-    }
+// ===== NEWS MODAL =====
+function openNewsModal(data) {
+    const modal = document.getElementById('news-modal');
+    document.getElementById('modal-title').textContent = data.title;
+    document.getElementById('modal-subtitle').textContent = data.subtitle;
+    document.getElementById('modal-image').src = data.image;
+    document.getElementById('modal-content').textContent = data.content;
+    
+    modal.classList.add('active');
 }
 
-// ===== INIT =====
-document.addEventListener('DOMContentLoaded', function() {
-    initHeroSlider();
-});
+function closeNewsModal() {
+    const modal = document.getElementById('news-modal');
+    if (modal) modal.classList.remove('active');
+}
 
-
-// ===== DASHBOARD DATA - GOOGLE SHEETS API =====
-
-// FORMAT: https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:json&sheet={SHEET_NAME}
-
-const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48'; // Uno solo
+// ===== DASHBOARD DATA =====
+const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48';
 
 const SHEET_NAMES = {
     classifica: 'Classifica',
     marcatori: 'Marcatori',
-    prezzi: 'Prezzi Consigliati', // Nota: il tuo sheet si chiama "FVP" non "Prezzi"
+    prezzi: 'FVP',
     infortunati: 'Infortunati'
 };
 
-
-// Fetch data da Google Sheets
 async function fetchSheetDataJson(sheetName) {
     try {
         const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
         const response = await fetch(url);
         const text = await response.text();
         
-        // Parse Google Visualization API response
         const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
         const json = JSON.parse(jsonString);
         
-        // Converti in array di oggetti
         const cols = json.table.cols.map(col => col.label);
         const rows = json.table.rows.map(row => {
             const obj = {};
@@ -116,22 +106,17 @@ async function fetchSheetDataJson(sheetName) {
     }
 }
 
-// Popola CLASSIFICA con LOGHI
 async function populateClassifica() {
     const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
     const tbody = document.getElementById('classifica-body');
     
-    if (!tbody || data.length === 0) {
-        console.log('Classifica data:', data);
-        return;
-    }
+    if (!tbody || data.length === 0) return;
     
     tbody.innerHTML = '';
     
     data.slice(0, 10).forEach(row => {
         const tr = document.createElement('tr');
         
-        // Se hai colonna "Logo", mostra logo + squadra insieme
         let squadraHTML = `<strong>${row['Squadra'] || '-'}</strong>`;
         if (row['Logo']) {
             squadraHTML = `
@@ -155,22 +140,17 @@ async function populateClassifica() {
     console.log('Classifica populated');
 }
 
-// Popola MARCATORI con LOGHI
 async function populateMarcatori() {
     const data = await fetchSheetDataJson(SHEET_NAMES.marcatori);
     const tbody = document.getElementById('marcatori-body');
     
-    if (!tbody || data.length === 0) {
-        console.log('Marcatori data:', data);
-        return;
-    }
+    if (!tbody || data.length === 0) return;
     
     tbody.innerHTML = '';
     
     data.slice(0, 10).forEach(row => {
         const tr = document.createElement('tr');
         
-        // Se hai colonna "Logo", mostra logo + club insieme
         let clubHTML = `${row['Club'] || '-'}`;
         if (row['Logo']) {
             clubHTML = `
@@ -194,15 +174,34 @@ async function populateMarcatori() {
     console.log('Marcatori populated');
 }
 
-// Popola INFORTUNATI con LOGHI (opzionale)
+async function populatePrezzi() {
+    const data = await fetchSheetDataJson(SHEET_NAMES.prezzi);
+    const tbody = document.getElementById('prezzi-body');
+    
+    if (!tbody || data.length === 0) return;
+    
+    tbody.innerHTML = '';
+    
+    data.slice(0, 10).forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><strong>${row['Giocatore'] || '-'}</strong></td>
+            <td>${row['Ruolo'] || '-'}</td>
+            <td>${row['Prezzo Attuale'] || '-'}</td>
+            <td>${row['Prezzo Consigliato'] || '-'}</td>
+            <td>${row['Nota'] || '-'}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+    
+    console.log('Prezzi populated');
+}
+
 async function populateInfortunati() {
     const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
     const tbody = document.getElementById('infortunati-body');
     
-    if (!tbody || data.length === 0) {
-        console.log('Infortunati data:', data);
-        return;
-    }
+    if (!tbody || data.length === 0) return;
     
     tbody.innerHTML = '';
     
@@ -210,7 +209,6 @@ async function populateInfortunati() {
         const tr = document.createElement('tr');
         tr.className = 'clickable';
         
-        // Se hai colonna "Logo"
         let clubHTML = `${row['Club'] || '-'}`;
         if (row['Logo']) {
             clubHTML = `
@@ -235,7 +233,6 @@ async function populateInfortunati() {
     console.log('Infortunati populated');
 }
 
-// MODAL Infortunio
 function openInjuryModal(data) {
     const modal = document.getElementById('infortunio-modal');
     document.getElementById('modal-giocatore').textContent = data['Giocatore'] || 'N/A';
@@ -252,7 +249,6 @@ function closeInjuryModal() {
     if (modal) modal.classList.remove('active');
 }
 
-// TAB SWITCHING
 function setupDashboardTabs() {
     const tabs = document.querySelectorAll('.tab-btn');
     tabs.forEach(tab => {
@@ -269,25 +265,43 @@ function setupDashboardTabs() {
     });
 }
 
-// MODAL CLOSE
+function toggleMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+        navLinks.classList.toggle('nav-open');
+    }
+}
+
+// ===== MODAL CLOSE =====
 document.addEventListener('click', function(e) {
-    const modal = document.getElementById('infortunio-modal');
-    if (!modal) return;
+    const newsModal = document.getElementById('news-modal');
+    const injuryModal = document.getElementById('infortunio-modal');
     
-    if (e.target === modal || e.target.classList.contains('modal-close')) {
+    if (newsModal && (e.target === newsModal || e.target.id === 'news-modal')) {
+        closeNewsModal();
+    }
+    
+    if (injuryModal && (e.target === injuryModal || e.target.id === 'infortunio-modal')) {
         closeInjuryModal();
+    }
+    
+    if (e.target.classList.contains('modal-close')) {
+        if (e.target.closest('#news-modal')) closeNewsModal();
+        if (e.target.closest('#infortunio-modal')) closeInjuryModal();
     }
 });
 
-// INIT
+// ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
+    initHeroSlider();
     setupDashboardTabs();
     await populateClassifica();
     await populateMarcatori();
+    await populatePrezzi();
     await populateInfortunati();
     
-    // Debug: apri console (F12) e vedi se dice "populated"
-    console.log('Dashboard initialized');
+    console.log('Site initialized');
 });
+
 
 
