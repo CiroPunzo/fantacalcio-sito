@@ -83,7 +83,7 @@ const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48'; // Uno solo
 const SHEET_NAMES = {
     classifica: 'Classifica',
     marcatori: 'Marcatori',
-    prezzi: 'FVP', // Nota: il tuo sheet si chiama "FVP" non "Prezzi"
+    prezzi: 'Prezzi', // Nota: il tuo sheet si chiama "FVP" non "Prezzi"
     infortunati: 'Infortunati'
 };
 
