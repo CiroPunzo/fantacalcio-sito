@@ -194,16 +194,17 @@ html, body {
     color: #020041;
 }
 
-/* FEATURED CARDS CAROUSEL - PREMIUM UPGRADE */
+/* FEATURED CARDS CAROUSEL - PREMIUM */
 .featured-cards {
     background: #010020;
-    padding: 60px 20px;
+    padding: 60px 0;
 }
 
 .carousel-wrapper {
     position: relative;
     width: 100%;
     overflow: hidden;
+    padding: 0 20px 40px 20px;
 }
 
 .carousel {
@@ -212,8 +213,8 @@ html, body {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    padding-bottom: 40px;
     -webkit-overflow-scrolling: touch;
+    scroll-padding-left: 20px;
 }
 
 .carousel::-webkit-scrollbar {
@@ -381,8 +382,12 @@ html, body {
     box-shadow: 0 0 16px rgba(184, 149, 107, 0.4);
 }
 
-/* DESKTOP: 4 CARD VISIBILI */
+/* DESKTOP: 4 CARD */
 @media (min-width: 1200px) {
+    .carousel-wrapper {
+        padding: 0 20px 40px 20px;
+    }
+
     .carousel {
         gap: 30px;
     }
