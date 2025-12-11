@@ -74,122 +74,145 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// ===== DASHBOARD DATA FETCHING =====
+// ===== DASHBOARD DATA - GOOGLE SHEETS API =====
 
-// GOOGLE SHEETS PUBLIC CSV EXPORT URL
-// Formula: https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid={SHEET_GID}
+// FORMAT: https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:json&sheet={SHEET_NAME}
 
-const SHEETS_CONFIG = {
-    classifica: 'https://docs.google.com/spreadsheets/d/1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48/edit?pli=1&gid=0#gid=0',
-    marcatori: 'https://docs.google.com/spreadsheets/d/1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48/edit?pli=1&gid=1526866622#gid=1526866622',
-    prezzi: 'https://docs.google.com/spreadsheets/d/1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48/edit?pli=1&gid=1457724526#gid=1457724526',
-    infortunati: 'https://docs.google.com/spreadsheets/d/1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48/edit?pli=1&gid=1965652148#gid=1965652148'
+const SHEET_ID = 'TUO_SHEET_ID_QUI'; // Sostituisci con il tuo ID
+
+const SHEET_NAMES = {
+    classifica: 'Classifica',
+    marcatori: 'Marcatori',
+    prezzi: 'Prezzi',
+    infortunati: 'Infortunati'
 };
 
-// Fetch CSV e converti a JSON
-async function fetchSheetData(url) {
+// Fetch data da Google Sheets
+async function fetchSheetDataJson(sheetName) {
     try {
+        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
         const response = await fetch(url);
-        const csv = await response.text();
-        return csvToArray(csv);
+        const text = await response.text();
+        
+        // Parse Google Visualization API response
+        const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+        const json = JSON.parse(jsonString);
+        
+        // Converti in array di oggetti
+        const cols = json.table.cols.map(col => col.label);
+        const rows = json.table.rows.map(row => {
+            const obj = {};
+            cols.forEach((col, idx) => {
+                obj[col] = row.c[idx]?.v || '';
+            });
+            return obj;
+        });
+        
+        return rows;
     } catch (error) {
         console.error('Error fetching sheet:', error);
         return [];
     }
 }
 
-// CSV → Array di oggetti
-function csvToArray(str) {
-    const lines = str.trim().split('\n');
-    const headers = lines[0].split(',').map(h => h.trim());
-    const result = [];
-    
-    for (let i = 1; i < lines.length; i++) {
-        const obj = {};
-        const currentLine = lines[i].split(',');
-        
-        for (let j = 0; j < headers.length; j++) {
-            obj[headers[j]] = currentLine[j]?.trim() || '';
-        }
-        result.push(obj);
-    }
-    return result;
-}
-
 // Popola CLASSIFICA
 async function populateClassifica() {
-    const data = await fetchSheetData(SHEETS_CONFIG.classifica);
+    const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
     const tbody = document.getElementById('classifica-body');
+    
+    if (!tbody || data.length === 0) {
+        console.log('Classifica data:', data);
+        return;
+    }
+    
     tbody.innerHTML = '';
     
     data.slice(0, 10).forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${row['Posizione']}</td>
-            <td><strong>${row['Squadra']}</strong></td>
-            <td>${row['Punti']}</td>
-            <td>${row['Partite']}</td>
-            <td>${row['xG']}</td>
+            <td>${row['Posizione'] || '-'}</td>
+            <td><strong>${row['Squadra'] || '-'}</strong></td>
+            <td>${row['Punti'] || '-'}</td>
+            <td>${row['Partite'] || '-'}</td>
+            <td>${row['xG'] || '-'}</td>
         `;
         tbody.appendChild(tr);
     });
+    
+    console.log('Classifica populated');
 }
 
 // Popola MARCATORI
 async function populateMarcatori() {
-    const data = await fetchSheetData(SHEETS_CONFIG.marcatori);
+    const data = await fetchSheetDataJson(SHEET_NAMES.marcatori);
     const tbody = document.getElementById('marcatori-body');
+    
+    if (!tbody || data.length === 0) {
+        console.log('Marcatori data:', data);
+        return;
+    }
+    
     tbody.innerHTML = '';
     
     data.slice(0, 10).forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${row['Posizione']}</td>
-            <td><strong>${row['Giocatore']}</strong></td>
-            <td>${row['Club']}</td>
-            <td>${row['Gol']}</td>
-            <td>${row['xG']}</td>
+            <td>${row['Posizione'] || '-'}</td>
+            <td><strong>${row['Giocatore'] || '-'}</strong></td>
+            <td>${row['Club'] || '-'}</td>
+            <td>${row['Gol'] || '-'}</td>
+            <td>${row['xG'] || '-'}</td>
         `;
         tbody.appendChild(tr);
     });
+    
+    console.log('Marcatori populated');
 }
 
 // Popola INFORTUNATI con POPUP
 async function populateInfortunati() {
-    const data = await fetchSheetData(SHEETS_CONFIG.infortunati);
+    const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
     const tbody = document.getElementById('infortunati-body');
+    
+    if (!tbody || data.length === 0) {
+        console.log('Infortunati data:', data);
+        return;
+    }
+    
     tbody.innerHTML = '';
     
     data.forEach(row => {
         const tr = document.createElement('tr');
         tr.className = 'clickable';
         tr.innerHTML = `
-            <td><strong>${row['Giocatore']}</strong></td>
-            <td>${row['Club']}</td>
-            <td>${row['Status']}</td>
-            <td>${row['Giorni Recupero']} gg</td>
+            <td><strong>${row['Giocatore'] || '-'}</strong></td>
+            <td>${row['Club'] || '-'}</td>
+            <td>${row['Status'] || '-'}</td>
+            <td>${row['Giorni Recupero'] || '-'} gg</td>
         `;
         
-        // Click per aprire modal
         tr.addEventListener('click', () => openInjuryModal(row));
         tbody.appendChild(tr);
     });
+    
+    console.log('Infortunati populated');
 }
 
 // MODAL Infortunio
 function openInjuryModal(data) {
     const modal = document.getElementById('infortunio-modal');
-    document.getElementById('modal-giocatore').textContent = data['Giocatore'];
-    document.getElementById('modal-club').textContent = data['Club'];
-    document.getElementById('modal-status').textContent = data['Status'];
-    document.getElementById('modal-infortunio').textContent = data['Tipo Infortunio'];
-    document.getElementById('modal-ritorno').textContent = data['Giorni Recupero'] + ' giorni';
+    document.getElementById('modal-giocatore').textContent = data['Giocatore'] || 'N/A';
+    document.getElementById('modal-club').textContent = data['Club'] || 'N/A';
+    document.getElementById('modal-status').textContent = data['Status'] || 'N/A';
+    document.getElementById('modal-infortunio').textContent = data['Tipo Infortunio'] || 'N/A';
+    document.getElementById('modal-ritorno').textContent = (data['Giorni Recupero'] || 'N/A') + ' giorni';
     
     modal.classList.add('active');
 }
 
 function closeInjuryModal() {
-    document.getElementById('infortunio-modal').classList.remove('active');
+    const modal = document.getElementById('infortunio-modal');
+    if (modal) modal.classList.remove('active');
 }
 
 // TAB SWITCHING
@@ -199,13 +222,12 @@ function setupDashboardTabs() {
         tab.addEventListener('click', (e) => {
             const tabName = e.target.dataset.tab;
             
-            // Remove active da tutti
             tabs.forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             
-            // Aggiungi active al cliccato
             e.target.classList.add('active');
-            document.getElementById(tabName).classList.add('active');
+            const tabContent = document.getElementById(tabName);
+            if (tabContent) tabContent.classList.add('active');
         });
     });
 }
@@ -213,17 +235,22 @@ function setupDashboardTabs() {
 // MODAL CLOSE
 document.addEventListener('click', function(e) {
     const modal = document.getElementById('infortunio-modal');
+    if (!modal) return;
+    
     if (e.target === modal || e.target.classList.contains('modal-close')) {
         closeInjuryModal();
     }
 });
 
-// INIT - Carica dati al load
+// INIT
 document.addEventListener('DOMContentLoaded', async function() {
     setupDashboardTabs();
     await populateClassifica();
     await populateMarcatori();
     await populateInfortunati();
+    
+    // Debug: apri console (F12) e vedi se dice "populated"
+    console.log('Dashboard initialized');
 });
 
 
