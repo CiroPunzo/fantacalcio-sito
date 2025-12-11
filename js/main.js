@@ -80,10 +80,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // Formula: https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid={SHEET_GID}
 
 const SHEETS_CONFIG = {
-    classifica: 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/export?format=csv&gid=0',
-    marcatori: 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/export?format=csv&gid=123456789',
-    prezzi: 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/export?format=csv&gid=987654321',
-    infortunati: 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/export?format=csv&gid=555555555'
+    classifica: 'https://docs.google.com/spreadsheets/d/1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48/edit?pli=1&gid=0#gid=0',
+    marcatori: 'https://docs.google.com/spreadsheets/d/1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48/edit?pli=1&gid=1526866622#gid=1526866622',
+    prezzi: 'https://docs.google.com/spreadsheets/d/1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48/edit?pli=1&gid=1457724526#gid=1457724526',
+    infortunati: 'https://docs.google.com/spreadsheets/d/1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48/edit?pli=1&gid=1965652148#gid=1965652148'
 };
 
 // Fetch CSV e converti a JSON
