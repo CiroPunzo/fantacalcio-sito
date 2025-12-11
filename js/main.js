@@ -34,15 +34,17 @@ function showHeroSlide(index) {
 }
 
 function nextHeroSlide() {
-    currentHeroSlide++;
     const slides = document.querySelectorAll('.hero-slide');
+    if (slides.length === 0) return;
+    currentHeroSlide++;
     if (currentHeroSlide >= slides.length) currentHeroSlide = 0;
     showHeroSlide(currentHeroSlide);
 }
 
 function prevHeroSlide() {
-    currentHeroSlide--;
     const slides = document.querySelectorAll('.hero-slide');
+    if (slides.length === 0) return;
+    currentHeroSlide--;
     if (currentHeroSlide < 0) currentHeroSlide = slides.length - 1;
     showHeroSlide(currentHeroSlide);
 }
@@ -55,14 +57,29 @@ function goToHeroSlide(index) {
     }, 5000);
 }
 
+// ===== MOBILE NAV =====
+function toggleMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+        navLinks.classList.toggle('nav-open');
+    }
+}
+
 // ===== NEWS MODAL =====
 function openNewsModal(data) {
     const modal = document.getElementById('news-modal');
-    document.getElementById('modal-title').textContent = data.title;
-    document.getElementById('modal-subtitle').textContent = data.subtitle;
-    document.getElementById('modal-image').src = data.image;
-    document.getElementById('modal-content').textContent = data.content;
-    
+    if (!modal) return;
+
+    const titleEl = document.getElementById('modal-title');
+    const subtitleEl = document.getElementById('modal-subtitle');
+    const imageEl = document.getElementById('modal-image');
+    const contentEl = document.getElementById('modal-content');
+
+    if (titleEl) titleEl.textContent = data.title || '';
+    if (subtitleEl) subtitleEl.textContent = data.subtitle || '';
+    if (imageEl) imageEl.src = data.image || '';
+    if (contentEl) contentEl.textContent = data.content || '';
+
     modal.classList.add('active');
 }
 
@@ -71,7 +88,7 @@ function closeNewsModal() {
     if (modal) modal.classList.remove('active');
 }
 
-// ===== DASHBOARD DATA =====
+// ===== GOOGLE SHEETS CONFIG =====
 const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48';
 
 const SHEET_NAMES = {
@@ -81,42 +98,58 @@ const SHEET_NAMES = {
     infortunati: 'Infortunati'
 };
 
+// Fetch + parse robusto da Google Sheets (gviz)
 async function fetchSheetDataJson(sheetName) {
     try {
-        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
         const response = await fetch(url);
         const text = await response.text();
-        
-        const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+
+        const jsonStart = text.indexOf('{');
+        const jsonEnd = text.lastIndexOf('}');
+        if (jsonStart === -1 || jsonEnd === -1) {
+            console.error('Impossibile trovare JSON nella risposta di Google Sheets');
+            console.log('Response text:', text);
+            return [];
+        }
+
+        const jsonString = text.substring(jsonStart, jsonEnd + 1);
         const json = JSON.parse(jsonString);
-        
-        const cols = json.table.cols.map(col => col.label);
+
+        const cols = json.table.cols.map(col => col.label || '');
         const rows = json.table.rows.map(row => {
             const obj = {};
             cols.forEach((col, idx) => {
-                obj[col] = row.c[idx]?.v || '';
+                obj[col] = row.c[idx]?.v ?? '';
             });
             return obj;
         });
-        
+
         return rows;
     } catch (error) {
-        console.error('Error fetching sheet:', error);
+        console.error('Errore fetchSheetDataJson:', error);
         return [];
     }
 }
 
+// ===== POPOLAZIONE TABELLE =====
 async function populateClassifica() {
     const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
     const tbody = document.getElementById('classifica-body');
-    
-    if (!tbody || data.length === 0) return;
-    
+    if (!tbody) {
+        console.warn('Elemento #classifica-body non trovato');
+        return;
+    }
+    if (!Array.isArray(data) || data.length === 0) {
+        console.warn('Nessun dato Classifica', data);
+        return;
+    }
+
     tbody.innerHTML = '';
-    
+
     data.slice(0, 10).forEach(row => {
         const tr = document.createElement('tr');
-        
+
         let squadraHTML = `<strong>${row['Squadra'] || '-'}</strong>`;
         if (row['Logo']) {
             squadraHTML = `
@@ -126,7 +159,7 @@ async function populateClassifica() {
                 </div>
             `;
         }
-        
+
         tr.innerHTML = `
             <td>${row['Posizione'] || '-'}</td>
             <td>${squadraHTML}</td>
@@ -136,21 +169,27 @@ async function populateClassifica() {
         `;
         tbody.appendChild(tr);
     });
-    
-    console.log('Classifica populated');
+
+    console.log('Classifica populated', data);
 }
 
 async function populateMarcatori() {
     const data = await fetchSheetDataJson(SHEET_NAMES.marcatori);
     const tbody = document.getElementById('marcatori-body');
-    
-    if (!tbody || data.length === 0) return;
-    
+    if (!tbody) {
+        console.warn('Elemento #marcatori-body non trovato');
+        return;
+    }
+    if (!Array.isArray(data) || data.length === 0) {
+        console.warn('Nessun dato Marcatori', data);
+        return;
+    }
+
     tbody.innerHTML = '';
-    
+
     data.slice(0, 10).forEach(row => {
         const tr = document.createElement('tr');
-        
+
         let clubHTML = `${row['Club'] || '-'}`;
         if (row['Logo']) {
             clubHTML = `
@@ -160,7 +199,7 @@ async function populateMarcatori() {
                 </div>
             `;
         }
-        
+
         tr.innerHTML = `
             <td>${row['Posizione'] || '-'}</td>
             <td><strong>${row['Giocatore'] || '-'}</strong></td>
@@ -170,18 +209,24 @@ async function populateMarcatori() {
         `;
         tbody.appendChild(tr);
     });
-    
-    console.log('Marcatori populated');
+
+    console.log('Marcatori populated', data);
 }
 
 async function populatePrezzi() {
     const data = await fetchSheetDataJson(SHEET_NAMES.prezzi);
     const tbody = document.getElementById('prezzi-body');
-    
-    if (!tbody || data.length === 0) return;
-    
+    if (!tbody) {
+        console.warn('Elemento #prezzi-body non trovato');
+        return;
+    }
+    if (!Array.isArray(data) || data.length === 0) {
+        console.warn('Nessun dato Prezzi (FVP)', data);
+        return;
+    }
+
     tbody.innerHTML = '';
-    
+
     data.slice(0, 10).forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -193,22 +238,28 @@ async function populatePrezzi() {
         `;
         tbody.appendChild(tr);
     });
-    
-    console.log('Prezzi populated');
+
+    console.log('Prezzi populated', data);
 }
 
 async function populateInfortunati() {
     const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
     const tbody = document.getElementById('infortunati-body');
-    
-    if (!tbody || data.length === 0) return;
-    
+    if (!tbody) {
+        console.warn('Elemento #infortunati-body non trovato');
+        return;
+    }
+    if (!Array.isArray(data) || data.length === 0) {
+        console.warn('Nessun dato Infortunati', data);
+        return;
+    }
+
     tbody.innerHTML = '';
-    
+
     data.forEach(row => {
         const tr = document.createElement('tr');
         tr.className = 'clickable';
-        
+
         let clubHTML = `${row['Club'] || '-'}`;
         if (row['Logo']) {
             clubHTML = `
@@ -218,29 +269,38 @@ async function populateInfortunati() {
                 </div>
             `;
         }
-        
+
         tr.innerHTML = `
             <td><strong>${row['Giocatore'] || '-'}</strong></td>
             <td>${clubHTML}</td>
             <td>${row['Status'] || '-'}</td>
             <td>${row['Giorni Recupero'] || '-'} gg</td>
         `;
-        
+
         tr.addEventListener('click', () => openInjuryModal(row));
         tbody.appendChild(tr);
     });
-    
-    console.log('Infortunati populated');
+
+    console.log('Infortunati populated', data);
 }
 
+// ===== INFORTUNIO MODAL =====
 function openInjuryModal(data) {
     const modal = document.getElementById('infortunio-modal');
-    document.getElementById('modal-giocatore').textContent = data['Giocatore'] || 'N/A';
-    document.getElementById('modal-club').textContent = data['Club'] || 'N/A';
-    document.getElementById('modal-status').textContent = data['Status'] || 'N/A';
-    document.getElementById('modal-infortunio').textContent = data['Tipo Infortunio'] || 'N/A';
-    document.getElementById('modal-ritorno').textContent = (data['Giorni Recupero'] || 'N/A') + ' giorni';
-    
+    if (!modal) return;
+
+    const g = document.getElementById('modal-giocatore');
+    const c = document.getElementById('modal-club');
+    const s = document.getElementById('modal-status');
+    const t = document.getElementById('modal-infortunio');
+    const r = document.getElementById('modal-ritorno');
+
+    if (g) g.textContent = data['Giocatore'] || 'N/A';
+    if (c) c.textContent = data['Club'] || 'N/A';
+    if (s) s.textContent = data['Status'] || 'N/A';
+    if (t) t.textContent = data['Tipo Infortunio'] || 'N/A';
+    if (r) r.textContent = (data['Giorni Recupero'] || 'N/A') + ' giorni';
+
     modal.classList.add('active');
 }
 
@@ -249,42 +309,40 @@ function closeInjuryModal() {
     if (modal) modal.classList.remove('active');
 }
 
+// ===== DASHBOARD TABS =====
 function setupDashboardTabs() {
     const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+
+    if (!tabs.length || !contents.length) return;
+
     tabs.forEach(tab => {
         tab.addEventListener('click', (e) => {
-            const tabName = e.target.dataset.tab;
-            
+            const tabName = e.currentTarget.dataset.tab;
+
             tabs.forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            
-            e.target.classList.add('active');
+            contents.forEach(c => c.classList.remove('active'));
+
+            e.currentTarget.classList.add('active');
             const tabContent = document.getElementById(tabName);
             if (tabContent) tabContent.classList.add('active');
         });
     });
 }
 
-function toggleMobileMenu() {
-    const navLinks = document.querySelector('.nav-links');
-    if (navLinks) {
-        navLinks.classList.toggle('nav-open');
-    }
-}
-
-// ===== MODAL CLOSE =====
+// ===== MODAL CLOSE HANDLER GENERICO =====
 document.addEventListener('click', function(e) {
     const newsModal = document.getElementById('news-modal');
     const injuryModal = document.getElementById('infortunio-modal');
-    
-    if (newsModal && (e.target === newsModal || e.target.id === 'news-modal')) {
+
+    if (newsModal && e.target === newsModal) {
         closeNewsModal();
     }
-    
-    if (injuryModal && (e.target === injuryModal || e.target.id === 'infortunio-modal')) {
+
+    if (injuryModal && e.target === injuryModal) {
         closeInjuryModal();
     }
-    
+
     if (e.target.classList.contains('modal-close')) {
         if (e.target.closest('#news-modal')) closeNewsModal();
         if (e.target.closest('#infortunio-modal')) closeInjuryModal();
@@ -299,9 +357,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     await populateMarcatori();
     await populatePrezzi();
     await populateInfortunati();
-    
     console.log('Site initialized');
 });
+
 
 
 
