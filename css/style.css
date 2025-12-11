@@ -121,6 +121,7 @@ html, body {
 }
 
 /* ===== HERO SLIDER - PREMIUM ===== */
+/* ===== HERO SLIDER - PREMIUM ===== */
 .hero-slider {
     position: relative;
     width: 100%;
@@ -247,6 +248,7 @@ html, body {
     position: absolute;
     bottom: 40px;
     right: 40px;
+    z-index: 15;
 }
 
 .hero-cta:hover {
@@ -258,6 +260,85 @@ html, body {
 .hero-cta:active {
     transform: translateY(-1px);
 }
+
+/* HERO ARROWS */
+.hero-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(184, 149, 107, 0.15);
+    border: none;
+    color: #B8956B;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 20;
+    backdrop-filter: blur(4px);
+}
+
+.hero-arrow:hover {
+    background: rgba(184, 149, 107, 0.3);
+    color: #d4c5a0;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.hero-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.hero-arrow-prev {
+    left: 30px;
+}
+
+.hero-arrow-next {
+    right: 30px;
+}
+
+.hero-arrow svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* HERO DOTS */
+.hero-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 20;
+}
+
+.hero-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(184, 149, 107, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hero-dot:hover {
+    background-color: rgba(184, 149, 107, 0.6);
+    transform: scale(1.15);
+}
+
+.hero-dot.active {
+    background-color: #B8956B;
+    width: 28px;
+    border-radius: 6px;
+    box-shadow: 0 0 16px rgba(184, 149, 107, 0.5);
+}
+
 
 /* HERO ARROWS */
 .hero-arrow {
