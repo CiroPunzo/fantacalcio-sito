@@ -1281,6 +1281,25 @@ html, body {
     color: #B8956B;
 }
 
+/* Modal classifica completa */
+.modal-content-wide {
+    max-width: 900px;
+}
+
+/* wrapper scrollabile per la tabella completa */
+.modal-table-wrapper {
+    max-height: 420px;
+    overflow-y: auto;
+    margin-top: 16px;
+    border-radius: 10px;
+}
+
+/* opzionale: righe leggermente più compatte dentro la modal */
+#classifica-full-body td {
+    padding: 10px 8px;
+}
+
+
 /* ===== FOOTER PREMIUM ===== */
 .footer-premium {
     background: linear-gradient(135deg, #010010 0%, #020041 100%);
