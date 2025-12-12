@@ -312,6 +312,24 @@ async function populateMarcatori() {
 
     tbody.innerHTML = '';
 
+    // ordina per Posizione calcolata in Sheets e mostra i primi 10
+    data
+        .filter(row => row['Posizione']) // solo righe con posizione
+        .sort((a, b) => Number(a['Posizione']) - Number(b['Posizione']))
+        .slice(0, 10)
+        .forEach(row => {
+            const tr = document.createElement('tr');
+
+            const giocatore = row['Giocatore'] || '-';
+            const club = row['Club'] || '-';
+            const gol = row['Gol'] || '-';
+            const xg = row['xG'] || '-';
+
+            const logoUrl = CLUB_LOGOS[club] || '';
+            const clubHTML = logoUrl
+
+    tbody.innerHTML = '';
+
     data.slice(0, 10).forEach(row => {
         const tr = document.createElement('tr');
 
