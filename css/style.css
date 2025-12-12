@@ -461,6 +461,42 @@ html, body {
     object-fit: contain;
 }
 
+.zona-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zona-badge img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+/* stile diverso per ogni coppa */
+.zona-champions img {
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
+}
+
+.zona-europa img {
+    filter: drop-shadow(0 0 6px rgba(255, 153, 51, 0.6));
+}
+
+.zona-conference img {
+    filter: drop-shadow(0 0 6px rgba(0, 255, 170, 0.6));
+}
+
+/* bollino retrocessione già ok */
+.zona-relegation span {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff4b4b 0%, #b00000 70%);
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
+
 /* Bollino retrocessione */
 .zona-relegation span {
     display: inline-block;
