@@ -94,7 +94,6 @@ const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48';
 const SHEET_NAMES = {
     classifica: 'Classifica',
     marcatori: 'Marcatori',
-    prezzi: 'FVP',
     infortunati: 'Infortunati'
 };
 
@@ -370,19 +369,6 @@ async function populateFullMarcatoriModal() {
         });
 }
 
-
-
-async function populatePrezzi() {
-    const data = await fetchSheetDataJson(SHEET_NAMES.prezzi);
-    const tbody = document.getElementById('prezzi-body');
-    if (!tbody) {
-        console.warn('Elemento #prezzi-body non trovato');
-        return;
-    }
-    if (!Array.isArray(data) || data.length === 0) {
-        console.warn('Nessun dato Prezzi (FVP)', data);
-        return;
-    }
 
     tbody.innerHTML = '';
 
