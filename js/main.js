@@ -313,7 +313,6 @@ async function populateMarcatori() {
             const giocatore = row['Giocatore'] || '-';
             const club = row['Club'] || '-';
             const gol = row['Gol'] || '-';
-            const xg = row['xG'] || '-';
 
             const logoUrl = CLUB_LOGOS[club] || '';
             const clubHTML = logoUrl
@@ -328,11 +327,13 @@ async function populateMarcatori() {
                 <td><strong>${giocatore}</strong></td>
                 <td>${clubHTML}</td>
                 <td>${gol}</td>
-                <td>${xg}</td>
             `;
             tbody.appendChild(tr);
         });
+
+    console.log('Marcatori populated', data);
 }
+
 
 async function populatePrezzi() {
     const data = await fetchSheetDataJson(SHEET_NAMES.prezzi);
