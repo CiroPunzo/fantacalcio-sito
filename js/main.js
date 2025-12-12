@@ -141,16 +141,48 @@ async function populateClassifica() {
 
     tbody.innerHTML = '';
 
-    data.slice(0, 10).forEach(row => {
+    data.slice(0, 20).forEach(row => {
         const tr = document.createElement('tr');
 
-        const logoCell = row['Logo']
-            ? `<img src="${row['Logo']}" alt="${row['Squadra'] || ''}" class="table-logo">`
-            : '-';
+        const pos = Number(row['Posizione']); // posizione numerica
+
+        // Determina zona (Champions / EL / Conf / Retrocessione)
+        let zonaHTML = '';
+        if (pos >= 1 && pos <= 4) {
+            // Champions League
+            zonaHTML = `
+                <div class="zona-badge zona-champions" title="Champions League">
+                    <img src="img/icon-cl-champions.png" alt="Champions League">
+                </div>
+            `;
+        } else if (pos >= 5 && pos <= 6) {
+            // Europa League
+            zonaHTML = `
+                <div class="zona-badge zona-europa" title="Europa League">
+                    <img src="img/icon-el-europa.png" alt="Europa League">
+                </div>
+            `;
+        } else if (pos === 7) {
+            // Conference League
+            zonaHTML = `
+                <div class="zona-badge zona-conference" title="Conference League">
+                    <img src="img/icon-conf-conference.png" alt="Conference League">
+                </div>
+            `;
+        } else if (pos >= 18) {
+            // Retrocessione
+            zonaHTML = `
+                <div class="zona-badge zona-relegation" title="Retrocessione">
+                    <span></span>
+                </div>
+            `;
+        } else {
+            zonaHTML = '';
+        }
 
         tr.innerHTML = `
             <td>${row['Posizione'] || '-'}</td>
-            <td>${logoCell}</td>
+            <td>${zonaHTML}</td>
             <td><strong>${row['Squadra'] || '-'}</strong></td>
             <td>${row['PG'] || '-'}</td>
             <td>${row['Punti'] || '-'}</td>
