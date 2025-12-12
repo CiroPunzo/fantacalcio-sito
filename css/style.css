@@ -423,6 +423,29 @@ html, body {
     margin-bottom: 20px;
 }
 
+/* ZONE EUROPEE / RETROCESSIONE */
+.zona-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zona-badge img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* Bollino retrocessione */
+.zona-relegation span {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff4b4b 0%, #b00000 70%);
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
 .dashboard-table thead {
     border-bottom: 2px solid rgba(184, 149, 107, 0.3);
 }
