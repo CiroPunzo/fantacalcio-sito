@@ -459,6 +459,7 @@ function setupDashboardTabs() {
 document.addEventListener('click', function(e) {
     const newsModal = document.getElementById('news-modal');
     const injuryModal = document.getElementById('infortunio-modal');
+    const classificaModal = document.getElementById('classifica-modal');
 
     if (newsModal && e.target === newsModal) {
         closeNewsModal();
@@ -468,11 +469,17 @@ document.addEventListener('click', function(e) {
         closeInjuryModal();
     }
 
+    if (classificaModal && e.target === classificaModal) {
+        classificaModal.classList.remove('active');
+    }
+
     if (e.target.classList.contains('modal-close')) {
         if (e.target.closest('#news-modal')) closeNewsModal();
         if (e.target.closest('#infortunio-modal')) closeInjuryModal();
+        if (e.target.closest('#classifica-modal')) classificaModal.classList.remove('active');
     }
 });
+
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
