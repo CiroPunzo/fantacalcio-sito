@@ -136,35 +136,24 @@ async function fetchSheetDataJson(sheetName) {
 async function populateClassifica() {
     const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
     const tbody = document.getElementById('classifica-body');
-    if (!tbody) {
-        console.warn('Elemento #classifica-body non trovato');
-        return;
-    }
-    if (!Array.isArray(data) || data.length === 0) {
-        console.warn('Nessun dato Classifica', data);
-        return;
-    }
+    if (!tbody) return;
+    if (!Array.isArray(data) || data.length === 0) return;
 
     tbody.innerHTML = '';
 
     data.slice(0, 10).forEach(row => {
         const tr = document.createElement('tr');
 
-        let squadraHTML = `<strong>${row['Squadra'] || '-'}</strong>`;
-        if (row['Logo']) {
-            squadraHTML = `
-                <div class="table-team">
-                    <img src="${row['Logo']}" alt="${row['Squadra']}" class="table-logo">
-                    <strong>${row['Squadra'] || '-'}</strong>
-                </div>
-            `;
-        }
+        const logoCell = row['Logo']
+            ? `<img src="${row['Logo']}" alt="${row['Squadra'] || ''}" class="table-logo">`
+            : '-';
 
         tr.innerHTML = `
             <td>${row['Posizione'] || '-'}</td>
-            <td>${squadraHTML}</td>
+            <td>${logoCell}</td>
+            <td><strong>${row['Squadra'] || '-'}</strong></td>
+            <td>${row['PG'] || '-'}</td>
             <td>${row['Punti'] || '-'}</td>
-            <td>${row['Partite'] || '-'}</td>
             <td>${row['xG'] || '-'}</td>
         `;
         tbody.appendChild(tr);
@@ -172,6 +161,7 @@ async function populateClassifica() {
 
     console.log('Classifica populated', data);
 }
+
 
 async function populateMarcatori() {
     const data = await fetchSheetDataJson(SHEET_NAMES.marcatori);
