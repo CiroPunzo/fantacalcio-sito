@@ -191,7 +191,10 @@
                             <!-- JS populate -->
                         </tbody>
                     </table>
-                    <a href="#" class="dashboard-link">Vedi la classifica completa →</a>
+                    <a href="#" class="dashboard-link" id="open-full-marcatori">
+    Vedi la classifica completa →
+</a>
+
                 </div>
 
                 <!-- PREZZI -->
@@ -583,6 +586,33 @@
             </tr>
           </thead>
           <tbody id="classifica-full-body">
+            <!-- JS populate -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL MARCATORI COMPLETA -->
+<div id="marcatori-modal" class="modal">
+  <div class="modal-content modal-content-wide">
+    <button class="modal-close" type="button">&times;</button>
+    <div class="modal-body">
+      <h2>Classifica completa marcatori</h2>
+      <p class="modal-subtitle">Tutti i marcatori della stagione.</p>
+
+      <div class="modal-table-wrapper">
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th>Pos</th>
+              <th>Giocatore</th>
+              <th>Club</th>
+              <th>Gol</th>
+            </tr>
+          </thead>
+          <tbody id="marcatori-full-body">
             <!-- JS populate -->
           </tbody>
         </table>
