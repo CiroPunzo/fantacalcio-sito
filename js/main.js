@@ -166,58 +166,69 @@ async function populateClassifica() {
 
     tbody.innerHTML = '';
 
-    data.slice(0, 20).forEach(row => {
-        const tr = document.createElement('tr');
+    // mostriamo solo le prime 10 in preview
+    data
+        .sort((a, b) => Number(a['Posizione']) - Number(b['Posizione']))
+        .slice(0, 10)
+        .forEach(row => {
+            const tr = document.createElement('tr');
 
-        const pos = Number(row['Posizione']); // posizione numerica
+            const pos = Number(row['Posizione']);
+            const squadra = row['Squadra'] || '-';
 
-        // Determina zona (Champions / EL / Conf / Retrocessione)
-        let zonaHTML = '';
-        if (pos >= 1 && pos <= 4) {
-            // Champions League
-            zonaHTML = `
-                <div class="zona-badge zona-champions" title="Champions League">
-                    <img src="img/icon-cl-champions.png" alt="Champions League">
-                </div>
-            `;
-        } else if (pos >= 5 && pos <= 6) {
-            // Europa League
-            zonaHTML = `
-                <div class="zona-badge zona-europa" title="Europa League">
-                    <img src="img/icon-el-europa.png" alt="Europa League">
-                </div>
-            `;
-        } else if (pos === 7) {
-            // Conference League
-            zonaHTML = `
-                <div class="zona-badge zona-conference" title="Conference League">
-                    <img src="img/icon-conf-conference.png" alt="Conference League">
-                </div>
-            `;
-        } else if (pos >= 18) {
-            // Retrocessione
-            zonaHTML = `
-                <div class="zona-badge zona-relegation" title="Retrocessione">
-                    <span></span>
-                </div>
-            `;
-        } else {
-            zonaHTML = '';
-        }
+            // ZONA (Champions / EL / Conference / Retrocessione)
+            let zonaHTML = '';
+            if (pos >= 1 && pos <= 4) {
+                zonaHTML = `
+                    <div class="zona-badge zona-champions" title="Champions League">
+                        <img src="img/icon-cl-champions.png" alt="Champions League">
+                    </div>
+                `;
+            } else if (pos >= 5 && pos <= 6) {
+                zonaHTML = `
+                    <div class="zona-badge zona-europa" title="Europa League">
+                        <img src="img/icon-el-europa.png" alt="Europa League">
+                    </div>
+                `;
+            } else if (pos === 7) {
+                zonaHTML = `
+                    <div class="zona-badge zona-conference" title="Conference League">
+                        <img src="img/icon-conf-conference.png" alt="Conference League">
+                    </div>
+                `;
+            } else if (pos >= 18) {
+                zonaHTML = `
+                    <div class="zona-badge zona-relegation" title="Retrocessione">
+                        <span></span>
+                    </div>
+                `;
+            }
 
-        tr.innerHTML = `
-            <td>${row['Posizione'] || '-'}</td>
-            <td>${zonaHTML}</td>
-            <td><strong>${row['Squadra'] || '-'}</strong></td>
-            <td>${row['PG'] || '-'}</td>
-            <td>${row['Punti'] || '-'}</td>
-            <td>${row['xG'] || '-'}</td>
-        `;
-        tbody.appendChild(tr);
-    });
+            // LOGO dalle risorse locali
+            const logoUrl = CLUB_LOGOS[squadra] || '';
+            const logoHTML = logoUrl
+                ? `<div class="logo-cell">
+                        <div class="logo-pill">
+                            <img src="${logoUrl}" alt="${squadra}">
+                        </div>
+                   </div>`
+                : '-';
+
+            tr.innerHTML = `
+                <td>${row['Posizione'] || '-'}</td>
+                <td>${zonaHTML}</td>
+                <td>${logoHTML}</td>
+                <td><strong>${squadra}</strong></td>
+                <td>${row['PG'] || '-'}</td>
+                <td>${row['xG'] || '-'}</td>
+                <td>${row['Punti'] || '-'}</td>
+            `;
+            tbody.appendChild(tr);
+        });
 
     console.log('Classifica populated', data);
 }
+
 
 
 async function populateMarcatori() {
