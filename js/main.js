@@ -133,6 +133,31 @@ async function fetchSheetDataJson(sheetName) {
 }
 
 // ===== POPOLAZIONE TABELLE =====
+
+const CLUB_LOGOS = {
+    'Milan': 'img/loghi/milan.png',
+    'Napoli': 'img/loghi/napoli.png',
+    'Inter': 'img/loghi/inter.png',
+    'Roma': 'img/loghi/roma.png',
+    'Bologna': 'img/loghi/bologna.png',
+    'Como': 'img/loghi/como.png',
+    'Juventus': 'img/loghi/juventus.png',
+    'Sassuolo': 'img/loghi/sassuolo.png',
+    'Cremonese': 'img/loghi/cremonese.png',
+    'Lazio': 'img/loghi/lazio.png',
+    'Udinese': 'img/loghi/udinese.png',
+    'Cagliari': 'img/loghi/cagliari.png',
+    'Parma': 'img/loghi/parma.png',
+    'Genoa': 'img/loghi/genoa.png',
+    'Verona': 'img/loghi/verona.png',
+    'Fiorentina': 'img/loghi/fiorentina.png',
+    'Pisa': 'img/loghi/pisa.png',
+    'Atalanta': 'img/loghi/atalanta.png',
+    'Lecce': 'img/loghi/lecce.png',
+    'Torino': 'img/loghi/torino.png',
+    
+};
+
 async function populateClassifica() {
     const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
     const tbody = document.getElementById('classifica-body');
