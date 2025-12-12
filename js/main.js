@@ -134,6 +134,7 @@ async function fetchSheetDataJson(sheetName) {
 
 // ===== POPOLAZIONE TABELLE =====
 
+// loghi locali per i club
 const CLUB_LOGOS = {
     'Milan': 'img/loghi/milan.png',
     'Napoli': 'img/loghi/napoli.png',
@@ -154,8 +155,7 @@ const CLUB_LOGOS = {
     'Pisa': 'img/loghi/pisa.png',
     'Atalanta': 'img/loghi/atalanta.png',
     'Lecce': 'img/loghi/lecce.png',
-    'Torino': 'img/loghi/torino.png',
-    
+    'Torino': 'img/loghi/torino.png'
 };
 
 async function populateClassifica() {
@@ -166,7 +166,6 @@ async function populateClassifica() {
 
     tbody.innerHTML = '';
 
-    // mostriamo solo le prime 10 in preview
     data
         .sort((a, b) => Number(a['Posizione']) - Number(b['Posizione']))
         .slice(0, 10)
@@ -176,7 +175,6 @@ async function populateClassifica() {
             const pos = Number(row['Posizione']);
             const squadra = row['Squadra'] || '-';
 
-            // ZONA (Champions / EL / Conference / Retrocessione)
             let zonaHTML = '';
             if (pos >= 1 && pos <= 4) {
                 zonaHTML = `
@@ -204,7 +202,6 @@ async function populateClassifica() {
                 `;
             }
 
-            // LOGO dalle risorse locali
             const logoUrl = CLUB_LOGOS[squadra] || '';
             const logoHTML = logoUrl
                 ? `<div class="logo-cell">
@@ -225,8 +222,6 @@ async function populateClassifica() {
             `;
             tbody.appendChild(tr);
         });
-
-    console.log('Classifica populated', data);
 }
 
 async function populateFullClassificaModal() {
@@ -245,7 +240,6 @@ async function populateFullClassificaModal() {
             const pos = Number(row['Posizione']);
             const squadra = row['Squadra'] || '-';
 
-            // stessa logica ZONA
             let zonaHTML = '';
             if (pos >= 1 && pos <= 4) {
                 zonaHTML = `
@@ -295,9 +289,6 @@ async function populateFullClassificaModal() {
         });
 }
 
-
-
-
 async function populateMarcatori() {
     const data = await fetchSheetDataJson(SHEET_NAMES.marcatori);
     const tbody = document.getElementById('marcatori-body');
@@ -312,9 +303,8 @@ async function populateMarcatori() {
 
     tbody.innerHTML = '';
 
-    // ordina per Posizione calcolata in Sheets e mostra i primi 10
     data
-        .filter(row => row['Posizione']) // solo righe con posizione
+        .filter(row => row['Posizione'])
         .sort((a, b) => Number(a['Posizione']) - Number(b['Posizione']))
         .slice(0, 10)
         .forEach(row => {
@@ -327,33 +317,21 @@ async function populateMarcatori() {
 
             const logoUrl = CLUB_LOGOS[club] || '';
             const clubHTML = logoUrl
+                ? `<div class="table-team">
+                        <img src="${logoUrl}" alt="${club}" class="table-logo">
+                        <span>${club}</span>
+                   </div>`
+                : (club || '-');
 
-    tbody.innerHTML = '';
-
-    data.slice(0, 10).forEach(row => {
-        const tr = document.createElement('tr');
-
-        let clubHTML = `${row['Club'] || '-'}`;
-        if (row['Logo']) {
-            clubHTML = `
-                <div class="table-team">
-                    <img src="${row['Logo']}" alt="${row['Club']}" class="table-logo">
-                    <span>${row['Club'] || '-'}</span>
-                </div>
+            tr.innerHTML = `
+                <td>${row['Posizione'] || '-'}</td>
+                <td><strong>${giocatore}</strong></td>
+                <td>${clubHTML}</td>
+                <td>${gol}</td>
+                <td>${xg}</td>
             `;
-        }
-
-        tr.innerHTML = `
-            <td>${row['Posizione'] || '-'}</td>
-            <td><strong>${row['Giocatore'] || '-'}</strong></td>
-            <td>${clubHTML}</td>
-            <td>${row['Gol'] || '-'}</td>
-            <td>${row['xG'] || '-'}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-
-    console.log('Marcatori populated', data);
+            tbody.appendChild(tr);
+        });
 }
 
 async function populatePrezzi() {
@@ -381,8 +359,6 @@ async function populatePrezzi() {
         `;
         tbody.appendChild(tr);
     });
-
-    console.log('Prezzi populated', data);
 }
 
 async function populateInfortunati() {
@@ -423,9 +399,101 @@ async function populateInfortunati() {
         tr.addEventListener('click', () => openInjuryModal(row));
         tbody.appendChild(tr);
     });
-
-    console.log('Infortunati populated', data);
 }
+
+// ===== INFORTUNIO MODAL =====
+function openInjuryModal(data) {
+    const modal = document.getElementById('infortunio-modal');
+    if (!modal) return;
+
+    const g = document.getElementById('modal-giocatore');
+    const c = document.getElementById('modal-club');
+    const s = document.getElementById('modal-status');
+    const t = document.getElementById('modal-infortunio');
+    const r = document.getElementById('modal-ritorno');
+
+    if (g) g.textContent = data['Giocatore'] || 'N/A';
+    if (c) c.textContent = data['Club'] || 'N/A';
+    if (s) s.textContent = data['Status'] || 'N/A';
+    if (t) t.textContent = data['Tipo Infortunio'] || 'N/A';
+    if (r) r.textContent = (data['Giorni Recupero'] || 'N/A') + ' giorni';
+
+    modal.classList.add('active');
+}
+
+function closeInjuryModal() {
+    const modal = document.getElementById('infortunio-modal');
+    if (modal) modal.classList.remove('active');
+}
+
+// ===== DASHBOARD TABS =====
+function setupDashboardTabs() {
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+
+    if (!tabs.length || !contents.length) return;
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            const tabName = e.currentTarget.dataset.tab;
+
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+
+            e.currentTarget.classList.add('active');
+            const tabContent = document.getElementById(tabName);
+            if (tabContent) tabContent.classList.add('active');
+        });
+    });
+}
+
+// ===== MODAL CLOSE HANDLER GENERICO =====
+document.addEventListener('click', function(e) {
+    const newsModal = document.getElementById('news-modal');
+    const injuryModal = document.getElementById('infortunio-modal');
+    const classificaModal = document.getElementById('classifica-modal');
+
+    if (newsModal && e.target === newsModal) {
+        closeNewsModal();
+    }
+
+    if (injuryModal && e.target === injuryModal) {
+        closeInjuryModal();
+    }
+
+    if (classificaModal && e.target === classificaModal) {
+        classificaModal.classList.remove('active');
+    }
+
+    if (e.target.classList.contains('modal-close')) {
+        if (e.target.closest('#news-modal')) closeNewsModal();
+        if (e.target.closest('#infortunio-modal')) closeInjuryModal();
+        if (e.target.closest('#classifica-modal')) classificaModal.classList.remove('active');
+    }
+});
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', async function() {
+    initHeroSlider();
+    setupDashboardTabs();
+    await populateClassifica();
+    await populateMarcatori();
+    await populatePrezzi();
+    await populateInfortunati();
+
+    const fullClassificaBtn = document.getElementById('open-full-classifica');
+    if (fullClassificaBtn) {
+        fullClassificaBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await populateFullClassificaModal();
+            const modal = document.getElementById('classifica-modal');
+            if (modal) modal.classList.add('active');
+        });
+    }
+
+    console.log('Site initialized');
+});
+
 
 // ===== INFORTUNIO MODAL =====
 function openInjuryModal(data) {
