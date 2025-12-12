@@ -334,6 +334,43 @@ async function populateMarcatori() {
     console.log('Marcatori populated', data);
 }
 
+async function populateFullMarcatoriModal() {
+    const data = await fetchSheetDataJson(SHEET_NAMES.marcatori);
+    const tbody = document.getElementById('marcatori-full-body');
+    if (!tbody) return;
+    if (!Array.isArray(data) || data.length === 0) return;
+
+    tbody.innerHTML = '';
+
+    data
+        .filter(row => row['Posizione'])
+        .sort((a, b) => Number(a['Posizione']) - Number(b['Posizione']))
+        .forEach(row => {
+            const tr = document.createElement('tr');
+
+            const giocatore = row['Giocatore'] || '-';
+            const club = row['Club'] || '-';
+            const gol = row['Gol'] || '-';
+
+            const logoUrl = CLUB_LOGOS[club] || '';
+            const clubHTML = logoUrl
+                ? `<div class="table-team">
+                        <img src="${logoUrl}" alt="${club}" class="table-logo">
+                        <span>${club}</span>
+                   </div>`
+                : (club || '-');
+
+            tr.innerHTML = `
+                <td>${row['Posizione'] || '-'}</td>
+                <td><strong>${giocatore}</strong></td>
+                <td>${clubHTML}</td>
+                <td>${gol}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+}
+
+
 
 async function populatePrezzi() {
     const data = await fetchSheetDataJson(SHEET_NAMES.prezzi);
@@ -545,8 +582,10 @@ function setupDashboardTabs() {
 // ===== MODAL CLOSE HANDLER GENERICO =====
 document.addEventListener('click', function(e) {
     const newsModal = document.getElementById('news-modal');
-    const injuryModal = document.getElementById('infortunio-modal');
-    const classificaModal = document.getElementById('classifica-modal');
+const injuryModal = document.getElementById('infortunio-modal');
+const classificaModal = document.getElementById('classifica-modal');
+const marcatoriModal = document.getElementById('marcatori-modal');
+
 
     if (newsModal && e.target === newsModal) {
         closeNewsModal();
@@ -565,6 +604,17 @@ document.addEventListener('click', function(e) {
         if (e.target.closest('#infortunio-modal')) closeInjuryModal();
         if (e.target.closest('#classifica-modal')) classificaModal.classList.remove('active');
     }
+    if (marcatoriModal && e.target === marcatoriModal) {
+    marcatoriModal.classList.remove('active');
+}
+
+if (e.target.classList.contains('modal-close')) {
+    if (e.target.closest('#news-modal')) closeNewsModal();
+    if (e.target.closest('#infortunio-modal')) closeInjuryModal();
+    if (e.target.closest('#classifica-modal')) classificaModal.classList.remove('active');
+    if (e.target.closest('#marcatori-modal')) marcatoriModal.classList.remove('active');
+}
+
 });
 
 
@@ -576,18 +626,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     await populateMarcatori();
     await populatePrezzi();
     await populateInfortunati();
-    console.log('Site initialized');
-});
 
-document.addEventListener('DOMContentLoaded', async function() {
-    initHeroSlider();
-    setupDashboardTabs();
-    await populateClassifica();
-    await populateMarcatori();
-    await populatePrezzi();
-    await populateInfortunati();
-
-    // bottone "Vedi tutte le squadre"
     const fullClassificaBtn = document.getElementById('open-full-classifica');
     if (fullClassificaBtn) {
         fullClassificaBtn.addEventListener('click', async (e) => {
@@ -598,8 +637,19 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     }
 
+    const fullMarcatoriBtn = document.getElementById('open-full-marcatori');
+    if (fullMarcatoriBtn) {
+        fullMarcatoriBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await populateFullMarcatoriModal();
+            const modal = document.getElementById('marcatori-modal');
+            if (modal) modal.classList.add('active');
+        });
+    }
+
     console.log('Site initialized');
 });
+
 
 
 
