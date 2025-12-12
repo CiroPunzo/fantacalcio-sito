@@ -229,6 +229,73 @@ async function populateClassifica() {
     console.log('Classifica populated', data);
 }
 
+async function populateFullClassificaModal() {
+    const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
+    const tbody = document.getElementById('classifica-full-body');
+    if (!tbody) return;
+    if (!Array.isArray(data) || data.length === 0) return;
+
+    tbody.innerHTML = '';
+
+    data
+        .sort((a, b) => Number(a['Posizione']) - Number(b['Posizione']))
+        .forEach(row => {
+            const tr = document.createElement('tr');
+
+            const pos = Number(row['Posizione']);
+            const squadra = row['Squadra'] || '-';
+
+            // stessa logica ZONA
+            let zonaHTML = '';
+            if (pos >= 1 && pos <= 4) {
+                zonaHTML = `
+                    <div class="zona-badge zona-champions" title="Champions League">
+                        <img src="img/icon-cl-champions.png" alt="Champions League">
+                    </div>
+                `;
+            } else if (pos >= 5 && pos <= 6) {
+                zonaHTML = `
+                    <div class="zona-badge zona-europa" title="Europa League">
+                        <img src="img/icon-el-europa.png" alt="Europa League">
+                    </div>
+                `;
+            } else if (pos === 7) {
+                zonaHTML = `
+                    <div class="zona-badge zona-conference" title="Conference League">
+                        <img src="img/icon-conf-conference.png" alt="Conference League">
+                    </div>
+                `;
+            } else if (pos >= 18) {
+                zonaHTML = `
+                    <div class="zona-badge zona-relegation" title="Retrocessione">
+                        <span></span>
+                    </div>
+                `;
+            }
+
+            const logoUrl = CLUB_LOGOS[squadra] || '';
+            const logoHTML = logoUrl
+                ? `<div class="logo-cell">
+                        <div class="logo-pill">
+                            <img src="${logoUrl}" alt="${squadra}">
+                        </div>
+                   </div>`
+                : '-';
+
+            tr.innerHTML = `
+                <td>${row['Posizione'] || '-'}</td>
+                <td>${zonaHTML}</td>
+                <td>${logoHTML}</td>
+                <td><strong>${squadra}</strong></td>
+                <td>${row['PG'] || '-'}</td>
+                <td>${row['xG'] || '-'}</td>
+                <td>${row['Punti'] || '-'}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+}
+
+
 
 
 async function populateMarcatori() {
