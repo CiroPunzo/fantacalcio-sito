@@ -485,6 +485,29 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('Site initialized');
 });
 
+document.addEventListener('DOMContentLoaded', async function() {
+    initHeroSlider();
+    setupDashboardTabs();
+    await populateClassifica();
+    await populateMarcatori();
+    await populatePrezzi();
+    await populateInfortunati();
+
+    // bottone "Vedi tutte le squadre"
+    const fullClassificaBtn = document.getElementById('open-full-classifica');
+    if (fullClassificaBtn) {
+        fullClassificaBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await populateFullClassificaModal();
+            const modal = document.getElementById('classifica-modal');
+            if (modal) modal.classList.add('active');
+        });
+    }
+
+    console.log('Site initialized');
+});
+
+
 
 
 
