@@ -448,6 +448,35 @@ html, body {
     margin-bottom: 20px;
 }
 
+/* Tabella classifica Serie A */
+.table.classifica-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table.classifica-table thead {
+    border-bottom: 2px solid rgba(184, 149, 107, 0.3);
+}
+
+.table.classifica-table th {
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: 700;
+    color: #B8956B;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.table.classifica-table td {
+    padding: 12px 8px;
+    border-bottom: 1px solid rgba(184, 149, 107, 0.1);
+    color: #e0e0e0;
+    font-size: 0.95rem;
+}
+
+
 /* ZONE EUROPEE / RETROCESSIONE */
 .zona-badge {
     display: flex;
