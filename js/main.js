@@ -286,6 +286,7 @@ async function populateFullClassificaModal() {
 
 
 // ----- MARCATORI -----
+// ----- MARCATORI -----
 async function populateMarcatori() {
     const data = await fetchSheetDataJson(SHEET_NAMES.marcatori);
     const tbody = document.getElementById('marcatori-body');
@@ -320,19 +321,13 @@ async function populateMarcatori() {
                 : (club || '-');
 
             tr.innerHTML = `
-    <td>${row['Posizione'] || '-'}</td>
-    <td>${zonaHTML}</td>
-    <td>
-        <div class="table-team">
-            ${logoUrl ? `<img src="${logoUrl}" alt="${squadra}" class="table-logo">` : ''}
-            <span><strong>${squadra}</strong></span>
-        </div>
-    </td>
-    <td>${row['PG'] || '-'}</td>
-    <td>${row['xG'] || '-'}</td>
-    <td>${row['Punti'] || '-'}</td>
-`;
-
+                <td>${row['Posizione'] || '-'}</td>
+                <td><strong>${giocatore}</strong></td>
+                <td>${clubHTML}</td>
+                <td>${gol}</td>
+            `;
+            tbody.appendChild(tr);
+        });
 
     console.log('Marcatori populated', data);
 }
@@ -372,6 +367,7 @@ async function populateFullMarcatoriModal() {
             tbody.appendChild(tr);
         });
 }
+
 
 // ----- INFORTUNATI -----
 async function populateInfortunati() {
