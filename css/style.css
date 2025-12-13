@@ -427,6 +427,13 @@ html, body {
     margin-bottom: 40px;
 }
 
+/* Wrapper scrollabile per tabelle su mobile */
+.dashboard-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+
 .tab-content {
     display: none;
 }
