@@ -327,13 +327,19 @@ async function populateMarcatori() {
                 : (club || '-');
 
             tr.innerHTML = `
-                <td>${row['Posizione'] || '-'}</td>
-                <td><strong>${giocatore}</strong></td>
-                <td>${clubHTML}</td>
-                <td>${gol}</td>
-            `;
-            tbody.appendChild(tr);
-        });
+    <td>${row['Posizione'] || '-'}</td>
+    <td>${zonaHTML}</td>
+    <td>
+        <div class="table-team">
+            ${logoUrl ? `<img src="${logoUrl}" alt="${squadra}" class="table-logo">` : ''}
+            <span><strong>${squadra}</strong></span>
+        </div>
+    </td>
+    <td>${row['PG'] || '-'}</td>
+    <td>${row['xG'] || '-'}</td>
+    <td>${row['Punti'] || '-'}</td>
+`;
+
 
     console.log('Marcatori populated', data);
 }
