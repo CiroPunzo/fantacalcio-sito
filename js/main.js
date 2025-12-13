@@ -212,16 +212,19 @@ async function populateClassifica() {
                 : '-';
 
             tr.innerHTML = `
-                <td>${row['Posizione'] || '-'}</td>
-                <td>${zonaHTML}</td>
-                <td>${logoHTML}</td>
-                <td><strong>${squadra}</strong></td>
-                <td>${row['PG'] || '-'}</td>
-                <td>${row['xG'] || '-'}</td>
-                <td>${row['Punti'] || '-'}</td>
-            `;
-            tbody.appendChild(tr);
-        });
+    <td>${row['Posizione'] || '-'}</td>
+    <td>${zonaHTML}</td>
+    <td>
+        <div class="table-team">
+            ${logoUrl ? `<img src="${logoUrl}" alt="${squadra}" class="table-logo">` : ''}
+            <span><strong>${squadra}</strong></span>
+        </div>
+    </td>
+    <td>${row['PG'] || '-'}</td>
+    <td>${row['xG'] || '-'}</td>
+    <td>${row['Punti'] || '-'}</td>
+`;
+
 }
 
 async function populateFullClassificaModal() {
