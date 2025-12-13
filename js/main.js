@@ -203,15 +203,8 @@ async function populateClassifica() {
             }
 
             const logoUrl = CLUB_LOGOS[squadra] || '';
-            const logoHTML = logoUrl
-                ? `<div class="logo-cell">
-                        <div class="logo-pill">
-                            <img src="${logoUrl}" alt="${squadra}">
-                        </div>
-                   </div>`
-                : '-';
 
-            tr.innerHTML = `
+tr.innerHTML = `
     <td>${row['Posizione'] || '-'}</td>
     <td>${zonaHTML}</td>
     <td>
@@ -224,6 +217,7 @@ async function populateClassifica() {
     <td>${row['xG'] || '-'}</td>
     <td>${row['Punti'] || '-'}</td>
 `;
+tbody.appendChild(tr);
 
 }
 
