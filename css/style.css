@@ -1678,46 +1678,33 @@ html, body {
 }
 
  (max-width: 768px) {
-    .hero-slider {
-        min-height: 500px;
+.hero-slider {
+        min-height: 520px;
     }
 
     .hero-content {
-        padding: 40px 20px;
-        max-width: 100%;
+        padding: 32px 20px 80px; /* più spazio sopra i puntini */
     }
 
     .hero-title {
         font-size: 1.8rem;
+        margin-bottom: 10px;
     }
 
     .hero-text {
         font-size: 0.95rem;
-        margin-bottom: 60px;
+        margin-bottom: 20px;
     }
 
     .hero-cta {
-        padding: 10px 20px;
-        font-size: 0.75rem;
-        bottom: 30px;
+        padding: 10px 22px;
+        font-size: 0.8rem;
+        bottom: 70px; /* alza il bottone */
         right: 20px;
     }
 
-    .hero-arrow {
-        width: 40px;
-        height: 40px;
-    }
-
-    .hero-arrow-prev {
-        left: 12px;
-    }
-
-    .hero-arrow-next {
-        right: 12px;
-    }
-
     .hero-dots {
-        bottom: 20px;
+        bottom: 24px; /* abbassa un filo i puntini */
     }
 
     .navbar-inner {
