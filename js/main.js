@@ -158,6 +158,7 @@ const CLUB_LOGOS = {
 };
 
 // ----- CLASSIFICA -----
+// ----- CLASSIFICA -----
 async function populateClassifica() {
     const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
     const tbody = document.getElementById('classifica-body');
@@ -204,21 +205,21 @@ async function populateClassifica() {
 
             const logoUrl = CLUB_LOGOS[squadra] || '';
 
-tr.innerHTML = `
-    <td>${row['Posizione'] || '-'}</td>
-    <td>${zonaHTML}</td>
-    <td>
-        <div class="table-team">
-            ${logoUrl ? `<img src="${logoUrl}" alt="${squadra}" class="table-logo">` : ''}
-            <span><strong>${squadra}</strong></span>
-        </div>
-    </td>
-    <td>${row['PG'] || '-'}</td>
-    <td>${row['xG'] || '-'}</td>
-    <td>${row['Punti'] || '-'}</td>
-`;
-tbody.appendChild(tr);
-
+            tr.innerHTML = `
+                <td>${row['Posizione'] || '-'}</td>
+                <td>${zonaHTML}</td>
+                <td>
+                    <div class="table-team">
+                        ${logoUrl ? `<img src="${logoUrl}" alt="${squadra}" class="table-logo">` : ''}
+                        <span><strong>${squadra}</strong></span>
+                    </div>
+                </td>
+                <td>${row['PG'] || '-'}</td>
+                <td>${row['xG'] || '-'}</td>
+                <td>${row['Punti'] || '-'}</td>
+            `;
+            tbody.appendChild(tr);
+        });
 }
 
 async function populateFullClassificaModal() {
@@ -265,19 +266,16 @@ async function populateFullClassificaModal() {
             }
 
             const logoUrl = CLUB_LOGOS[squadra] || '';
-            const logoHTML = logoUrl
-                ? `<div class="logo-cell">
-                        <div class="logo-pill">
-                            <img src="${logoUrl}" alt="${squadra}">
-                        </div>
-                   </div>`
-                : '-';
 
             tr.innerHTML = `
                 <td>${row['Posizione'] || '-'}</td>
                 <td>${zonaHTML}</td>
-                <td>${logoHTML}</td>
-                <td><strong>${squadra}</strong></td>
+                <td>
+                    <div class="table-team">
+                        ${logoUrl ? `<img src="${logoUrl}" alt="${squadra}" class="table-logo">` : ''}
+                        <span><strong>${squadra}</strong></span>
+                    </div>
+                </td>
                 <td>${row['PG'] || '-'}</td>
                 <td>${row['xG'] || '-'}</td>
                 <td>${row['Punti'] || '-'}</td>
@@ -285,6 +283,7 @@ async function populateFullClassificaModal() {
             tbody.appendChild(tr);
         });
 }
+
 
 // ----- MARCATORI -----
 async function populateMarcatori() {
