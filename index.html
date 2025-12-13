@@ -152,23 +152,20 @@
                 <!-- CLASSIFICA -->
                 <div id="classifica" class="tab-content active">
                     <table class="dashboard-table">
-                      <thead>
-    <tr>
-        <th>Pos</th>
-        <th>Zona</th>
-        <th>Logo</th>
-        <th>Squadra</th>
-        <th>PG</th>
-        <th>xG</th>
-        <th>PT</th>
-    </tr>
-</thead>
+                     <table class="table classifica-table">
+    <thead>
+        <tr>
+            <th>Pos</th>
+            <th></th> <!-- zona (CL/EL/etc) -->
+            <th>Squadra</th> <!-- UNA sola colonna per logo+nome -->
+            <th>PG</th>
+            <th>xG</th>
+            <th>Punti</th>
+        </tr>
+    </thead>
+    <tbody id="classifica-body"></tbody>
+</table>
 
-
-                        <tbody id="classifica-body">
-                            <!-- JS populate -->
-                        </tbody>
-                    </table>
                    <a href="#" class="dashboard-link" id="open-full-classifica">
     Vedi tutte le squadre →
 </a>
