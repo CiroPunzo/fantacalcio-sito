@@ -208,6 +208,9 @@
 </tbody>
 
                     </table>
+                    <a href="#" class="dashboard-link" id="open-full-infortunati">
+    Vedi la lista completa →
+  </a>
                 </div>
             </div>
         </div>
@@ -596,5 +599,33 @@
     </div>
   </div>
 </div>
+
+<!-- MODAL INFORTUNATI COMPLETA -->
+<div id="infortunati-modal" class="modal">
+  <div class="modal-content modal-content-wide">
+    <button class="modal-close" type="button">&times;</button>
+    <div class="modal-body">
+      <h2>Lista completa indisponibili</h2>
+      <p class="modal-subtitle">Tutti gli infortunati con giorni di recupero.</p>
+
+      <div class="modal-table-wrapper">
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th>Giocatore</th>
+              <th>Club</th>
+              <th>Giorni</th>
+              <th>Tipo Infortunio</th>
+            </tr>
+          </thead>
+          <tbody id="infortunati-full-body">
+            <!-- JS populate -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
