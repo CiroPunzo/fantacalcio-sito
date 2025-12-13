@@ -415,6 +415,41 @@ async function populateInfortunati() {
     console.log('Infortunati populated', data);
 }
 
+async function populateFullInfortunatiModal() {
+    const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
+    const tbody = document.getElementById('infortunati-full-body');
+    if (!tbody) return;
+    if (!Array.isArray(data) || data.length === 0) return;
+
+    tbody.innerHTML = '';
+
+    data.forEach(row => {
+        const tr = document.createElement('tr');
+
+        const giocatore = row['Giocatore'] || '-';
+        const club = row['Club'] || '-';
+        const giorni = row['Giorni Recupero'] || '-';
+        const tipo = row['Tipo Infortunio'] || '-';
+
+        const logoUrl = CLUB_LOGOS[club] || '';
+        const clubHTML = logoUrl
+            ? `<div class="table-team">
+                    <img src="${logoUrl}" alt="${club}" class="table-logo">
+                    <span>${club}</span>
+               </div>`
+            : (club || '-');
+
+        tr.innerHTML = `
+            <td><strong>${giocatore}</strong></td>
+            <td>${clubHTML}</td>
+            <td>${giorni}</td>
+            <td>${tipo}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+
 // ===== INFORTUNIO MODAL =====
 function openInjuryModal(data) {
     const modal = document.getElementById('infortunio-modal');
@@ -467,6 +502,7 @@ document.addEventListener('click', function(e) {
     const injuryModal = document.getElementById('infortunio-modal');
     const classificaModal = document.getElementById('classifica-modal');
     const marcatoriModal = document.getElementById('marcatori-modal');
+    const infortunatiFullModal = document.getElementById('infortunati-modal');
 
     if (newsModal && e.target === newsModal) {
         closeNewsModal();
@@ -484,11 +520,16 @@ document.addEventListener('click', function(e) {
         marcatoriModal.classList.remove('active');
     }
 
+    if (infortunatiFullModal && e.target === infortunatiFullModal) {
+    infortunatiFullModal.classList.remove('active');
+}
+
     if (e.target.classList.contains('modal-close')) {
         if (e.target.closest('#news-modal')) closeNewsModal();
         if (e.target.closest('#infortunio-modal')) closeInjuryModal();
         if (e.target.closest('#classifica-modal')) classificaModal.classList.remove('active');
         if (e.target.closest('#marcatori-modal')) marcatoriModal.classList.remove('active');
+        if (e.target.closest('#infortunati-modal')) infortunatiFullModal.classList.remove('active');
     }
 });
 
@@ -519,6 +560,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (modal) modal.classList.add('active');
         });
     }
+
+    const fullInfortunatiBtn = document.getElementById('open-full-infortunati');
+if (fullInfortunatiBtn) {
+    fullInfortunatiBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await populateFullInfortunatiModal();
+        const modal = document.getElementById('infortunati-modal');
+        if (modal) modal.classList.add('active');
+    });
+}
+
 
     console.log('Site initialized');
 });
