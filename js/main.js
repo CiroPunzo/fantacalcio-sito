@@ -403,6 +403,40 @@ async function populateInfortunati() {
         const tr = document.createElement('tr');
         tr.className = 'clickable';
 
+        const giocatore = row['Giocatore'] || '-';
+        const club = row['Club'] || '-';
+        const giorni = row['Giorni Recupero'] || '-';
+        const tipo = row['Tipo Infortunio'] || '-';
+
+        const logoUrl = CLUB_LOGOS[club] || '';
+        const clubHTML = logoUrl
+            ? `<div class="table-team">
+                    <img src="${logoUrl}" alt="${club}" class="table-logo">
+                    <span>${club}</span>
+               </div>`
+            : (club || '-');
+
+        tr.innerHTML = `
+            <td><strong>${giocatore}</strong></td>
+            <td>${clubHTML}</td>
+            <td>${giorni}</td>
+            <td>${tipo}</td>
+        `;
+
+        tr.addEventListener('click', () => openInjuryModal(row));
+        tbody.appendChild(tr);
+    });
+
+    console.log('Infortunati populated', data);
+}
+
+
+    tbody.innerHTML = '';
+
+    data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.className = 'clickable';
+
         let clubHTML = `${row['Club'] || '-'}`;
         if (row['Logo']) {
             clubHTML = `
@@ -438,12 +472,13 @@ function openInjuryModal(data) {
 
     if (g) g.textContent = data['Giocatore'] || 'N/A';
     if (c) c.textContent = data['Club'] || 'N/A';
-    if (s) s.textContent = data['Status'] || 'N/A';
+    if (s) s.textContent = 'Indisponibile';  // status fisso, semplice
     if (t) t.textContent = data['Tipo Infortunio'] || 'N/A';
     if (r) r.textContent = (data['Giorni Recupero'] || 'N/A') + ' giorni';
 
     modal.classList.add('active');
 }
+
 
 function closeInjuryModal() {
     const modal = document.getElementById('infortunio-modal');
