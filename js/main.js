@@ -383,7 +383,6 @@ async function populateFullMarcatoriModal() {
         `;
         tbody.appendChild(tr);
     });
-}
 
 async function populateInfortunati() {
     const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
