@@ -1607,7 +1607,7 @@ html, body {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 1200px) {
+ (max-width: 1200px) {
     .hero-content {
         padding: 50px 30px;
         max-width: 500px;
@@ -1657,7 +1657,7 @@ html, body {
     }
 }
 
-@media (max-width: 1024px) {
+ (max-width: 1024px) {
     .telegram-container {
         grid-template-columns: 1fr;
         gap: 40px;
@@ -1677,7 +1677,7 @@ html, body {
     }
 }
 
-@media (max-width: 768px) {
+ (max-width: 768px) {
     .hero-slider {
         min-height: 500px;
     }
@@ -1962,10 +1962,15 @@ html, body {
     }
 }
 
-@media (max-width: 480px) {
-    .hero-title {
-        font-size: 1.5rem;
+ (max-width: 480px) {
+    .dashboard-table th,
+    .dashboard-table td,
+    .table.classifica-table th,
+    .table.classifica-table td {
+        font-size: 0.8rem;
+        padding: 8px 4px;
     }
+ }
 
     .hero-text {
         font-size: 0.9rem;
