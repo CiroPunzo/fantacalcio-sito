@@ -157,6 +157,7 @@ const CLUB_LOGOS = {
     'Torino': 'img/loghi/torino.png'
 };
 
+// ----- CLASSIFICA -----
 async function populateClassifica() {
     const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
     const tbody = document.getElementById('classifica-body');
@@ -288,6 +289,7 @@ async function populateFullClassificaModal() {
         });
 }
 
+// ----- MARCATORI -----
 async function populateMarcatori() {
     const data = await fetchSheetDataJson(SHEET_NAMES.marcatori);
     const tbody = document.getElementById('marcatori-body');
@@ -369,21 +371,7 @@ async function populateFullMarcatoriModal() {
         });
 }
 
-
-    tbody.innerHTML = '';
-
-    data.slice(0, 10).forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td><strong>${row['Giocatore'] || '-'}</strong></td>
-            <td>${row['Ruolo'] || '-'}</td>
-            <td>${row['Prezzo Attuale'] || '-'}</td>
-            <td>${row['Prezzo Consigliato'] || '-'}</td>
-            <td>${row['Nota'] || '-'}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-
+// ----- INFORTUNATI -----
 async function populateInfortunati() {
     const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
     const tbody = document.getElementById('infortunati-body');
@@ -429,35 +417,6 @@ async function populateInfortunati() {
     console.log('Infortunati populated', data);
 }
 
-
-    tbody.innerHTML = '';
-
-    data.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.className = 'clickable';
-
-        let clubHTML = `${row['Club'] || '-'}`;
-        if (row['Logo']) {
-            clubHTML = `
-                <div class="table-team">
-                    <img src="${row['Logo']}" alt="${row['Club']}" class="table-logo">
-                    <span>${row['Club'] || '-'}</span>
-                </div>
-            `;
-        }
-
-        tr.innerHTML = `
-            <td><strong>${row['Giocatore'] || '-'}</strong></td>
-            <td>${clubHTML}</td>
-            <td>${row['Status'] || '-'}</td>
-            <td>${row['Giorni Recupero'] || '-'} gg</td>
-        `;
-
-        tr.addEventListener('click', () => openInjuryModal(row));
-        tbody.appendChild(tr);
-    });
-}
-
 // ===== INFORTUNIO MODAL =====
 function openInjuryModal(data) {
     const modal = document.getElementById('infortunio-modal');
@@ -471,13 +430,12 @@ function openInjuryModal(data) {
 
     if (g) g.textContent = data['Giocatore'] || 'N/A';
     if (c) c.textContent = data['Club'] || 'N/A';
-    if (s) s.textContent = 'Indisponibile';  // status fisso, semplice
+    if (s) s.textContent = 'Indisponibile';
     if (t) t.textContent = data['Tipo Infortunio'] || 'N/A';
     if (r) r.textContent = (data['Giorni Recupero'] || 'N/A') + ' giorni';
 
     modal.classList.add('active');
 }
-
 
 function closeInjuryModal() {
     const modal = document.getElementById('infortunio-modal');
@@ -510,6 +468,7 @@ document.addEventListener('click', function(e) {
     const newsModal = document.getElementById('news-modal');
     const injuryModal = document.getElementById('infortunio-modal');
     const classificaModal = document.getElementById('classifica-modal');
+    const marcatoriModal = document.getElementById('marcatori-modal');
 
     if (newsModal && e.target === newsModal) {
         closeNewsModal();
@@ -523,120 +482,17 @@ document.addEventListener('click', function(e) {
         classificaModal.classList.remove('active');
     }
 
-    if (e.target.classList.contains('modal-close')) {
-        if (e.target.closest('#news-modal')) closeNewsModal();
-        if (e.target.closest('#infortunio-modal')) closeInjuryModal();
-        if (e.target.closest('#classifica-modal')) classificaModal.classList.remove('active');
-    }
-});
-
-// ===== INIT =====
-document.addEventListener('DOMContentLoaded', async function() {
-    initHeroSlider();
-    setupDashboardTabs();
-    await populateClassifica();
-    await populateMarcatori();
-    await populatePrezzi();
-    await populateInfortunati();
-
-    const fullClassificaBtn = document.getElementById('open-full-classifica');
-    if (fullClassificaBtn) {
-        fullClassificaBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            await populateFullClassificaModal();
-            const modal = document.getElementById('classifica-modal');
-            if (modal) modal.classList.add('active');
-        });
-    }
-
-    console.log('Site initialized');
-});
-
-
-// ===== INFORTUNIO MODAL =====
-function openInjuryModal(data) {
-    const modal = document.getElementById('infortunio-modal');
-    if (!modal) return;
-
-    const g = document.getElementById('modal-giocatore');
-    const c = document.getElementById('modal-club');
-    const s = document.getElementById('modal-status');
-    const t = document.getElementById('modal-infortunio');
-    const r = document.getElementById('modal-ritorno');
-
-    if (g) g.textContent = data['Giocatore'] || 'N/A';
-    if (c) c.textContent = data['Club'] || 'N/A';
-    if (s) s.textContent = data['Status'] || 'N/A';
-    if (t) t.textContent = data['Tipo Infortunio'] || 'N/A';
-    if (r) r.textContent = (data['Giorni Recupero'] || 'N/A') + ' giorni';
-
-    modal.classList.add('active');
-}
-
-function closeInjuryModal() {
-    const modal = document.getElementById('infortunio-modal');
-    if (modal) modal.classList.remove('active');
-}
-
-// ===== DASHBOARD TABS =====
-function setupDashboardTabs() {
-    const tabs = document.querySelectorAll('.tab-btn');
-    const contents = document.querySelectorAll('.tab-content');
-
-    if (!tabs.length || !contents.length) return;
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            const tabName = e.currentTarget.dataset.tab;
-
-            tabs.forEach(t => t.classList.remove('active'));
-            contents.forEach(c => c.classList.remove('active'));
-
-            e.currentTarget.classList.add('active');
-            const tabContent = document.getElementById(tabName);
-            if (tabContent) tabContent.classList.add('active');
-        });
-    });
-}
-
-// ===== MODAL CLOSE HANDLER GENERICO =====
-document.addEventListener('click', function(e) {
-    const newsModal = document.getElementById('news-modal');
-const injuryModal = document.getElementById('infortunio-modal');
-const classificaModal = document.getElementById('classifica-modal');
-const marcatoriModal = document.getElementById('marcatori-modal');
-
-
-    if (newsModal && e.target === newsModal) {
-        closeNewsModal();
-    }
-
-    if (injuryModal && e.target === injuryModal) {
-        closeInjuryModal();
-    }
-
-    if (classificaModal && e.target === classificaModal) {
-        classificaModal.classList.remove('active');
-    }
-
-    if (e.target.classList.contains('modal-close')) {
-        if (e.target.closest('#news-modal')) closeNewsModal();
-        if (e.target.closest('#infortunio-modal')) closeInjuryModal();
-        if (e.target.closest('#classifica-modal')) classificaModal.classList.remove('active');
-    }
     if (marcatoriModal && e.target === marcatoriModal) {
-    marcatoriModal.classList.remove('active');
-}
+        marcatoriModal.classList.remove('active');
+    }
 
-if (e.target.classList.contains('modal-close')) {
-    if (e.target.closest('#news-modal')) closeNewsModal();
-    if (e.target.closest('#infortunio-modal')) closeInjuryModal();
-    if (e.target.closest('#classifica-modal')) classificaModal.classList.remove('active');
-    if (e.target.closest('#marcatori-modal')) marcatoriModal.classList.remove('active');
-}
-
+    if (e.target.classList.contains('modal-close')) {
+        if (e.target.closest('#news-modal')) closeNewsModal();
+        if (e.target.closest('#infortunio-modal')) closeInjuryModal();
+        if (e.target.closest('#classifica-modal')) classificaModal.classList.remove('active');
+        if (e.target.closest('#marcatori-modal')) marcatoriModal.classList.remove('active');
+    }
 });
-
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
@@ -644,7 +500,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     setupDashboardTabs();
     await populateClassifica();
     await populateMarcatori();
-    await populatePrezzi();
     await populateInfortunati();
 
     const fullClassificaBtn = document.getElementById('open-full-classifica');
@@ -669,6 +524,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     console.log('Site initialized');
 });
+
 
 
 
