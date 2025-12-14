@@ -1607,7 +1607,7 @@ html, body {
 }
 
 /* ===== RESPONSIVE ===== */
- (max-width: 1200px) {
+@media (max-width: 1200px) {
     .hero-content {
         padding: 50px 30px;
         max-width: 500px;
@@ -1657,7 +1657,7 @@ html, body {
     }
 }
 
- (max-width: 1024px) {
+@media (max-width: 1024px) {
     .telegram-container {
         grid-template-columns: 1fr;
         gap: 40px;
@@ -1677,73 +1677,57 @@ html, body {
     }
 }
 
- (max-width: 768px) {
-.hero-slider {
-        min-height: 520px;
-    }
-
-    .hero-content {
-        padding: 32px 20px 80px; /* più spazio sopra i puntini */
-    }
-
-    .hero-title {
-        font-size: 1.8rem;
-        margin-bottom: 10px;
-    }
-
-    .hero-text {
-        font-size: 0.95rem;
-        margin-bottom: 20px;
-    }
-
-    .hero-cta {
-        padding: 10px 22px;
-        font-size: 0.8rem;
-        bottom: 70px; /* alza il bottone */
-        right: 20px;
-    }
-
-    .hero-dots {
-        bottom: 24px; /* abbassa un filo i puntini */
+@media (max-width: 768px) {
+    /* NAVBAR MOBILE */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(2, 0, 65, 0.96);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
     }
 
     .navbar-inner {
-        padding: 12px 0;
-        height: auto;
+        padding: 10px 20px;
+        height: 56px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        position: relative;
     }
 
     .logo {
-        position: static;
-        transform: none;
         gap: 8px;
-        font-size: 1.2rem;
-    }
-
-    .logo-image {
-        height: 34px;
-    }
-
-    .logo-text {
-        display: block;
         font-size: 1.1rem;
     }
 
+    .logo-image {
+        height: 32px;
+    }
+
+    .logo-text {
+        font-size: 1.1rem;
+    }
+
+    /* Mostra hamburger, nasconde links in linea */
     .nav-toggle {
         display: flex;
-        position: relative;
-        right: 0;
-        top: 0;
-        transform: none;
+        position: static;
         z-index: 1001;
+    }
+
+    .nav-toggle-bar {
+        width: 20px;
+        height: 2px;
+        background-color: #f5f5f5;
+        display: block;
     }
 
     .nav-links {
         position: fixed;
-        top: 64px; /* altezza navbar mobile */
+        top: 56px; /* altezza navbar */
         left: 0;
         right: 0;
         background-color: #020041;
@@ -1759,7 +1743,48 @@ html, body {
     .nav-links.nav-open {
         display: flex;
     }
-}
+
+    .nav-links a {
+        padding: 8px 0;
+        font-size: 0.9rem;
+    }
+
+    /* Compensa la navbar fissa per il contenuto */
+    body {
+        padding-top: 56px;
+    }
+
+    /* HERO MOBILE */
+    .hero-slider {
+        min-height: 520px;
+    }
+
+    .hero-content {
+        padding: 32px 20px 80px;
+    }
+
+    .hero-title {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .hero-text {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+    .hero-cta {
+        padding: 10px 22px;
+        font-size: 0.8rem;
+        bottom: 70px;
+        right: 20px;
+    }
+
+    .hero-dots {
+        bottom: 24px;
+    }
+
+    /* NEWS */
     .news-cards-grid {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -1786,6 +1811,7 @@ html, body {
         margin: -30px -24px 16px -24px;
     }
 
+    /* DASHBOARD */
     .dashboard-title {
         font-size: 1.6rem;
         margin-bottom: 30px;
@@ -1821,6 +1847,7 @@ html, body {
         font-size: 1.4rem;
     }
 
+    /* TELEGRAM */
     .telegram-section-premium {
         padding: 60px 20px;
     }
@@ -1866,6 +1893,7 @@ html, body {
         max-width: 160px;
     }
 
+    /* GENERALE */
     .features-grid {
         grid-template-columns: 1fr;
     }
@@ -1954,7 +1982,7 @@ html, body {
     }
 }
 
- (max-width: 480px) {
+@media (max-width: 480px) {
     .dashboard-table th,
     .dashboard-table td,
     .table.classifica-table th,
@@ -1962,7 +1990,6 @@ html, body {
         font-size: 0.8rem;
         padding: 8px 4px;
     }
- }
 
     .hero-text {
         font-size: 0.9rem;
