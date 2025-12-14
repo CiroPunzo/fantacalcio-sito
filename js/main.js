@@ -110,6 +110,7 @@ const SHEET_NAMES = {
     classifica: 'Classifica',
     marcatori: 'Marcatori',
     infortunati: 'Infortunati'
+    pronostici: 'Pronostici'
 };
 
 // Fetch + parse robusto da Google Sheets (gviz)
@@ -506,6 +507,81 @@ function setupDashboardTabs() {
     });
 }
 
+// ===== ANALISI FANTACALCIO (TAB PREVISIONI) =====
+async function populateAnalisiFantacalcio(selectedGiornata = null) {
+    const data = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
+    const tbody = document.getElementById('pred-fanta-body');
+    const select = document.getElementById('select-giornata-fanta');
+
+    if (!tbody || !Array.isArray(data) || data.length === 0) return;
+
+    // ricava le giornate disponibili
+    const giornate = Array.from(new Set(
+        data.map(row => row['Giornata']).filter(g => g !== '')
+    )).sort((a, b) => Number(a) - Number(b));
+
+    // inizializza select se vuota
+    if (select && select.options.length === 0) {
+        giornate.forEach(g => {
+            const opt = document.createElement('option');
+            opt.value = g;
+            opt.textContent = `Giornata ${g}`;
+            select.appendChild(opt);
+        });
+    }
+
+    // giornata corrente: ultima disponibile, se non passata da argomento
+    const giornataCorrente = selectedGiornata || (giornate.length ? giornate[giornate.length - 1] : null);
+    if (!giornataCorrente) return;
+
+    if (select) {
+        select.value = giornataCorrente;
+        select.onchange = () => {
+            populateAnalisiFantacalcio(select.value);
+        };
+    }
+
+    // filtra per giornata
+    const filtrati = data.filter(row => String(row['Giornata']) === String(giornataCorrente));
+
+    tbody.innerHTML = '';
+
+    filtrati.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.classList.add('clickable');
+
+        const casa = row['SquadraCasa'] || '-';
+        const trasferta = row['SquadraTrasferta'] || '-';
+        const orario = row['Orario'] || '-';
+        const consigliati = row['Consigliati'] || '-';
+        const daEvitare = row['DaEvitare'] || '-';
+
+        const logoCasa = CLUB_LOGOS[casa] || '';
+        const logoTrasferta = CLUB_LOGOS[trasferta] || '';
+
+        tr.innerHTML = `
+            <td>
+                <div class="pred-match-cell">
+                    <div class="pred-match-cell-logos">
+                        ${logoCasa ? `<img src="${logoCasa}" alt="${casa}">` : ''}
+                        ${logoTrasferta ? `<img src="${logoTrasferta}" alt="${trasferta}">` : ''}
+                    </div>
+                    <div class="pred-match-cell-names">
+                        <span><strong>${casa}</strong> vs <strong>${trasferta}</strong></span>
+                    </div>
+                </div>
+            </td>
+            <td>${orario}</td>
+            <td>${consigliati}</td>
+            <td>${daEvitare}</td>
+        `;
+
+        // qui in futuro attacchiamo l'apertura della modal dettagliata
+        tbody.appendChild(tr);
+    });
+}
+
+
 // ===== MODAL CLOSE HANDLER GENERICO =====
 document.addEventListener('click', function(e) {
     const newsModal = document.getElementById('news-modal');
@@ -551,6 +627,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     await populateClassifica();
     await populateMarcatori();
     await populateInfortunati();
+    await populateAnalisiFantacalcio();
 
     const fullClassificaBtn = document.getElementById('open-full-classifica');
     if (fullClassificaBtn) {
