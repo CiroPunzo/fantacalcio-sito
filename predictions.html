@@ -67,16 +67,11 @@
     </header>
 
     <!-- BLOCCO 1: ANALISI FANTACALCIO -->
-    <section class="pred-section pred-fanta">
+   <section class="pred-section pred-fanta">
     <div class="container">
         <div class="pred-card">
             <div class="pred-card-header">
-                <div>
-                    <h2 class="pred-card-title">Analisi Fantacalcio ProFantasy</h2>
-                    <p class="pred-section-subtitle">
-                        Lettura tattica delle partite e consigli su chi schierare e chi evitare.
-                    </p>
-                </div>
+                <h2 class="pred-card-title">Analisi Fantacalcio ProFantasy</h2>
                 <div class="pred-card-controls">
                     <label for="select-giornata-fanta" class="pred-label">Giornata</label>
                     <select id="select-giornata-fanta" class="pred-card-select">
@@ -85,13 +80,33 @@
                 </div>
             </div>
 
-            <!-- Lista match fantacalcio -->
-            <div id="pred-fanta-list" class="pred-match-list">
-                <!-- Righe match via JS -->
+            <p class="pred-section-subtitle">
+                Tutte le partite della giornata, con lettura tattica e indicazioni su chi schierare.
+            </p>
+
+            <div class="dashboard-table-wrapper">
+                <table class="dashboard-table pred-fanta-table">
+                    <thead>
+                        <tr>
+                            <th>Match</th>
+                            <th>Orario</th>
+                            <th>Consigliati</th>
+                            <th>Da evitare</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pred-fanta-body">
+                        <!-- 10 match di giornata popolati da Google Sheets -->
+                    </tbody>
+                </table>
             </div>
+
+            <a href="#" class="dashboard-link" id="open-full-fanta">
+                Vedi analisi dettagliata match →
+            </a>
         </div>
     </div>
 </section>
+
 
 
     <!-- BLOCCO 2: PRONOSTICI DI GIORNATA -->
