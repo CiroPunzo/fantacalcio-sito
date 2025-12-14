@@ -649,6 +649,42 @@ html, body {
     border-bottom: 1px solid rgba(184, 149, 107, 0.2);
 }
 
+/* Tabella previsioni fantacalcio */
+.pred-fanta-table th {
+    text-align: left;
+}
+
+.pred-fanta-table td {
+    cursor: pointer;
+}
+
+/* stile per cella match con loghi */
+.pred-match-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pred-match-cell-logos {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pred-match-cell-logos img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.pred-match-cell-names {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.9rem;
+}
+
+
 .tab-btn {
     padding: 10px 20px;
     background: rgba(184, 149, 107, 0.1);
