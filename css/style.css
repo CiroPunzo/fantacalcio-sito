@@ -1773,6 +1773,7 @@ html, body {
         margin-bottom: 16px;
     }
 
+    /* Bottone dentro il flusso, non assoluto */
     .hero-cta {
         position: static;
         margin-top: 16px;
@@ -1984,6 +1985,7 @@ html, body {
         padding: 24px 0;
     }
 }
+
 
 @media (max-width: 480px) {
     .dashboard-table th,
