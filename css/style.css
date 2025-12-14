@@ -1770,18 +1770,21 @@ html, body {
 
     .hero-text {
         font-size: 0.95rem;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
     }
 
     .hero-cta {
+        position: static;
+        margin-top: 16px;
+        align-self: flex-start;
         padding: 10px 22px;
         font-size: 0.8rem;
-        bottom: 70px;
-        right: 20px;
+        box-shadow: 0 6px 20px rgba(184, 149, 107, 0.3);
     }
 
+    /* Dots un filo più su, ma separati dal testo */
     .hero-dots {
-        bottom: 24px;
+        bottom: 20px;
     }
 
     /* NEWS */
