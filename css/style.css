@@ -1783,7 +1783,6 @@ html, body {
         box-shadow: 0 6px 20px rgba(184, 149, 107, 0.3);
     }
 
-    /* Dots un filo più su, ma separati dal testo */
     .hero-dots {
         bottom: 20px;
     }
