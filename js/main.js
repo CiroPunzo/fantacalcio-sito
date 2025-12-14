@@ -57,12 +57,27 @@ function goToHeroSlide(index) {
     }, 5000);
 }
 
-// ===== MOBILE NAV =====
-function toggleMobileMenu() {
-    const navLinks = document.querySelector('.nav-links');
-    if (navLinks) {
-        navLinks.classList.toggle('nav-open');
-    }
+// ===== NAVBAR MOBILE (HAMBURGER) =====
+function setupMobileNavbar() {
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    if (!navToggle || !navLinks) return;
+
+    navToggle.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('nav-open');
+        navToggle.classList.toggle('nav-open', isOpen);
+        navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // chiudi menu al click sui link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('nav-open');
+            navToggle.classList.remove('nav-open');
+            navToggle.setAttribute('aria-expanded', 'false');
+        });
+    });
 }
 
 // ===== NEWS MODAL =====
@@ -157,7 +172,6 @@ const CLUB_LOGOS = {
     'Torino': 'img/loghi/torino.png'
 };
 
-// ----- CLASSIFICA -----
 // ----- CLASSIFICA -----
 async function populateClassifica() {
     const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
@@ -284,8 +298,6 @@ async function populateFullClassificaModal() {
         });
 }
 
-
-// ----- MARCATORI -----
 // ----- MARCATORI -----
 async function populateMarcatori() {
     const data = await fetchSheetDataJson(SHEET_NAMES.marcatori);
@@ -368,7 +380,6 @@ async function populateFullMarcatoriModal() {
         });
 }
 
-
 // ----- INFORTUNATI -----
 async function populateInfortunati() {
     const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
@@ -449,7 +460,6 @@ async function populateFullInfortunatiModal() {
     });
 }
 
-
 // ===== INFORTUNIO MODAL =====
 function openInjuryModal(data) {
     const modal = document.getElementById('infortunio-modal');
@@ -521,8 +531,8 @@ document.addEventListener('click', function(e) {
     }
 
     if (infortunatiFullModal && e.target === infortunatiFullModal) {
-    infortunatiFullModal.classList.remove('active');
-}
+        infortunatiFullModal.classList.remove('active');
+    }
 
     if (e.target.classList.contains('modal-close')) {
         if (e.target.closest('#news-modal')) closeNewsModal();
@@ -536,6 +546,7 @@ document.addEventListener('click', function(e) {
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
     initHeroSlider();
+    setupMobileNavbar();
     setupDashboardTabs();
     await populateClassifica();
     await populateMarcatori();
@@ -562,15 +573,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     const fullInfortunatiBtn = document.getElementById('open-full-infortunati');
-if (fullInfortunatiBtn) {
-    fullInfortunatiBtn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        await populateFullInfortunatiModal();
-        const modal = document.getElementById('infortunati-modal');
-        if (modal) modal.classList.add('active');
-    });
-}
-
+    if (fullInfortunatiBtn) {
+        fullInfortunatiBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await populateFullInfortunatiModal();
+            const modal = document.getElementById('infortunati-modal');
+            if (modal) modal.classList.add('active');
+        });
+    }
 
     console.log('Site initialized');
 });
