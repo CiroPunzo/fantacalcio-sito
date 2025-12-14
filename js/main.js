@@ -70,7 +70,6 @@ function setupMobileNavbar() {
         navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
-    // chiudi menu al click sui link
     navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('nav-open');
@@ -109,7 +108,8 @@ const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48';
 const SHEET_NAMES = {
     classifica: 'Classifica',
     marcatori: 'Marcatori',
-    infortunati: 'Infortunati'
+    infortunati: 'Infortunati',
+    analisiFantacalcio: 'AnalisiFantacalcio',
     pronostici: 'Pronostici'
 };
 
@@ -149,7 +149,6 @@ async function fetchSheetDataJson(sheetName) {
 
 // ===== POPOLAZIONE TABELLE =====
 
-// loghi locali per i club
 const CLUB_LOGOS = {
     'Milan': 'img/loghi/milan.png',
     'Napoli': 'img/loghi/napoli.png',
@@ -515,12 +514,10 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
 
     if (!tbody || !Array.isArray(data) || data.length === 0) return;
 
-    // ricava le giornate disponibili
     const giornate = Array.from(new Set(
         data.map(row => row['Giornata']).filter(g => g !== '')
     )).sort((a, b) => Number(a) - Number(b));
 
-    // inizializza select se vuota
     if (select && select.options.length === 0) {
         giornate.forEach(g => {
             const opt = document.createElement('option');
@@ -530,7 +527,6 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
         });
     }
 
-    // giornata corrente: ultima disponibile, se non passata da argomento
     const giornataCorrente = selectedGiornata || (giornate.length ? giornate[giornate.length - 1] : null);
     if (!giornataCorrente) return;
 
@@ -541,7 +537,6 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
         };
     }
 
-    // filtra per giornata
     const filtrati = data.filter(row => String(row['Giornata']) === String(giornataCorrente));
 
     tbody.innerHTML = '';
@@ -576,11 +571,9 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
             <td>${daEvitare}</td>
         `;
 
-        // qui in futuro attacchiamo l'apertura della modal dettagliata
         tbody.appendChild(tr);
     });
 }
-
 
 // ===== MODAL CLOSE HANDLER GENERICO =====
 document.addEventListener('click', function(e) {
