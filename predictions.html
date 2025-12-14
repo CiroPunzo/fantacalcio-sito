@@ -111,28 +111,45 @@
 
     <!-- BLOCCO 2: PRONOSTICI DI GIORNATA -->
     <section class="pred-section pred-prono">
-        <div class="container">
-            <div class="pred-section-header">
-                <div>
-                    <h2 class="pred-section-title">Pronostici Partite ProFantasy</h2>
-                    <p class="pred-section-subtitle">
-                        Esiti più probabili per ogni match, con livello di confidenza.
-                    </p>
-                </div>
-                <div class="pred-controls">
+    <div class="container">
+        <div class="pred-card">
+            <div class="pred-card-header">
+                <h2 class="pred-card-title">Pronostici Partite ProFantasy</h2>
+                <div class="pred-card-controls">
                     <label for="select-giornata-prono" class="pred-label">Giornata</label>
-                    <select id="select-giornata-prono" class="pred-select">
-                        <!-- Opzioni verranno popolate via JS -->
+                    <select id="select-giornata-prono" class="pred-card-select">
+                        <!-- Opzioni via JS -->
                     </select>
                 </div>
             </div>
 
-            <!-- Lista match pronostici (placeholder) -->
-            <div id="pred-prono-list" class="pred-match-list">
-                <!-- Card match pronostici generate via JS -->
+            <p class="pred-section-subtitle">
+                Esiti più probabili per ogni match, con livello di confidenza.
+            </p>
+
+            <div class="dashboard-table-wrapper">
+                <table class="dashboard-table pred-prono-table">
+                    <thead>
+                        <tr>
+                            <th>Match</th>
+                            <th>Orario</th>
+                            <th>Esito principale</th>
+                            <th>Conf.</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pred-prono-body">
+                        <!-- Match popolati da Google Sheets -->
+                    </tbody>
+                </table>
             </div>
+
+            <a href="#" class="dashboard-link" id="open-full-prono">
+                Vedi dettagli pronostici →
+            </a>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- FOOTER PREMIUM (uguale alla home) -->
     <footer class="footer-premium">
