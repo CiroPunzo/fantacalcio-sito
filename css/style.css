@@ -1945,9 +1945,8 @@ html, body {
     }
 
     .footer-main {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        padding: 40px 0;
+        gap: 20px;
+        padding: 30px 0;
     }
 
     .footer-cta-banner {
@@ -1969,17 +1968,13 @@ html, body {
     }
 
     .footer-col-title {
-        margin-bottom: 16px;
-    }
-
-    .footer-links {
-        gap: 10px;
-    }
-
-    .footer-col-title {
         font-size: 0.85rem;
         letter-spacing: 0.04em;
         opacity: 0.9;
+    }
+
+    .footer-links {
+        gap: 6px;
     }
 
     .footer-links a {
@@ -1988,7 +1983,7 @@ html, body {
     }
 
     .footer-bottom {
-        padding: 24px 0;
+        padding: 18px 0;
     }
 }
 
