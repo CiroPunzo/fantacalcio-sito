@@ -3,14 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Previsioni Giornaliere - Fantacalcio Insights</title>
+
+    <title>Previsioni – Ciro Profantasy</title>
+
+    <meta name="description" content="Previsioni di giornata di Ciro Profantasy: analisi fantacalcio e pronostici partita per partita.">
+    <meta name="keywords" content="fantacalcio previsioni, pronostici calcio, ciro profantasy">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="img/favicon.ico">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- NAVBAR (stessa della home) -->
     <nav class="navbar">
-        <div class="container">
-            <div class="logo">📊 Fantacalcio Insights</div>
-            <ul class="nav-links">
+        <div class="container navbar-inner">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="img/logo-ciro-profantasy.jpg" alt="Ciro Profantasy" class="logo-image">
+                    <span class="logo-text">Ciro Profantasy</span>
+                </a>
+            </div>
+
+            <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="predictions.html" class="active">Previsioni</a></li>
                 <li><a href="track-record.html">Risultati</a></li>
@@ -20,36 +44,105 @@
         </div>
     </nav>
 
-    <main class="container">
-        <h1>📅 Previsioni della Giornata</h1>
-        
-        <div class="predictions-filter">
-            <select id="filterGiornata" onchange="filterByGiornata()">
-                <option value="">Tutte le giornate</option>
-                <option value="1">Giornata 1</option>
-                <option value="2">Giornata 2</option>
-                <option value="3">Giornata 3</option>
-                <!-- Aggiungi altre giornate -->
-            </select>
-        </div>
+    <!-- HERO PREVISIONI -->
+    <header class="hero-predictions">
+        <div class="container hero-predictions-inner">
+            <div class="hero-predictions-content">
+                <span class="hero-tag">Previsioni</span>
+                <h1 class="hero-predictions-title">Previsioni di giornata</h1>
+                <p class="hero-predictions-text">
+                    Analisi fantacalcio e pronostici partita per partita, aggiornati a ogni giornata di Serie A.
+                </p>
 
-        <div id="predictions-container" class="predictions-grid">
-            <!-- QUESTO VIENE GENERATO AUTOMATICAMENTE DA AIRTABLE -->
-            <!-- I dati verranno poppolati automaticamente dal GitHub Action -->
-        </div>
-    </main>
+                <div class="hero-predictions-meta">
+                    <span class="badge-pill" id="pred-giornata-badge">Giornata corrente</span>
+                    <span class="badge-pill badge-soft" id="pred-data-badge">Data</span>
+                </div>
 
-    <footer class="footer">
+                <a href="#telegram-cta" class="hero-predictions-cta">
+                    Ricevi le previsioni su Telegram
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- BLOCCO 1: ANALISI FANTACALCIO -->
+    <section class="pred-section pred-fanta">
         <div class="container">
-            <p>&copy; 2026 Fantacalcio Insights</p>
+            <div class="pred-section-header">
+                <div>
+                    <h2 class="pred-section-title">Analisi Fantacalcio ProFantasy</h2>
+                    <p class="pred-section-subtitle">
+                        Lettura tattica delle partite e consigli su chi schierare e chi evitare.
+                    </p>
+                </div>
+                <div class="pred-controls">
+                    <label for="select-giornata-fanta" class="pred-label">Giornata</label>
+                    <select id="select-giornata-fanta" class="pred-select">
+                        <!-- Opzioni verranno popolate via JS -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Lista match fantacalcio (placeholder, la riempiamo dopo via JS) -->
+            <div id="pred-fanta-list" class="pred-match-list">
+                <!-- Card match fantacalcio generate via JS -->
+            </div>
         </div>
+    </section>
+
+    <!-- BLOCCO 2: PRONOSTICI DI GIORNATA -->
+    <section class="pred-section pred-prono">
+        <div class="container">
+            <div class="pred-section-header">
+                <div>
+                    <h2 class="pred-section-title">Pronostici Partite ProFantasy</h2>
+                    <p class="pred-section-subtitle">
+                        Esiti più probabili per ogni match, con livello di confidenza.
+                    </p>
+                </div>
+                <div class="pred-controls">
+                    <label for="select-giornata-prono" class="pred-label">Giornata</label>
+                    <select id="select-giornata-prono" class="pred-select">
+                        <!-- Opzioni verranno popolate via JS -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Lista match pronostici (placeholder) -->
+            <div id="pred-prono-list" class="pred-match-list">
+                <!-- Card match pronostici generate via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER PREMIUM (uguale alla home) -->
+    <!-- Puoi copiare e incollare qui il footer-premium completo da index.html -->
+    <footer class="footer-premium">
+        <!-- ... footer identico alla home ... -->
     </footer>
 
+    <!-- MODAL ANALISI FANTACALCIO -->
+    <div id="pred-fanta-modal" class="modal">
+        <div class="modal-content modal-content-wide">
+            <button class="modal-close" type="button">&times;</button>
+            <div class="modal-body" id="pred-fanta-modal-body">
+                <!-- Contenuto match fantacalcio via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PRONOSTICI -->
+    <div id="pred-prono-modal" class="modal">
+        <div class="modal-content modal-content-wide">
+            <button class="modal-close" type="button">&times;</button>
+            <div class="modal-body" id="pred-prono-modal-body">
+                <!-- Contenuto match pronostici via JS -->
+            </div>
+        </div>
+    </div>
+
     <script src="js/main.js"></script>
-    <script>
-        // Dati injectati dal build system
-        const PREDICTIONS_DATA = window.PREDICTIONS_DATA || [];
-        
-        function filterByGiornata() {
-            const select = document.getElementById('filterGiornata');
-            const value = select.value;
+</body>
+</html>
+
