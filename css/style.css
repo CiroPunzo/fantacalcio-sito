@@ -338,6 +338,222 @@ html, body {
     box-shadow: 0 0 16px rgba(184, 149, 107, 0.5);
 }
 
+/* ===== PAGINA PREVISIONI ===== */
+
+/* HERO PREVISIONI */
+.hero-predictions {
+    background: radial-gradient(circle at top left, #081655 0%, #020041 40%, #010020 100%);
+    padding: 80px 20px 40px;
+    border-bottom: 1px solid rgba(184, 149, 107, 0.25);
+}
+
+.hero-predictions-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-predictions-content {
+    max-width: 680px;
+}
+
+.hero-predictions-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 2.6rem;
+    color: #B8956B;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+}
+
+.hero-predictions-text {
+    font-size: 1.05rem;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.hero-predictions-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.badge-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(184, 149, 107, 0.5);
+    color: #B8956B;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(184, 149, 107, 0.08);
+}
+
+.badge-pill.badge-soft {
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #d8d8d8;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.hero-predictions-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 26px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #0084FF 0%, #0073e6 100%);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+    box-shadow: 0 8px 24px rgba(0, 132, 255, 0.35);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hero-predictions-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 132, 255, 0.5);
+}
+
+/* SEZIONI PREVISIONI */
+.pred-section {
+    padding: 50px 20px;
+    border-top: 1px solid rgba(184, 149, 107, 0.18);
+}
+
+.pred-fanta {
+    background: linear-gradient(135deg, #020041 0%, #010020 100%);
+}
+
+.pred-prono {
+    background: linear-gradient(135deg, #010020 0%, #020041 100%);
+}
+
+.pred-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.pred-section-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.9rem;
+    color: #B8956B;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.pred-section-subtitle {
+    color: #d0d0d0;
+    font-size: 0.95rem;
+    max-width: 520px;
+}
+
+.pred-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.pred-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #b0b0b0;
+}
+
+.pred-select {
+    min-width: 130px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(184, 149, 107, 0.6);
+    background: rgba(5, 5, 25, 0.9);
+    color: #f5f5f5;
+    font-size: 0.9rem;
+}
+
+/* LISTA MATCH */
+.pred-match-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Card match base, la popoleremo via JS */
+.pred-match-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: radial-gradient(circle at top left, rgba(10, 10, 30, 0.96), rgba(3, 3, 18, 0.98));
+    border: 1px solid rgba(184, 149, 107, 0.25);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.pred-match-card:hover {
+    border-color: rgba(184, 149, 107, 0.6);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7);
+    transform: translateY(-2px);
+}
+
+.pred-match-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pred-match-logos {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pred-match-logos img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
+.pred-match-names {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pred-match-title {
+    font-weight: 600;
+    color: #f5f5f5;
+    font-size: 0.95rem;
+}
+
+.pred-match-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: #b0b0b0;
+}
+
+.pred-match-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    font-size: 0.8rem;
+    color: #d0d0d0;
+}
+
 /* ===== DASHBOARD ANALITICA ===== */
 .dashboard-section {
     background: linear-gradient(135deg, #020041 0%, #010020 100%);
