@@ -1775,8 +1775,8 @@ html, body {
 
     /* Bottone dentro il flusso, non assoluto */
     .hero-cta {
-        position: static;
-        margin-top: 16px;
+        position: static !important;
+        margin-top: 20px;
         align-self: flex-start;
         padding: 10px 22px;
         font-size: 0.8rem;
