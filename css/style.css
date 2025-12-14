@@ -1976,8 +1976,15 @@ html, body {
         gap: 10px;
     }
 
+    .footer-col-title {
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        opacity: 0.9;
+    }
+
     .footer-links a {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        opacity: 0.9;
     }
 
     .footer-bottom {
