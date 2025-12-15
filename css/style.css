@@ -350,6 +350,10 @@ html, body {
 .hero-predictions-inner {
     max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
 }
 
 .hero-predictions-content {
@@ -359,10 +363,14 @@ html, body {
 .hero-predictions-title {
     font-family: 'Anton', sans-serif;
     font-size: 2.6rem;
-    color: #B8956B;
+    color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-bottom: 12px;
+}
+
+.hero-predictions-title span#pred-hero-giornata {
+    color: #B8956B;
 }
 
 .hero-predictions-text {
@@ -418,6 +426,44 @@ html, body {
     transform: translateY(-3px);
     box-shadow: 0 12px 32px rgba(0, 132, 255, 0.5);
 }
+
+/* Colonna destra hero */
+.hero-predictions-side {
+    flex-shrink: 0;
+}
+
+/* Badge matchday/stato */
+.pred-hero-badge {
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(184,149,107,0.18), rgba(34,34,34,0.95));
+    border: 1px solid rgba(184,149,107,0.5);
+    text-align: right;
+    min-width: 150px;
+}
+
+.pred-hero-badge-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #b0b0b0;
+    margin-bottom: 3px;
+}
+
+.pred-hero-badge-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .hero-predictions-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
 
 /* SEZIONI PREVISIONI */
 .pred-section {
