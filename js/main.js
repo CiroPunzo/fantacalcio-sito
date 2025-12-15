@@ -541,15 +541,15 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
 
     tbody.innerHTML = '';
 
-    filtrati.forEach(row => {
+        filtrati.forEach(row => {
         const tr = document.createElement('tr');
         tr.classList.add('clickable');
 
         const casa = row['SquadraCasa'] || '-';
         const trasferta = row['SquadraTrasferta'] || '-';
         const orario = row['Orario'] || '-';
-        const consigliati = row['Consigliati'] || '-';
-        const daEvitare = row['DaEvitare'] || '-';
+        const esito = row['EsitoPrincipale'] || '-';
+        const conf = row['Confidenza'] || '-';
 
         const logoCasa = CLUB_LOGOS[casa] || '';
         const logoTrasferta = CLUB_LOGOS[trasferta] || '';
@@ -567,13 +567,14 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
                 </div>
             </td>
             <td>${orario}</td>
-            <td>${consigliati}</td>
-            <td>${daEvitare}</td>
+            <td>${esito}</td>
+            <td>${conf}</td>
         `;
 
-        tr.addEventListener('click', () => openFantaMatchModal(row));
+        tr.addEventListener('click', () => openPronoMatchModal(row));
         tbody.appendChild(tr);
     });
+
 }
 
 function openFantaMatchModal(row) {
