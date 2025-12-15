@@ -1715,6 +1715,62 @@ html, body {
     color: #e0e0e0;
 }
 
+/* Modal pronostici */
+.pred-prono-main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.pred-prono-main-esito {
+    flex: 1 1 200px;
+}
+
+.pred-prono-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #b0b0b0;
+    margin-bottom: 4px;
+}
+
+.pred-prono-esito {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #B8956B 0%, #a67d52 100%);
+    display: inline-block;
+}
+
+.pred-prono-main-conf {
+    text-align: right;
+    min-width: 150px;
+}
+
+.pred-prono-stars {
+    font-size: 1rem;
+    color: #ffd76a;
+}
+
+.pred-prono-conf-num {
+    font-size: 0.8rem;
+    color: #d0d0d0;
+    margin-left: 6px;
+}
+
+.pred-prono-alt-list {
+    padding-left: 18px;
+    font-size: 0.9rem;
+    color: #e0e0e0;
+}
+
+
 
 
 /* ===== FOOTER PREMIUM ===== */
