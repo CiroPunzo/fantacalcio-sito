@@ -148,7 +148,6 @@ async function fetchSheetDataJson(sheetName) {
 }
 
 // ===== POPOLAZIONE TABELLE =====
-
 const CLUB_LOGOS = {
     'Milan': 'img/loghi/milan.png',
     'Napoli': 'img/loghi/napoli.png',
@@ -629,8 +628,6 @@ function openFantaMatchModal(row) {
     modal.classList.add('active');
 }
 
-
-
 // ===== PRONOSTICI (TAB PREVISIONI) =====
 async function populatePronostici(selectedGiornata = null) {
     const data = await fetchSheetDataJson(SHEET_NAMES.pronostici);
@@ -696,11 +693,76 @@ async function populatePronostici(selectedGiornata = null) {
             <td>${conf}</td>
         `;
 
-        // qui dopo collegheremo la modal dei pronostici
+        tr.addEventListener('click', () => openPronoMatchModal(row));
         tbody.appendChild(tr);
     });
 }
 
+function openPronoMatchModal(row) {
+    const modal = document.getElementById('pred-prono-modal');
+    const body = document.getElementById('pred-prono-modal-body');
+    if (!modal || !body) return;
+
+    const casa = row['SquadraCasa'] || '-';
+    const trasferta = row['SquadraTrasferta'] || '-';
+    const giornata = row['Giornata'] || '-';
+    const orario = row['Orario'] || '-';
+    const esito = row['EsitoPrincipale'] || '-';
+    const alt1 = row['EsitoSecondario1'] || '';
+    const alt2 = row['EsitoSecondario2'] || '';
+    const conf = row['Confidenza'] || '-';
+    const motivazione = row['Motivazione'] || '-';
+
+    const logoCasa = CLUB_LOGOS[casa] || '';
+    const logoTrasferta = CLUB_LOGOS[trasferta] || '';
+
+    const maxStars = 5;
+    const confNum = Number(conf) || 0;
+    const stars = '★'.repeat(Math.max(0, Math.min(confNum, maxStars))) +
+                  '☆'.repeat(Math.max(0, maxStars - Math.min(confNum, maxStars)));
+
+    body.innerHTML = `
+        <div class="pred-modal-header">
+            <div class="pred-modal-logos">
+                ${logoCasa ? `<img src="${logoCasa}" alt="${casa}">` : ''}
+                ${logoTrasferta ? `<img src="${logoTrasferta}" alt="${trasferta}">` : ''}
+            </div>
+            <div class="pred-modal-title-block">
+                <h2>${casa} vs ${trasferta}</h2>
+                <p class="pred-modal-subtitle">
+                    Giornata ${giornata} · ${orario}
+                </p>
+            </div>
+        </div>
+
+        <div class="pred-modal-section pred-prono-main">
+            <div class="pred-prono-main-esito">
+                <span class="pred-prono-label">Esito principale</span>
+                <p class="pred-prono-esito">${esito}</p>
+            </div>
+            <div class="pred-prono-main-conf">
+                <span class="pred-prono-label">Confidenza</span>
+                <p class="pred-prono-stars">${stars} <span class="pred-prono-conf-num">${conf}/5</span></p>
+            </div>
+        </div>
+
+        ${alt1 || alt2 ? `
+        <div class="pred-modal-section">
+            <h3>Altri esiti considerati</h3>
+            <ul class="pred-prono-alt-list">
+                ${alt1 ? `<li>${alt1}</li>` : ''}
+                ${alt2 ? `<li>${alt2}</li>` : ''}
+            </ul>
+        </div>` : ''}
+
+        <div class="pred-modal-section">
+            <h3>Motivazione</h3>
+            <p>${motivazione}</p>
+        </div>
+    `;
+
+    modal.classList.add('active');
+}
 
 // ===== MODAL CLOSE HANDLER GENERICO =====
 document.addEventListener('click', function(e) {
@@ -730,7 +792,6 @@ document.addEventListener('click', function(e) {
         if (e.target.closest('#pred-prono-modal')) pronoModal.classList.remove('active');
     }
 });
-
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
