@@ -5,12 +5,12 @@ let autoRotateInterval;
 function initHeroSlider() {
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-dot');
-    
+
     if (slides.length === 0) return;
-    
+
     slides[0].classList.add('active');
-    dots[0].classList.add('active');
-    
+    if (dots[0]) dots[0].classList.add('active');
+
     autoRotateInterval = setInterval(() => {
         nextHeroSlide();
     }, 5000);
@@ -20,17 +20,19 @@ function showHeroSlide(index) {
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-dot');
     const totalSlides = slides.length;
-    
+
+    if (totalSlides === 0) return;
+
     if (index >= totalSlides) index = 0;
     if (index < 0) index = totalSlides - 1;
-    
+
     currentHeroSlide = index;
-    
+
     slides.forEach(slide => slide.classList.remove('active'));
     dots.forEach(dot => dot.classList.remove('active'));
-    
+
     slides[index].classList.add('active');
-    dots[index].classList.add('active');
+    if (dots[index]) dots[index].classList.add('active');
 }
 
 function nextHeroSlide() {
@@ -102,7 +104,7 @@ function closeNewsModal() {
     if (modal) modal.classList.remove('active');
 }
 
-// ===== GOOGLE S CONFIG =====
+// ===== GOOGLE SHEETS CONFIG =====
 const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48';
 
 const SHEET_NAMES = {
@@ -110,9 +112,8 @@ const SHEET_NAMES = {
     marcatori: 'Marcatori',
     infortunati: 'Infortunati',
     analisiFantacalcio: 'AnalisiFantacalcio',
-    pronostici: 'Pronostici'
+    pronostici: 'Pronostici',
     risultatiGiornata: 'RisultatiGiornata'
-
 };
 
 // Fetch + parse robusto da Google Sheets (gviz)
@@ -637,7 +638,6 @@ function openFirstFantaMatchInTable() {
     const firstRow = tbody.querySelector('tr');
     if (!firstRow) return;
 
-    // Simula il click sulla prima riga (riusa già openFantaMatchModal)
     firstRow.click();
 }
 
@@ -648,10 +648,8 @@ function openFirstPronoMatchInTable() {
     const firstRow = tbody.querySelector('tr');
     if (!firstRow) return;
 
-    // Simula il click sulla prima riga (riusa già openPronoMatchModal)
     firstRow.click();
 }
-
 
 // ===== PRONOSTICI (TAB PREVISIONI) =====
 async function populatePronostici(selectedGiornata = null) {
@@ -728,12 +726,9 @@ async function populateRisultatiGiornata() {
     const data = await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
     if (!Array.isArray(data) || data.length === 0) return;
 
-    // Pulisci righe vuote
     const rows = data.filter(row => row['Giornata']);
-
     if (rows.length === 0) return;
 
-    // Calcolo KPI globali
     const accPronList = rows
         .map(r => Number(r['AccuracyPronostici']))
         .filter(v => !isNaN(v));
@@ -746,7 +741,6 @@ async function populateRisultatiGiornata() {
     const accPronAvg = avg(accPronList);
     const accFantaAvg = avg(accFantaList);
 
-    // Miglior giornata per accuracy pronostici
     let bestRound = null;
     let bestAcc = -1;
     rows.forEach(r => {
@@ -757,7 +751,6 @@ async function populateRisultatiGiornata() {
         }
     });
 
-    // Aggiorna hero KPI
     const globalAccEl = document.getElementById('res-global-accuracy');
     const giornateCountEl = document.getElementById('res-giornate-count');
     const lastGiornataEl = document.getElementById('res-last-giornata');
@@ -778,7 +771,6 @@ async function populateRisultatiGiornata() {
         }
     }
 
-    // Aggiorna KPI cards
     const kpiPronEl = document.getElementById('res-kpi-pronostici');
     const kpiFantaEl = document.getElementById('res-kpi-fanta');
     const kpiBestRoundEl = document.getElementById('res-kpi-best-round');
@@ -793,13 +785,11 @@ async function populateRisultatiGiornata() {
         kpiBestRoundNoteEl.textContent = `Giornata ${bestRound} con ${bestAcc.toFixed(1)}% di accuracy pronostici.`;
     }
 
-    // Popola tabella storico
     const tbody = document.getElementById('results-history-body');
     if (!tbody) return;
 
     tbody.innerHTML = '';
 
-    // Ordina per giornata crescente
     rows.sort((a, b) => Number(a['Giornata']) - Number(b['Giornata']))
         .forEach(r => {
             const tr = document.createElement('tr');
@@ -822,7 +812,6 @@ async function populateRisultatiGiornata() {
         });
 }
 
-
 function openPronoMatchModal(row) {
     const modal = document.getElementById('pred-prono-modal');
     const body = document.getElementById('pred-prono-modal-body');
@@ -835,7 +824,7 @@ function openPronoMatchModal(row) {
     const esito = row['EsitoPrincipale'] || '-';
     const alt1 = row['EsitoSecondario1'] || '';
     const alt2 = row['EsitoSecondario2'] || '';
-    const conf = row['Confidenza'] || '-';
+    the conf = row['Confidenza'] || '-';
     const motivazione = row['Motivazione'] || '-';
 
     const logoCasa = CLUB_LOGOS[casa] || '';
@@ -920,90 +909,90 @@ document.addEventListener('click', function(e) {
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
-   initHeroSlider();
+    initHeroSlider();
     setupMobileNavbar();
     setupDashboardTabs();
 
     const path = window.location.pathname;
+    const normalizedPath = path.toLowerCase();
 
-    if (path.includes('predictions')) {
+    // Pagina PREVISIONI
+    if (normalizedPath.includes('predictions')) {
         await populateClassifica();
         await populateMarcatori();
         await populateInfortunati();
         await populateAnalisiFantacalcio();
         await populatePronostici();
 
-    const fullClassificaBtn = document.getElementById('open-full-classifica');
-    if (fullClassificaBtn) {
-        fullClassificaBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            await populateFullClassificaModal();
-            const modal = document.getElementById('classifica-modal');
-            if (modal) modal.classList.add('active');
-        });
-    }
+        const fullClassificaBtn = document.getElementById('open-full-classifica');
+        if (fullClassificaBtn) {
+            fullClassificaBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await populateFullClassificaModal();
+                const modal = document.getElementById('classifica-modal');
+                if (modal) modal.classList.add('active');
+            });
+        }
 
-    const fullMarcatoriBtn = document.getElementById('open-full-marcatori');
-    if (fullMarcatoriBtn) {
-        fullMarcatoriBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            await populateFullMarcatoriModal();
-            const modal = document.getElementById('marcatori-modal');
-            if (modal) modal.classList.add('active');
-        });
-    }
+        const fullMarcatoriBtn = document.getElementById('open-full-marcatori');
+        if (fullMarcatoriBtn) {
+            fullMarcatoriBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await populateFullMarcatoriModal();
+                const modal = document.getElementById('marcatori-modal');
+                if (modal) modal.classList.add('active');
+            });
+        }
 
-    const fullInfortunatiBtn = document.getElementById('open-full-infortunati');
-    if (fullInfortunatiBtn) {
-        fullInfortunatiBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            await populateFullInfortunatiModal();
-            const modal = document.getElementById('infortunati-modal');
-            if (modal) modal.classList.add('active');
-        });
-    }
+        const fullInfortunatiBtn = document.getElementById('open-full-infortunati');
+        if (fullInfortunatiBtn) {
+            fullInfortunatiBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await populateFullInfortunatiModal();
+                const modal = document.getElementById('infortunati-modal');
+                if (modal) modal.classList.add('active');
+            });
+        }
 
         const fullFantaBtn = document.getElementById('open-full-fanta');
-    if (fullFantaBtn) {
-        fullFantaBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            openFirstFantaMatchInTable();
-        });
-    }
+        if (fullFantaBtn) {
+            fullFantaBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openFirstFantaMatchInTable();
+            });
+        }
 
-    const fullPronoBtn = document.getElementById('open-full-prono');
-    if (fullPronoBtn) {
-        fullPronoBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            openFirstPronoMatchInTable();
-        });
-    }
-    
+        const fullPronoBtn = document.getElementById('open-full-prono');
+        if (fullPronoBtn) {
+            fullPronoBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openFirstPronoMatchInTable();
+            });
+        }
+
         const heroGiornataEl = document.getElementById('pred-hero-giornata');
-    const fantaData = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
-    if (heroGiornataEl && Array.isArray(fantaData) && fantaData.length) {
-        const giornate = Array.from(new Set(
-            fantaData.map(row => row['Giornata']).filter(g => g !== '')
-        )).sort((a, b) => Number(a) - Number(b));
-        if (giornate.length) {
-            heroGiornataEl.textContent = giornate[giornate.length - 1];
+        const fantaData = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
+        if (heroGiornataEl && Array.isArray(fantaData) && fantaData.length) {
+            const giornate = Array.from(new Set(
+                fantaData.map(row => row['Giornata']).filter(g => g !== '')
+            )).sort((a, b) => Number(a) - Number(b));
+            if (giornate.length) {
+                heroGiornataEl.textContent = giornate[giornate.length - 1];
+            }
         }
     }
 
-        if (path.includes('index') || path === '/' || path === '') {
+    // HOME
+    if (normalizedPath.includes('index') || normalizedPath === '/' || normalizedPath === '') {
         await populateClassifica();
         await populateMarcatori();
         await populateInfortunati();
-        // altre cose eventuali per l’home
     }
 
-    if (path.includes('risultati')) {
+    // PAGINA RISULTATI (track-record.html)
+    if (normalizedPath.includes('track-record') || normalizedPath.includes('risultati')) {
         await populateRisultatiGiornata();
     }
-
-    console.log('Site initialized');
-
-
 
     console.log('Site initialized');
 });
