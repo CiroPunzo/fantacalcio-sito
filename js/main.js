@@ -708,26 +708,16 @@ document.addEventListener('click', function(e) {
     const classificaModal = document.getElementById('classifica-modal');
     const marcatoriModal = document.getElementById('marcatori-modal');
     const infortunatiFullModal = document.getElementById('infortunati-modal');
+    const fantaModal = document.getElementById('pred-fanta-modal');
+    const pronoModal = document.getElementById('pred-prono-modal');
 
-    if (newsModal && e.target === newsModal) {
-        closeNewsModal();
-    }
-
-    if (injuryModal && e.target === injuryModal) {
-        closeInjuryModal();
-    }
-
-    if (classificaModal && e.target === classificaModal) {
-        classificaModal.classList.remove('active');
-    }
-
-    if (marcatoriModal && e.target === marcatoriModal) {
-        marcatoriModal.classList.remove('active');
-    }
-
-    if (infortunatiFullModal && e.target === infortunatiFullModal) {
-        infortunatiFullModal.classList.remove('active');
-    }
+    if (newsModal && e.target === newsModal) closeNewsModal();
+    if (injuryModal && e.target === injuryModal) closeInjuryModal();
+    if (classificaModal && e.target === classificaModal) classificaModal.classList.remove('active');
+    if (marcatoriModal && e.target === marcatoriModal) marcatoriModal.classList.remove('active');
+    if (infortunatiFullModal && e.target === infortunatiFullModal) infortunatiFullModal.classList.remove('active');
+    if (fantaModal && e.target === fantaModal) fantaModal.classList.remove('active');
+    if (pronoModal && e.target === pronoModal) pronoModal.classList.remove('active');
 
     if (e.target.classList.contains('modal-close')) {
         if (e.target.closest('#news-modal')) closeNewsModal();
@@ -735,8 +725,11 @@ document.addEventListener('click', function(e) {
         if (e.target.closest('#classifica-modal')) classificaModal.classList.remove('active');
         if (e.target.closest('#marcatori-modal')) marcatoriModal.classList.remove('active');
         if (e.target.closest('#infortunati-modal')) infortunatiFullModal.classList.remove('active');
+        if (e.target.closest('#pred-fanta-modal')) fantaModal.classList.remove('active');
+        if (e.target.closest('#pred-prono-modal')) pronoModal.classList.remove('active');
     }
 });
+
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
