@@ -628,6 +628,29 @@ function openFantaMatchModal(row) {
     modal.classList.add('active');
 }
 
+function openFirstFantaMatchInTable() {
+    const tbody = document.getElementById('pred-fanta-body');
+    if (!tbody) return;
+
+    const firstRow = tbody.querySelector('tr');
+    if (!firstRow) return;
+
+    // Simula il click sulla prima riga (riusa già openFantaMatchModal)
+    firstRow.click();
+}
+
+function openFirstPronoMatchInTable() {
+    const tbody = document.getElementById('pred-prono-body');
+    if (!tbody) return;
+
+    const firstRow = tbody.querySelector('tr');
+    if (!firstRow) return;
+
+    // Simula il click sulla prima riga (riusa già openPronoMatchModal)
+    firstRow.click();
+}
+
+
 // ===== PRONOSTICI (TAB PREVISIONI) =====
 async function populatePronostici(selectedGiornata = null) {
     const data = await fetchSheetDataJson(SHEET_NAMES.pronostici);
@@ -833,6 +856,23 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (modal) modal.classList.add('active');
         });
     }
+
+        const fullFantaBtn = document.getElementById('open-full-fanta');
+    if (fullFantaBtn) {
+        fullFantaBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openFirstFantaMatchInTable();
+        });
+    }
+
+    const fullPronoBtn = document.getElementById('open-full-prono');
+    if (fullPronoBtn) {
+        fullPronoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openFirstPronoMatchInTable();
+        });
+    }
+
 
     console.log('Site initialized');
 });
