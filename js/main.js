@@ -102,7 +102,7 @@ function closeNewsModal() {
     if (modal) modal.classList.remove('active');
 }
 
-// ===== GOOGLE SHEETS CONFIG =====
+// ===== GOOGLE S CONFIG =====
 const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48';
 
 const SHEET_NAMES = {
@@ -111,6 +111,8 @@ const SHEET_NAMES = {
     infortunati: 'Infortunati',
     analisiFantacalcio: 'AnalisiFantacalcio',
     pronostici: 'Pronostici'
+    risultatiGiornata: 'RisultatiGiornata'
+
 };
 
 // Fetch + parse robusto da Google Sheets (gviz)
@@ -721,6 +723,106 @@ async function populatePronostici(selectedGiornata = null) {
     });
 }
 
+// ===== RISULTATI GIORNATA (PAGINA RISULTATI) =====
+async function populateRisultatiGiornata() {
+    const data = await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
+    if (!Array.isArray(data) || data.length === 0) return;
+
+    // Pulisci righe vuote
+    const rows = data.filter(row => row['Giornata']);
+
+    if (rows.length === 0) return;
+
+    // Calcolo KPI globali
+    const accPronList = rows
+        .map(r => Number(r['AccuracyPronostici']))
+        .filter(v => !isNaN(v));
+    const accFantaList = rows
+        .map(r => Number(r['AccuracyFanta']))
+        .filter(v => !isNaN(v));
+
+    const avg = arr => arr.length ? (arr.reduce((s, v) => s + v, 0) / arr.length) : 0;
+
+    const accPronAvg = avg(accPronList);
+    const accFantaAvg = avg(accFantaList);
+
+    // Miglior giornata per accuracy pronostici
+    let bestRound = null;
+    let bestAcc = -1;
+    rows.forEach(r => {
+        const acc = Number(r['AccuracyPronostici']);
+        if (!isNaN(acc) && acc > bestAcc) {
+            bestAcc = acc;
+            bestRound = r['Giornata'];
+        }
+    });
+
+    // Aggiorna hero KPI
+    const globalAccEl = document.getElementById('res-global-accuracy');
+    const giornateCountEl = document.getElementById('res-giornate-count');
+    const lastGiornataEl = document.getElementById('res-last-giornata');
+
+    if (globalAccEl && accPronList.length) {
+        globalAccEl.textContent = `Accuracy globale: ${accPronAvg.toFixed(1)}%`;
+    }
+    if (giornateCountEl) {
+        giornateCountEl.textContent = `Giornate analizzate: ${rows.length}`;
+    }
+
+    if (lastGiornataEl) {
+        const giornateOrd = Array.from(new Set(
+            rows.map(r => r['Giornata'])
+        )).sort((a, b) => Number(a) - Number(b));
+        if (giornateOrd.length) {
+            lastGiornataEl.textContent = giornateOrd[giornateOrd.length - 1];
+        }
+    }
+
+    // Aggiorna KPI cards
+    const kpiPronEl = document.getElementById('res-kpi-pronostici');
+    const kpiFantaEl = document.getElementById('res-kpi-fanta');
+    const kpiBestRoundEl = document.getElementById('res-kpi-best-round');
+    const kpiBestRoundNoteEl = document.getElementById('res-kpi-best-round-note');
+
+    if (kpiPronEl) kpiPronEl.textContent = accPronList.length ? `${accPronAvg.toFixed(1)}%` : '-';
+    if (kpiFantaEl) kpiFantaEl.textContent = accFantaList.length ? `${accFantaAvg.toFixed(1)}%` : '-';
+    if (kpiBestRoundEl) {
+        kpiBestRoundEl.textContent = bestRound ? `Giornata ${bestRound}` : '-';
+    }
+    if (kpiBestRoundNoteEl && bestRound && bestAcc >= 0) {
+        kpiBestRoundNoteEl.textContent = `Giornata ${bestRound} con ${bestAcc.toFixed(1)}% di accuracy pronostici.`;
+    }
+
+    // Popola tabella storico
+    const tbody = document.getElementById('results-history-body');
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+
+    // Ordina per giornata crescente
+    rows.sort((a, b) => Number(a['Giornata']) - Number(b['Giornata']))
+        .forEach(r => {
+            const tr = document.createElement('tr');
+
+            const g = r['Giornata'] || '-';
+            const accPron = r['AccuracyPronostici'] || '-';
+            const accFanta = r['AccuracyFanta'] || '-';
+            const bestMatch = r['MigliorMatch'] || '-';
+            const worstMatch = r['PeggiorMatch'] || '-';
+
+            tr.innerHTML = `
+                <td>${g}</td>
+                <td>${accPron}%</td>
+                <td>${accFanta}%</td>
+                <td>${bestMatch}</td>
+                <td>${worstMatch}</td>
+            `;
+
+            tbody.appendChild(tr);
+        });
+}
+
+
 function openPronoMatchModal(row) {
     const modal = document.getElementById('pred-prono-modal');
     const body = document.getElementById('pred-prono-modal-body');
@@ -818,14 +920,18 @@ document.addEventListener('click', function(e) {
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
-    initHeroSlider();
+   initHeroSlider();
     setupMobileNavbar();
     setupDashboardTabs();
-    await populateClassifica();
-    await populateMarcatori();
-    await populateInfortunati();
-    await populateAnalisiFantacalcio();
-    await populatePronostici();
+
+    const path = window.location.pathname;
+
+    if (path.includes('predictions')) {
+        await populateClassifica();
+        await populateMarcatori();
+        await populateInfortunati();
+        await populateAnalisiFantacalcio();
+        await populatePronostici();
 
     const fullClassificaBtn = document.getElementById('open-full-classifica');
     if (fullClassificaBtn) {
@@ -883,6 +989,19 @@ document.addEventListener('DOMContentLoaded', async function() {
             heroGiornataEl.textContent = giornate[giornate.length - 1];
         }
     }
+
+        if (path.includes('index') || path === '/' || path === '') {
+        await populateClassifica();
+        await populateMarcatori();
+        await populateInfortunati();
+        // altre cose eventuali per l’home
+    }
+
+    if (path.includes('risultati')) {
+        await populateRisultatiGiornata();
+    }
+
+    console.log('Site initialized');
 
 
 
