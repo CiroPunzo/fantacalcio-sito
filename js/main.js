@@ -541,15 +541,15 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
 
     tbody.innerHTML = '';
 
-        filtrati.forEach(row => {
+    filtrati.forEach(row => {
         const tr = document.createElement('tr');
         tr.classList.add('clickable');
 
         const casa = row['SquadraCasa'] || '-';
         const trasferta = row['SquadraTrasferta'] || '-';
         const orario = row['Orario'] || '-';
-        const esito = row['EsitoPrincipale'] || '-';
-        const conf = row['Confidenza'] || '-';
+        const consigliati = row['Consigliati'] || '-';
+        const daEvitare = row['DaEvitare'] || '-';
 
         const logoCasa = CLUB_LOGOS[casa] || '';
         const logoTrasferta = CLUB_LOGOS[trasferta] || '';
@@ -567,39 +567,31 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
                 </div>
             </td>
             <td>${orario}</td>
-            <td>${esito}</td>
-            <td>${conf}</td>
+            <td>${consigliati}</td>
+            <td>${daEvitare}</td>
         `;
 
-        tr.addEventListener('click', () => openPronoMatchModal(row));
+        tr.addEventListener('click', () => openFantaMatchModal(row));
         tbody.appendChild(tr);
     });
-
 }
 
-function openPronoMatchModal(row) {
-    const modal = document.getElementById('pred-prono-modal');
-    const body = document.getElementById('pred-prono-modal-body');
+function openFantaMatchModal(row) {
+    const modal = document.getElementById('pred-fanta-modal');
+    const body = document.getElementById('pred-fanta-modal-body');
     if (!modal || !body) return;
 
     const casa = row['SquadraCasa'] || '-';
     const trasferta = row['SquadraTrasferta'] || '-';
-    const giornata = row['Giornata'] || '-';
-    const orario = row['Orario'] || '-';
-    const esito = row['EsitoPrincipale'] || '-';
-    const alt1 = row['EsitoSecondario1'] || '';
-    const alt2 = row['EsitoSecondario2'] || '';
-    const conf = row['Confidenza'] || '-';
-    const motivazione = row['Motivazione'] || '-';
+    const previsione = row['PrevisioneRisultato'] || '-';
+    const analisi = row['AnalisiTattica'] || '-';
+    const consCasa = row['ConsigliatiCasa'] || row['Consigliati'] || '-';
+    const consTrasf = row['ConsigliatiTrasferta'] || '-';
+    const evitaCasa = row['EvitaCasa'] || row['DaEvitare'] || '-';
+    const evitaTrasf = row['EvitaTrasferta'] || '-';
 
     const logoCasa = CLUB_LOGOS[casa] || '';
     const logoTrasferta = CLUB_LOGOS[trasferta] || '';
-
-    // stelline confidenza (max 5)
-    const maxStars = 5;
-    const confNum = Number(conf) || 0;
-    const stars = '★'.repeat(Math.max(0, Math.min(confNum, maxStars))) +
-                  '☆'.repeat(Math.max(0, maxStars - Math.min(confNum, maxStars)));
 
     body.innerHTML = `
         <div class="pred-modal-header">
@@ -609,35 +601,28 @@ function openPronoMatchModal(row) {
             </div>
             <div class="pred-modal-title-block">
                 <h2>${casa} vs ${trasferta}</h2>
-                <p class="pred-modal-subtitle">
-                    Giornata ${giornata} · ${orario}
-                </p>
+                <p class="pred-modal-subtitle">Previsione risultato: <strong>${previsione}</strong></p>
             </div>
         </div>
 
-        <div class="pred-modal-section pred-prono-main">
-            <div class="pred-prono-main-esito">
-                <span class="pred-prono-label">Esito principale</span>
-                <p class="pred-prono-esito">${esito}</p>
-            </div>
-            <div class="pred-prono-main-conf">
-                <span class="pred-prono-label">Confidenza</span>
-                <p class="pred-prono-stars">${stars} <span class="pred-prono-conf-num">${conf}/5</span></p>
-            </div>
+        <div class="pred-modal-section">
+            <h3>Analisi tattica</h3>
+            <p>${analisi}</p>
         </div>
 
-        ${alt1 || alt2 ? `
-        <div class="pred-modal-section">
-            <h3>Altri esiti considerati</h3>
-            <ul class="pred-prono-alt-list">
-                ${alt1 ? `<li>${alt1}</li>` : ''}
-                ${alt2 ? `<li>${alt2}</li>` : ''}
-            </ul>
-        </div>` : ''}
-
-        <div class="pred-modal-section">
-            <h3>Motivazione</h3>
-            <p>${motivazione}</p>
+        <div class="pred-modal-grid">
+            <div class="pred-modal-col">
+                <h4>${casa} – Consigliati</h4>
+                <p>${consCasa}</p>
+                <h4>${casa} – Da evitare</h4>
+                <p>${evitaCasa}</p>
+            </div>
+            <div class="pred-modal-col">
+                <h4>${trasferta} – Consigliati</h4>
+                <p>${consTrasf}</p>
+                <h4>${trasferta} – Da evitare</h4>
+                <p>${evitaTrasf}</p>
+            </div>
         </div>
     `;
 
