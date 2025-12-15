@@ -571,7 +571,6 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
             <td>${daEvitare}</td>
         `;
 
-        // al click apriamo la modal dettagliata
         tr.addEventListener('click', () => openFantaMatchModal(row));
         tbody.appendChild(tr);
     });
@@ -630,53 +629,6 @@ function openFantaMatchModal(row) {
     modal.classList.add('active');
 }
 
-    const giornataCorrente = selectedGiornata || (giornate.length ? giornate[giornate.length - 1] : null);
-    if (!giornataCorrente) return;
-
-    if (select) {
-        select.value = giornataCorrente;
-        select.onchange = () => {
-            populateAnalisiFantacalcio(select.value);
-        };
-    }
-
-    const filtrati = data.filter(row => String(row['Giornata']) === String(giornataCorrente));
-
-    tbody.innerHTML = '';
-
-    filtrati.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.classList.add('clickable');
-
-        const casa = row['SquadraCasa'] || '-';
-        const trasferta = row['SquadraTrasferta'] || '-';
-        const orario = row['Orario'] || '-';
-        const consigliati = row['Consigliati'] || '-';
-        const daEvitare = row['DaEvitare'] || '-';
-
-        const logoCasa = CLUB_LOGOS[casa] || '';
-        const logoTrasferta = CLUB_LOGOS[trasferta] || '';
-
-        tr.innerHTML = `
-            <td>
-                <div class="pred-match-cell">
-                    <div class="pred-match-cell-logos">
-                        ${logoCasa ? `<img src="${logoCasa}" alt="${casa}">` : ''}
-                        ${logoTrasferta ? `<img src="${logoTrasferta}" alt="${trasferta}">` : ''}
-                    </div>
-                    <div class="pred-match-cell-names">
-                        <span><strong>${casa}</strong> vs <strong>${trasferta}</strong></span>
-                    </div>
-                </div>
-            </td>
-            <td>${orario}</td>
-            <td>${consigliati}</td>
-            <td>${daEvitare}</td>
-        `;
-
-        tbody.appendChild(tr);
-    });
-}
 
 // ===== PRONOSTICI (TAB PREVISIONI) =====
 async function populatePronostici(selectedGiornata = null) {
