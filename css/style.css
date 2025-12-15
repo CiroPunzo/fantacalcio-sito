@@ -1816,6 +1816,69 @@ html, body {
     color: #e0e0e0;
 }
 
+/* Banner giocatore sotto hero */
+.pred-player-highlight {
+    padding: 26px 20px 10px;
+    background: radial-gradient(circle at top left, rgba(184,149,107,0.16) 0%, rgba(4,4,18,0.98) 40%, #020012 100%);
+    border-bottom: 1px solid rgba(184,149,107,0.18);
+}
+
+.pred-player-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+}
+
+.pred-player-image-wrap {
+    position: relative;
+    max-width: 260px;
+}
+
+.pred-player-image {
+    width: 100%;
+    display: block;
+    border-radius: 18px;
+    object-fit: cover;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.6);
+}
+
+.pred-player-kicker {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #b0b0b0;
+    margin-bottom: 4px;
+}
+
+.pred-player-title {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.pred-player-desc {
+    font-size: 0.95rem;
+    color: #d5d5d5;
+    max-width: 520px;
+}
+
+@media (max-width: 768px) {
+    .pred-player-highlight {
+        padding: 18px 20px 6px;
+    }
+
+    .pred-player-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .pred-player-image-wrap {
+        max-width: 220px;
+    }
+}
+
+
 
 
 
