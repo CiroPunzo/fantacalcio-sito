@@ -872,6 +872,18 @@ document.addEventListener('DOMContentLoaded', async function() {
             openFirstPronoMatchInTable();
         });
     }
+    
+        const heroGiornataEl = document.getElementById('pred-hero-giornata');
+    const fantaData = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
+    if (heroGiornataEl && Array.isArray(fantaData) && fantaData.length) {
+        const giornate = Array.from(new Set(
+            fantaData.map(row => row['Giornata']).filter(g => g !== '')
+        )).sort((a, b) => Number(a) - Number(b));
+        if (giornate.length) {
+            heroGiornataEl.textContent = giornate[giornate.length - 1];
+        }
+    }
+
 
 
     console.log('Site initialized');
