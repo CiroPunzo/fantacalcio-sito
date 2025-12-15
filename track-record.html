@@ -14,25 +14,29 @@
 <body>
 
   <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="container navbar-inner">
-      <a href="index.html" class="logo">
-        <span class="logo-text">ProFantasy League</span>
-      </a>
+ <header class="navbar">
+  <div class="container navbar-inner">
+    <a href="index.html" class="logo-link">
+      <img src="img/logo-square.png" alt="Ciro Profantasy" class="logo-image">
+      <span class="logo-text">Ciro Profantasy</span>
+    </a>
 
-      <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-label="Menu">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
+    <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-label="Menu">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
 
-      <nav id="nav-links" class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="predictions.html">Previsioni</a>
-        <a href="track-record.html" class="active">Risultati</a>
-      </nav>
-    </div>
-  </header>
+    <nav id="nav-links" class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="predictions.html">Previsioni</a>
+      <a href="track-record.html" class="active">Risultati</a>
+      <a href="about.html">Chi sono</a>
+      <a href="contact.html">Contatti</a>
+    </nav>
+  </div>
+</header>
+
 
   <!-- HERO RISULTATI -->
   <header class="hero-results">
@@ -117,24 +121,56 @@
 
   <!-- FOOTER SEMPLIFICATO -->
   <footer class="footer-premium">
-    <div class="footer-container">
-      <div class="footer-main">
-        <div class="footer-col footer-col-brand">
-          <div class="footer-logo">
-            <img src="img/logo-square.png" alt="ProFantasy League" class="footer-logo-img">
-          </div>
+  <div class="footer-container">
+
+    <div class="footer-main">
+      <!-- Colonna brand -->
+      <div class="footer-col footer-col-brand">
+        <div class="footer-logo">
+          <img src="img/logo-square.png" alt="Ciro Profantasy" class="footer-logo-img">
+          <h4>Ciro Profantasy</h4>
+        </div>
+        <p class="footer-bio">
+          Analisi dati, pronostici e consigli fantacalcio per dominare la tua lega.
+        </p>
+        <div class="footer-socials">
+          <a href="https://t.me/..." target="_blank" class="footer-social-link">Telegram</a>
+          <a href="https://www.tiktok.com/@..." target="_blank" class="footer-social-link">TikTok</a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p class="footer-copyright">
-          © ProFantasy League – Tutti i diritti riservati.
-        </p>
+
+      <!-- Colonna link utili -->
+      <div class="footer-col">
+        <h5 class="footer-col-title">Sezioni</h5>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="predictions.html">Previsioni</a></li>
+          <li><a href="track-record.html">Risultati</a></li>
+        </ul>
+      </div>
+
+      <!-- Colonna servizi -->
+      <div class="footer-col">
+        <h5 class="footer-col-title">Servizi</h5>
+        <ul class="footer-links">
+          <li><a href="about.html">Chi sono</a></li>
+          <li><a href="contact.html">Contatti</a></li>
+        </ul>
       </div>
     </div>
-  </footer>
 
-  <script src="main.js"></script>
-</body>
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        © ProFantasy League – Tutti i diritti riservati.
+      </p>
+      <p class="footer-disclaimer">
+        Le previsioni hanno finalità informative e non costituiscono consulenza finanziaria o di gioco.
+      </p>
+    </div>
+
+  </div>
+</footer>
+
 </html>
 
 </body>
