@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Risultati previsioni ProFantasy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- FONT & STILI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Stessi font usati nel resto del sito -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="results-page">
+
+    <!-- NAVBAR (stessa di index/predictions, adatta solo href se servono) -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">ProFantasy League</a>
+            <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav id="nav-links" class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="predictions.html">Previsioni</a>
+                <a href="risultati.html" class="active">Risultati</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO RISULTATI -->
+    <header class="hero-results">
+        <div class="container hero-results-inner">
+            <div class="hero-results-content">
+                <span class="hero-tag">Risultati</span>
+                <h1 class="hero-results-title">
+                    Risultati previsioni ProFantasy
+                </h1>
+                <p class="hero-results-text">
+                    Performance di analisi fantacalcio e pronostici ProFantasy, giornata per giornata.
+                </p>
+
+                <div class="hero-results-meta">
+                    <span class="badge-pill" id="res-global-accuracy">Accuracy globale: -</span>
+                    <span class="badge-pill badge-soft" id="res-giornate-count">Giornate analizzate: -</span>
+                </div>
+            </div>
+
+            <div class="hero-results-side">
+                <div class="res-hero-badge">
+                    <span class="res-hero-badge-label">Ultima giornata</span>
+                    <span class="res-hero-badge-value" id="res-last-giornata">-</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- KPI RIASSUNTIVI -->
+        <section class="results-kpi">
+            <div class="container results-kpi-inner">
+                <div class="results-kpi-card">
+                    <p class="results-kpi-label">Accuracy pronostici</p>
+                    <p class="results-kpi-value" id="res-kpi-pronostici">-</p>
+                    <p class="results-kpi-sub">Percentuale totale pronostici corretti.</p>
+                </div>
+                <div class="results-kpi-card">
+                    <p class="results-kpi-label">Accuracy fantacalcio</p>
+                    <p class="results-kpi-value" id="res-kpi-fanta">-</p>
+                    <p class="results-kpi-sub">Indicatori di consigli giocatori centrati.</p>
+                </div>
+                <div class="results-kpi-card">
+                    <p class="results-kpi-label">Miglior giornata</p>
+                    <p class="results-kpi-value" id="res-kpi-best-round">-</p>
+                    <p class="results-kpi-sub" id="res-kpi-best-round-note">La giornata con l’accuracy più alta.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STORICO GIORNATE -->
+        <section class="results-history">
+            <div class="container">
+                <div class="results-history-header">
+                    <h2 class="results-history-title">Storico giornate</h2>
+                    <p class="results-history-subtitle">
+                        Riepilogo di come hanno performato le previsioni per ogni giornata di Serie A.
+                    </p>
+                </div>
+
+                <div class="dashboard-table-wrapper">
+                    <table class="dashboard-table results-table">
+                        <thead>
+                            <tr>
+                                <th>Giornata</th>
+                                <th>Accuracy pronostici</th>
+                                <th>Accuracy fantacalcio</th>
+                                <th>Colpo di giornata</th>
+                                <th>Flop di giornata</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-history-body">
+                            <!-- Righe popolate da Google Sheets -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER (stesso del sito) -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p class="footer-copy">
+                © ProFantasy League – Tutti i diritti riservati.
+            </p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
