@@ -571,6 +571,109 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
             <td>${daEvitare}</td>
         `;
 
+        // al click apriamo la modal dettagliata
+        tr.addEventListener('click', () => openFantaMatchModal(row));
+        tbody.appendChild(tr);
+    });
+}
+
+function openFantaMatchModal(row) {
+    const modal = document.getElementById('pred-fanta-modal');
+    const body = document.getElementById('pred-fanta-modal-body');
+    if (!modal || !body) return;
+
+    const casa = row['SquadraCasa'] || '-';
+    const trasferta = row['SquadraTrasferta'] || '-';
+    const previsione = row['PrevisioneRisultato'] || '-';
+    const analisi = row['AnalisiTattica'] || '-';
+    const consCasa = row['ConsigliatiCasa'] || row['Consigliati'] || '-';
+    const consTrasf = row['ConsigliatiTrasferta'] || '-';
+    const evitaCasa = row['EvitaCasa'] || row['DaEvitare'] || '-';
+    const evitaTrasf = row['EvitaTrasferta'] || '-';
+
+    const logoCasa = CLUB_LOGOS[casa] || '';
+    const logoTrasferta = CLUB_LOGOS[trasferta] || '';
+
+    body.innerHTML = `
+        <div class="pred-modal-header">
+            <div class="pred-modal-logos">
+                ${logoCasa ? `<img src="${logoCasa}" alt="${casa}">` : ''}
+                ${logoTrasferta ? `<img src="${logoTrasferta}" alt="${trasferta}">` : ''}
+            </div>
+            <div class="pred-modal-title-block">
+                <h2>${casa} vs ${trasferta}</h2>
+                <p class="pred-modal-subtitle">Previsione risultato: <strong>${previsione}</strong></p>
+            </div>
+        </div>
+
+        <div class="pred-modal-section">
+            <h3>Analisi tattica</h3>
+            <p>${analisi}</p>
+        </div>
+
+        <div class="pred-modal-grid">
+            <div class="pred-modal-col">
+                <h4>${casa} – Consigliati</h4>
+                <p>${consCasa}</p>
+                <h4>${casa} – Da evitare</h4>
+                <p>${evitaCasa}</p>
+            </div>
+            <div class="pred-modal-col">
+                <h4>${trasferta} – Consigliati</h4>
+                <p>${consTrasf}</p>
+                <h4>${trasferta} – Da evitare</h4>
+                <p>${evitaTrasf}</p>
+            </div>
+        </div>
+    `;
+
+    modal.classList.add('active');
+}
+
+    const giornataCorrente = selectedGiornata || (giornate.length ? giornate[giornate.length - 1] : null);
+    if (!giornataCorrente) return;
+
+    if (select) {
+        select.value = giornataCorrente;
+        select.onchange = () => {
+            populateAnalisiFantacalcio(select.value);
+        };
+    }
+
+    const filtrati = data.filter(row => String(row['Giornata']) === String(giornataCorrente));
+
+    tbody.innerHTML = '';
+
+    filtrati.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.classList.add('clickable');
+
+        const casa = row['SquadraCasa'] || '-';
+        const trasferta = row['SquadraTrasferta'] || '-';
+        const orario = row['Orario'] || '-';
+        const consigliati = row['Consigliati'] || '-';
+        const daEvitare = row['DaEvitare'] || '-';
+
+        const logoCasa = CLUB_LOGOS[casa] || '';
+        const logoTrasferta = CLUB_LOGOS[trasferta] || '';
+
+        tr.innerHTML = `
+            <td>
+                <div class="pred-match-cell">
+                    <div class="pred-match-cell-logos">
+                        ${logoCasa ? `<img src="${logoCasa}" alt="${casa}">` : ''}
+                        ${logoTrasferta ? `<img src="${logoTrasferta}" alt="${trasferta}">` : ''}
+                    </div>
+                    <div class="pred-match-cell-names">
+                        <span><strong>${casa}</strong> vs <strong>${trasferta}</strong></span>
+                    </div>
+                </div>
+            </td>
+            <td>${orario}</td>
+            <td>${consigliati}</td>
+            <td>${daEvitare}</td>
+        `;
+
         tbody.appendChild(tr);
     });
 }
