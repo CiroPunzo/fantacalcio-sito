@@ -1878,9 +1878,168 @@ html, body {
     }
 }
 
+/* ===== PAGINA RISULTATI ===== */
 
+/* Hero risultati */
+.hero-results {
+    background: radial-gradient(circle at top left, #081655 0%, #020041 40%, #010020 100%);
+    padding: 70px 20px 40px;
+    border-bottom: 1px solid rgba(184, 149, 107, 0.25);
+}
 
+.hero-results-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
 
+.hero-results-content {
+    max-width: 680px;
+}
+
+.hero-results-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 2.4rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+}
+
+.hero-results-text {
+    font-size: 1.05rem;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.hero-results-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Badge lato destro hero risultati */
+.hero-results-side {
+    flex-shrink: 0;
+}
+
+.res-hero-badge {
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(184,149,107,0.18), rgba(34,34,34,0.95));
+    border: 1px solid rgba(184,149,107,0.5);
+    text-align: right;
+    min-width: 150px;
+}
+
+.res-hero-badge-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #b0b0b0;
+    margin-bottom: 3px;
+}
+
+.res-hero-badge-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* KPI cards */
+.results-kpi {
+    padding: 32px 20px 18px;
+    background: linear-gradient(135deg, #020041 0%, #010020 100%);
+    border-bottom: 1px solid rgba(184,149,107,0.18);
+}
+
+.results-kpi-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.results-kpi-card {
+    background: rgba(5, 5, 30, 0.9);
+    border-radius: 14px;
+    border: 1px solid rgba(184,149,107,0.35);
+    padding: 16px 18px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.6);
+}
+
+.results-kpi-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #b0b0b0;
+    margin-bottom: 6px;
+}
+
+.results-kpi-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.results-kpi-sub {
+    font-size: 0.85rem;
+    color: #d0d0d0;
+}
+
+/* Storico giornate */
+.results-history {
+    padding: 32px 20px 40px;
+    background: #010020;
+}
+
+.results-history-header {
+    max-width: 1200px;
+    margin: 0 auto 18px;
+}
+
+.results-history-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #B8956B;
+    margin-bottom: 6px;
+}
+
+.results-history-subtitle {
+    font-size: 0.95rem;
+    color: #d0d0d0;
+}
+
+/* Tabella risultati riusa .dashboard-table, qui solo qualche tweak se vuoi */
+.results-table td,
+.results-table th {
+    white-space: nowrap;
+}
+
+.results-table td:nth-child(4),
+.results-table td:nth-child(5) {
+    white-space: normal;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+    .results-kpi-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-results-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
 
 /* ===== FOOTER PREMIUM ===== */
 .footer-premium {
@@ -2698,169 +2857,6 @@ html, body {
     .footer-copyright,
     .footer-disclaimer {
         font-size: 0.8rem;
-    }
-}
-
-/* ===== PAGINA RISULTATI ===== */
-
-/* Hero risultati */
-.hero-results {
-    background: radial-gradient(circle at top left, #081655 0%, #020041 40%, #010020 100%);
-    padding: 70px 20px 40px;
-    border-bottom: 1px solid rgba(184, 149, 107, 0.25);
-}
-
-.hero-results-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-}
-
-.hero-results-content {
-    max-width: 680px;
-}
-
-.hero-results-title {
-    font-family: 'Anton', sans-serif;
-    font-size: 2.4rem;
-    color: #ffffff;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 12px;
-}
-
-.hero-results-text {
-    font-size: 1.05rem;
-    color: #e0e0e0;
-    margin-bottom: 20px;
-}
-
-.hero-results-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-/* Badge lato destro hero risultati */
-.hero-results-side {
-    flex-shrink: 0;
-}
-
-.res-hero-badge {
-    padding: 10px 16px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, rgba(184,149,107,0.18), rgba(34,34,34,0.95));
-    border: 1px solid rgba(184,149,107,0.5);
-    text-align: right;
-    min-width: 150px;
-}
-
-.res-hero-badge-label {
-    display: block;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: #b0b0b0;
-    margin-bottom: 3px;
-}
-
-.res-hero-badge-value {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #ffffff;
-}
-
-/* KPI cards */
-.results-kpi {
-    padding: 32px 20px 18px;
-    background: linear-gradient(135deg, #020041 0%, #010020 100%);
-    border-bottom: 1px solid rgba(184,149,107,0.18);
-}
-
-.results-kpi-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-}
-
-.results-kpi-card {
-    background: rgba(5, 5, 30, 0.9);
-    border-radius: 14px;
-    border: 1px solid rgba(184,149,107,0.35);
-    padding: 16px 18px;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.6);
-}
-
-.results-kpi-label {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #b0b0b0;
-    margin-bottom: 6px;
-}
-
-.results-kpi-value {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 4px;
-}
-
-.results-kpi-sub {
-    font-size: 0.85rem;
-    color: #d0d0d0;
-}
-
-/* Storico giornate */
-.results-history {
-    padding: 32px 20px 40px;
-    background: #010020;
-}
-
-.results-history-header {
-    max-width: 1200px;
-    margin: 0 auto 18px;
-}
-
-.results-history-title {
-    font-family: 'Anton', sans-serif;
-    font-size: 1.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #B8956B;
-    margin-bottom: 6px;
-}
-
-.results-history-subtitle {
-    font-size: 0.95rem;
-    color: #d0d0d0;
-}
-
-/* Tabella risultati riusa .dashboard-table, qui solo qualche tweak se vuoi */
-.results-table td,
-.results-table th {
-    white-space: nowrap;
-}
-
-.results-table td:nth-child(4),
-.results-table td:nth-child(5) {
-    white-space: normal;
-}
-
-/* Responsivo */
-@media (max-width: 900px) {
-    .results-kpi-inner {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-results-inner {
-        flex-direction: column;
-        align-items: flex-start;
     }
 }
 
