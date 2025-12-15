@@ -824,7 +824,7 @@ function openPronoMatchModal(row) {
     const esito = row['EsitoPrincipale'] || '-';
     const alt1 = row['EsitoSecondario1'] || '';
     const alt2 = row['EsitoSecondario2'] || '';
-    the conf = row['Confidenza'] || '-';
+    const conf = row['Confidenza'] || '-';
     const motivazione = row['Motivazione'] || '-';
 
     const logoCasa = CLUB_LOGOS[casa] || '';
@@ -913,11 +913,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     setupMobileNavbar();
     setupDashboardTabs();
 
-    const path = window.location.pathname;
-    const normalizedPath = path.toLowerCase();
+    const path = window.location.pathname.toLowerCase();
 
     // Pagina PREVISIONI
-    if (normalizedPath.includes('predictions')) {
+    if (path.includes('predictions')) {
         await populateClassifica();
         await populateMarcatori();
         await populateInfortunati();
@@ -983,19 +982,20 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     // HOME
-    if (normalizedPath.includes('index') || normalizedPath === '/' || normalizedPath === '') {
+    if (path.endsWith('/') || path.endsWith('/index.html')) {
         await populateClassifica();
         await populateMarcatori();
         await populateInfortunati();
     }
 
     // PAGINA RISULTATI (track-record.html)
-    if (normalizedPath.includes('track-record') || normalizedPath.includes('risultati')) {
+    if (path.includes('track-record') || path.includes('risultati')) {
         await populateRisultatiGiornata();
     }
 
     console.log('Site initialized');
 });
+
 
 
 
