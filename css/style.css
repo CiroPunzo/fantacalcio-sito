@@ -2261,7 +2261,16 @@ html, body {
   border: 1px solid rgba(184,149,107,0.25);
   padding: 18px 18px 20px;
   box-shadow: 0 10px 28px rgba(0,0,0,0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
+
+.about-method-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.8);
+  border-color: rgba(184,149,107,0.7);
+  background: radial-gradient(circle at top, rgba(184,149,107,0.18), rgba(5,5,25,1));
+}
+
 
 .about-method-card h3 {
   font-size: 1.05rem;
