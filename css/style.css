@@ -2293,37 +2293,69 @@ html, body {
 /* Per chi è */
 .about-for-who {
   background: #010020;
-  padding: 50px 20px;
+  padding: 60px 20px;
   border-top: 1px solid rgba(184,149,107,0.18);
   border-bottom: 1px solid rgba(184,149,107,0.18);
 }
 
-.about-for-who-inner {
-  max-width: 1200px;
-  margin: 0 auto;
+.about-for-who-grid {
+  max-width: 1100px;
+  margin: 0 auto 24px;
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
-  gap: 28px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
 }
 
-.about-for-who-list {
-  list-style: disc;
-  padding-left: 20px;
-  color: #d8d8d8;
-  font-size: 0.96rem;
+.about-for-who-card {
+  background: rgba(5,5,25,0.96);
+  border-radius: 14px;
+  border: 1px solid rgba(184,149,107,0.25);
+  padding: 18px 18px 20px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
-.about-for-who-list li {
+.about-for-who-card h3 {
+  font-size: 1.05rem;
+  color: #ffffff;
   margin-bottom: 8px;
 }
 
-.about-for-who-highlight {
-  padding: 18px 20px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(184,149,107,0.15), rgba4,4,18,0.98);
+.about-for-who-card p {
+  font-size: 0.9rem;
+  color: #d0d0d0;
+}
+
+.about-for-who-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.8);
+  border-color: rgba(184,149,107,0.7);
+  background: radial-gradient(circle at top, rgba(184,149,107,0.18), rgba(5,5,25,1));
+}
+
+.about-for-who-note {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(184,149,107,0.14), rgba4,4,18,0.98);
   border: 1px solid rgba(184,149,107,0.4);
-  font-size: 0.94rem;
+  font-size: 0.9rem;
   color: #f0f0f0;
+  text-align: center;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .about-for-who-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .about-for-who-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* CTA */
