@@ -2018,6 +2018,31 @@ html, body {
     color: #d0d0d0;
 }
 
+/* KPI cards */
+.results-kpi-card {
+  background: rgba(5, 5, 30, 0.9);
+  border-radius: 14px;
+  border: 1px solid rgba(184, 149, 107, 0.35);
+  padding: 16px 18px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+/* Hover “premium” */
+.results-kpi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+  border-color: rgba(184, 149, 107, 0.8);
+  background: linear-gradient(135deg, rgba(184,149,107,0.18) 0%, rgba(5,5,30,0.95) 100%);
+}
+
+/* Dettaglio sul valore centrale */
+.results-kpi-card:hover .results-kpi-value {
+  color: #B8956B;
+  text-shadow: 0 0 12px rgba(184, 149, 107, 0.7);
+}
+
+
 /* Tabella risultati riusa .dashboard-table, qui solo qualche tweak se vuoi */
 .results-table td,
 .results-table th {
