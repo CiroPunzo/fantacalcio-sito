@@ -723,93 +723,93 @@ async function populatePronostici(selectedGiornata = null) {
 
 // ===== RISULTATI GIORNATA (PAGINA RISULTATI) =====
 async function populateRisultatiGiornata() {
-    const data = await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
-    if (!Array.isArray(data) || data.length === 0) return;
+  const data = await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
+  if (!Array.isArray(data) || data.length === 0) return;
 
-    const rows = data.filter(row => row['Risultati']);
-    if (rows.length === 0) return;
+  const rows = data.filter(row => row['Risultati']);
+  if (rows.length === 0) return;
 
-    const accPronList = rows
-        .map(r => Number(r['AccuracyPronostici']))
-        .filter(v => !isNaN(v));
-    const accFantaList = rows
-        .map(r => Number(r['AccuracyFanta']))
-        .filter(v => !isNaN(v));
+  const accPronList = rows
+    .map(r => Number(r['AccuracyPronostici']))
+    .filter(v => !isNaN(v));
+  const accFantaList = rows
+    .map(r => Number(r['AccuracyFanta']))
+    .filter(v => !isNaN(v));
 
-    const avg = arr => arr.length ? (arr.reduce((s, v) => s + v, 0) / arr.length) : 0;
+  const avg = arr => arr.length ? (arr.reduce((s, v) => s + v, 0) / arr.length) : 0;
 
-    const accPronAvg = avg(accPronList);
-    const accFantaAvg = avg(accFantaList);
+  const accPronAvg = avg(accPronList);
+  const accFantaAvg = avg(accFantaList);
 
-    let bestRound = null;
-    let bestAcc = -1;
-    rows.forEach(r => {
-        const acc = Number(r['AccuracyPronostici']);
-        if (!isNaN(acc) && acc > bestAcc) {
-            bestAcc = acc;
-            bestRound = r['Risultati'];
-        }
+  let bestRound = null;
+  let bestAcc = -1;
+  rows.forEach(r => {
+    const acc = Number(r['AccuracyPronostici']);
+    if (!isNaN(acc) && acc > bestAcc) {
+      bestAcc = acc;
+      bestRound = r['Risultati'];
+    }
+  });
+
+  const globalAccEl = document.getElementById('res-global-accuracy');
+  const giornateCountEl = document.getElementById('res-giornate-count');
+  const lastGiornataEl = document.getElementById('res-last-giornata');
+
+  if (globalAccEl && accPronList.length) {
+    globalAccEl.textContent = `Accuracy globale: ${accPronAvg.toFixed(1)}%`;
+  }
+  if (giornateCountEl) {
+    giornateCountEl.textContent = `Giornate analizzate: ${rows.length}`;
+  }
+
+  if (lastGiornataEl) {
+    const giornateOrd = Array.from(new Set(
+      rows.map(r => r['Risultati'])
+    )).sort((a, b) => Number(a) - Number(b));
+    if (giornateOrd.length) {
+      lastGiornataEl.textContent = giornateOrd[giornateOrd.length - 1];
+    }
+  }
+
+  const kpiPronEl = document.getElementById('res-kpi-pronostici');
+  const kpiFantaEl = document.getElementById('res-kpi-fanta');
+  const kpiBestRoundEl = document.getElementById('res-kpi-best-round');
+  const kpiBestRoundNoteEl = document.getElementById('res-kpi-best-round-note');
+
+  if (kpiPronEl) kpiPronEl.textContent = accPronList.length ? `${accPronAvg.toFixed(1)}%` : '-';
+  if (kpiFantaEl) kpiFantaEl.textContent = accFantaList.length ? `${accFantaAvg.toFixed(1)}%` : '-';
+  if (kpiBestRoundEl) {
+    kpiBestRoundEl.textContent = bestRound ? `Giornata ${bestRound}` : '-';
+  }
+  if (kpiBestRoundNoteEl && bestRound && bestAcc >= 0) {
+    kpiBestRoundNoteEl.textContent = `Giornata ${bestRound} con ${bestAcc.toFixed(1)}% di accuracy pronostici.`;
+  }
+
+  const tbody = document.getElementById('results-history-body');
+  if (!tbody) return;
+
+  tbody.innerHTML = '';
+
+  rows.sort((a, b) => Number(a['Risultati']) - Number(b['Risultati']))
+    .forEach(r => {
+      const tr = document.createElement('tr');
+
+      const g = r['Risultati'] || '-';
+      const accPron = r['AccuracyPronostici'] || '-';
+      const accFanta = r['AccuracyFanta'] || '-';
+      const bestMatch = r['MigliorMatch'] || '-';
+      const worstMatch = r['PeggiorMatch'] || '-';
+
+      tr.innerHTML = `
+        <td>${g}</td>
+        <td>${accPron}%</td>
+        <td>${accFanta}%</td>
+        <td>${bestMatch}</td>
+        <td>${worstMatch}</td>
+      `;
+
+      tbody.appendChild(tr);
     });
-
-    const globalAccEl = document.getElementById('res-global-accuracy');
-    const giornateCountEl = document.getElementById('res-giornate-count');
-    const lastGiornataEl = document.getElementById('res-last-giornata');
-
-    if (globalAccEl && accPronList.length) {
-        globalAccEl.textContent = `Accuracy globale: ${accPronAvg.toFixed(1)}%`;
-    }
-    if (giornateCountEl) {
-        giornateCountEl.textContent = `Giornate analizzate: ${rows.length}`;
-    }
-
-    if (lastGiornataEl) {
-        const giornateOrd = Array.from(new Set(
-            rows.map(r => r['Risultati'])
-        )).sort((a, b) => Number(a) - Number(b));
-        if (giornateOrd.length) {
-            lastGiornataEl.textContent = giornateOrd[giornateOrd.length - 1];
-        }
-    }
-
-    const kpiPronEl = document.getElementById('res-kpi-pronostici');
-    const kpiFantaEl = document.getElementById('res-kpi-fanta');
-    const kpiBestRoundEl = document.getElementById('res-kpi-best-round');
-    const kpiBestRoundNoteEl = document.getElementById('res-kpi-best-round-note');
-
-    if (kpiPronEl) kpiPronEl.textContent = accPronList.length ? `${accPronAvg.toFixed(1)}%` : '-';
-    if (kpiFantaEl) kpiFantaEl.textContent = accFantaList.length ? `${accFantaAvg.toFixed(1)}%` : '-';
-    if (kpiBestRoundEl) {
-        kpiBestRoundEl.textContent = bestRound ? `Risultati ${bestRound}` : '-';
-    }
-    if (kpiBestRoundNoteEl && bestRound && bestAcc >= 0) {
-        kpiBestRoundNoteEl.textContent = `Risultati ${bestRound} con ${bestAcc.toFixed(1)}% di accuracy pronostici.`;
-    }
-
-    const tbody = document.getElementById('results-history-body');
-    if (!tbody) return;
-
-    tbody.innerHTML = '';
-
-    rows.sort((a, b) => Number(a['Risultati']) - Number(b['Risultati']))
-        .forEach(r => {
-            const tr = document.createElement('tr');
-
-            const g = r['Risultati'] || '-';
-            const accPron = r['AccuracyPronostici'] || '-';
-            const accFanta = r['AccuracyFanta'] || '-';
-            const bestMatch = r['MigliorMatch'] || '-';
-            const worstMatch = r['PeggiorMatch'] || '-';
-
-            tr.innerHTML = `
-                <td>${g}</td>
-                <td>${accPron}%</td>
-                <td>${accFanta}%</td>
-                <td>${bestMatch}</td>
-                <td>${worstMatch}</td>
-            `;
-
-            tbody.appendChild(tr);
-        });
 }
 
 function openPronoMatchModal(row) {
