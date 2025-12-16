@@ -991,7 +991,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // PAGINA RISULTATI (track-record.html)
   if (path.includes('track-record') || path.includes('risultati')) {
-    await populaterisultatiGiornata();
+    await populateRisultatiGiornata();
   }
 
   console.log('Site initialized');
