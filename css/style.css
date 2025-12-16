@@ -2349,23 +2349,24 @@ html, body {
 @media (max-width: 768px) {
     /* NAVBAR MOBILE */
     .navbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        background: rgba(2, 0, 65, 0.96);
-        backdrop-filter: blur(8px);
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
-    }
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(2, 0, 65, 0.96);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+  }
+
 
     .navbar-inner {
-        padding: 10px 20px;
-        height: 56px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+    padding: 10px 20px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
     .logo {
         gap: 8px;
@@ -2382,10 +2383,10 @@ html, body {
 
     /* Mostra hamburger, nasconde links in linea */
     .nav-toggle {
-        display: flex;
-        position: static;
-        z-index: 1001;
-    }
+    display: flex;
+    position: static;
+    z-index: 1001;
+  }
 
     .nav-toggle-bar {
         width: 20px;
@@ -2395,33 +2396,33 @@ html, body {
     }
 
     .nav-links {
-        position: fixed;
-        top: 56px; /* altezza navbar */
-        left: 0;
-        right: 0;
-        background-color: #020041;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-        padding: 16px 0 24px;
-        border-top: 1px solid rgba(184, 149, 107, 0.25);
-        display: none;
-        z-index: 999;
-    }
+    position: fixed;
+    top: 56px; /* altezza navbar */
+    left: 0;
+    right: 0;
+    background-color: #020041;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0 24px;
+    border-top: 1px solid rgba(184, 149, 107, 0.25);
+    display: none;
+    z-index: 999;
+  }
 
     .nav-links.nav-open {
-        display: flex;
-    }
+    display: flex; /* viene aggiunta dal JS */
+  }
 
     .nav-links a {
-        padding: 8px 0;
-        font-size: 0.9rem;
-    }
+    padding: 8px 0;
+    font-size: 0.9rem;
+  }
 
     /* Compensa la navbar fissa per il contenuto */
     body {
-        padding-top: 56px;
-    }
+    padding-top: 56px;
+  }
 
     /* HERO MOBILE */
     .hero-slider {
