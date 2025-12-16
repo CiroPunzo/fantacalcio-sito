@@ -722,13 +722,47 @@ async function populatePronostici(selectedGiornata = null) {
 }
 
 // ===== RISULTATI GIORNATA (PAGINA RISULTATI) =====
-async function populateRisultatiGiornata() {
-  const data = await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
-  if (!Array.isArray(data) || data.length === 0) return;
+// ===== RISULTATI GIORNATA (PAGINA RISULTATI) =====
+let RESULTS_DATA_CACHE = null;
 
-  const rows = data.filter(row => row['Risultati']);
+async function populateRisultatiGiornata(selectedRound = 'all') {
+  // 1. Prendo i dati (con cache)
+  const data = RESULTS_DATA_CACHE ||
+    await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
+  if (!Array.isArray(data) || data.length === 0) return;
+  RESULTS_DATA_CACHE = data;
+
+  const allRows = data.filter(row => row['Risultati']);
+  if (allRows.length === 0) return;
+
+  // 2. Lista giornate disponibili
+  const rounds = Array.from(new Set(
+    allRows.map(r => r['Risultati'])
+  )).sort((a, b) => Number(a) - Number(b));
+
+  // 3. Popolo il select solo la prima volta
+  const selectEl = document.getElementById('results-giornata-select');
+  if (selectEl && selectEl.options.length <= 1) {
+    rounds.forEach(g => {
+      const opt = document.createElement('option');
+      opt.value = g;
+      opt.textContent = `Giornata ${g}`;
+      selectEl.appendChild(opt);
+    });
+
+    selectEl.onchange = () => {
+      populateRisultatiGiornata(selectEl.value || 'all');
+    };
+  }
+
+  // 4. Applico il filtro (all = tutte)
+  const rows = (selectedRound === 'all')
+    ? allRows
+    : allRows.filter(r => String(r['Risultati']) === String(selectedRound));
+
   if (rows.length === 0) return;
 
+  // 5. Calcolo medie sulle righe filtrate
   const accPronList = rows
     .map(r => Number(r['AccuracyPronostici']))
     .filter(v => !isNaN(v));
@@ -741,9 +775,10 @@ async function populateRisultatiGiornata() {
   const accPronAvg = avg(accPronList);
   const accFantaAvg = avg(accFantaList);
 
+  // 6. Best round calcolato sul totale
   let bestRound = null;
   let bestAcc = -1;
-  rows.forEach(r => {
+  allRows.forEach(r => {
     const acc = Number(r['AccuracyPronostici']);
     if (!isNaN(acc) && acc > bestAcc) {
       bestAcc = acc;
@@ -751,26 +786,28 @@ async function populateRisultatiGiornata() {
     }
   });
 
+  // 7. Aggiorno badge hero
   const globalAccEl = document.getElementById('res-global-accuracy');
   const giornateCountEl = document.getElementById('res-giornate-count');
   const lastGiornataEl = document.getElementById('res-last-giornata');
 
   if (globalAccEl && accPronList.length) {
-    globalAccEl.textContent = `Accuracy globale: ${accPronAvg.toFixed(1)}%`;
+    const label = (selectedRound === 'all')
+      ? 'Accuracy globale'
+      : `Accuracy giornata ${selectedRound}`;
+    globalAccEl.textContent = `${label}: ${accPronAvg.toFixed(1)}%`;
   }
   if (giornateCountEl) {
-    giornateCountEl.textContent = `Giornate analizzate: ${rows.length}`;
+    const countLabel = (selectedRound === 'all')
+      ? `Giornate analizzate: ${allRows.length}`
+      : `Giornata selezionata: ${selectedRound}`;
+    giornateCountEl.textContent = countLabel;
+  }
+  if (lastGiornataEl && rounds.length) {
+    lastGiornataEl.textContent = rounds[rounds.length - 1];
   }
 
-  if (lastGiornataEl) {
-    const giornateOrd = Array.from(new Set(
-      rows.map(r => r['Risultati'])
-    )).sort((a, b) => Number(a) - Number(b));
-    if (giornateOrd.length) {
-      lastGiornataEl.textContent = giornateOrd[giornateOrd.length - 1];
-    }
-  }
-
+  // 8. Aggiorno KPI
   const kpiPronEl = document.getElementById('res-kpi-pronostici');
   const kpiFantaEl = document.getElementById('res-kpi-fanta');
   const kpiBestRoundEl = document.getElementById('res-kpi-best-round');
@@ -785,6 +822,7 @@ async function populateRisultatiGiornata() {
     kpiBestRoundNoteEl.textContent = `Giornata ${bestRound} con ${bestAcc.toFixed(1)}% di accuracy pronostici.`;
   }
 
+  // 9. Popolo tabella storico
   const tbody = document.getElementById('results-history-body');
   if (!tbody) return;
 
@@ -800,7 +838,6 @@ async function populateRisultatiGiornata() {
       const bestMatch = r['MigliorMatch'] || '-';
       const worstMatch = r['PeggiorMatch'] || '-';
 
-      // se è la miglior giornata, aggiunge la classe speciale
       if (String(g) === String(bestRound)) {
         tr.classList.add('results-best-round-row');
       }
@@ -816,6 +853,7 @@ async function populateRisultatiGiornata() {
       tbody.appendChild(tr);
     });
 }
+
 
 function openPronoMatchModal(row) {
     const modal = document.getElementById('pred-prono-modal');
