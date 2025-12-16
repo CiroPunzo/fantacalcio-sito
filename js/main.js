@@ -800,6 +800,11 @@ async function populateRisultatiGiornata() {
       const bestMatch = r['MigliorMatch'] || '-';
       const worstMatch = r['PeggiorMatch'] || '-';
 
+      // se è la miglior giornata, aggiunge la classe speciale
+      if (String(g) === String(bestRound)) {
+        tr.classList.add('results-best-round-row');
+      }
+
       tr.innerHTML = `
         <td>${g}</td>
         <td>${accPron}%</td>
