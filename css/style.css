@@ -2000,8 +2000,31 @@ html, body {
 }
 
 .results-history-header {
-    max-width: 1200px;
-    margin: 0 auto 18px;
+  max-width: 1200px;
+  margin: 0 auto 18px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.results-history-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #d0d0d0;
+}
+
+#results-giornata-select {
+  min-width: 140px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(184, 149, 107, 0.6);
+  background: rgba(5, 5, 25, 0.95);
+  color: #f5f5f5;
+  font-size: 0.9rem;
 }
 
 .results-history-title {
