@@ -113,7 +113,7 @@ const SHEET_NAMES = {
     infortunati: 'Infortunati',
     analisiFantacalcio: 'AnalisiFantacalcio',
     pronostici: 'Pronostici',
-    risultatiGiornata: 'RisultatiGiornata'
+    RisultatiGiornata: 'RisultatiGiornata'
 };
 
 // Fetch + parse robusto da Google Sheets (gviz)
