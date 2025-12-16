@@ -726,7 +726,7 @@ async function populateRisultatiGiornata() {
     const data = await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
     if (!Array.isArray(data) || data.length === 0) return;
 
-    const rows = data.filter(row => row['Giornata']);
+    const rows = data.filter(row => row['Risultati']);
     if (rows.length === 0) return;
 
     const accPronList = rows
@@ -747,7 +747,7 @@ async function populateRisultatiGiornata() {
         const acc = Number(r['AccuracyPronostici']);
         if (!isNaN(acc) && acc > bestAcc) {
             bestAcc = acc;
-            bestRound = r['Giornata'];
+            bestRound = r['Risultati'];
         }
     });
 
@@ -764,7 +764,7 @@ async function populateRisultatiGiornata() {
 
     if (lastGiornataEl) {
         const giornateOrd = Array.from(new Set(
-            rows.map(r => r['Giornata'])
+            rows.map(r => r['Risultati'])
         )).sort((a, b) => Number(a) - Number(b));
         if (giornateOrd.length) {
             lastGiornataEl.textContent = giornateOrd[giornateOrd.length - 1];
@@ -779,10 +779,10 @@ async function populateRisultatiGiornata() {
     if (kpiPronEl) kpiPronEl.textContent = accPronList.length ? `${accPronAvg.toFixed(1)}%` : '-';
     if (kpiFantaEl) kpiFantaEl.textContent = accFantaList.length ? `${accFantaAvg.toFixed(1)}%` : '-';
     if (kpiBestRoundEl) {
-        kpiBestRoundEl.textContent = bestRound ? `Giornata ${bestRound}` : '-';
+        kpiBestRoundEl.textContent = bestRound ? `Risultati ${bestRound}` : '-';
     }
     if (kpiBestRoundNoteEl && bestRound && bestAcc >= 0) {
-        kpiBestRoundNoteEl.textContent = `Giornata ${bestRound} con ${bestAcc.toFixed(1)}% di accuracy pronostici.`;
+        kpiBestRoundNoteEl.textContent = `Risultati ${bestRound} con ${bestAcc.toFixed(1)}% di accuracy pronostici.`;
     }
 
     const tbody = document.getElementById('results-history-body');
@@ -790,11 +790,11 @@ async function populateRisultatiGiornata() {
 
     tbody.innerHTML = '';
 
-    rows.sort((a, b) => Number(a['Giornata']) - Number(b['Giornata']))
+    rows.sort((a, b) => Number(a['Risultati']) - Number(b['Risultati']))
         .forEach(r => {
             const tr = document.createElement('tr');
 
-            const g = r['Giornata'] || '-';
+            const g = r['Risultati'] || '-';
             const accPron = r['AccuracyPronostici'] || '-';
             const accFanta = r['AccuracyFanta'] || '-';
             const bestMatch = r['MigliorMatch'] || '-';
