@@ -723,7 +723,7 @@ async function populatePronostici(selectedGiornata = null) {
 
 // ===== RISULTATI GIORNATA (PAGINA RISULTATI) =====
 async function populateRisultatiGiornata() {
-    const data = await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
+    const data = await fetchSheetDataJson(SHEET_NAMES.RisultatiGiornata);
     if (!Array.isArray(data) || data.length === 0) return;
 
     const rows = data.filter(row => row['Giornata']);
