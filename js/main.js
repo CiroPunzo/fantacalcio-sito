@@ -996,19 +996,30 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('Site initialized');
 });
 
-// Safeguard hamburger anche se qualcosa va storto prima
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('DEBUG navbar risultati – DOMContentLoaded');
+
   const navToggle = document.getElementById('nav-toggle');
   const navLinks = document.getElementById('nav-links');
 
-  if (!navToggle || !navLinks) return;
+  console.log('DEBUG navbar risultati – navToggle:', navToggle);
+  console.log('DEBUG navbar risultati – navLinks:', navLinks);
+
+  if (!navToggle || !navLinks) {
+    console.log('DEBUG navbar risultati – elementi NON trovati');
+    return;
+  }
+
+  console.log('DEBUG navbar risultati – listener agganciato');
 
   navToggle.addEventListener('click', () => {
+    console.log('DEBUG navbar risultati – click hamburger');
     const isOpen = navLinks.classList.toggle('nav-open');
     navToggle.classList.toggle('nav-open', isOpen);
     navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 });
+
 
 
 
