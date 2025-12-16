@@ -113,7 +113,7 @@ const SHEET_NAMES = {
     infortunati: 'Infortunati',
     analisiFantacalcio: 'AnalisiFantacalcio',
     pronostici: 'Pronostici',
-    RisultatiGiornata: 'RisultatiGiornata'
+    risultatiGiornata: 'RisultatiGiornata'
 };
 
 // Fetch + parse robusto da Google Sheets (gviz)
@@ -723,7 +723,7 @@ async function populatePronostici(selectedGiornata = null) {
 
 // ===== RISULTATI GIORNATA (PAGINA RISULTATI) =====
 async function populateRisultatiGiornata() {
-    const data = await fetchSheetDataJson(SHEET_NAMES.RisultatiGiornata);
+    const data = await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
     if (!Array.isArray(data) || data.length === 0) return;
 
     const rows = data.filter(row => row['Giornata']);
