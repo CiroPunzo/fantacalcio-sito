@@ -909,115 +909,92 @@ document.addEventListener('click', function(e) {
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
-    initHeroSlider();
-    setupMobileNavbar();
-    setupDashboardTabs();
+  // Slider + navbar + tabs sempre
+  initHeroSlider();
+  setupMobileNavbar();
+  setupDashboardTabs();
 
-    const path = window.location.pathname.toLowerCase();
+  const path = window.location.pathname.toLowerCase();
 
-    // Pagina PREVISIONI
-    if (path.includes('predictions')) {
-        await populateClassifica();
-        await populateMarcatori();
-        await populateInfortunati();
-        await populateAnalisiFantacalcio();
-        await populatePronostici();
+  // PAGINA PREVISIONI
+  if (path.includes('predictions')) {
+    await populateClassifica();
+    await populateMarcatori();
+    await populateInfortunati();
+    await populateAnalisiFantacalcio();
+    await populatePronostici();
 
-        const fullClassificaBtn = document.getElementById('open-full-classifica');
-        if (fullClassificaBtn) {
-            fullClassificaBtn.addEventListener('click', async (e) => {
-                e.preventDefault();
-                await populateFullClassificaModal();
-                const modal = document.getElementById('classifica-modal');
-                if (modal) modal.classList.add('active');
-            });
-        }
-
-        const fullMarcatoriBtn = document.getElementById('open-full-marcatori');
-        if (fullMarcatoriBtn) {
-            fullMarcatoriBtn.addEventListener('click', async (e) => {
-                e.preventDefault();
-                await populateFullMarcatoriModal();
-                const modal = document.getElementById('marcatori-modal');
-                if (modal) modal.classList.add('active');
-            });
-        }
-
-        const fullInfortunatiBtn = document.getElementById('open-full-infortunati');
-        if (fullInfortunatiBtn) {
-            fullInfortunatiBtn.addEventListener('click', async (e) => {
-                e.preventDefault();
-                await populateFullInfortunatiModal();
-                const modal = document.getElementById('infortunati-modal');
-                if (modal) modal.classList.add('active');
-            });
-        }
-
-        const fullFantaBtn = document.getElementById('open-full-fanta');
-        if (fullFantaBtn) {
-            fullFantaBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                openFirstFantaMatchInTable();
-            });
-        }
-
-        const fullPronoBtn = document.getElementById('open-full-prono');
-        if (fullPronoBtn) {
-            fullPronoBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                openFirstPronoMatchInTable();
-            });
-        }
-
-        const heroGiornataEl = document.getElementById('pred-hero-giornata');
-        const fantaData = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
-        if (heroGiornataEl && Array.isArray(fantaData) && fantaData.length) {
-            const giornate = Array.from(new Set(
-                fantaData.map(row => row['Giornata']).filter(g => g !== '')
-            )).sort((a, b) => Number(a) - Number(b));
-            if (giornate.length) {
-                heroGiornataEl.textContent = giornate[giornate.length - 1];
-            }
-        }
+    const fullClassificaBtn = document.getElementById('open-full-classifica');
+    if (fullClassificaBtn) {
+      fullClassificaBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await populateFullClassificaModal();
+        const modal = document.getElementById('classifica-modal');
+        if (modal) modal.classList.add('active');
+      });
     }
 
-    // HOME
-    if (path.endsWith('/') || path.endsWith('/index.html')) {
-        await populateClassifica();
-        await populateMarcatori();
-        await populateInfortunati();
+    const fullMarcatoriBtn = document.getElementById('open-full-marcatori');
+    if (fullMarcatoriBtn) {
+      fullMarcatoriBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await populateFullMarcatoriModal();
+        const modal = document.getElementById('marcatori-modal');
+        if (modal) modal.classList.add('active');
+      });
     }
 
-    // PAGINA RISULTATI (track-record.html)
-    if (path.includes('track-record') || path.includes('risultati')) {
-        await populateRisultatiGiornata();
+    const fullInfortunatiBtn = document.getElementById('open-full-infortunati');
+    if (fullInfortunatiBtn) {
+      fullInfortunatiBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await populateFullInfortunatiModal();
+        const modal = document.getElementById('infortunati-modal');
+        if (modal) modal.classList.add('active');
+      });
     }
 
-    console.log('Site initialized');
-});
+    const fullFantaBtn = document.getElementById('open-full-fanta');
+    if (fullFantaBtn) {
+      fullFantaBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openFirstFantaMatchInTable();
+      });
+    }
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DEBUG navbar risultati – DOMContentLoaded');
+    const fullPronoBtn = document.getElementById('open-full-prono');
+    if (fullPronoBtn) {
+      fullPronoBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openFirstPronoMatchInTable();
+      });
+    }
 
-  const navToggle = document.getElementById('nav-toggle');
-  const navLinks = document.getElementById('nav-links');
-
-  console.log('DEBUG navbar risultati – navToggle:', navToggle);
-  console.log('DEBUG navbar risultati – navLinks:', navLinks);
-
-  if (!navToggle || !navLinks) {
-    console.log('DEBUG navbar risultati – elementi NON trovati');
-    return;
+    const heroGiornataEl = document.getElementById('pred-hero-giornata');
+    const fantaData = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
+    if (heroGiornataEl && Array.isArray(fantaData) && fantaData.length) {
+      const giornate = Array.from(new Set(
+        fantaData.map(row => row['Giornata']).filter(g => g !== '')
+      )).sort((a, b) => Number(a) - Number(b));
+      if (giornate.length) {
+        heroGiornataEl.textContent = giornate[giornate.length - 1];
+      }
+    }
   }
 
-  console.log('DEBUG navbar risultati – listener agganciato');
+  // HOME
+  if (path.endsWith('/') || path.endsWith('/index.html')) {
+    await populateClassifica();
+    await populateMarcatori();
+    await populateInfortunati();
+  }
 
-  navToggle.addEventListener('click', () => {
-    console.log('DEBUG navbar risultati – click hamburger');
-    const isOpen = navLinks.classList.toggle('nav-open');
-    navToggle.classList.toggle('nav-open', isOpen);
-    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  });
+  // PAGINA RISULTATI (track-record.html)
+  if (path.includes('track-record') || path.includes('risultati')) {
+    await populateRisultatiGiornata();
+  }
+
+  console.log('Site initialized');
 });
 
 
