@@ -508,6 +508,33 @@ function setupDashboardTabs() {
     });
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  const fullClassifica   = document.getElementById('open-full-classifica');
+  const fullMarcatori    = document.getElementById('open-full-marcatori');
+  const fullInfortunati  = document.getElementById('open-full-infortunati');
+
+  function apriPopupClassifica(e) {
+    e.preventDefault(); // evita scroll in alto
+    // qui metti la tua logica per aprire il popup classifica
+    // es: document.getElementById('popup-classifica').classList.add('is-open');
+  }
+
+  function apriPopupMarcatori(e) {
+    e.preventDefault();
+    // logica per popup marcatori
+  }
+
+  function apriPopupInfortunati(e) {
+    e.preventDefault();
+    // logica per popup infortunati
+  }
+
+  if (fullClassifica)  fullClassifica.addEventListener('click', apriPopupClassifica);
+  if (fullMarcatori)   fullMarcatori.addEventListener('click', apriPopupMarcatori);
+  if (fullInfortunati) fullInfortunati.addEventListener('click', apriPopupInfortunati);
+});
+
+
 // ===== ANALISI FANTACALCIO (TAB PREVISIONI) =====
 async function populateAnalisiFantacalcio(selectedGiornata = null) {
     const data = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
