@@ -138,80 +138,83 @@
 
     <!-- DASHBOARD ANALITICA -->
     <section class="dashboard-section">
-        <div class="container">
-            <h2 class="dashboard-title">Live Data della Giornata</h2>
-            
-            <!-- TABS -->
-            <div class="dashboard-tabs">
-                <button class="tab-btn active" data-tab="classifica">Classifica</button>
-                <button class="tab-btn" data-tab="marcatori">Marcatori</button>
-                <button class="tab-btn" data-tab="infortunati">Indisponibili</button>
-            </div>
+  <div class="container">
+    <h2 class="dashboard-title">Live Data della Giornata</h2>
+    
+    <!-- TABS -->
+    <div class="dashboard-tabs">
+      <button class="tab-btn active" data-tab="classifica">Classifica</button>
+      <button class="tab-btn" data-tab="marcatori">Marcatori</button>
+      <button class="tab-btn" data-tab="infortunati">Indisponibili</button>
+    </div>
 
-            <!-- TAB CONTENT -->
-            <div class="dashboard-content">
-                <!-- CLASSIFICA -->
-                <div id="classifica" class="tab-content active">
-                    <div class="dashboard-table-wrapper">
-                        <table class="table classifica-table">
-                            <thead>
-                                <tr>
-                                    <th>Pos</th>
-                                    <th></th>
-                                    <th>Squadra</th>
-                                    <th>PG</th>
-                                    <th>xG</th>
-                                    <th>Punti</th>
-                                </tr>
-                            </thead>
-                            <tbody id="classifica-body"></tbody>
-                        </table>
-                    </div>
-                  <button type="button" class="dashboard-link" id="open-full-classifica">
-  Vedi tutte le squadre →
-</button>
-                </div>
-
-                <!-- MARCATORI -->
-                <div id="marcatori" class="tab-content">
-                    <div class="dashboard-table-wrapper">
-                        <table class="dashboard-table">
-                            <thead>
-                                <tr>
-                                    <th>Pos</th>
-                                    <th>Giocatore</th>
-                                    <th>Club</th>
-                                    <th>Gol</th>
-                                </tr>
-                            </thead>
-                            <tbody id="marcatori-body"></tbody>
-                        </table>
-                    </div>
-                    <a href="#classifica" class="btn btn-classifica">Vedi tutta la classifica</a>
-                </div>
-
-                <!-- INFORTUNATI -->
-                <div id="infortunati" class="tab-content">
-                    <div class="dashboard-table-wrapper">
-                        <table class="dashboard-table">
-                            <thead>
-                                <tr>
-                                    <th>Giocatore</th>
-                                    <th>Club</th>
-                                    <th>Giorni</th>
-                                    <th>Tipo Infortunio</th>
-                                </tr>
-                            </thead>
-                            <tbody id="infortunati-body"></tbody>
-                        </table>
-                    </div>
-                    <button type="button" class="dashboard-link" id="open-full-infortunati">
-                        Vedi la lista completa →
-                    </button>
-                </div>
-            </div>
+    <!-- TAB CONTENT -->
+    <div class="dashboard-content">
+      <!-- CLASSIFICA -->
+      <div id="classifica" class="tab-content active">
+        <div class="dashboard-table-wrapper">
+          <table class="table classifica-table">
+            <thead>
+              <tr>
+                <th>Pos</th>
+                <th></th>
+                <th>Squadra</th>
+                <th>PG</th>
+                <th>xG</th>
+                <th>Punti</th>
+              </tr>
+            </thead>
+            <tbody id="classifica-body"></tbody>
+          </table>
         </div>
-    </section>
+        <a href="#" class="dashboard-link" id="open-full-classifica">
+          Vedi tutte le squadre →
+        </a>
+      </div>
+
+      <!-- MARCATORI -->
+      <div id="marcatori" class="tab-content">
+        <div class="dashboard-table-wrapper">
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th>Pos</th>
+                <th>Giocatore</th>
+                <th>Club</th>
+                <th>Gol</th>
+              </tr>
+            </thead>
+            <tbody id="marcatori-body"></tbody>
+          </table>
+        </div>
+        <a href="#" class="dashboard-link" id="open-full-marcatori">
+          Vedi la classifica completa →
+        </a>
+      </div>
+
+      <!-- INFORTUNATI -->
+      <div id="infortunati" class="tab-content">
+        <div class="dashboard-table-wrapper">
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th>Giocatore</th>
+                <th>Club</th>
+                <th>Giorni</th>
+                <th>Tipo Infortunio</th>
+              </tr>
+            </thead>
+            <tbody id="infortunati-body"></tbody>
+          </table>
+        </div>
+        <a href="#" class="dashboard-link" id="open-full-infortunati">
+          Vedi la lista completa →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 
     <!-- NEWS CARDS SECTION -->
     <section class="news-cards-section">
