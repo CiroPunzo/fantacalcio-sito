@@ -78,6 +78,20 @@ html, body {
     font-size: 1.6rem;
 }
 
+/* Contenitore logo (adatta il selettore alle tue classi reali) */
+.site-logo,
+.site-logo img,
+.navbar-logo,
+.navbar-brand img {
+  background-color: transparent !important;
+}
+
+/* Se per caso hai messo un background globale aggressivo */
+img {
+  background-color: transparent;
+}
+
+
 .nav-links {
     display: flex;
     list-style: none;
