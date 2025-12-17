@@ -508,72 +508,125 @@ function setupDashboardTabs() {
     });
 }
 
-// ===== FULL TABLE MODALS (CLASSIFICA, MARCATORI, INFORTUNATI) =====
-document.addEventListener('DOMContentLoaded', () => {
-  const fullClassificaLink   = document.getElementById('open-full-classifica');
-  const fullMarcatoriLink    = document.getElementById('open-full-marcatori');
-  const fullInfortunatiLink  = document.getElementById('open-full-infortunati');
+// ===== MODAL CLOSE HANDLER GENERICO =====
+document.addEventListener('click', function(e) {
+    const newsModal = document.getElementById('news-modal');
+    const injuryModal = document.getElementById('infortunio-modal');
+    const classificaModal = document.getElementById('classifica-modal');
+    const marcatoriModal = document.getElementById('marcatori-modal');
+    const infortunatiFullModal = document.getElementById('infortunati-modal');
+    const fantaModal = document.getElementById('pred-fanta-modal');
+    const pronoModal = document.getElementById('pred-prono-modal');
 
-  const classificaFullModal  = document.getElementById('classifica-full-modal');
-  const marcatoriFullModal   = document.getElementById('marcatori-full-modal');
-  const infortunatiFullModal = document.getElementById('infortunati-full-modal');
+    if (newsModal && e.target === newsModal) closeNewsModal();
+    if (injuryModal && e.target === injuryModal) closeInjuryModal();
+    if (classificaModal && e.target === classificaModal) classificaModal.classList.remove('active');
+    if (marcatoriModal && e.target === marcatoriModal) marcatoriModal.classList.remove('active');
+    if (infortunatiFullModal && e.target === infortunatiFullModal) infortunatiFullModal.classList.remove('active');
+    if (fantaModal && e.target === fantaModal) fantaModal.classList.remove('active');
+    if (pronoModal && e.target === pronoModal) pronoModal.classList.remove('active');
 
-  // helper per aprire / chiudere
-  function openModal(modalEl) {
-    if (!modalEl) return;
-    modalEl.classList.add('active');
-    document.body.style.overflow = 'hidden'; // blocca scroll sotto il popup [web:52][web:66]
-  }
+    if (e.target.classList.contains('modal-close')) {
+        if (e.target.closest('#news-modal')) closeNewsModal();
+        if (e.target.closest('#infortunio-modal')) closeInjuryModal();
+        if (e.target.closest('#classifica-modal')) classificaModal.classList.remove('active');
+        if (e.target.closest('#marcatori-modal')) marcatoriModal.classList.remove('active');
+        if (e.target.closest('#infortunati-modal')) infortunatiFullModal.classList.remove('active');
+        if (e.target.closest('#pred-fanta-modal')) fantaModal.classList.remove('active');
+        if (e.target.closest('#pred-prono-modal')) pronoModal.classList.remove('active');
+    }
+});
 
-  function closeModal(modalEl) {
-    if (!modalEl) return;
-    modalEl.classList.remove('active');
-    document.body.style.overflow = '';
-  }
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', async function() {
+  // Slider + navbar + tabs sempre
+  initHeroSlider();
+  setupMobileNavbar();
+  setupDashboardTabs();
 
-  // CLASSIFICA COMPLETA
-  if (fullClassificaLink && classificaFullModal) {
-    fullClassificaLink.addEventListener('click', async (e) => {
-      e.preventDefault(); // evita salto in alto [web:47][web:65]
+  const path = window.location.pathname.toLowerCase();
+
+  // HANDLER UNICO PER I LINK DI APERTURA MODALI FULL TABLE (vale ovunque compaiano)
+  const fullClassificaBtn   = document.getElementById('open-full-classifica');
+  const fullMarcatoriBtn    = document.getElementById('open-full-marcatori');
+  const fullInfortunatiBtn  = document.getElementById('open-full-infortunati');
+
+  if (fullClassificaBtn) {
+    fullClassificaBtn.addEventListener('click', async (e) => {
+      e.preventDefault();                          // blocca lo scroll in alto [web:47]
       await populateFullClassificaModal();
-      openModal(classificaFullModal);
+      const modal = document.getElementById('classifica-modal');
+      if (modal) modal.classList.add('active');
     });
   }
 
-  // MARCATORI COMPLETI
-  if (fullMarcatoriLink && marcatoriFullModal) {
-    fullMarcatoriLink.addEventListener('click', async (e) => {
+  if (fullMarcatoriBtn) {
+    fullMarcatoriBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       await populateFullMarcatoriModal();
-      openModal(marcatoriFullModal);
+      const modal = document.getElementById('marcatori-modal');
+      if (modal) modal.classList.add('active');
     });
   }
 
-  // INFORTUNATI COMPLETI
-  if (fullInfortunatiLink && infortunatiFullModal) {
-    fullInfortunatiLink.addEventListener('click', async (e) => {
+  if (fullInfortunatiBtn) {
+    fullInfortunatiBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       await populateFullInfortunatiModal();
-      openModal(infortunatiFullModal);
+      const modal = document.getElementById('infortunati-modal');
+      if (modal) modal.classList.add('active');
     });
   }
 
-  // CHIUSURA POPUP (pulsanti con data-close-modal)
-  document.querySelectorAll('[data-close-modal]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const modal = btn.closest('.modal');
-      closeModal(modal);
-    });
-  });
+  // PAGINA PREVISIONI
+  if (path.includes('predictions')) {
+    await populateClassifica();
+    await populateMarcatori();
+    await populateInfortunati();
+    await populateAnalisiFantacalcio();
+    await populatePronostici();
 
-  // Chiudi cliccando sullo sfondo scuro
-  document.querySelectorAll('.modal').forEach(modal => {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closeModal(modal);
+    const fullFantaBtn = document.getElementById('open-full-fanta');
+    if (fullFantaBtn) {
+      fullFantaBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openFirstFantaMatchInTable();
+      });
+    }
+
+    const fullPronoBtn = document.getElementById('open-full-prono');
+    if (fullPronoBtn) {
+      fullPronoBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openFirstPronoMatchInTable();
+      });
+    }
+
+    const heroGiornataEl = document.getElementById('pred-hero-giornata');
+    const fantaData = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
+    if (heroGiornataEl && Array.isArray(fantaData) && fantaData.length) {
+      const giornate = Array.from(new Set(
+        fantaData.map(row => row['Giornata']).filter(g => g !== '')
+      )).sort((a, b) => Number(a) - Number(b));
+      if (giornate.length) {
+        heroGiornataEl.textContent = giornate[giornate.length - 1];
       }
-    });
-  });
+    }
+  }
+
+  // HOME
+  if (path.endsWith('/') || path.endsWith('/index.html')) {
+    await populateClassifica();
+    await populateMarcatori();
+    await populateInfortunati();
+  }
+
+  // PAGINA RISULTATI (track-record.html)
+  if (path.includes('track-record') || path.includes('risultati')) {
+    await populateRisultatiGiornata();
+  }
+
+  console.log('Site initialized');
 });
 
 
