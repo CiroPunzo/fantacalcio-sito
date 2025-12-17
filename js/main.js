@@ -508,31 +508,74 @@ function setupDashboardTabs() {
     });
 }
 
+// ===== FULL TABLE MODALS (CLASSIFICA, MARCATORI, INFORTUNATI) =====
 document.addEventListener('DOMContentLoaded', () => {
-  const fullClassifica   = document.getElementById('open-full-classifica');
-  const fullMarcatori    = document.getElementById('open-full-marcatori');
-  const fullInfortunati  = document.getElementById('open-full-infortunati');
+  const fullClassificaLink   = document.getElementById('open-full-classifica');
+  const fullMarcatoriLink    = document.getElementById('open-full-marcatori');
+  const fullInfortunatiLink  = document.getElementById('open-full-infortunati');
 
-  function apriPopupClassifica(e) {
-    e.preventDefault(); // evita scroll in alto
-    // qui metti la tua logica per aprire il popup classifica
-    // es: document.getElementById('popup-classifica').classList.add('is-open');
+  const classificaFullModal  = document.getElementById('classifica-full-modal');
+  const marcatoriFullModal   = document.getElementById('marcatori-full-modal');
+  const infortunatiFullModal = document.getElementById('infortunati-full-modal');
+
+  // helper per aprire / chiudere
+  function openModal(modalEl) {
+    if (!modalEl) return;
+    modalEl.classList.add('active');
+    document.body.style.overflow = 'hidden'; // blocca scroll sotto il popup [web:52][web:66]
   }
 
-  function apriPopupMarcatori(e) {
-    e.preventDefault();
-    // logica per popup marcatori
+  function closeModal(modalEl) {
+    if (!modalEl) return;
+    modalEl.classList.remove('active');
+    document.body.style.overflow = '';
   }
 
-  function apriPopupInfortunati(e) {
-    e.preventDefault();
-    // logica per popup infortunati
+  // CLASSIFICA COMPLETA
+  if (fullClassificaLink && classificaFullModal) {
+    fullClassificaLink.addEventListener('click', async (e) => {
+      e.preventDefault(); // evita salto in alto [web:47][web:65]
+      await populateFullClassificaModal();
+      openModal(classificaFullModal);
+    });
   }
 
-  if (fullClassifica)  fullClassifica.addEventListener('click', apriPopupClassifica);
-  if (fullMarcatori)   fullMarcatori.addEventListener('click', apriPopupMarcatori);
-  if (fullInfortunati) fullInfortunati.addEventListener('click', apriPopupInfortunati);
+  // MARCATORI COMPLETI
+  if (fullMarcatoriLink && marcatoriFullModal) {
+    fullMarcatoriLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await populateFullMarcatoriModal();
+      openModal(marcatoriFullModal);
+    });
+  }
+
+  // INFORTUNATI COMPLETI
+  if (fullInfortunatiLink && infortunatiFullModal) {
+    fullInfortunatiLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await populateFullInfortunatiModal();
+      openModal(infortunatiFullModal);
+    });
+  }
+
+  // CHIUSURA POPUP (pulsanti con data-close-modal)
+  document.querySelectorAll('[data-close-modal]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const modal = btn.closest('.modal');
+      closeModal(modal);
+    });
+  });
+
+  // Chiudi cliccando sullo sfondo scuro
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal(modal);
+      }
+    });
+  });
 });
+
 
 
 // ===== ANALISI FANTACALCIO (TAB PREVISIONI) =====
