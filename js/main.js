@@ -61,25 +61,42 @@ function goToHeroSlide(index) {
 
 // ===== NAVBAR MOBILE (HAMBURGER) =====
 function setupMobileNavbar() {
-    const navToggle = document.getElementById('nav-toggle');
-    const navLinks = document.getElementById('nav-links');
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
 
-    if (!navToggle || !navLinks) return;
+  if (!navToggle || !navLinks) return;
 
-    navToggle.addEventListener('click', () => {
-        const isOpen = navLinks.classList.toggle('nav-open');
-        navToggle.classList.toggle('nav-open', isOpen);
-        navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  // assicuriamoci che il bottone sia clickabile per Safari/iOS
+  navToggle.style.pointerEvents = 'auto';
+
+  const toggleMenu = (e) => {
+    // per Safari mobile è più sicuro prevenire default su button
+    if (e) e.preventDefault();
+
+    const isOpen = navLinks.classList.toggle('nav-open');
+    navToggle.classList.toggle('nav-open', isOpen);
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  };
+
+  // click “classico”
+  navToggle.addEventListener('click', toggleMenu);
+
+  // supporto esplicito touch per Safari iOS
+  navToggle.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    toggleMenu(e);
+  });
+
+  // chiudi il menu al click su un link
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('nav-open');
+      navToggle.classList.remove('nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
     });
-
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('nav-open');
-            navToggle.classList.remove('nav-open');
-            navToggle.setAttribute('aria-expanded', 'false');
-        });
-    });
+  });
 }
+
 
 // ===== NEWS MODAL =====
 function openNewsModal(data) {
