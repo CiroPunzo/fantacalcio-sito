@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Ciro Profantasy - Analisi Fantacalcio Professionali</title>
     <meta name="description" content="Analisi professionali per fantacalcio e calcio: modello proprietario sui marcatori, dati avanzati e lettura tattica delle partite.">
     <meta name="keywords" content="fantacalcio, previsioni, analisi calcio, marcatori, ciro profantasy">
 
-    <title>Ciro Profantasy - Analisi Fantacalcio Professionali</title>
-
-    <!-- Font -->
+    <!-- FONT -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -18,59 +16,42 @@
     <link rel="icon" href="img/favicon.ico">
     <link rel="stylesheet" href="css/style.css">
 
-   <!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <title>Chi è Ciro Profantasy</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cookie Consent by TermsFeed -->
+    <script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+      cookieconsent.run({
+        notice_banner_type: "simple",
+        consent_type: "express",
+        palette: "dark",
+        language: "it",
+        page_load_consent_levels: ["strictly-necessary"],
+        notice_banner_reject_button_hide: false,
+        preferences_center_close_button_hide: false,
+        page_refresh_confirmation_buttons: false,
+        website_name: "www.ciroprofantasy.netlify.app"
+        // opzionale: banner_position: "bottom-right"
+      });
+    });
+    </script>
 
-  <!-- FONT & STILI -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+    <!-- Google Analytics -->
+    <script type="text/plain" data-cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-CY7LK0E6M4"></script>
+    <script type="text/plain" data-cookie-consent="tracking">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-CY7LK0E6M4');
+    </script>
+    <!-- end of Google Analytics-->
 
-  <!-- Cookie Consent by TermsFeed -->
-<script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" charset="UTF-8"></script>
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function () {
-  cookieconsent.run({
-    notice_banner_type: "simple",
-    consent_type: "express",
-    palette: "dark",
-    language: "it",
-    page_load_consent_levels: ["strictly-necessary"],
-    notice_banner_reject_button_hide: false,
-    preferences_center_close_button_hide: false,
-    page_refresh_confirmation_buttons: false,
-    website_name: "www.ciroprofantasy.netlify.app"
-    // opzionale: banner_position: "bottom-right"
-  });
-});
-</script>
-
-<!-- Google Analytics -->
-<script type="text/plain" data-cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-CY7LK0E6M4"></script>
-<script type="text/plain" data-cookie-consent="tracking">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-CY7LK0E6M4');
-</script>
-<!-- end of Google Analytics-->
-
-<noscript>
-  Free cookie consent management tool by
-  <a href="https://www.termsfeed.com/">TermsFeed Generator</a>
-</noscript>
-<!-- End Cookie Consent by TermsFeed -->
-
-
+    <noscript>
+      Free cookie consent management tool by
+      <a href="https://www.termsfeed.com/">TermsFeed Generator</a>
+    </noscript>
+    <!-- End Cookie Consent by TermsFeed -->
 </head>
-<body>
 
-</head>
 <body>
     <!-- NAVBAR -->
     <nav class="navbar">
@@ -82,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </a>
             </div>
 
-            <!-- HAMBURGER: usa JS, non inline -->
+            <!-- HAMBURGER -->
             <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false">
                 <span class="nav-toggle-bar"></span>
                 <span class="nav-toggle-bar"></span>
@@ -192,161 +173,159 @@ document.addEventListener('DOMContentLoaded', function () {
 
     <!-- DASHBOARD ANALITICA -->
     <section class="dashboard-section">
-  <div class="container">
-    <h2 class="dashboard-title">Live Data della Giornata</h2>
-    
-    <!-- TABS -->
-    <div class="dashboard-tabs">
-      <button class="tab-btn active" data-tab="classifica">Classifica</button>
-      <button class="tab-btn" data-tab="marcatori">Marcatori</button>
-      <button class="tab-btn" data-tab="infortunati">Indisponibili</button>
-    </div>
-
-    <!-- TAB CONTENT -->
-    <div class="dashboard-content">
-      <!-- CLASSIFICA -->
-      <div id="classifica" class="tab-content active">
-        <div class="dashboard-table-wrapper">
-          <table class="table classifica-table">
-            <thead>
-              <tr>
-                <th>Pos</th>
-                <th></th>
-                <th>Squadra</th>
-                <th>PG</th>
-                <th>xG</th>
-                <th>Punti</th>
-              </tr>
-            </thead>
-            <tbody id="classifica-body"></tbody>
-          </table>
+      <div class="container">
+        <h2 class="dashboard-title">Live Data della Giornata</h2>
+        
+        <!-- TABS -->
+        <div class="dashboard-tabs">
+          <button class="tab-btn active" data-tab="classifica">Classifica</button>
+          <button class="tab-btn" data-tab="marcatori">Marcatori</button>
+          <button class="tab-btn" data-tab="infortunati">Indisponibili</button>
         </div>
-        <a href="#" class="dashboard-link" id="open-full-classifica">
-          Vedi tutte le squadre →
-        </a>
+
+        <!-- TAB CONTENT -->
+        <div class="dashboard-content">
+          <!-- CLASSIFICA -->
+          <div id="classifica" class="tab-content active">
+            <div class="dashboard-table-wrapper">
+              <table class="table classifica-table">
+                <thead>
+                  <tr>
+                    <th>Pos</th>
+                    <th></th>
+                    <th>Squadra</th>
+                    <th>PG</th>
+                    <th>xG</th>
+                    <th>Punti</th>
+                  </tr>
+                </thead>
+                <tbody id="classifica-body"></tbody>
+              </table>
+            </div>
+            <a href="#" class="dashboard-link" id="open-full-classifica">
+              Vedi tutte le squadre →
+            </a>
+          </div>
+
+          <!-- MARCATORI -->
+          <div id="marcatori" class="tab-content">
+            <div class="dashboard-table-wrapper">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Pos</th>
+                    <th>Giocatore</th>
+                    <th>Club</th>
+                    <th>Gol</th>
+                  </tr>
+                </thead>
+                <tbody id="marcatori-body"></tbody>
+              </table>
+            </div>
+            <a href="#" class="dashboard-link" id="open-full-marcatori">
+              Vedi la classifica completa →
+            </a>
+          </div>
+
+          <!-- INFORTUNATI -->
+          <div id="infortunati" class="tab-content">
+            <div class="dashboard-table-wrapper">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Giocatore</th>
+                    <th>Club</th>
+                    <th>Giorni</th>
+                    <th>Tipo Infortunio</th>
+                  </tr>
+                </thead>
+                <tbody id="infortunati-body"></tbody>
+              </table>
+            </div>
+            <a href="#" class="dashboard-link" id="open-full-infortunati">
+              Vedi la lista completa →
+            </a>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <!-- MARCATORI -->
-      <div id="marcatori" class="tab-content">
-        <div class="dashboard-table-wrapper">
-          <table class="dashboard-table">
-            <thead>
-              <tr>
-                <th>Pos</th>
-                <th>Giocatore</th>
-                <th>Club</th>
-                <th>Gol</th>
-              </tr>
-            </thead>
-            <tbody id="marcatori-body"></tbody>
-          </table>
+    <!-- NEWS CARDS SECTION -->
+    <section class="news-cards-section">
+      <div class="container">
+        <h2 class="news-title">Ultime Notizie</h2>
+        
+        <div class="news-cards-grid">
+          <!-- NEWS CARD 1 -->
+          <article class="news-card" onclick="openNewsModal({
+            title: 'Titolo notizia 1',
+            subtitle: 'Sottotitolo notizia 1',
+            image: 'img/NotizieHome/notizia-1.png',
+            content: 'Testo completo della notizia 1. Qui puoi inserire l\'analisi dettagliata, consigli, ecc.'
+          })">
+            <div class="news-card-image">
+              <img src="img/NotizieHome/notizia-1.png" alt="Titolo notizia 1">
+            </div>
+            <div class="news-card-overlay"></div>
+            <div class="news-card-content">
+              <h3 class="news-card-title">Titolo notizia 1</h3>
+              <p class="news-card-subtitle">Sottotitolo notizia 1</p>
+            </div>
+          </article>
+
+          <!-- NEWS CARD 2 -->
+          <article class="news-card" onclick="openNewsModal({
+            title: 'Titolo notizia 2',
+            subtitle: 'Sottotitolo notizia 2',
+            image: 'img/NotizieHome/notizia-2.png',
+            content: 'Testo completo della notizia 2.'
+          })">
+            <div class="news-card-image">
+              <img src="img/NotizieHome/notizia-2.png" alt="Titolo notizia 2">
+            </div>
+            <div class="news-card-overlay"></div>
+            <div class="news-card-content">
+              <h3 class="news-card-title">Titolo notizia 2</h3>
+              <p class="news-card-subtitle">Sottotitolo notizia 2</p>
+            </div>
+          </article>
+
+          <!-- NEWS CARD 3 -->
+          <article class="news-card" onclick="openNewsModal({
+            title: 'Titolo notizia 3',
+            subtitle: 'Sottotitolo notizia 3',
+            image: 'img/NotizieHome/notizia-3.png',
+            content: 'Testo completo della notizia 3.'
+          })">
+            <div class="news-card-image">
+              <img src="img/NotizieHome/notizia-3.png" alt="Titolo notizia 3">
+            </div>
+            <div class="news-card-overlay"></div>
+            <div class="news-card-content">
+              <h3 class="news-card-title">Titolo notizia 3</h3>
+              <p class="news-card-subtitle">Sottotitolo notizia 3</p>
+            </div>
+          </article>
+
+          <!-- NEWS CARD 4 -->
+          <article class="news-card" onclick="openNewsModal({
+            title: 'Titolo notizia 4',
+            subtitle: 'Sottotitolo notizia 4',
+            image: 'img/NotizieHome/notizia-4.png',
+            content: 'Testo completo della notizia 4.'
+          })">
+            <div class="news-card-image">
+              <img src="img/NotizieHome/notizia-4.png" alt="Titolo notizia 4">
+            </div>
+            <div class="news-card-overlay"></div>
+            <div class="news-card-content">
+              <h3 class="news-card-title">Titolo notizia 4</h3>
+              <p class="news-card-subtitle">Sottotitolo notizia 4</p>
+            </div>
+          </article>
         </div>
-        <a href="#" class="dashboard-link" id="open-full-marcatori">
-          Vedi la classifica completa →
-        </a>
       </div>
-
-      <!-- INFORTUNATI -->
-      <div id="infortunati" class="tab-content">
-        <div class="dashboard-table-wrapper">
-          <table class="dashboard-table">
-            <thead>
-              <tr>
-                <th>Giocatore</th>
-                <th>Club</th>
-                <th>Giorni</th>
-                <th>Tipo Infortunio</th>
-              </tr>
-            </thead>
-            <tbody id="infortunati-body"></tbody>
-          </table>
-        </div>
-        <a href="#" class="dashboard-link" id="open-full-infortunati">
-          Vedi la lista completa →
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-   <!-- NEWS CARDS SECTION -->
-<section class="news-cards-section">
-  <div class="container">
-    <h2 class="news-title">Ultime Notizie</h2>
-    
-    <div class="news-cards-grid">
-      <!-- NEWS CARD 1 -->
-      <article class="news-card" onclick="openNewsModal({
-        title: 'Titolo notizia 1',
-        subtitle: 'Sottotitolo notizia 1',
-        image: 'img/NotizieHome/notizia-1.png',
-        content: 'Testo completo della notizia 1. Qui puoi inserire l\'analisi dettagliata, consigli, ecc.'
-      })">
-        <div class="news-card-image">
-          <img src="img/NotizieHome/notizia-1.png" alt="Titolo notizia 1">
-        </div>
-        <div class="news-card-overlay"></div>
-        <div class="news-card-content">
-          <h3 class="news-card-title">Titolo notizia 1</h3>
-          <p class="news-card-subtitle">Sottotitolo notizia 1</p>
-        </div>
-      </article>
-
-      <!-- NEWS CARD 2 -->
-      <article class="news-card" onclick="openNewsModal({
-        title: 'Titolo notizia 2',
-        subtitle: 'Sottotitolo notizia 2',
-        image: 'img/NotizieHome/notizia-2.png',
-        content: 'Testo completo della notizia 2.'
-      })">
-        <div class="news-card-image">
-          <img src="img/NotizieHome/notizia-2.png" alt="Titolo notizia 2">
-        </div>
-        <div class="news-card-overlay"></div>
-        <div class="news-card-content">
-          <h3 class="news-card-title">Titolo notizia 2</h3>
-          <p class="news-card-subtitle">Sottotitolo notizia 2</p>
-        </div>
-      </article>
-
-      <!-- NEWS CARD 3 -->
-      <article class="news-card" onclick="openNewsModal({
-        title: 'Titolo notizia 3',
-        subtitle: 'Sottotitolo notizia 3',
-        image: 'img/NotizieHome/notizia-3.png',
-        content: 'Testo completo della notizia 3.'
-      })">
-        <div class="news-card-image">
-          <img src="img/NotizieHome/notizia-3.png" alt="Titolo notizia 3">
-        </div>
-        <div class="news-card-overlay"></div>
-        <div class="news-card-content">
-          <h3 class="news-card-title">Titolo notizia 3</h3>
-          <p class="news-card-subtitle">Sottotitolo notizia 3</p>
-        </div>
-      </article>
-
-      <!-- NEWS CARD 4 -->
-      <article class="news-card" onclick="openNewsModal({
-        title: 'Titolo notizia 4',
-        subtitle: 'Sottotitolo notizia 4',
-        image: 'img/NotizieHome/notizia-4.png',
-        content: 'Testo completo della notizia 4.'
-      })">
-        <div class="news-card-image">
-          <img src="img/NotizieHome/notizia-4.png" alt="Titolo notizia 4">
-        </div>
-        <div class="news-card-overlay"></div>
-        <div class="news-card-content">
-          <h3 class="news-card-title">Titolo notizia 4</h3>
-          <p class="news-card-subtitle">Sottotitolo notizia 4</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
+    </section>
 
     <!-- STATISTICHE DI IMPATTO -->
     <section class="stats-section">
@@ -659,6 +638,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <script src="js/main.js"></script>
 </body>
 </html>
+
 
 
 
