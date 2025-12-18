@@ -136,6 +136,31 @@ img {
     display: block;
 }
 
+/* MOBILE NAV */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;          /* altezza navbar */
+    right: 20px;
+    left: 20px;
+    flex-direction: column;
+    gap: 16px;
+    background: #050814;
+    padding: 20px;
+    border-radius: 12px;
+    display: none;      /* chiuso di default */
+  }
+
+  .nav-links.open {
+    display: flex;      /* aperto quando JS aggiunge .open */
+  }
+}
+
+
 /* ===== HERO SLIDER ===== */
 .hero-slider {
     position: relative;
