@@ -1,337 +1,365 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Previsioni – Ciro Profantasy</title>
-
-    <meta name="description" content="Previsioni di giornata di Ciro Profantasy: analisi fantacalcio e pronostici partita per partita.">
-    <meta name="keywords" content="fantacalcio previsioni, pronostici calcio, ciro profantasy">
-
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="icon" href="img/favicon.ico">
-    <link rel="stylesheet" href="css/style.css">
-
-    <!DOCTYPE html>
-<html lang="it">
-<head>
   <meta charset="UTF-8">
-  <title>Chi è Ciro Profantasy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- FONT & STILI -->
+  <title>Previsioni – Ciro Profantasy</title>
+  <meta name="description" content="Previsioni di giornata di Ciro Profantasy: analisi fantacalcio e pronostici partita per partita.">
+  <meta name="keywords" content="fantacalcio previsioni, pronostici calcio, ciro profantasy">
+
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="img/favicon.ico">
   <link rel="stylesheet" href="css/style.css">
 
   <!-- Cookie Consent by CookieYes -->
-    <script id="cookieyes"
-        type="text/javascript"
-        src="https://cdn-cookieyes.com/client_data/632f288ce1ebe1b7d38335aa7a3ff5ff/script.js">
-</script>
-    <!-- End Cookie Consent by CookieYes -->
-
-<!-- Google Analytics -->
-<script type="text/plain" data-cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-CY7LK0E6M4"></script>
-<script type="text/plain" data-cookie-consent="tracking">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-CY7LK0E6M4');
-</script>
-<!-- end of Google Analytics-->
-
-<noscript>
-  Free cookie consent management tool by
-  <a href="https://www.termsfeed.com/">TermsFeed Generator</a>
-</noscript>
-<!-- End Cookie Consent by TermsFeed -->
-
-
+  <script id="cookieyes"
+          type="text/javascript"
+          src="https://cdn-cookieyes.com/client_data/632f288ce1ebe1b7d38335aa7a3ff5ff/script.js">
+  </script>
+  <!-- End Cookie Consent by CookieYes -->
 </head>
+
 <body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <div class="logo">
+        <a href="index.html" class="logo-link">
+          <img src="img/logo-ciro-profantasy.png" alt="Ciro Profantasy" class="logo-image">
+          <span class="logo-text">Ciro Profantasy</span>
+        </a>
+      </div>
 
-</head>
-<body>
-    <!-- NAVBAR (stessa della home) -->
-    <nav class="navbar">
-        <div class="container navbar-inner">
-            <div class="logo">
-                <a href="index.html" class="logo-link">
-                    <img src="img/logo-ciro-profantasy.png" alt="Ciro Profantasy" class="logo-image">
-                    <span class="logo-text">Ciro Profantasy</span>
-                </a>
-            </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
 
-            <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false">
-                <span class="nav-toggle-bar"></span>
-                <span class="nav-toggle-bar"></span>
-                <span class="nav-toggle-bar"></span>
-            </button>
-
-            <ul class="nav-links" id="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="predictions.html" class="active">Previsioni</a></li>
-                <li><a href="track-record.html">Risultati</a></li>
-                <li><a href="chi-sono.html">Chi Sono</a></li>
-                <li><a href="contatti.html">Contatti</a></li>
-            </ul>
-        </div>
-    </nav>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="predictions.html" class="active">Previsioni</a></li>
+        <li><a href="track-record.html">Risultati</a></li>
+        <li><a href="chi-sono.html">Chi Sono</a></li>
+        <li><a href="contatti.html">Contatti</a></li>
+      </ul>
+    </div>
+  </nav>
 
   <!-- HERO PREVISIONI -->
-<header class="hero-predictions">
+  <header class="hero-predictions">
     <div class="container hero-predictions-inner">
-        <div class="hero-predictions-content">
-            <span class="hero-tag">Previsioni ProFantasy</span>
-            <h1 class="hero-predictions-title">
-                Giornata <span id="pred-hero-giornata">18</span>
-            </h1>
-            <p class="hero-predictions-text">
-                Analisi fantacalcio e pronostici partita per partita, aggiornati a ogni giornata di Serie A.
-            </p>
+      <div class="hero-predictions-content">
+        <span class="hero-tag">Previsioni ProFantasy</span>
+        <h1 class="hero-predictions-title">
+          Giornata <span id="pred-hero-giornata">18</span>
+        </h1>
+        <p class="hero-predictions-text">
+          Analisi fantacalcio e pronostici partita per partita, aggiornati a ogni giornata di Serie A.
+        </p>
 
-            <div class="hero-predictions-meta">
-                <span class="badge-pill" id="pred-giornata-badge">Giornata corrente</span>
-                <span class="badge-pill badge-soft" id="pred-data-badge">Data</span>
-            </div>
-
-            <a href="#telegram-cta" class="hero-predictions-cta">
-                Ricevi le previsioni su Telegram
-            </a>
+        <div class="hero-predictions-meta">
+          <span class="badge-pill" id="pred-giornata-badge">Giornata corrente</span>
+          <span class="badge-pill badge-soft" id="pred-data-badge">Data</span>
         </div>
 
-        <div class="hero-predictions-side">
-            <div class="pred-hero-badge">
-                <span class="pred-hero-badge-label">Stato</span>
-                <span class="pred-hero-badge-value">Aggiornato</span>
-            </div>
+        <a href="#telegram-cta" class="hero-predictions-cta">
+          Ricevi le previsioni su Telegram
+        </a>
+      </div>
+
+      <div class="hero-predictions-side">
+        <div class="pred-hero-badge">
+          <span class="pred-hero-badge-label">Stato</span>
+          <span class="pred-hero-badge-value">Aggiornato</span>
         </div>
+      </div>
     </div>
-</header>
+  </header>
 
-    <section class="pred-player-highlight">
+  <!-- PLAYER HIGHLIGHT -->
+  <section class="pred-player-highlight">
     <div class="container pred-player-inner">
-        <div class="pred-player-image-wrap">
-            <img src="img/players/highlight-player.png" alt="Giocatore in evidenza" class="pred-player-image">
-        </div>
-        <div class="pred-player-text">
-            <p class="pred-player-kicker">Giocatore in evidenza</p>
-            <h2 class="pred-player-title">Focus ProFantasy sulla prossima giornata</h2>
-            <p class="pred-player-desc">
-                Le nostre previsioni analizzano forma, calendario e dati avanzati per aiutarti a scegliere i giocatori giusti al momento giusto.
-            </p>
-        </div>
+      <div class="pred-player-image-wrap">
+        <img src="img/players/highlight-player.png" alt="Giocatore in evidenza" class="pred-player-image">
+      </div>
+      <div class="pred-player-text">
+        <p class="pred-player-kicker">Giocatore in evidenza</p>
+        <h2 class="pred-player-title">Focus ProFantasy sulla prossima giornata</h2>
+        <p class="pred-player-desc">
+          Le nostre previsioni analizzano forma, calendario e dati avanzati per aiutarti a scegliere i giocatori giusti al momento giusto.
+        </p>
+      </div>
     </div>
-</section>
+  </section>
 
-
-
-    <!-- BLOCCO 1: ANALISI FANTACALCIO -->
-   <section class="pred-section pred-fanta">
+  <!-- BLOCCO 1: ANALISI FANTACALCIO -->
+  <section class="pred-section pred-fanta">
     <div class="container">
-        <div class="pred-card">
-            <div class="pred-card-header">
-                <h2 class="pred-card-title">Analisi Fantacalcio ProFantasy</h2>
-                <div class="pred-card-controls">
-                    <label for="select-giornata-fanta" class="pred-label">Giornata</label>
-                    <select id="select-giornata-fanta" class="pred-card-select">
-                        <!-- Opzioni via JS -->
-                    </select>
-                </div>
-            </div>
-
-            <p class="pred-section-subtitle">
-                Tutte le partite della giornata, con lettura tattica e indicazioni su chi schierare.
-            </p>
-
-            <div class="dashboard-table-wrapper">
-                <table class="dashboard-table pred-fanta-table">
-                    <thead>
-                        <tr>
-                            <th>Match</th>
-                            <th>Orario</th>
-                            <th>Consigliati</th>
-                            <th>Da evitare</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pred-fanta-body">
-                        <!-- 10 match di giornata popolati da Google Sheets -->
-                    </tbody>
-                </table>
-            </div>
-
-            <a href="#" class="dashboard-link" id="open-full-fanta">
-                Vedi analisi dettagliata match →
-            </a>
+      <div class="pred-card">
+        <div class="pred-card-header">
+          <h2 class="pred-card-title">Analisi Fantacalcio ProFantasy</h2>
+          <div class="pred-card-controls">
+            <label for="select-giornata-fanta" class="pred-label">Giornata</label>
+            <select id="select-giornata-fanta" class="pred-card-select">
+              <!-- Opzioni via JS -->
+            </select>
+          </div>
         </div>
+
+        <p class="pred-section-subtitle">
+          Tutte le partite della giornata, con lettura tattica e indicazioni su chi schierare.
+        </p>
+
+        <div class="dashboard-table-wrapper">
+          <table class="dashboard-table pred-fanta-table">
+            <thead>
+              <tr>
+                <th>Match</th>
+                <th>Orario</th>
+                <th>Consigliati</th>
+                <th>Da evitare</th>
+              </tr>
+            </thead>
+            <tbody id="pred-fanta-body">
+              <!-- 10 match di giornata popolati da Google Sheets -->
+            </tbody>
+          </table>
+        </div>
+
+        <a href="#" class="dashboard-link" id="open-full-fanta">
+          Vedi analisi dettagliata match →
+        </a>
+      </div>
     </div>
-</section>
+  </section>
 
-
-
-    <!-- BLOCCO 2: PRONOSTICI DI GIORNATA -->
-    <section class="pred-section pred-prono">
+  <!-- BLOCCO 2: PRONOSTICI DI GIORNATA -->
+  <section class="pred-section pred-prono">
     <div class="container">
-        <div class="pred-card">
-            <div class="pred-card-header">
-                <h2 class="pred-card-title">Pronostici Partite ProFantasy</h2>
-                <div class="pred-card-controls">
-                    <label for="select-giornata-prono" class="pred-label">Giornata</label>
-                    <select id="select-giornata-prono" class="pred-card-select">
-                        <!-- Opzioni via JS -->
-                    </select>
-                </div>
+      <div class="pred-card">
+        <div class="pred-card-header">
+          <h2 class="pred-card-title">Pronostici Partite ProFantasy</h2>
+          <div class="pred-card-controls">
+            <label for="select-giornata-prono" class="pred-label">Giornata</label>
+            <select id="select-giornata-prono" class="pred-card-select">
+              <!-- Opzioni via JS -->
+            </select>
+          </div>
+        </div>
+
+        <p class="pred-section-subtitle">
+          Esiti più probabili per ogni match, con livello di confidenza.
+        </p>
+
+        <div class="dashboard-table-wrapper">
+          <table class="dashboard-table pred-prono-table">
+            <thead>
+              <tr>
+                <th>Match</th>
+                <th>Orario</th>
+                <th>Esito principale</th>
+                <th>Conf.</th>
+              </tr>
+            </thead>
+            <tbody id="pred-prono-body">
+              <!-- Match popolati da Google Sheets -->
+            </tbody>
+          </table>
+        </div>
+
+        <a href="#" class="dashboard-link" id="open-full-prono">
+          Vedi dettagli pronostici →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TELEGRAM CTA - ricicla la stessa sezione se vuoi, oppure puoi ometterla
+       e lasciare solo quella della home; se la vuoi uguale alla home, copiala da index.html -->
+  <section id="telegram-cta" class="telegram-section-premium">
+    <div class="telegram-container">
+      <div class="telegram-content">
+        <h2 class="telegram-title">Entra nella Community</h2>
+        <p class="telegram-subtitle">
+          Accesso esclusivo alle analisi giornaliere, pronostici sui marcatori e dritte sugli infortunati prima di ogni giornata.
+        </p>
+
+        <div class="telegram-features">
+          <div class="telegram-feature">
+            <span class="telegram-feature-icon">💬</span>
+            <div>
+              <strong>Analisi Giornaliera</strong>
+              <p>Consigli dettagliati ogni mattina prima delle giornate</p>
             </div>
+          </div>
 
-            <p class="pred-section-subtitle">
-                Esiti più probabili per ogni match, con livello di confidenza.
-            </p>
-
-            <div class="dashboard-table-wrapper">
-                <table class="dashboard-table pred-prono-table">
-                    <thead>
-                        <tr>
-                            <th>Match</th>
-                            <th>Orario</th>
-                            <th>Esito principale</th>
-                            <th>Conf.</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pred-prono-body">
-                        <!-- Match popolati da Google Sheets -->
-                    </tbody>
-                </table>
+          <div class="telegram-feature">
+            <span class="telegram-feature-icon">⚡</span>
+            <div>
+              <strong>Aggiornamenti Real-time</strong>
+              <p>Notifiche istantanee su infortunati e ultimi cambi</p>
             </div>
+          </div>
 
-            <a href="#" class="dashboard-link" id="open-full-prono">
-                Vedi dettagli pronostici →
+          <div class="telegram-feature">
+            <span class="telegram-feature-icon">👥</span>
+            <div>
+              <strong>Community Attiva</strong>
+              <p>Connettiti con altri appassionati di fantacalcio</p>
+            </div>
+          </div>
+
+          <div class="telegram-feature">
+            <span class="telegram-feature-icon">🎯</span>
+            <div>
+              <strong>Supporto Diretto</strong>
+              <p>Rispondi alle tue domande sulla formazione</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="telegram-cta-buttons">
+          <a href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="btn-telegram-primary">
+            Entra su Telegram
+          </a>
+          <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer" class="btn-telegram-secondary">
+            Seguimi su TikTok
+          </a>
+        </div>
+
+        <p class="telegram-guarantee">
+          ✓ Gratuito · ✓ Senza Spam · ✓ Cancellati quando vuoi
+        </p>
+      </div>
+
+      <div class="telegram-visual">
+        <div class="telegram-qr-box">
+          <p class="telegram-qr-label">Scansiona il QR Code</p>
+          <img src="img/telegram-qr.png" alt="QR Code Telegram" class="telegram-qr-image">
+          <p class="telegram-qr-hint">O clicca il pulsante a sinistra</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="telegram-decoration telegram-deco-1"></div>
+    <div class="telegram-decoration telegram-deco-2"></div>
+  </section>
+
+  <!-- FOOTER PREMIUM -->
+  <footer class="footer-premium">
+    <div class="footer-container">
+      <div class="footer-cta-banner">
+        <h3>Non perdere gli aggiornamenti</h3>
+        <p>Iscriviti al canale Telegram per le analisi quotidiane</p>
+        <a href="https://t.me/+hpq210YBS18yN2E8" class="footer-cta-btn" target="_blank" rel="noopener noreferrer">
+          Entra su Telegram
+        </a>
+      </div>
+
+      <div class="footer-main">
+        <div class="footer-col footer-col-brand">
+          <div class="footer-logo">
+            <img src="img/logo-ciro-profantasy.png" alt="Ciro Profantasy" class="footer-logo-img">
+            <div>
+              <h4>Ciro Profantasy</h4>
+              <p>Analisi Fantacalcio Professionali</p>
+            </div>
+          </div>
+          <p class="footer-bio">
+            Strategie avanzate, dati e lettura tattica per dominare il fantacalcio.
+          </p>
+          <div class="footer-socials">
+            <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="TikTok">
+              <span>TikTok</span>
             </a>
+            <a href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Telegram">
+              <span>Telegram</span>
+            </a>
+            <a href="https://www.instagram.com/ciro_profantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Instagram">
+              <span>Instagram</span>
+            </a>
+          </div>
         </div>
+
+        <div class="footer-col">
+          <h5 class="footer-col-title">Esplora</h5>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="predictions.html">Previsioni</a></li>
+            <li><a href="track-record.html">Risultati</a></li>
+            <li><a href="chi-sono.html">Chi Sono</a></li>
+            <li><a href="contatti.html">Contatti</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5 class="footer-col-title">Risorse</h5>
+          <ul class="footer-links">
+            <li><a href="legal.html#privacy">Privacy Policy</a></li>
+            <li><a href="legal.html#terms">Terms of Service</a></li>
+            <li><a href="legal.html#disclaimer">Disclaimer</a></li>
+            <li><a href="legal.html#faq">FAQ</a></li>
+            <li><a href="legal.html#contact">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-col-stats">
+          <h5 class="footer-col-title">Statistiche</h5>
+          <div class="footer-stat">
+            <span class="footer-stat-value">92%</span>
+            <span class="footer-stat-label">Win Rate</span>
+          </div>
+          <div class="footer-stat">
+            <span class="footer-stat-value">79%</span>
+            <span class="footer-stat-label">Marcatori</span>
+          </div>
+          <div class="footer-stat">
+            <span class="footer-stat-value">4.8★</span>
+            <span class="footer-stat-label">Rating</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copyright">
+          &copy; 2025 Ciro Profantasy. Tutti i diritti riservati.
+        </p>
+        <p class="footer-disclaimer">
+          Le analisi fornite sono a scopo informativo. Non sono consigli di investimento. 
+          Gioca responsabilmente.
+        </p>
+      </div>
     </div>
-</section>
 
+    <div class="footer-decoration"></div>
+  </footer>
 
-    <!-- FOOTER PREMIUM (uguale alla home) -->
-    <footer class="footer-premium">
-        <div class="footer-container">
-            <div class="footer-cta-banner">
-                <h3>Non perdere gli aggiornamenti</h3>
-                <p>Iscriviti al canale Telegram per le analisi quotidiane</p>
-                <a href="https://t.me/+hpq210YBS18yN2E8" class="footer-cta-btn" target="_blank" rel="noopener noreferrer">
-                    Entra su Telegram
-                </a>
-            </div>
-
-            <div class="footer-main">
-                <div class="footer-col footer-col-brand">
-                    <div class="footer-logo">
-                        <img src="img/logo-ciro-profantasy.png" alt="Ciro Profantasy" class="footer-logo-img">
-                        <div>
-                            <h4>Ciro Profantasy</h4>
-                            <p>Analisi Fantacalcio Professionali</p>
-                        </div>
-                    </div>
-                    <p class="footer-bio">
-                        Strategie avanzate, dati e lettura tattica per dominare il fantacalcio.
-                    </p>
-                    <div class="footer-socials">
-                        <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="TikTok">
-                            <span>TikTok</span>
-                        </a>
-                        <a href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Telegram">
-                            <span>Telegram</span>
-                        </a>
-                        <a href="https://www.instagram.com/ciro_profantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Instagram">
-                            <span>Instagram</span>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-col">
-                    <h5 class="footer-col-title">Esplora</h5>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="predictions.html">Previsioni</a></li>
-                        <li><a href="track-record.html">Risultati</a></li>
-                        <li><a href="chi-sono.html">Chi Sono</a></li>
-                        <li><a href="contatti.html">Contatti</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h5 class="footer-col-title">Risorse</h5>
-                    <ul class="footer-links">
-                       <li><a href="legal.html#privacy">Privacy Policy</a></li>
-<li><a href="legal.html#terms">Terms of Service</a></li>
-<li><a href="legal.html#disclaimer">Disclaimer</a></li>
-<li><a href="legal.html#faq">FAQ</a></li>
-<li><a href="legal.html#contact">Contact Us</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col footer-col-stats">
-                    <h5 class="footer-col-title">Statistiche</h5>
-                    <div class="footer-stat">
-                        <span class="footer-stat-value">92%</span>
-                        <span class="footer-stat-label">Win Rate</span>
-                    </div>
-                    <div class="footer-stat">
-                        <span class="footer-stat-value">79%</span>
-                        <span class="footer-stat-label">Marcatori</span>
-                    </div>
-                    <div class="footer-stat">
-                        <span class="footer-stat-value">4.8★</span>
-                        <span class="footer-stat-label">Rating</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p class="footer-copyright">
-                    &copy; 2025 Ciro Profantasy. Tutti i diritti riservati.
-                </p>
-                <p class="footer-disclaimer">
-                    Le analisi fornite sono a scopo informativo. Non sono consigli di investimento. 
-                    Gioca responsabilmente.
-                </p>
-            </div>
-        </div>
-
-        <div class="footer-decoration"></div>
-    </footer>
-
-    <!-- MODAL ANALISI FANTACALCIO -->
-    <div id="pred-fanta-modal" class="modal">
+  <!-- MODAL ANALISI FANTACALCIO -->
+  <div id="pred-fanta-modal" class="modal">
     <div class="modal-content modal-content-wide">
-        <button class="modal-close" type="button">&times;</button>
-        <div class="modal-body" id="pred-fanta-modal-body"></div>
+      <button class="modal-close" type="button">&times;</button>
+      <div class="modal-body" id="pred-fanta-modal-body"></div>
     </div>
-</div>
+  </div>
 
-<div id="pred-prono-modal" class="modal">
+  <!-- MODAL PRONOSTICI -->
+  <div id="pred-prono-modal" class="modal">
     <div class="modal-content modal-content-wide">
-        <button class="modal-close" type="button">&times;</button>
-        <div class="modal-body" id="pred-prono-modal-body"></div>
+      <button class="modal-close" type="button">&times;</button>
+      <div class="modal-body" id="pred-prono-modal-body">
+        <!-- Contenuto match pronostici via JS -->
+      </div>
     </div>
-</div>
-    <!-- MODAL PRONOSTICI -->
-    <div id="pred-prono-modal" class="modal">
-        <div class="modal-content modal-content-wide">
-            <button class="modal-close" type="button">&times;</button>
-            <div class="modal-body" id="pred-prono-modal-body">
-                <!-- Contenuto match pronostici via JS -->
-            </div>
-        </div>
-    </div>
+  </div>
 
-    <script src="js/main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
+
 
