@@ -646,6 +646,19 @@ document.addEventListener('DOMContentLoaded', async function() {
   console.log('Site initialized');
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks  = document.getElementById('nav-links');
+
+  if (!navToggle || !navLinks) return;
+
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+});
+
+
 
 
 // ===== ANALISI FANTACALCIO (TAB PREVISIONI) =====
