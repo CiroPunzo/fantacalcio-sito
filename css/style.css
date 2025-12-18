@@ -3131,5 +3131,73 @@ img {
   .footer-bottom { padding: 18px 0; }
 }
 
+/* Contenitore banner TermsFeed */
+.termsfeed-com---nb {
+  position: fixed !important;
+  right: 24px;
+  bottom: 24px;
+  max-width: 420px;
+  border-radius: 16px;
+  background: #0B1220 !important;              /* blu notte */
+  color: #F9FAFB !important;                   /* testo principale */
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(245, 194, 66, 0.5);   /* oro soft */
+  transform: translateY(40px);
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  z-index: 9999;
+}
+
+/* Quando il banner è visibile */
+.termsfeed-com---nb.termsfeed-com---visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Testo */
+.termsfeed-com---nb .cc-nb-title,
+.termsfeed-com---nb .cc-nb-text {
+  color: #F9FAFB !important;
+  font-family: inherit;
+}
+
+.termsfeed-com---nb .cc-nb-okagree,
+.termsfeed-com---nb .cc-nb-reject {
+  border-radius: 999px !important;
+  padding: 8px 18px !important;
+  font-size: 0.9rem !important;
+  border: none !important;
+}
+
+/* Bottone ACCETTA */
+.termsfeed-com---nb .cc-nb-okagree {
+  background-color: #F5C242 !important;      /* oro */
+  color: #0B1220 !important;                 /* blu notte */
+}
+
+/* Bottone RIFIUTA */
+.termsfeed-com---nb .cc-nb-reject {
+  background-color: transparent !important;
+  color: #D1D5DB !important;
+  border: 1px solid rgba(209, 213, 219, 0.5) !important;
+}
+
+/* Link "Impostazioni" o simili */
+.termsfeed-com---nb a {
+  color: #F5C242 !important;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+/* Mobile: banner più largo e centrato */
+@media (max-width: 640px) {
+  .termsfeed-com---nb {
+    left: 16px;
+    right: 16px;
+    max-width: none;
+    bottom: 16px;
+  }
+}
+
 
 
