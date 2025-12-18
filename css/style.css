@@ -3133,24 +3133,22 @@ img {
   .footer-bottom { padding: 18px 0; }
 }
 
-/* Contenitore banner TermsFeed */
 .termsfeed-com---nb {
   position: fixed !important;
   right: 24px;
   bottom: 24px;
   max-width: 420px;
   border-radius: 16px;
-  background: #0B1220 !important;              /* blu notte */
-  color: #F9FAFB !important;                   /* testo principale */
+  background: #0B1220 !important;
+  color: #F9FAFB !important;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(245, 194, 66, 0.5);   /* oro soft */
+  border: 1px solid rgba(245, 194, 66, 0.5);
   transform: translateY(40px);
   opacity: 0;
   transition: opacity 0.35s ease, transform 0.35s ease;
   z-index: 9999;
 }
 
-/* Quando il banner è visibile */
 .termsfeed-com---nb.termsfeed-com---visible {
   transform: translateY(0);
   opacity: 1;
