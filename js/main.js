@@ -403,6 +403,7 @@ async function populateFullMarcatoriModal() {
 }
 
 // ----- INFORTUNATI -----
+// ----- INFORTUNATI -----
 async function populateInfortunati() {
     const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
     const tbody = document.getElementById('infortunati-body');
@@ -415,12 +416,62 @@ async function populateInfortunati() {
         return;
     }
 
-    console.log('RAW Infortunati data:', data._cols, data); // opzionale debug
+    // data._cols contiene le intestazioni, data[0] è la prima riga (Giocatore / Club / ...)
+    // quindi prendiamo solo le righe di dati vere
+    const rows = data.filter(row =>
+        (row[0] || row['Giocatore']) && (row[0] !== 'Giocatore')
+    );
+
     tbody.innerHTML = '';
 
-    data.forEach(row => {
+    // PREVIEW: primi 10
+    rows
+        .slice(0, 10)
+        .forEach(row => {
+            const tr = document.createElement('tr');
+            tr.className = 'clickable';
+
+            const giocatore = row[0] || row['Giocatore'] || '-';
+            const club      = row[1] || row['Club'] || '-';
+            const rientro   = row[2] || row['Rientro Previsto'] || '-';
+            const tipo      = row[3] || row['Tipo Infortunio'] || '-';
+
+            const logoUrl = CLUB_LOGOS[club] || '';
+            const clubHTML = logoUrl
+                ? `<div class="table-team">
+                        <img src="${logoUrl}" alt="${club}" class="table-logo">
+                        <span>${club}</span>
+                   </div>`
+                : (club || '-');
+
+            tr.innerHTML = `
+                <td><strong>${giocatore}</strong></td>
+                <td>${clubHTML}</td>
+                <td>${rientro}</td>
+                <td>${tipo}</td>
+            `;
+
+            tr.addEventListener('click', () => openInjuryModal(row));
+            tbody.appendChild(tr);
+        });
+
+    console.log('Infortunati populated (preview)', rows.length);
+}
+
+async function populateFullInfortunatiModal() {
+    const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
+    const tbody = document.getElementById('infortunati-full-body');
+    if (!tbody) return;
+    if (!Array.isArray(data) || data.length === 0) return;
+
+    const rows = data.filter(row =>
+        (row[0] || row['Giocatore']) && (row[0] !== 'Giocatore')
+    );
+
+    tbody.innerHTML = '';
+
+    rows.forEach(row => {
         const tr = document.createElement('tr');
-        tr.className = 'clickable';
 
         const giocatore = row[0] || row['Giocatore'] || '-';
         const club      = row[1] || row['Club'] || '-';
@@ -441,46 +492,10 @@ async function populateInfortunati() {
             <td>${rientro}</td>
             <td>${tipo}</td>
         `;
-
-        tr.addEventListener('click', () => openInjuryModal(row));
         tbody.appendChild(tr);
     });
 
-    console.log('Infortunati populated', data);
-}
-
-async function populateFullInfortunatiModal() {
-    const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
-    const tbody = document.getElementById('infortunati-full-body');
-    if (!tbody) return;
-    if (!Array.isArray(data) || data.length === 0) return;
-
-    tbody.innerHTML = '';
-
-    data.forEach(row => {
-        const tr = document.createElement('tr');
-
-        const giocatore = row['Giocatore'] || '-';
-        const club = row['Club'] || '-';
-        const giorni = row['Rientro Previsto'] || '-';
-        const tipo = row['Tipo Infortunio'] || '-';
-
-        const logoUrl = CLUB_LOGOS[club] || '';
-        const clubHTML = logoUrl
-            ? `<div class="table-team">
-                    <img src="${logoUrl}" alt="${club}" class="table-logo">
-                    <span>${club}</span>
-               </div>`
-            : (club || '-');
-
-        tr.innerHTML = `
-            <td><strong>${giocatore}</strong></td>
-            <td>${clubHTML}</td>
-            <td>${giorni}</td>
-            <td>${tipo}</td>
-        `;
-        tbody.appendChild(tr);
-    });
+    console.log('Infortunati full populated', rows.length);
 }
 
 // ===== INFORTUNIO MODAL =====
@@ -507,6 +522,7 @@ function openInjuryModal(data) {
 
     modal.classList.add('active');
 }
+
 
 function closeInjuryModal() {
     const modal = document.getElementById('infortunio-modal');
