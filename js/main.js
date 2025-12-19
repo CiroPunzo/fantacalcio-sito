@@ -155,17 +155,20 @@ async function fetchSheetDataJson(sheetName) {
         const rows = json.table.rows.map(row => {
             const obj = {};
             cols.forEach((col, idx) => {
-                obj[col] = row.c[idx]?.v ?? '';
+                obj[col || idx] = row.c[idx]?.v ?? '';
             });
             return obj;
         });
 
+        // Salvo anche le colonne per usarle in debug o mapping
+        rows._cols = cols;
         return rows;
     } catch (error) {
         console.error('Errore fetchSheetDataJson:', error);
         return [];
     }
 }
+
 
 // ===== POPOLAZIONE TABELLE =====
 const CLUB_LOGOS = {
@@ -412,16 +415,17 @@ async function populateInfortunati() {
         return;
     }
 
+    console.log('RAW Infortunati data:', data._cols, data); // opzionale debug
     tbody.innerHTML = '';
 
     data.forEach(row => {
         const tr = document.createElement('tr');
         tr.className = 'clickable';
 
-        const giocatore = row['Giocatore'] || '-';
-        const club = row['Club'] || '-';
-        const giorni = row['Rientro Previsto'] || '-';
-        const tipo = row['Tipo Infortunio'] || '-';
+        const giocatore = row[0] || row['Giocatore'] || '-';
+        const club      = row[1] || row['Club'] || '-';
+        const rientro   = row[2] || row['Rientro Previsto'] || '-';
+        const tipo      = row[3] || row['Tipo Infortunio'] || '-';
 
         const logoUrl = CLUB_LOGOS[club] || '';
         const clubHTML = logoUrl
@@ -434,7 +438,7 @@ async function populateInfortunati() {
         tr.innerHTML = `
             <td><strong>${giocatore}</strong></td>
             <td>${clubHTML}</td>
-            <td>${giorni}</td>
+            <td>${rientro}</td>
             <td>${tipo}</td>
         `;
 
@@ -490,11 +494,16 @@ function openInjuryModal(data) {
     const t = document.getElementById('modal-infortunio');
     const r = document.getElementById('modal-ritorno');
 
-    if (g) g.textContent = data['Giocatore'] || 'N/A';
-    if (c) c.textContent = data['Club'] || 'N/A';
+    const giocatore = data[0] || data['Giocatore'] || 'N/A';
+    const club      = data[1] || data['Club'] || 'N/A';
+    const rientro   = data[2] || data['Rientro Previsto'] || 'N/A';
+    const tipo      = data[3] || data['Tipo Infortunio'] || 'N/A';
+
+    if (g) g.textContent = giocatore;
+    if (c) c.textContent = club;
     if (s) s.textContent = 'Indisponibile';
-    if (t) t.textContent = data['Tipo Infortunio'] || 'N/A';
-    if (r) r.textContent = data['Rientro Previsto'] || 'N/A';
+    if (t) t.textContent = tipo;
+    if (r) r.textContent = rientro;
 
     modal.classList.add('active');
 }
