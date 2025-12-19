@@ -420,7 +420,7 @@ async function populateInfortunati() {
 
         const giocatore = row['Giocatore'] || '-';
         const club = row['Club'] || '-';
-        const giorni = row['Giorni Recupero'] || '-';
+        const giorni = row['Rientro Previsto'] || '-';
         const tipo = row['Tipo Infortunio'] || '-';
 
         const logoUrl = CLUB_LOGOS[club] || '';
@@ -458,7 +458,7 @@ async function populateFullInfortunatiModal() {
 
         const giocatore = row['Giocatore'] || '-';
         const club = row['Club'] || '-';
-        const giorni = row['Giorni Recupero'] || '-';
+        const giorni = row['Rientro Previsto'] || '-';
         const tipo = row['Tipo Infortunio'] || '-';
 
         const logoUrl = CLUB_LOGOS[club] || '';
@@ -494,7 +494,7 @@ function openInjuryModal(data) {
     if (c) c.textContent = data['Club'] || 'N/A';
     if (s) s.textContent = 'Indisponibile';
     if (t) t.textContent = data['Tipo Infortunio'] || 'N/A';
-    if (r) r.textContent = (data['Giorni Recupero'] || 'N/A') + ' giorni';
+    if (r) r.textContent = (data['Rientro Previsto'] || 'N/A') + ' giorni';
 
     modal.classList.add('active');
 }
