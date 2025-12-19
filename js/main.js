@@ -126,7 +126,7 @@ const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48';
 
 const SHEET_NAMES = {
     classifica: 'Classifica',
-    marcatori: 'ClassificaMarcatori', // <-- ORA LEGGE LA CLASSIFICA ORDINATA
+    marcatori: 'ClassificaMarcatori', // <-- classifica marcatori ordinata
     infortunati: 'Infortunati',
     analisiFantacalcio: 'AnalisiFantacalcio',
     pronostici: 'Pronostici',
@@ -339,8 +339,8 @@ async function populateMarcatori() {
         .forEach(row => {
             const tr = document.createElement('tr');
 
-            const giocatore = row['Nome Giocatore'] || row['Giocatore'] || '-';
-            const club = row['Squadra'] || row['Club'] || '-';
+            const giocatore = row['Nome Giocatore'] || '-';
+            const club = row['Squadra'] || '-';
             const gol = row['Gol'] || '-';
 
             const logoUrl = CLUB_LOGOS[club] || '';
@@ -377,8 +377,8 @@ async function populateFullMarcatoriModal() {
         .forEach(row => {
             const tr = document.createElement('tr');
 
-            const giocatore = row['Nome Giocatore'] || row['Giocatore'] || '-';
-            const club = row['Squadra'] || row['Club'] || '-';
+            const giocatore = row['Nome Giocatore'] || '-';
+            const club = row['Squadra'] || '-';
             const gol = row['Gol'] || '-';
 
             const logoUrl = CLUB_LOGOS[club] || '';
