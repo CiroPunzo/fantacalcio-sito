@@ -472,6 +472,7 @@ async function populateFullInfortunatiModal() {
 
     rows.forEach(row => {
         const tr = document.createElement('tr');
+        tr.className = 'clickable'; // <-- come nella preview
 
         const giocatore = row[0] || row['Giocatore'] || '-';
         const club      = row[1] || row['Club'] || '-';
@@ -492,11 +493,16 @@ async function populateFullInfortunatiModal() {
             <td>${rientro}</td>
             <td>${tipo}</td>
         `;
+
+        // <-- aggiungiamo anche qui l'apertura del modal
+        tr.addEventListener('click', () => openInjuryModal(row));
+
         tbody.appendChild(tr);
     });
 
     console.log('Infortunati full populated', rows.length);
 }
+
 
 // ===== INFORTUNIO MODAL =====
 function openInjuryModal(data) {
