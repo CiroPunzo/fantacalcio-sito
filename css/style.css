@@ -1204,7 +1204,7 @@ img {
 }
 
 /* NEWS MODAL */
-#news-modal.modal.active {
+#news-modal.active {
     display: flex;
 }
 
@@ -1751,6 +1751,17 @@ img {
 #classifica-full-body td {
     padding: 10px 8px;
 }
+
+/* Lista completa indisponibili (sotto) */
+#infortunati-modal {
+    z-index: 900;
+}
+
+/* Dettaglio singolo infortunio (sopra a tutto) */
+#infortunio-modal {
+    z-index: 1100;
+}
+
 
 /* Modal analisi fantacalcio */
 .pred-modal-header {
