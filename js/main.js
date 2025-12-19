@@ -494,7 +494,7 @@ function openInjuryModal(data) {
     if (c) c.textContent = data['Club'] || 'N/A';
     if (s) s.textContent = 'Indisponibile';
     if (t) t.textContent = data['Tipo Infortunio'] || 'N/A';
-    if (r) r.textContent = (data['Rientro Previsto'] || 'N/A') + ' giorni';
+    if (r) r.textContent = data['Rientro Previsto'] || 'N/A';
 
     modal.classList.add('active');
 }
