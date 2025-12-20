@@ -60,6 +60,7 @@ function goToHeroSlide(index) {
 }
 
 // Seleziona il container dello slider
+// Seleziona il container dello slider
 const heroSlider = document.querySelector('.hero-slider');
 
 if (heroSlider) {
@@ -81,15 +82,24 @@ if (heroSlider) {
 
     if (Math.abs(diff) < threshold) return;
 
+    // stop autoplay mentre swipe
+    clearInterval(autoRotateInterval);
+
     if (diff < 0) {
       // swipe verso sinistra -> slide successiva
-      goToNextHeroSlide();   // usa la tua funzione "next"
+      nextHeroSlide();
     } else {
       // swipe verso destra -> slide precedente
-      goToPrevHeroSlide();   // usa la tua funzione "prev"
+      prevHeroSlide();
     }
+
+    // riavvia autoplay
+    autoRotateInterval = setInterval(() => {
+      nextHeroSlide();
+    }, 5000);
   }
 }
+
 
 
 // ===== NAVBAR MOBILE (HAMBURGER) =====
