@@ -26,6 +26,37 @@ function initHeroSlider() {
   autoRotateInterval = setInterval(() => {
     nextHeroSlide();
   }, 5000);
+
+  // swipe mobile
+  const heroSlider = document.querySelector('.hero-slider');
+  if (heroSlider) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    heroSlider.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    heroSlider.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].clientX;
+      const diff = touchEndX - touchStartX;
+      const threshold = 50; // minimo movimento
+
+      if (Math.abs(diff) < threshold) return;
+
+      clearInterval(autoRotateInterval);
+
+      if (diff < 0) {
+        nextHeroSlide();   // swipe verso sinistra -> slide successiva
+      } else {
+        prevHeroSlide();   // swipe verso destra -> slide precedente
+      }
+
+      autoRotateInterval = setInterval(() => {
+        nextHeroSlide();
+      }, 5000);
+    }, { passive: true });
+  }
 }
 
 function showHeroSlide(index) {
@@ -65,8 +96,6 @@ function goToHeroSlide(index) {
     nextHeroSlide();
   }, 5000);
 }
-
-
 
 // ===== NEWS MODAL =====
 function openNewsModal(data) {
