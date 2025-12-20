@@ -3298,6 +3298,24 @@ img {
   }
 }
 
+/* TABLET / SCHERMI MEDI – centra i bottoni */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .telegram-cta-buttons {
+    justify-content: center;
+  }
+
+  .btn-telegram-primary,
+  .btn-telegram-secondary {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .telegram-guarantee {
+    text-align: center;
+  }
+}
+
+
 
 
 
