@@ -3304,25 +3304,31 @@ img {
   }
 }
 
-/* TABLET / SCHERMI MEDI – centra i bottoni */
+/* FIX DEFINITIVO – bottoni centrati solo su schermi medi */
 @media (min-width: 769px) and (max-width: 1300px) {
 
-  .telegram-cta-buttons {
-    display: flex;
-    justify-content: center;
+  /* forza il contenitore dei bottoni al centro */
+  section#telegram-cta .telegram-cta-buttons {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
     gap: 16px;
     flex-wrap: wrap;
+    width: 100%;
   }
 
-  .telegram-cta-buttons > a {
-    flex: 1 1 260px;      /* stessa larghezza per i due bottoni */
-    max-width: 360px;
+  /* stessa larghezza per i due bottoni, sempre centrati */
+  section#telegram-cta .telegram-cta-buttons > a {
+    flex: 0 1 320px;
+    max-width: 340px;
   }
 
-  .telegram-guarantee {
-    text-align: center;
+  /* testo garanzia centrato */
+  section#telegram-cta .telegram-guarantee {
+    text-align: center !important;
   }
 }
+
 
 
 
