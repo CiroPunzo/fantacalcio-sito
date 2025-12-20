@@ -8,6 +8,7 @@ function initHeroSlider() {
 
   if (slides.length === 0 || dots.length === 0) return;
 
+  // stato iniziale
   slides.forEach(slide => slide.classList.remove('active'));
   slides[0].classList.add('active');
 
@@ -21,7 +22,10 @@ function initHeroSlider() {
     });
   });
 
-  ...
+  // autoplay
+  autoRotateInterval = setInterval(() => {
+    nextHeroSlide();
+  }, 5000);
 }
 
 function showHeroSlide(index) {
@@ -62,48 +66,6 @@ function goToHeroSlide(index) {
   }, 5000);
 }
 
-// inizializza a DOM pronto
-document.addEventListener('DOMContentLoaded', initHeroSlider);
-
-
-
-// ===== NAVBAR MOBILE (HAMBURGER) =====
-function setupMobileNavbar() {
-  const navToggle = document.getElementById('nav-toggle');
-  const navLinks = document.getElementById('nav-links');
-
-  if (!navToggle || !navLinks) return;
-
-  // assicuriamoci che il bottone sia clickabile per Safari/iOS
-  navToggle.style.pointerEvents = 'auto';
-
-  const toggleMenu = (e) => {
-    // per Safari mobile è più sicuro prevenire default su button
-    if (e) e.preventDefault();
-
-    const isOpen = navLinks.classList.toggle('nav-open');
-    navToggle.classList.toggle('nav-open', isOpen);
-    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  };
-
-  // click “classico”
-  navToggle.addEventListener('click', toggleMenu);
-
-  // supporto esplicito touch per Safari iOS
-  navToggle.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    toggleMenu(e);
-  });
-
-  // chiudi il menu al click su un link
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('nav-open');
-      navToggle.classList.remove('nav-open');
-      navToggle.setAttribute('aria-expanded', 'false');
-    });
-  });
-}
 
 
 // ===== NEWS MODAL =====
