@@ -587,10 +587,10 @@ function setupMobileNavbar() {
   });
 }
 
-// =====  =====
+// ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
   // Slider + navbar + tabs sempre
-  HeroSlider();
+  initHeroSlider();
   setupMobileNavbar();
   setupDashboardTabs();
 
