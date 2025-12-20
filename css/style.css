@@ -3282,9 +3282,15 @@ img {
   }
 
   /* Bottoni centrati */
-  .telegram-cta-buttons {
+    .telegram-cta-buttons {
+    display: flex;
+    gap: 16px;
+    margin: 24px 0;
+    flex-wrap: wrap;
+
+    /* nuovo */
     justify-content: center;
-  }
+}
 
   .btn-telegram-primary,
   .btn-telegram-secondary {
