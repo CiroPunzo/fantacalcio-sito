@@ -324,7 +324,7 @@ img {
 /* HERO DOTS */
 .hero-dots {
     position: absolute;
-    bottom: 70px;          /* dentro la hero */
+    bottom: 270px;          /* dentro la hero */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
