@@ -3305,14 +3305,17 @@ img {
 }
 
 /* TABLET / SCHERMI MEDI – centra i bottoni */
-@media (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1024px) {
+
   .telegram-cta-buttons {
+    display: flex;
     justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
   }
 
-  .btn-telegram-primary,
-  .btn-telegram-secondary {
-    width: 100%;
+  .telegram-cta-buttons > a {
+    flex: 1 1 260px;      /* stessa larghezza per i due bottoni */
     max-width: 360px;
   }
 
@@ -3320,6 +3323,7 @@ img {
     text-align: center;
   }
 }
+
 
 
 
