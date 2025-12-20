@@ -554,11 +554,43 @@ document.addEventListener('click', function(e) {
         if (e.target.closest('#pred-prono-modal')) pronoModal.classList.remove('active');
     }
 });
+// ===== NAVBAR MOBILE (HAMBURGER) =====
+function setupMobileNavbar() {
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
 
-// ===== INIT =====
+  if (!navToggle || !navLinks) return;
+
+  // assicuriamoci che il bottone sia clickabile per Safari/iOS
+  navToggle.style.pointerEvents = 'auto';
+
+  const toggleMenu = (e) => {
+    if (e) e.preventDefault();
+
+    const isOpen = navLinks.classList.toggle('nav-open');
+    navToggle.classList.toggle('nav-open', isOpen);
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  };
+
+  navToggle.addEventListener('click', toggleMenu);
+  navToggle.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    toggleMenu(e);
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('nav-open');
+      navToggle.classList.remove('nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
+// =====  =====
 document.addEventListener('DOMContentLoaded', async function() {
   // Slider + navbar + tabs sempre
-  initHeroSlider();
+  HeroSlider();
   setupMobileNavbar();
   setupDashboardTabs();
 
@@ -644,7 +676,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     await populateRisultatiGiornata();
   }
 
-  console.log('Site initialized');
+  console.log('Site ialized');
 });
 
 // ===== ANALISI FANTACALCIO (TAB PREVISIONI) =====
@@ -1089,10 +1121,10 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// ===== INIT =====
+// =====  =====
 document.addEventListener('DOMContentLoaded', async function() {
   // Slider + navbar + tabs sempre
-  initHeroSlider();
+  HeroSlider();
   setupMobileNavbar();
   setupDashboardTabs();
 
@@ -1176,7 +1208,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     await populateRisultatiGiornata();
   }
 
-  console.log('Site initialized');
+  console.log('Site ialized');
 });
 
 
