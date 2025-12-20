@@ -683,6 +683,57 @@ img {
     color: #d0d0d0;
 }
 
+/* Header card previsioni */
+.pred-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Blocco titolo e select */
+.pred-card-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.6rem;
+}
+
+.pred-card-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pred-card-select {
+  min-width: 120px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(184, 149, 107, 0.7);
+  background: rgba(5,5,25,0.95);
+  color: #f5f5f5;
+  font-size: 0.85rem;
+}
+@media (max-width: 768px) {
+  .pred-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pred-card-title {
+    font-size: 1.4rem;
+  }
+
+  .pred-card-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .pred-card-select {
+    width: auto;
+    max-width: 55vw;   /* evita che esca dallo schermo */
+  }
+}
+
+
 /* ===== DASHBOARD ANALITICA ===== */
 .dashboard-section {
     background: linear-gradient(135deg, #020041 0%, #010020 100%);
