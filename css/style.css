@@ -169,9 +169,8 @@ img {
   max-height: 520px;
   background: #020041;
   overflow: hidden;
-  margin-bottom: 40px;  /* un po’ meno stacco */
+  margin-bottom: 40px;
 }
-
 
 .hero-slide {
   position: absolute;
@@ -377,17 +376,13 @@ img {
 /* Mobile */
   @media (max-width: 768px) {
   .hero-slider {
-    height: 75vh;        /* ma la parte visiva effettiva la controlliamo con il contenuto */
+    height: 65vh;      /* un po' meno alta */
     max-height: none;
-    margin-bottom: 28px; /* stacco più corto verso “Live Data” */
+    margin-bottom: 24px;
   }
 
   .hero-content {
-    padding: 36px 20px 40px;  /* meno padding sotto: la foto “scende” e il blu si riduce */
-  }
-
-  .hero-dots {
-    bottom: 24px;        /* se le stai posizionando assolute; altrimenti riduci margin-top */
+    padding: 32px 20px 32px;  /* meno spazio sotto */
   }
 
   .hero-title {
@@ -397,6 +392,10 @@ img {
   .hero-cta-inline {
     width: 100%;
     justify-content: center;
+  }
+
+  .hero-dots {
+    bottom: 20px;
   }
   }
 
