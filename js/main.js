@@ -59,6 +59,39 @@ function goToHeroSlide(index) {
     }, 5000);
 }
 
+// Seleziona il container dello slider
+const heroSlider = document.querySelector('.hero-slider');
+
+if (heroSlider) {
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  heroSlider.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+
+  heroSlider.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    handleHeroSwipe();
+  }, { passive: true });
+
+  function handleHeroSwipe() {
+    const diff = touchEndX - touchStartX;
+    const threshold = 50; // minimo movimento per considerarlo swipe
+
+    if (Math.abs(diff) < threshold) return;
+
+    if (diff < 0) {
+      // swipe verso sinistra -> slide successiva
+      goToNextHeroSlide();   // usa la tua funzione "next"
+    } else {
+      // swipe verso destra -> slide precedente
+      goToPrevHeroSlide();   // usa la tua funzione "prev"
+    }
+  }
+}
+
+
 // ===== NAVBAR MOBILE (HAMBURGER) =====
 function setupMobileNavbar() {
   const navToggle = document.getElementById('nav-toggle');
