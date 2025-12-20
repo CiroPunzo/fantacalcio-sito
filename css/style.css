@@ -323,7 +323,7 @@ img {
 /* HERO DOTS */
 .hero-dots {
     position: absolute;
-    bottom: 120px;    /* li portiamo ben sopra il bordo inferiore */
+    bottom: 280px;    /* li portiamo ben sopra il bordo inferiore */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
