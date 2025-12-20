@@ -165,21 +165,19 @@ img {
 .hero-slider {
     position: relative;
     width: 100%;
-    min-height: 380px;   /* un po’ meno alta */
-    /* rimuovi height: 100vh; se l’avevi messa */
-    overflow: hidden;
+    padding-bottom: 40px;   /* spazio sotto per staccare dalla sezione successiva */
     background: #020041;
-    margin-top: 0;
+    overflow: hidden;
 }
 
-
+/* la zona visiva del carousel */
 .hero-slide {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 60vh;        /* circa 3/5 dello schermo */
-    max-height: 520px;   /* limite su desktop grande */
+    height: 65vh;           /* circa 2/3 schermo */
+    max-height: 520px;
     opacity: 0;
     transition: opacity 0.6s ease-in-out;
     display: flex;
@@ -190,6 +188,7 @@ img {
     opacity: 1;
     z-index: 10;
 }
+
 
 .hero-slide-image {
     position: absolute;
@@ -323,7 +322,7 @@ img {
 /* HERO DOTS */
 .hero-dots {
     position: absolute;
-    bottom: 24px;
+    bottom: 18px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
