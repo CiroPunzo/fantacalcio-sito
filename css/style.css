@@ -3244,5 +3244,60 @@ img {
   color: #F5C242;
 }
 
+/* MOBILE – sezione Telegram */
+@media (max-width: 768px) {
+
+  /* Layout a colonna e centrato */
+  .telegram-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+    gap: 32px;
+  }
+
+  /* Nascondo SOLO la colonna con il QR */
+  .telegram-visual {
+    display: none;
+  }
+
+  /* Titolo e sottotitolo centrati */
+  .telegram-title,
+  .telegram-subtitle {
+    text-align: center;
+  }
+
+  /* Card in colonna a tutta larghezza */
+  .telegram-features {
+    width: 100%;
+    max-width: 380px;
+    margin: 16px auto;
+  }
+
+  .telegram-feature {
+    width: 100%;
+    border-radius: 16px;
+    /* Effetto neon leggero */
+    box-shadow: 0 0 14px rgba(0, 132, 255, 0.45);
+    background: rgba(0, 132, 255, 0.12);
+  }
+
+  /* Bottoni centrati */
+  .telegram-cta-buttons {
+    justify-content: center;
+  }
+
+  .btn-telegram-primary,
+  .btn-telegram-secondary {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  /* Testo garanzia centrato */
+  .telegram-guarantee {
+    text-align: center;
+  }
+}
+
+
 
 
