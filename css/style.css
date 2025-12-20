@@ -3305,7 +3305,7 @@ img {
 }
 
 /* TABLET / SCHERMI MEDI – centra i bottoni */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (max-width: 1024px) {
   .telegram-cta-buttons {
     justify-content: center;
   }
