@@ -165,23 +165,25 @@ img {
 .hero-slider {
     position: relative;
     width: 100%;
-    min-height: 580px;
-    height: 100vh;
+    min-height: 380px;   /* un po’ meno alta */
+    /* rimuovi height: 100vh; se l’avevi messa */
     overflow: hidden;
     background: #020041;
     margin-top: 0;
 }
+
 
 .hero-slide {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 60vh;        /* circa 3/5 dello schermo */
+    max-height: 520px;   /* limite su desktop grande */
     opacity: 0;
     transition: opacity 0.6s ease-in-out;
     display: flex;
-    align-items: flex-end; /* puoi mettere center se vuoi il contenuto più centrato */
+    align-items: flex-end;
 }
 
 .hero-slide.active {
@@ -321,7 +323,7 @@ img {
 /* HERO DOTS */
 .hero-dots {
     position: absolute;
-    bottom: 40px;
+    bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
