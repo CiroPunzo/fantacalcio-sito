@@ -161,8 +161,8 @@ img {
 }
 
 
-/* =====  SLIDER ===== */
-.-slider {
+/* ===== HERO SLIDER ===== */
+.hero-slider {
     position: relative;
     width: 100%;
     min-height: 580px;
@@ -171,7 +171,7 @@ img {
     margin-top: 0;
 }
 
-.-slide {
+.hero-slide {
     position: absolute;
     top: 0;
     left: 0;
@@ -180,15 +180,15 @@ img {
     opacity: 0;
     transition: opacity 0.6s ease-in-out;
     display: flex;
-    align-items: flex-end;
+    align-items: flex-end; /* puoi mettere center se vuoi il contenuto più centrato */
 }
 
-.-slide.active {
+.hero-slide.active {
     opacity: 1;
     z-index: 10;
 }
 
-.-slide-image {
+.hero-slide-image {
     position: absolute;
     top: 0;
     left: 0;
@@ -198,7 +198,7 @@ img {
     z-index: 1;
 }
 
-.-overlay {
+.hero-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -214,7 +214,7 @@ img {
     z-index: 2;
 }
 
-.-content {
+.hero-content {
     position: relative;
     z-index: 3;
     padding: 60px 40px;
@@ -234,7 +234,7 @@ img {
     }
 }
 
-.-tag {
+.hero-tag {
     display: inline-block;
     padding: 8px 16px;
     background: linear-gradient(135deg, #B8956B 0%, #a67d52 100%);
@@ -248,7 +248,7 @@ img {
     box-shadow: 0 4px 12px rgba(184, 149, 107, 0.3);
 }
 
-.-title {
+.hero-title {
     font-family: 'Anton', sans-serif;
     font-size: 3rem;
     font-weight: 700;
@@ -260,7 +260,7 @@ img {
     line-height: 1.1;
 }
 
-.-text {
+.hero-text {
     font-size: 1.1rem;
     color: #e0e0e0;
     margin-bottom: 32px;
@@ -268,41 +268,12 @@ img {
     line-height: 1.6;
 }
 
-.-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 28px;
-    background: linear-gradient(135deg, #B8956B 0%, #a67d52 100%);
-    color: #020041;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.8rem;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 6px 20px rgba(184, 149, 107, 0.3);
-    position: absolute;
-    bottom: 40px;
-    right: 40px;
-    z-index: 15;
-}
+/* (vecchio .hero-cta lasciato solo se ti serve ancora da qualche parte)
+.hero-cta { ... }
+*/
 
-.-cta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(184, 149, 107, 0.45);
-    background: linear-gradient(135deg, #a67d52 0%, #95714a 100%);
-}
-
-.-cta:active {
-    transform: translateY(-1px);
-}
-
-/*  ARROWS */
-.-arrow {
+/* ARROWS */
+.hero-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -321,7 +292,7 @@ img {
     backdrop-filter: blur(4px);
 }
 
-.-arrow:hover {
+.hero-arrow:hover {
     background: rgba(184, 149, 107, 0.3);
     color: #d4c5a0;
     transform: translateY(-50%) scale(1.1);
@@ -415,6 +386,7 @@ img {
   transform: translateY(-2px);
 }
 
+/* Mobile */
 @media (max-width: 768px) {
   .hero-content {
     padding: 40px 20px 70px;
@@ -429,6 +401,7 @@ img {
     justify-content: center;
   }
 }
+
 
 
 /* ===== PAGINA PREVISIONI ===== */
