@@ -166,6 +166,7 @@ img {
     position: relative;
     width: 100%;
     min-height: 580px;
+    height: 100vh;
     overflow: hidden;
     background: #020041;
     margin-top: 0;
@@ -320,7 +321,7 @@ img {
 /* HERO DOTS */
 .hero-dots {
     position: absolute;
-    bottom: 30px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
