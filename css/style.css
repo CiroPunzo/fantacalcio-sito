@@ -161,8 +161,8 @@ img {
 }
 
 
-/* ===== HERO SLIDER ===== */
-.hero-slider {
+/* =====  SLIDER ===== */
+.-slider {
     position: relative;
     width: 100%;
     min-height: 580px;
@@ -171,7 +171,7 @@ img {
     margin-top: 0;
 }
 
-.hero-slide {
+.-slide {
     position: absolute;
     top: 0;
     left: 0;
@@ -183,12 +183,12 @@ img {
     align-items: flex-end;
 }
 
-.hero-slide.active {
+.-slide.active {
     opacity: 1;
     z-index: 10;
 }
 
-.hero-slide-image {
+.-slide-image {
     position: absolute;
     top: 0;
     left: 0;
@@ -198,7 +198,7 @@ img {
     z-index: 1;
 }
 
-.hero-overlay {
+.-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -214,7 +214,7 @@ img {
     z-index: 2;
 }
 
-.hero-content {
+.-content {
     position: relative;
     z-index: 3;
     padding: 60px 40px;
@@ -234,7 +234,7 @@ img {
     }
 }
 
-.hero-tag {
+.-tag {
     display: inline-block;
     padding: 8px 16px;
     background: linear-gradient(135deg, #B8956B 0%, #a67d52 100%);
@@ -248,7 +248,7 @@ img {
     box-shadow: 0 4px 12px rgba(184, 149, 107, 0.3);
 }
 
-.hero-title {
+.-title {
     font-family: 'Anton', sans-serif;
     font-size: 3rem;
     font-weight: 700;
@@ -260,7 +260,7 @@ img {
     line-height: 1.1;
 }
 
-.hero-text {
+.-text {
     font-size: 1.1rem;
     color: #e0e0e0;
     margin-bottom: 32px;
@@ -268,7 +268,7 @@ img {
     line-height: 1.6;
 }
 
-.hero-cta {
+.-cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -291,18 +291,18 @@ img {
     z-index: 15;
 }
 
-.hero-cta:hover {
+.-cta:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(184, 149, 107, 0.45);
     background: linear-gradient(135deg, #a67d52 0%, #95714a 100%);
 }
 
-.hero-cta:active {
+.-cta:active {
     transform: translateY(-1px);
 }
 
-/* HERO ARROWS */
-.hero-arrow {
+/*  ARROWS */
+.-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -321,7 +321,7 @@ img {
     backdrop-filter: blur(4px);
 }
 
-.hero-arrow:hover {
+.-arrow:hover {
     background: rgba(184, 149, 107, 0.3);
     color: #d4c5a0;
     transform: translateY(-50%) scale(1.1);
@@ -378,6 +378,58 @@ img {
     border-radius: 6px;
     box-shadow: 0 0 16px rgba(184, 149, 107, 0.5);
 }
+
+/* CTA inline stile Serie A / FIFA */
+.hero-cta-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(184, 149, 107, 0.8);
+  background: rgba(2, 0, 65, 0.75);
+  color: #f5f5f5;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: 8px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+.hero-cta-inline span {
+  white-space: nowrap;
+}
+
+.hero-cta-inline svg {
+  width: 18px;
+  height: 18px;
+  stroke: #B8956B;
+}
+
+.hero-cta-inline:hover {
+  background: linear-gradient(135deg, rgba(184,149,107,0.15), rgba(2,0,65,0.95));
+  box-shadow: 0 0 24px rgba(184, 149, 107, 0.6);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 40px 20px 70px;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-cta-inline {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 
 /* ===== PAGINA PREVISIONI ===== */
 
