@@ -1346,7 +1346,9 @@ img {
     gap: 16px;
     margin: 24px 0;
     flex-wrap: wrap;
+    justify-content: flex-start;   /* desktop: allineati a sinistra */
 }
+
 
 .btn-telegram-primary,
 .btn-telegram-secondary {
@@ -3247,7 +3249,6 @@ img {
 /* MOBILE – sezione Telegram */
 @media (max-width: 768px) {
 
-  /* Layout a colonna e centrato */
   .telegram-container {
     grid-template-columns: 1fr;
     text-align: center;
@@ -3255,18 +3256,15 @@ img {
     gap: 32px;
   }
 
-  /* Nascondo SOLO la colonna con il QR */
   .telegram-visual {
     display: none;
   }
 
-  /* Titolo e sottotitolo centrati */
   .telegram-title,
   .telegram-subtitle {
     text-align: center;
   }
 
-  /* Card in colonna a tutta larghezza */
   .telegram-features {
     width: 100%;
     max-width: 380px;
@@ -3276,21 +3274,13 @@ img {
   .telegram-feature {
     width: 100%;
     border-radius: 16px;
-    /* Effetto neon leggero */
     box-shadow: 0 0 14px rgba(0, 132, 255, 0.45);
     background: rgba(0, 132, 255, 0.12);
   }
 
-  /* Bottoni centrati */
-    .telegram-cta-buttons {
-    display: flex;
-    gap: 16px;
-    margin: 24px 0;
-    flex-wrap: wrap;
-
-    /* nuovo */
-    justify-content: center;
-}
+  .telegram-cta-buttons {
+    justify-content: center;       /* mobile: centrati */
+  }
 
   .btn-telegram-primary,
   .btn-telegram-secondary {
@@ -3298,7 +3288,6 @@ img {
     max-width: 320px;
   }
 
-  /* Testo garanzia centrato */
   .telegram-guarantee {
     text-align: center;
   }
@@ -3307,27 +3296,20 @@ img {
 /* FIX DEFINITIVO – bottoni centrati solo su schermi medi */
 @media (min-width: 769px) and (max-width: 1300px) {
 
-  /* forza il contenitore dei bottoni al centro */
-  section#telegram-cta .telegram-cta-buttons {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 16px;
-    flex-wrap: wrap;
-    width: 100%;
+  .telegram-cta-buttons {
+    justify-content: center;       /* schermi medi: centrati */
   }
 
-  /* stessa larghezza per i due bottoni, sempre centrati */
-  section#telegram-cta .telegram-cta-buttons > a {
+  .telegram-cta-buttons > a {
     flex: 0 1 320px;
     max-width: 340px;
   }
 
-  /* testo garanzia centrato */
-  section#telegram-cta .telegram-guarantee {
-    text-align: center !important;
+  .telegram-guarantee {
+    text-align: center;
   }
 }
+
 
 
 
