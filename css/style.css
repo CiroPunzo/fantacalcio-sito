@@ -3305,7 +3305,7 @@ img {
 }
 
 /* TABLET / SCHERMI MEDI – centra i bottoni */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1300px) {
 
   .telegram-cta-buttons {
     display: flex;
