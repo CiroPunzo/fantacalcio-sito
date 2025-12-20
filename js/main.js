@@ -3,102 +3,104 @@ let currentHeroSlide = 0;
 let autoRotateInterval;
 
 function initHeroSlider() {
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.hero-dot');
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
 
-    if (slides.length === 0) return;
+  if (slides.length === 0) return;
 
-    slides[0].classList.add('active');
-    if (dots[0]) dots[0].classList.add('active');
+  // stato iniziale
+  slides.forEach(slide => slide.classList.remove('active'));
+  slides[0].classList.add('active');
 
-    autoRotateInterval = setInterval(() => {
+  // sincronizza i dots: primo attivo
+  dots.forEach(dot => dot.classList.remove('active'));
+  if (dots[0]) dots[0].classList.add('active');
+
+  // click sui dots (nuova struttura)
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      goToHeroSlide(index);
+    });
+  });
+
+  // autoplay
+  autoRotateInterval = setInterval(() => {
+    nextHeroSlide();
+  }, 5000);
+
+  // swipe touch su mobile
+  const heroSlider = document.querySelector('.hero-slider');
+  if (heroSlider) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    heroSlider.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    heroSlider.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].clientX;
+      const diff = touchEndX - touchStartX;
+      const threshold = 50;
+      if (Math.abs(diff) < threshold) return;
+
+      clearInterval(autoRotateInterval);
+      if (diff < 0) {
         nextHeroSlide();
-    }, 5000);
+      } else {
+        prevHeroSlide();
+      }
+      autoRotateInterval = setInterval(() => {
+        nextHeroSlide();
+      }, 5000);
+    }, { passive: true });
+  }
 }
 
 function showHeroSlide(index) {
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.hero-dot');
-    const totalSlides = slides.length;
+  const slides = document.querySelectorAll('.hero-slide');
+  const allDots = document.querySelectorAll('.hero-dot'); // tutti i dots di tutte le slide
+  const total = slides.length;
+  if (total === 0) return;
 
-    if (totalSlides === 0) return;
+  if (index >= total) index = 0;
+  if (index < 0) index = total - 1;
+  currentHeroSlide = index;
 
-    if (index >= totalSlides) index = 0;
-    if (index < 0) index = totalSlides - 1;
+  // attiva la slide corretta
+  slides.forEach(slide => slide.classList.remove('active'));
+  slides[index].classList.add('active');
 
-    currentHeroSlide = index;
-
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-
-    slides[index].classList.add('active');
-    if (dots[index]) dots[index].classList.add('active');
+  // reset dots
+  allDots.forEach(dot => dot.classList.remove('active'));
+  // attiva solo il dot con lo stesso index
+  if (allDots[index]) {
+    allDots[index].classList.add('active');
+  }
 }
 
 function nextHeroSlide() {
-    const slides = document.querySelectorAll('.hero-slide');
-    if (slides.length === 0) return;
-    currentHeroSlide++;
-    if (currentHeroSlide >= slides.length) currentHeroSlide = 0;
-    showHeroSlide(currentHeroSlide);
+  const slides = document.querySelectorAll('.hero-slide');
+  if (slides.length === 0) return;
+  showHeroSlide(currentHeroSlide + 1);
 }
 
 function prevHeroSlide() {
-    const slides = document.querySelectorAll('.hero-slide');
-    if (slides.length === 0) return;
-    currentHeroSlide--;
-    if (currentHeroSlide < 0) currentHeroSlide = slides.length - 1;
-    showHeroSlide(currentHeroSlide);
+  const slides = document.querySelectorAll('.hero-slide');
+  if (slides.length === 0) return;
+  showHeroSlide(currentHeroSlide - 1);
 }
 
 function goToHeroSlide(index) {
-    showHeroSlide(index);
-    clearInterval(autoRotateInterval);
-    autoRotateInterval = setInterval(() => {
-        nextHeroSlide();
-    }, 5000);
+  clearInterval(autoRotateInterval);
+  showHeroSlide(index);
+  autoRotateInterval = setInterval(() => {
+    nextHeroSlide();
+  }, 5000);
 }
 
-// Seleziona il container dello slider
-// Seleziona il container dello slider
-const heroSlider = document.querySelector('.hero-slider');
-
-if (heroSlider) {
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  heroSlider.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].clientX;
-  }, { passive: true });
-
-  heroSlider.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].clientX;
-    handleHeroSwipe();
-  }, { passive: true });
-
-  function handleHeroSwipe() {
-    const diff = touchEndX - touchStartX;
-    const threshold = 50; // minimo movimento per considerarlo swipe
-
-    if (Math.abs(diff) < threshold) return;
-
-    // stop autoplay mentre swipe
-    clearInterval(autoRotateInterval);
-
-    if (diff < 0) {
-      // swipe verso sinistra -> slide successiva
-      nextHeroSlide();
-    } else {
-      // swipe verso destra -> slide precedente
-      prevHeroSlide();
-    }
-
-    // riavvia autoplay
-    autoRotateInterval = setInterval(() => {
-      nextHeroSlide();
-    }, 5000);
-  }
-}
+// inizializza a DOM pronto
+document.addEventListener('DOMContentLoaded', initHeroSlider);
 
 
 
