@@ -124,7 +124,7 @@ function closeNewsModal() {
 const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48';
 
 const SHEET_NAMES = {
-    classifica: 'Classifica',
+    classifica: 'Classifica!A2:E',
     marcatori: 'ClassificaMarcatori', // <-- classifica marcatori ordinata
     infortunati: 'Infortunati',
     analisiFantacalcio: 'AnalisiFantacalcio',
