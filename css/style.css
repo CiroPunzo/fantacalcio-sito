@@ -167,7 +167,7 @@ img {
   width: 100%;
   min-height: 85vh;        /* prima: height: 60vh; */
   height: auto;
-  max-height: none;        /* prima: max-height: 520px; */
+  max-height: 720px;        /* prima: max-height: 520px; */
   background: #020041;
   overflow: hidden;
   margin-bottom: 40px;
