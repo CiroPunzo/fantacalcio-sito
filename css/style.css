@@ -307,7 +307,7 @@ img {
 .hero-dots {
   position: absolute;
   left: 40px;
-  bottom: 40px;
+  bottom: 24px;
   display: flex;
   gap: 6px;
   z-index: 20;
