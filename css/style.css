@@ -167,7 +167,7 @@ img {
   width: 100%;
   min-height: 85vh;        /* prima: height: 60vh; */
   height: auto;
-  -height: 720px;        /* prima: max-height: 520px; */
+  max-height: 650px;        /* prima: max-height: 520px; */
   background: #020041;
   overflow: hidden;
   margin-bottom: 40px;
@@ -216,7 +216,7 @@ img {
 .hero-content {
   position: relative;
   z-index: 3;
-  padding: 60px 40px;
+  padding: 30px 40px;   /* prima 60px 40px */
   max-width: 600px;
   color: #ffffff;
   animation: slideInUp 0.8s ease-out;
@@ -307,7 +307,7 @@ img {
 .hero-dots {
   position: absolute;
   left: 40px;
-  bottom: 24px;
+  bottom: 40px;
   display: flex;
   gap: 6px;
   z-index: 20;
