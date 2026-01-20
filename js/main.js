@@ -1069,7 +1069,7 @@ async function renderMatchCarouselFromFanta(roundValue) {
 
   const rows = fantaData
     .filter(r => String(r.Giornata) === String(roundValue))
-    .slice();
+    .slice(0, 10);
 
   // Se hai Orario valorizzato in formato ordinabile, ordiniamo; altrimenti resta l'ordine del foglio
   rows.sort((a, b) => String(a.Orario || "").localeCompare(String(b.Orario || "")));
