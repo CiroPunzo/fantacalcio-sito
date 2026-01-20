@@ -1,26 +1,416 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Risultati previsioni ProFantasy</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Partecipa · ProFantasy League</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- FONT & STILI -->
+  <!-- FONT / STILI -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
 
   <!-- Cookie Consent by CookieYes -->
-  <script id="cookieyes"
-          type="text/javascript"
-          src="https://cdn-cookieyes.com/client_data/632f288ce1ebe1b7d38335aa7a3ff5ff/script.js">
-  </script>
+  <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/632f288ce1ebe1b7d38335aa7a3ff5ff/script.js"></script>
   <!-- End Cookie Consent by CookieYes -->
+
+  <style>
+    /* ===== PAGE: PARTECIPA (solo per questa pagina) ===== */
+    .league-hero {
+      position: relative;
+      padding: clamp(80px, 10vh, 120px) 0 60px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(0,255,255,0.16) 0%, rgba(0,0,0,0.00) 40%),
+        radial-gradient(circle at 80% 20%, rgba(255,0,255,0.14) 0%, rgba(0,0,0,0.00) 35%),
+        linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(7,6,35,1) 45%, rgba(1,0,18,1) 100%);
+    }
+
+    .league-hero::before{
+      content:"";
+      position:absolute;
+      inset:-120px;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(0,255,255,0.08), rgba(0,0,0,0) 55%),
+        radial-gradient(circle at 30% 65%, rgba(255,0,255,0.08), rgba(0,0,0,0) 55%);
+      filter: blur(6px);
+      pointer-events:none;
+    }
+
+    .league-hero-inner{
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px){
+      .league-hero-inner{ grid-template-columns: 1fr; }
+    }
+
+    .league-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.86);
+      font-weight: 600;
+      width: fit-content;
+      margin-bottom: 16px;
+    }
+
+    .neon-title{
+      font-family: "Anton", sans-serif;
+      letter-spacing: 0.5px;
+      line-height: 0.98;
+      font-size: clamp(44px, 6vw, 78px);
+      margin: 0 0 14px;
+      color: #ffffff;
+      text-shadow:
+        0 0 8px rgba(0,255,255,0.38),
+        0 0 18px rgba(0,255,255,0.22),
+        0 0 28px rgba(255,0,255,0.18);
+    }
+
+    .league-hero-sub{
+      color: rgba(255,255,255,0.82);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin: 0 0 22px;
+      max-width: 60ch;
+    }
+
+    .league-hero-ctas{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items:center;
+      margin-bottom: 14px;
+    }
+
+    .btn-neon{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      text-decoration:none;
+      color:#081018;
+      font-weight: 800;
+      background: linear-gradient(135deg, rgba(0,255,255,1), rgba(255,0,255,1));
+      box-shadow:
+        0 10px 30px rgba(0,255,255,0.16),
+        0 10px 30px rgba(255,0,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .btn-ghost{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 16px;
+      border-radius: 14px;
+      text-decoration:none;
+      color: rgba(255,255,255,0.90);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-weight: 700;
+    }
+
+    .league-hero-note{
+      color: rgba(255,255,255,0.68);
+      font-size: .92rem;
+      margin: 0;
+    }
+
+    .prize-card{
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+      min-height: 320px;
+      display:flex;
+      flex-direction: column;
+    }
+
+    .prize-card img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display:block;
+      min-height: 320px;
+      filter: saturate(1.10) contrast(1.10);
+    }
+
+    .prize-card-overlay{
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to top, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.05) 100%);
+      pointer-events:none;
+    }
+
+    .prize-card-caption{
+      position:absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 14px;
+      z-index: 2;
+      color: rgba(255,255,255,0.92);
+      font-weight: 800;
+      letter-spacing: .2px;
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+      text-shadow: 0 8px 24px rgba(0,0,0,0.55);
+    }
+
+    .prize-card-caption small{
+      font-weight: 600;
+      color: rgba(255,255,255,0.74);
+    }
+
+    .league-section{
+      padding: 48px 0;
+      background: #050515;
+    }
+
+    .league-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    @media (max-width: 900px){
+      .league-grid{ grid-template-columns: 1fr; }
+    }
+
+    .league-card{
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      padding: 18px;
+      position: relative;
+      overflow:hidden;
+    }
+
+    .league-card::before{
+      content:"";
+      position:absolute;
+      inset:-80px;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(0,255,255,0.10), rgba(0,0,0,0) 45%),
+        radial-gradient(circle at 85% 30%, rgba(255,0,255,0.09), rgba(0,0,0,0) 45%);
+      filter: blur(10px);
+      pointer-events:none;
+    }
+
+    .league-card-inner{ position:relative; z-index:1; }
+
+    .league-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.86);
+      font-weight: 800;
+      width: fit-content;
+      margin-bottom: 12px;
+    }
+
+    .league-card h2{
+      margin: 0 0 10px;
+      color: rgba(255,255,255,0.96);
+      font-family: "Anton", sans-serif;
+      letter-spacing: .3px;
+      font-size: 32px;
+      line-height: 1.02;
+    }
+
+    .league-card p{
+      margin: 0 0 14px;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.6;
+    }
+
+    .league-specs{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .league-specs li{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.84);
+    }
+
+    .league-dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      margin-top: 6px;
+      background: linear-gradient(135deg, rgba(0,255,255,1), rgba(255,0,255,1));
+      flex: 0 0 10px;
+      box-shadow: 0 0 14px rgba(0,255,255,0.24);
+    }
+
+    .cta-section{
+      padding: 54px 0 64px;
+      background: linear-gradient(180deg, #050515 0%, #06072a 45%, #050515 100%);
+    }
+
+    .cta-card{
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 18px;
+      overflow:hidden;
+      position: relative;
+    }
+
+    .cta-card::before{
+      content:"";
+      position:absolute;
+      inset:-120px;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(0,255,255,0.10), rgba(0,0,0,0) 50%),
+        radial-gradient(circle at 75% 35%, rgba(255,0,255,0.10), rgba(0,0,0,0) 50%);
+      filter: blur(12px);
+      pointer-events:none;
+    }
+
+    .cta-card-inner{ position:relative; z-index:1; }
+
+    .cta-title{
+      margin: 0 0 10px;
+      color: rgba(255,255,255,0.98);
+      font-family: "Anton", sans-serif;
+      letter-spacing: .3px;
+      font-size: 38px;
+      line-height: 1.02;
+    }
+
+    .cta-sub{
+      margin: 0 0 16px;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.6;
+      max-width: 70ch;
+    }
+
+    .lead-form{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 800px){
+      .lead-form{ grid-template-columns: 1fr; }
+    }
+
+    .field{
+      display:flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field label{
+      color: rgba(255,255,255,0.82);
+      font-weight: 700;
+      font-size: .95rem;
+    }
+
+    .field input{
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.28);
+      color: rgba(255,255,255,0.92);
+      outline: none;
+    }
+
+    .field input::placeholder{ color: rgba(255,255,255,0.45); }
+
+    .field-full{ grid-column: 1 / -1; }
+
+    .consent{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      color: rgba(255,255,255,0.72);
+      font-size: .92rem;
+      line-height: 1.5;
+      padding: 12px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .consent input{ margin-top: 3px; }
+
+    .cta-actions{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items:center;
+      margin-top: 12px;
+    }
+
+    .cta-actions button{
+      cursor: pointer;
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 900;
+      color: #081018;
+      background: linear-gradient(135deg, rgba(0,255,255,1), rgba(255,0,255,1));
+      box-shadow:
+        0 10px 30px rgba(0,255,255,0.16),
+        0 10px 30px rgba(255,0,255,0.12);
+    }
+
+    .cta-actions a{
+      text-decoration:none;
+      color: rgba(255,255,255,0.86);
+      font-weight: 800;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .smallprint{
+      margin-top: 10px;
+      color: rgba(255,255,255,0.58);
+      font-size: .88rem;
+      line-height: 1.5;
+    }
+  </style>
 </head>
 
 <body>
-  <!-- NAVBAR -->
+  <!-- NAVBAR (identica) -->
   <nav class="navbar">
     <div class="container navbar-inner">
       <div class="logo">
@@ -39,133 +429,167 @@
       <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="predictions.html">Previsioni</a></li>
-        <li><a href="track-record.html" class="active">Risultati</a></li>
+        <!-- manteniamo lo stesso file track-record.html, ma lo rendiamo "Partecipa" -->
+        <li><a href="track-record.html" class="active">Partecipa</a></li>
         <li><a href="chi-sono.html">Chi Sono</a></li>
         <li><a href="contatti.html">Contatti</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- HERO RISULTATI -->
-  <header class="hero-results">
-    <div class="container hero-results-inner">
-      <div class="hero-results-content">
-        <span class="hero-tag">Risultati</span>
-        <h1 class="hero-results-title">
-          Risultati previsioni ProFantasy
-        </h1>
-        <p class="hero-results-text">
-          Performance di analisi fantacalcio e pronostici ProFantasy, giornata per giornata.
+  <!-- HERO -->
+  <header class="league-hero">
+    <div class="container league-hero-inner">
+      <div>
+        <div class="league-kicker">ProFantasy League · Iscrizioni</div>
+        <h1 class="neon-title">Vinci fantastici premi con ProFantasy</h1>
+        <p class="league-hero-sub">
+          Due formule, un solo obiettivo: giocare un fantacalcio competitivo, con gestione seria e premi reali.
+          Scegli il club che fa per te e lascia i contatti per essere richiamato dal Team.
         </p>
 
-        <div class="hero-results-meta">
-          <span class="badge-pill" id="res-global-accuracy">Accuracy globale: -</span>
-          <span class="badge-pill badge-soft" id="res-giornate-count">Giornate analizzate: -</span>
+        <div class="league-hero-ctas">
+          <a class="btn-neon" href="#cta-partecipa">Partecipa ora</a>
+          <a class="btn-ghost" href="#club">Scopri i club</a>
         </div>
+
+        <p class="league-hero-note">
+          Posti limitati (soprattutto nell’Exclusive). Contatti rapidi via WhatsApp.
+        </p>
       </div>
 
-      <div class="hero-results-side">
-        <div class="res-hero-badge">
-          <span class="res-hero-badge-label">Ultima giornata</span>
-          <span class="res-hero-badge-value" id="res-last-giornata">-</span>
+      <div class="prize-card" aria-label="Premi ProFantasy">
+        <img src="img/premi-profantasy.png" alt="Premi ProFantasy (immagine)" loading="lazy">
+        <div class="prize-card-overlay"></div>
+        <div class="prize-card-caption">
+          <span>Premi in palio</span>
+          <small>Immagine: sostituisci con i premi reali</small>
         </div>
       </div>
     </div>
   </header>
 
+  <!-- SEZIONE CLUB -->
   <main>
-    <!-- KPI RIASSUNTIVI -->
-    <section class="results-kpi">
-      <div class="container results-kpi-inner">
-        <div class="results-kpi-card">
-          <p class="results-kpi-label">Accuracy pronostici</p>
-          <p class="results-kpi-value" id="res-kpi-pronostici">-</p>
-          <p class="results-kpi-sub">Percentuale totale pronostici corretti.</p>
-        </div>
-        <div class="results-kpi-card">
-          <p class="results-kpi-label">Accuracy fantacalcio</p>
-          <p class="results-kpi-value" id="res-kpi-fanta">-</p>
-          <p class="results-kpi-sub">Indicatori di consigli giocatori centrati.</p>
-        </div>
-        <div class="results-kpi-card">
-          <p class="results-kpi-label">Miglior giornata</p>
-          <p class="results-kpi-value" id="res-kpi-best-round">-</p>
-          <p class="results-kpi-sub" id="res-kpi-best-round-note">La giornata con l’accuracy più alta.</p>
+    <section id="club" class="league-section">
+      <div class="container">
+        <div class="league-grid">
+
+          <!-- EXCLUSIVE -->
+          <article class="league-card">
+            <div class="league-card-inner">
+              <div class="league-badge">ProFantasy Exclusive Club</div>
+              <h2>Formula premium, numero chiuso</h2>
+              <p>
+                Il club per chi vuole la versione più competitiva e “seria”: posti limitati e quota più alta,
+                con premi più importanti e un’esperienza curata.
+              </p>
+
+              <ul class="league-specs">
+                <li><span class="league-dot"></span><span><strong>Quota:</strong> 100€ a partecipante (una tantum).</span></li>
+                <li><span class="league-dot"></span><span><strong>Partecipanti:</strong> 50 (numero chiuso).</span></li>
+                <li><span class="league-dot"></span><span><strong>Premi:</strong> top prize + premi settimanali (definizione finale con il Team).</span></li>
+                <li><span class="league-dot"></span><span><strong>Gestione:</strong> supporto dedicato e comunicazioni prioritarie.</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- OPEN -->
+          <article class="league-card">
+            <div class="league-card-inner">
+              <div class="league-badge">ProFantasy Open Club</div>
+              <h2>Accessibile, premi e community</h2>
+              <p>
+                Il club “entry” per entrare nel mondo ProFantasy: quota più bassa, tanti partecipanti,
+                competizione e premi distribuiti in modo smart.
+              </p>
+
+              <ul class="league-specs">
+                <li><span class="league-dot"></span><span><strong>Quota:</strong> 25€ a partecipante.</span></li>
+                <li><span class="league-dot"></span><span><strong>Partecipanti:</strong> ampia disponibilità (struttura definitiva in definizione).</span></li>
+                <li><span class="league-dot"></span><span><strong>Premi:</strong> più premi “a obiettivi” + finali (definizione finale con il Team).</span></li>
+                <li><span class="league-dot"></span><span><strong>Esperienza:</strong> community attiva + aggiornamenti e consigli ProFantasy.</span></li>
+              </ul>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
 
-    <!-- STORICO GIORNATE -->
-    <section class="results-history">
+    <!-- CTA / FORM -->
+    <section id="cta-partecipa" class="cta-section">
       <div class="container">
-        <div class="results-history-header">
-          <h2 class="results-history-title">Storico giornate</h2>
-          <p class="results-history-subtitle">
-            Riepilogo di come hanno performato le previsioni per ogni giornata di Serie A.
-          </p>
+        <div class="cta-card">
+          <div class="cta-card-inner">
+            <h2 class="cta-title">Lascia i tuoi contatti: ti richiamiamo noi</h2>
+            <p class="cta-sub">
+              Compila Email e WhatsApp: il Team ProFantasy ti contatterà per darti regolamento, modalità di iscrizione,
+              conferma posti e tutte le info su premi e struttura.
+            </p>
 
-          <div class="results-history-filters">
-            <label for="results-giornata-select">Filtra per giornata:</label>
-            <select id="results-giornata-select">
-              <option value="all">Tutte le giornate</option>
-              <!-- opzioni aggiunte via JS -->
-            </select>
+            <!-- Form “frontend-only” (puoi poi collegarlo a Netlify Forms / Google Form) -->
+            <form class="lead-form" action="#" method="post">
+              <div class="field">
+                <label for="lead-email">Email</label>
+                <input id="lead-email" name="email" type="email" placeholder="nome@email.com" required>
+              </div>
+
+              <div class="field">
+                <label for="lead-whatsapp">Numero WhatsApp</label>
+                <input id="lead-whatsapp" name="whatsapp" type="tel" placeholder="+39 3xx xxx xxxx" required>
+              </div>
+
+              <div class="field field-full">
+                <div class="consent">
+                  <input id="lead-consent" name="consenso" type="checkbox" required>
+                  <label for="lead-consent" style="margin:0; font-weight:600; color:rgba(255,255,255,0.78);">
+                    Acconsento ad essere contattato dal Team ProFantasy e dichiaro di aver letto la
+                    <a href="legal.html#privacy" style="color:rgba(0,255,255,0.95); font-weight:800; text-decoration:none;">Privacy Policy</a>.
+                  </label>
+                </div>
+              </div>
+
+              <div class="field field-full">
+                <div class="cta-actions">
+                  <button type="submit">Invia richiesta</button>
+                  <a href="https://t.me/hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer">Entra su Telegram</a>
+                </div>
+                <p class="smallprint">
+                  Niente spam: contatto solo per info iscrizione e onboarding. Puoi chiedere la cancellazione in qualsiasi momento.
+                </p>
+              </div>
+            </form>
+
           </div>
-        </div>
-
-        <div class="dashboard-table-wrapper">
-          <table class="dashboard-table results-table">
-            <thead>
-              <tr>
-                <th>Giornata</th>
-                <th>Accuracy pronostici</th>
-                <th>Accuracy fantacalcio</th>
-                <th>Colpo di giornata</th>
-                <th>Flop di giornata</th>
-              </tr>
-            </thead>
-            <tbody id="results-history-body">
-              <!-- Righe popolate da Google Sheets -->
-            </tbody>
-          </table>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- FOOTER PREMIUM -->
+  <!-- FOOTER (identico) -->
   <footer class="footer-premium">
     <div class="footer-container">
       <div class="footer-cta-banner">
         <h3>Non perdere gli aggiornamenti</h3>
-        <p>Iscriviti al canale Telegram per le analisi quotidiane</p>
-        <a href="https://t.me/+hpq210YBS18yN2E8" class="footer-cta-btn" target="_blank" rel="noopener noreferrer">
-          Entra su Telegram
-        </a>
+        <p>Iscriviti al canale Telegram per le analisi quotidiane.</p>
+        <a href="https://t.me/hpq210YBS18yN2E8" class="footer-cta-btn" target="_blank" rel="noopener noreferrer">Entra su Telegram</a>
       </div>
 
       <div class="footer-main">
         <div class="footer-col footer-col-brand">
           <div class="footer-logo">
             <img src="img/logo-ciro-profantasy.png" alt="Ciro Profantasy" class="footer-logo-img">
-            <div>
-              <h4>Ciro Profantasy</h4>
-              <p>Analisi Fantacalcio Professionali</p>
-            </div>
           </div>
+          <h4>Ciro Profantasy</h4>
+          <p>Analisi Fantacalcio Professionali</p>
           <p class="footer-bio">
             Strategie avanzate, dati e lettura tattica per dominare il fantacalcio.
           </p>
           <div class="footer-socials">
-            <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="TikTok">
-              <span>TikTok</span>
-            </a>
-            <a href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Telegram">
-              <span>Telegram</span>
-            </a>
-            <a href="https://www.instagram.com/ciro_profantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Instagram">
-              <span>Instagram</span>
-            </a>
+            <a href="https://www.tiktok.com/@ciroprofantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="TikTok"><span>TikTok</span></a>
+            <a href="https://t.me/hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Telegram"><span>Telegram</span></a>
+            <a href="https://www.instagram.com/ciroprofantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Instagram"><span>Instagram</span></a>
           </div>
         </div>
 
@@ -174,7 +598,7 @@
           <ul class="footer-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="predictions.html">Previsioni</a></li>
-            <li><a href="track-record.html">Risultati</a></li>
+            <li><a href="track-record.html">Partecipa</a></li>
             <li><a href="chi-sono.html">Chi Sono</a></li>
             <li><a href="contatti.html">Contatti</a></li>
           </ul>
@@ -193,39 +617,27 @@
 
         <div class="footer-col footer-col-stats">
           <h5 class="footer-col-title">Statistiche</h5>
-          <div class="footer-stat">
-            <span class="footer-stat-value">92%</span>
-            <span class="footer-stat-label">Win Rate</span>
-          </div>
-          <div class="footer-stat">
-            <span class="footer-stat-value">79%</span>
-            <span class="footer-stat-label">Marcatori</span>
-          </div>
-          <div class="footer-stat">
-            <span class="footer-stat-value">4.8★</span>
-            <span class="footer-stat-label">Rating</span>
-          </div>
+          <div class="footer-stat"><span class="footer-stat-value">92</span><span class="footer-stat-label">Win Rate</span></div>
+          <div class="footer-stat"><span class="footer-stat-value">79</span><span class="footer-stat-label">Marcatori</span></div>
+          <div class="footer-stat"><span class="footer-stat-value">4.8</span><span class="footer-stat-label">Ratings</span></div>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p class="footeropyright">
-          &copy; 2025 Ciro Profantasy. Tutti i diritti riservati.
-        </p>
+        <p class="footer-copyright">© 2025 Ciro Profantasy. Tutti i diritti riservati.</p>
         <p class="footer-disclaimer">
-          Le analisi fornite sono a scopo informativo. Non sono consigli di investimento. 
-          Gioca responsabilmente.
+          Le analisi fornite sono a scopo informativo. Non sono consigli di investimento. Gioca responsabilmente.
         </p>
       </div>
+      <div class="footer-decoration"></div>
     </div>
-
-    <div class="footer-decoration"></div>
   </footer>
 
   <!-- JS PRINCIPALE -->
   <script src="js/main.js"></script>
 </body>
 </html>
+
 
 
 
