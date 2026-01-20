@@ -595,9 +595,22 @@ async function populateGlobalRoundSelect() {
   if (!selectGlobal) return;
 
   const fantaData = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
-  const rounds = getUniqueRoundsFromRows(fantaData, "Giornata");
+  if (!Array.isArray(fantaData) || !fantaData.length) return;
+
+  // 1) considero "valida" una riga se ha Giornata + almeno le squadre
+  const validRows = fantaData.filter(r =>
+    Number(r.Giornata) &&
+    String(r.SquadraCasa || r['SquadraCasa'] || '').trim() !== '' &&
+    String(r.SquadraTrasferta || r['SquadraTrasferta'] || '').trim() !== ''
+  );
+
+  const rounds = Array.from(new Set(
+    validRows.map(r => Number(r.Giornata)).filter(n => Number.isFinite(n))
+  )).sort((a, b) => a - b);
+
   if (!rounds.length) return;
 
+  // 2) popolo select con SOLO le giornate realmente presenti
   selectGlobal.innerHTML = "";
   rounds.forEach(r => {
     const opt = document.createElement("option");
@@ -606,12 +619,14 @@ async function populateGlobalRoundSelect() {
     selectGlobal.appendChild(opt);
   });
 
+  // 3) default = ultima giornata realmente presente (corrente)
   const defaultRound = rounds[rounds.length - 1];
   selectGlobal.value = String(defaultRound);
 
   selectGlobal.onchange = () => setPredictionsRound(selectGlobal.value);
   await setPredictionsRound(defaultRound);
 }
+
 
 async function setPredictionsRound(roundValue) {
   const r = Number(roundValue);
