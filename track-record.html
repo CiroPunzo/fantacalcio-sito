@@ -16,40 +16,55 @@
   <!-- End Cookie Consent by CookieYes -->
 
   <style>
-    /* ===== PAGE: PARTECIPA (solo per questa pagina) ===== */
+    /* ===== PAGE: PARTECIPA (coerente con palette ProFantasy) =====
+       Palette sito (da style.css):
+       - Blu notte: #020041 / #010020
+       - Oro premium: #B8956B
+    */
 
     :root{
-      --pf-cyan: rgba(0,255,255,1);
-      --pf-magenta: rgba(255,0,255,1);
-      --pf-bg-0: #050515;
-      --pf-bg-1: #07062a;
-      --pf-bg-2: #0b0a35;
+      --pf-navy: #020041;
+      --pf-deep: #010020;
+      --pf-deeper: #050018;
+      --pf-gold: #B8956B;
+      --pf-gold-2: #A67D52;
+
       --pf-white: rgba(255,255,255,0.96);
-      --pf-white-80: rgba(255,255,255,0.80);
-      --pf-white-70: rgba(255,255,255,0.70);
-      --pf-border: rgba(255,255,255,0.12);
-      --pf-glow: 0 0 14px rgba(0,255,255,0.20), 0 0 22px rgba(255,0,255,0.14);
+      --pf-text: rgba(255,255,255,0.86);
+      --pf-muted: rgba(255,255,255,0.74);
+
+      --pf-border: rgba(184,149,107,0.35);
+      --pf-border-strong: rgba(184,149,107,0.70);
+
+      --pf-card: rgba(5,5,25,0.92);
+      --pf-card-2: rgba(10,0,40,0.70);
+
+      --pf-shadow: 0 18px 60px rgba(0,0,0,0.55);
+      --pf-shadow-2: 0 26px 90px rgba(0,0,0,0.70);
+
+      --pf-radius: 18px;
     }
 
-    /* HERO */
-    .league-hero {
+    /* ===== HERO ===== */
+    .league-hero{
       position: relative;
-      padding: clamp(80px, 10vh, 120px) 0 60px;
+      padding: clamp(76px, 10vh, 110px) 0 58px;
       overflow: hidden;
       background:
-        radial-gradient(circle at 18% 8%, rgba(0,255,255,0.18) 0%, rgba(0,0,0,0.00) 42%),
-        radial-gradient(circle at 82% 18%, rgba(255,0,255,0.16) 0%, rgba(0,0,0,0.00) 38%),
-        linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(7,6,35,1) 45%, rgba(1,0,18,1) 100%);
+        radial-gradient(circle at 14% 10%, rgba(184,149,107,0.18) 0%, rgba(0,0,0,0) 45%),
+        radial-gradient(circle at 85% 18%, rgba(0,132,255,0.14) 0%, rgba(0,0,0,0) 42%),
+        linear-gradient(135deg, var(--pf-navy) 0%, var(--pf-deep) 55%, var(--pf-deeper) 100%);
+      border-bottom: 1px solid rgba(184,149,107,0.22);
     }
 
     .league-hero::before{
       content:"";
       position:absolute;
-      inset:-120px;
+      inset:-140px;
       background:
-        radial-gradient(circle at 50% 35%, rgba(0,255,255,0.10), rgba(0,0,0,0) 55%),
-        radial-gradient(circle at 30% 65%, rgba(255,0,255,0.09), rgba(0,0,0,0) 55%);
-      filter: blur(8px);
+        radial-gradient(circle at 45% 30%, rgba(184,149,107,0.10), rgba(0,0,0,0) 55%),
+        radial-gradient(circle at 70% 65%, rgba(0,132,255,0.08), rgba(0,0,0,0) 55%);
+      filter: blur(10px);
       pointer-events:none;
     }
 
@@ -72,26 +87,30 @@
       gap:10px;
       padding:10px 14px;
       border-radius:999px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.14);
-      color: rgba(255,255,255,0.88);
-      font-weight: 700;
+      background: rgba(184,149,107,0.12);
+      border: 1px solid rgba(184,149,107,0.35);
+      color: rgba(255,255,255,0.92);
+      font-weight: 800;
       width: fit-content;
       margin-bottom: 16px;
       backdrop-filter: blur(6px);
     }
 
-    .neon-title{
+    .league-title{
       font-family: "Anton", sans-serif;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.7px;
       line-height: 0.98;
       font-size: clamp(44px, 6vw, 78px);
       margin: 0 0 14px;
-      color: #ffffff;
+      color: var(--pf-white);
+      text-shadow: 0 4px 22px rgba(0,0,0,0.55);
+    }
+
+    .league-title .gold{
+      color: var(--pf-gold);
       text-shadow:
-        0 0 10px rgba(0,255,255,0.44),
-        0 0 22px rgba(0,255,255,0.22),
-        0 0 34px rgba(255,0,255,0.20);
+        0 0 12px rgba(184,149,107,0.38),
+        0 6px 26px rgba(0,0,0,0.55);
     }
 
     .league-hero-sub{
@@ -110,57 +129,76 @@
       margin-bottom: 14px;
     }
 
-    .btn-neon{
+    .btn-primary-premium{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
-      padding: 12px 16px;
-      border-radius: 14px;
+      padding: 12px 18px;
+      border-radius: 999px;
       text-decoration:none;
-      color:#061018;
+      color: var(--pf-navy);
       font-weight: 900;
-      background: linear-gradient(135deg, rgba(0,255,255,1), rgba(255,0,255,1));
-      box-shadow:
-        0 14px 40px rgba(0,255,255,0.22),
-        0 14px 40px rgba(255,0,255,0.16);
-      border: 1px solid rgba(255,255,255,0.18);
-      transition: transform .18s ease, filter .18s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.86rem;
+      background: linear-gradient(135deg, var(--pf-gold) 0%, var(--pf-gold-2) 100%);
+      box-shadow: 0 14px 40px rgba(184,149,107,0.30);
+      border: 1px solid rgba(184,149,107,0.55);
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
     }
-    .btn-neon:hover{ transform: translateY(-2px); filter: brightness(1.08); }
+    .btn-primary-premium:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 52px rgba(184,149,107,0.42);
+      filter: brightness(1.03);
+    }
 
-    .btn-ghost{
+    .btn-secondary-premium{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding: 12px 16px;
-      border-radius: 14px;
+      padding: 12px 18px;
+      border-radius: 999px;
       text-decoration:none;
       color: rgba(255,255,255,0.92);
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.16);
-      font-weight: 800;
-      transition: transform .18s ease, background .18s ease;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.86rem;
+      background: rgba(184,149,107,0.10);
+      border: 1px solid rgba(184,149,107,0.35);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
     }
-    .btn-ghost:hover{ transform: translateY(-2px); background: rgba(255,255,255,0.10); }
+    .btn-secondary-premium:hover{
+      transform: translateY(-2px);
+      background: rgba(184,149,107,0.16);
+      border-color: rgba(184,149,107,0.60);
+    }
 
     .league-hero-note{
-      color: rgba(255,255,255,0.70);
+      color: rgba(255,255,255,0.72);
       font-size: .92rem;
       margin: 0;
     }
 
-    /* IMAGE PREMI */
+    /* ===== IMMAGINE PREMI ===== */
     .prize-card{
       position: relative;
-      border-radius: 18px;
+      border-radius: var(--pf-radius);
       overflow: hidden;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(184,149,107,0.26);
+      box-shadow: var(--pf-shadow);
       min-height: 320px;
       display:flex;
       flex-direction: column;
+      transform: translateY(0);
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+
+    .prize-card:hover{
+      transform: translateY(-6px);
+      border-color: rgba(184,149,107,0.55);
+      box-shadow: var(--pf-shadow-2);
     }
 
     .prize-card img{
@@ -169,13 +207,13 @@
       object-fit: cover;
       display:block;
       min-height: 320px;
-      filter: saturate(1.10) contrast(1.10);
+      filter: saturate(1.08) contrast(1.08);
     }
 
     .prize-card-overlay{
       position:absolute;
       inset:0;
-      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.26) 52%, rgba(0,0,0,0.06) 100%);
+      background: linear-gradient(to top, rgba(1,0,32,0.82) 0%, rgba(1,0,32,0.38) 55%, rgba(1,0,32,0.10) 100%);
       pointer-events:none;
     }
 
@@ -192,33 +230,31 @@
       justify-content: space-between;
       gap: 10px;
       align-items: baseline;
-      text-shadow: 0 8px 24px rgba(0,0,0,0.55);
+      text-shadow: 0 8px 24px rgba(0,0,0,0.60);
     }
 
     .prize-card-caption small{
-      font-weight: 600;
-      color: rgba(255,255,255,0.76);
+      font-weight: 700;
+      color: rgba(255,255,255,0.72);
     }
 
-    /* SEZIONE CLUB: NON NERA PIATTA */
+    /* ===== SEZIONE CLUB (NO STACCHI “A FASCIA”) ===== */
     .league-section{
       position: relative;
-      padding: 56px 0;
+      padding: 58px 0;
       background:
-        radial-gradient(circle at 10% 15%, rgba(0,255,255,0.08) 0%, rgba(0,0,0,0.0) 40%),
-        radial-gradient(circle at 85% 20%, rgba(255,0,255,0.08) 0%, rgba(0,0,0,0.0) 38%),
-        linear-gradient(180deg, var(--pf-bg-0) 0%, var(--pf-bg-1) 50%, var(--pf-bg-0) 100%);
-      overflow: hidden;
+        radial-gradient(circle at 15% 20%, rgba(184,149,107,0.10) 0%, rgba(0,0,0,0) 45%),
+        radial-gradient(circle at 85% 20%, rgba(0,132,255,0.08) 0%, rgba(0,0,0,0) 45%),
+        linear-gradient(135deg, var(--pf-navy) 0%, var(--pf-deep) 55%, var(--pf-deeper) 100%);
     }
 
     .league-section::after{
       content:"";
       position:absolute;
       inset:0;
-      background-image:
-        radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
       background-size: 22px 22px;
-      opacity: 0.20;
+      opacity: 0.14;
       pointer-events:none;
     }
 
@@ -234,40 +270,39 @@
       .league-grid{ grid-template-columns: 1fr; }
     }
 
-    /* CARD + HOVER */
+    /* ===== CARD CLUB (hover premium) ===== */
     .league-card{
-      border-radius: 18px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: var(--pf-radius);
+      background: radial-gradient(circle at top left, rgba(184,149,107,0.12) 0%, rgba(10,0,40,0.55) 45%, rgba(5,5,25,0.92) 100%);
+      border: 1px solid rgba(184,149,107,0.30);
       padding: 18px;
       position: relative;
       overflow:hidden;
       transform: translateY(0);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+      box-shadow: 0 14px 46px rgba(0,0,0,0.50);
       backdrop-filter: blur(8px);
     }
 
     .league-card::before{
       content:"";
       position:absolute;
-      inset:-90px;
+      inset:-120px;
       background:
-        radial-gradient(circle at 20% 15%, rgba(0,255,255,0.12), rgba(0,0,0,0) 50%),
-        radial-gradient(circle at 85% 30%, rgba(255,0,255,0.10), rgba(0,0,0,0) 50%);
+        radial-gradient(circle at 20% 15%, rgba(184,149,107,0.16), rgba(0,0,0,0) 55%),
+        radial-gradient(circle at 85% 30%, rgba(0,132,255,0.10), rgba(0,0,0,0) 55%);
       filter: blur(14px);
       pointer-events:none;
       opacity: .85;
-      transition: opacity .18s ease;
+      transition: opacity .22s ease;
     }
 
     .league-card:hover{
-      transform: translateY(-6px);
-      border-color: rgba(255,255,255,0.22);
-      background: rgba(255,255,255,0.08);
+      transform: translateY(-8px);
+      border-color: rgba(184,149,107,0.75);
       box-shadow:
-        0 22px 70px rgba(0,0,0,0.50),
-        0 0 0 1px rgba(0,255,255,0.10),
-        0 0 0 1px rgba(255,0,255,0.06);
+        0 26px 80px rgba(0,0,0,0.72),
+        0 0 0 1px rgba(184,149,107,0.10);
     }
 
     .league-card:hover::before{ opacity: 1; }
@@ -280,12 +315,15 @@
       gap:8px;
       padding:8px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.14);
-      color: rgba(255,255,255,0.90);
+      background: rgba(184,149,107,0.12);
+      border: 1px solid rgba(184,149,107,0.30);
+      color: rgba(255,255,255,0.92);
       font-weight: 900;
       width: fit-content;
       margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
     }
 
     .league-card h2{
@@ -295,11 +333,12 @@
       letter-spacing: .3px;
       font-size: 32px;
       line-height: 1.02;
+      text-shadow: 0 10px 26px rgba(0,0,0,0.55);
     }
 
     .league-card p{
       margin: 0 0 14px;
-      color: rgba(255,255,255,0.80);
+      color: rgba(255,255,255,0.82);
       line-height: 1.65;
     }
 
@@ -318,9 +357,9 @@
       align-items:flex-start;
       padding: 10px 12px;
       border-radius: 14px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      color: rgba(255,255,255,0.86);
+      background: rgba(184,149,107,0.08);
+      border: 1px solid rgba(184,149,107,0.22);
+      color: rgba(255,255,255,0.88);
     }
 
     .league-dot{
@@ -328,12 +367,11 @@
       height: 10px;
       border-radius: 999px;
       margin-top: 6px;
-      background: linear-gradient(135deg, var(--pf-cyan), var(--pf-magenta));
+      background: linear-gradient(135deg, var(--pf-gold), var(--pf-gold-2));
       flex: 0 0 10px;
-      box-shadow: var(--pf-glow);
+      box-shadow: 0 0 14px rgba(184,149,107,0.30);
     }
 
-    /* BUTTON: Scarica regolamento */
     .league-card-actions{
       display:flex;
       flex-wrap: wrap;
@@ -346,56 +384,64 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding: 12px 14px;
-      border-radius: 14px;
+      padding: 12px 16px;
+      border-radius: 999px;
       text-decoration:none;
       font-weight: 900;
-      color: rgba(255,255,255,0.94);
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.16);
-      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.82rem;
+      color: var(--pf-navy);
+      background: linear-gradient(135deg, var(--pf-gold) 0%, var(--pf-gold-2) 100%);
+      border: 1px solid rgba(184,149,107,0.55);
+      box-shadow: 0 12px 34px rgba(184,149,107,0.26);
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
     }
 
     .btn-download:hover{
       transform: translateY(-2px);
-      background: rgba(255,255,255,0.12);
-      border-color: rgba(255,255,255,0.24);
+      box-shadow: 0 16px 44px rgba(184,149,107,0.38);
+      filter: brightness(1.03);
     }
 
-    /* CTA: più impattante */
+    /* ===== CTA (premium, no titolo blu, no sottotitolo “grigino”) ===== */
     .cta-section{
       position: relative;
-      padding: 58px 0 68px;
+      padding: 64px 0 74px;
       background:
-        radial-gradient(circle at 20% 20%, rgba(0,255,255,0.14) 0%, rgba(0,0,0,0.0) 45%),
-        radial-gradient(circle at 80% 25%, rgba(255,0,255,0.14) 0%, rgba(0,0,0,0.0) 45%),
-        linear-gradient(180deg, #050515 0%, #0a0940 50%, #050515 100%);
-      overflow: hidden;
+        radial-gradient(circle at 20% 18%, rgba(184,149,107,0.14) 0%, rgba(0,0,0,0) 48%),
+        radial-gradient(circle at 80% 22%, rgba(0,132,255,0.10) 0%, rgba(0,0,0,0) 48%),
+        linear-gradient(135deg, var(--pf-navy) 0%, var(--pf-deep) 55%, var(--pf-deeper) 100%);
+      border-top: 1px solid rgba(184,149,107,0.18);
     }
 
     .cta-section::after{
       content:"";
       position:absolute;
       inset:0;
-      background-image:
-        radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
       background-size: 18px 18px;
-      opacity: 0.18;
+      opacity: 0.12;
       pointer-events:none;
     }
 
     .cta-card{
       position: relative;
       border-radius: 22px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.16);
-      padding: 20px;
+      background: radial-gradient(circle at top left, rgba(184,149,107,0.16) 0%, rgba(10,0,40,0.55) 45%, rgba(5,5,25,0.92) 100%);
+      border: 1px solid rgba(184,149,107,0.35);
+      padding: 22px;
       overflow:hidden;
-      box-shadow:
-        0 28px 90px rgba(0,0,0,0.55),
-        0 0 0 1px rgba(0,255,255,0.08),
-        0 0 0 1px rgba(255,0,255,0.06);
+      box-shadow: 0 26px 92px rgba(0,0,0,0.65);
       backdrop-filter: blur(10px);
+      transform: translateY(0);
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+
+    .cta-card:hover{
+      transform: translateY(-8px);
+      border-color: rgba(184,149,107,0.70);
+      box-shadow: 0 32px 110px rgba(0,0,0,0.72);
     }
 
     .cta-card::before{
@@ -403,9 +449,9 @@
       position:absolute;
       inset:-140px;
       background:
-        radial-gradient(circle at 25% 25%, rgba(0,255,255,0.16), rgba(0,0,0,0) 54%),
-        radial-gradient(circle at 75% 35%, rgba(255,0,255,0.16), rgba(0,0,0,0) 54%);
-      filter: blur(16px);
+        radial-gradient(circle at 25% 25%, rgba(184,149,107,0.18), rgba(0,0,0,0) 56%),
+        radial-gradient(circle at 75% 35%, rgba(0,132,255,0.10), rgba(0,0,0,0) 56%);
+      filter: blur(18px);
       pointer-events:none;
       opacity: 0.95;
     }
@@ -414,17 +460,18 @@
 
     .cta-title{
       margin: 0 0 10px;
-      color: rgba(255,255,255,0.99);
+      color: var(--pf-gold);
       font-family: "Anton", sans-serif;
-      letter-spacing: .3px;
-      font-size: 40px;
+      letter-spacing: .4px;
+      font-size: 42px;
       line-height: 1.02;
-      text-shadow: 0 0 18px rgba(0,255,255,0.16);
+      text-transform: uppercase;
+      text-shadow: 0 0 14px rgba(184,149,107,0.28);
     }
 
     .cta-sub{
       margin: 0 0 16px;
-      color: rgba(255,255,255,0.84);
+      color: rgba(255,255,255,0.86);
       line-height: 1.65;
       max-width: 72ch;
     }
@@ -447,26 +494,27 @@
     }
 
     .field label{
-      color: rgba(255,255,255,0.90);
-      font-weight: 800;
+      color: rgba(255,255,255,0.92);
+      font-weight: 900;
       font-size: .95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     .field input{
       padding: 12px 12px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(184,149,107,0.38);
+      background: rgba(2,0,65,0.50);
       color: rgba(255,255,255,0.96);
       outline: none;
-      box-shadow: inset 0 0 0 1px rgba(0,255,255,0.06);
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
     }
 
     .field input:focus{
-      border-color: rgba(0,255,255,0.40);
-      box-shadow:
-        0 0 0 4px rgba(0,255,255,0.12),
-        inset 0 0 0 1px rgba(255,0,255,0.06);
+      border-color: rgba(184,149,107,0.85);
+      box-shadow: 0 0 0 4px rgba(184,149,107,0.14);
+      background: rgba(2,0,65,0.62);
     }
 
     .field input::placeholder{ color: rgba(255,255,255,0.50); }
@@ -477,21 +525,23 @@
       display:flex;
       gap: 10px;
       align-items:flex-start;
-      color: rgba(255,255,255,0.80);
+      color: rgba(255,255,255,0.84);
       font-size: .92rem;
       line-height: 1.55;
       padding: 12px 12px;
       border-radius: 14px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(184,149,107,0.08);
+      border: 1px solid rgba(184,149,107,0.24);
     }
 
     .consent input{ margin-top: 3px; }
 
     .consent a{
-      color: rgba(0,255,255,0.95);
+      color: rgba(255,255,255,0.92);
       font-weight: 900;
-      text-decoration: none;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
     }
 
     .cta-actions{
@@ -505,33 +555,46 @@
     .cta-actions button{
       cursor: pointer;
       border: 0;
-      border-radius: 14px;
-      padding: 12px 16px;
+      border-radius: 999px;
+      padding: 12px 18px;
       font-weight: 1000;
-      color: #061018;
-      background: linear-gradient(135deg, rgba(0,255,255,1), rgba(255,0,255,1));
-      box-shadow:
-        0 16px 46px rgba(0,255,255,0.26),
-        0 16px 46px rgba(255,0,255,0.18);
-      transition: transform .18s ease, filter .18s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.86rem;
+      color: var(--pf-navy);
+      background: linear-gradient(135deg, var(--pf-gold) 0%, var(--pf-gold-2) 100%);
+      box-shadow: 0 14px 44px rgba(184,149,107,0.34);
+      border: 1px solid rgba(184,149,107,0.55);
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
     }
-    .cta-actions button:hover{ transform: translateY(-2px); filter: brightness(1.08); }
+    .cta-actions button:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 56px rgba(184,149,107,0.44);
+      filter: brightness(1.02);
+    }
 
     .cta-actions a{
       text-decoration:none;
-      color: rgba(255,255,255,0.94);
-      font-weight: 900;
-      padding: 12px 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.10);
-      transition: transform .18s ease, background .18s ease;
+      color: rgba(255,255,255,0.92);
+      font-weight: 1000;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.86rem;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(184,149,107,0.35);
+      background: rgba(184,149,107,0.10);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
     }
-    .cta-actions a:hover{ transform: translateY(-2px); background: rgba(255,255,255,0.14); }
+    .cta-actions a:hover{
+      transform: translateY(-2px);
+      background: rgba(184,149,107,0.16);
+      border-color: rgba(184,149,107,0.60);
+    }
 
     .smallprint{
       margin-top: 10px;
-      color: rgba(255,255,255,0.68);
+      color: rgba(255,255,255,0.72);
       font-size: .88rem;
       line-height: 1.55;
     }
@@ -539,7 +602,7 @@
 </head>
 
 <body>
-  <!-- NAVBAR (identica struttura/link) -->
+  <!-- NAVBAR (stessa struttura/link) -->
   <nav class="navbar">
     <div class="container navbar-inner">
       <div class="logo">
@@ -570,15 +633,19 @@
     <div class="container league-hero-inner">
       <div>
         <div class="league-kicker">ProFantasy League · Iscrizioni</div>
-        <h1 class="neon-title">Vinci fantastici premi con ProFantasy</h1>
+
+        <h1 class="league-title">
+          Vinci <span class="gold">premi reali</span> con ProFantasy
+        </h1>
+
         <p class="league-hero-sub">
-          Due formule, un solo obiettivo: giocare un fantacalcio competitivo, con gestione seria e premi reali.
-          Scegli il club che fa per te e lascia i contatti per essere richiamato dal Team.
+          Due formule, un solo obiettivo: giocare un fantacalcio competitivo, con gestione seria e premi concreti.
+          Scegli il club che fa per te e lascia i contatti: il Team ti richiama.
         </p>
 
         <div class="league-hero-ctas">
-          <a class="btn-neon" href="#cta-partecipa">Partecipa ora</a>
-          <a class="btn-ghost" href="#club">Scopri i club</a>
+          <a class="btn-primary-premium" href="#cta-partecipa">Partecipa ora</a>
+          <a class="btn-secondary-premium" href="#club">Scopri i club</a>
         </div>
 
         <p class="league-hero-note">
@@ -658,9 +725,9 @@
       <div class="container">
         <div class="cta-card">
           <div class="cta-card-inner">
-            <h2 class="cta-title">Lascia i tuoi contatti: ti richiamiamo noi</h2>
+            <h2 class="cta-title">Lascia i tuoi contatti</h2>
             <p class="cta-sub">
-              Compila Email e WhatsApp: il Team ProFantasy ti contatterà per regolamento, modalità di iscrizione,
+              Inserisci Email e WhatsApp: il Team ProFantasy ti contatterà con regolamento, modalità di iscrizione,
               conferma posti e tutte le info su premi e struttura.
             </p>
 
@@ -678,7 +745,7 @@
               <div class="field field-full">
                 <div class="consent">
                   <input id="lead-consent" name="consenso" type="checkbox" required>
-                  <label for="lead-consent" style="margin:0; font-weight:700; color:rgba(255,255,255,0.84);">
+                  <label for="lead-consent" style="margin:0; font-weight:700;">
                     Acconsento ad essere contattato dal Team ProFantasy e dichiaro di aver letto la
                     <a href="legal.html#privacy">Privacy Policy</a>.
                   </label>
@@ -703,7 +770,7 @@
     </section>
   </main>
 
-  <!-- FOOTER (identico struttura/link) -->
+  <!-- FOOTER (stessa struttura/link) -->
   <footer class="footer-premium">
     <div class="footer-container">
       <div class="footer-cta-banner">
