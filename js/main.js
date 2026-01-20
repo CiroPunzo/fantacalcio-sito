@@ -60,9 +60,9 @@ function initHeroSlider() {
 }
 
 function showHeroSlide(index) {
-  const slides = document.querySelectorAll('.hero-slide');
-  const dots = document.querySelectorAll('.hero-dot');
-  const total = slides.length;
+   slides = document.querySelectorAll('.hero-slide');
+   dots = document.querySelectorAll('.hero-dot');
+   total = slides.length;
 
   if (total === 0) return;
 
@@ -78,13 +78,13 @@ function showHeroSlide(index) {
 }
 
 function nextHeroSlide() {
-  const slides = document.querySelectorAll('.hero-slide');
+   slides = document.querySelectorAll('.hero-slide');
   if (slides.length === 0) return;
   showHeroSlide(currentHeroSlide + 1);
 }
 
 function prevHeroSlide() {
-  const slides = document.querySelectorAll('.hero-slide');
+   slides = document.querySelectorAll('.hero-slide');
   if (slides.length === 0) return;
   showHeroSlide(currentHeroSlide - 1);
 }
@@ -99,13 +99,13 @@ function goToHeroSlide(index) {
 
 // ===== NEWS MODAL =====
 function openNewsModal(data) {
-    const modal = document.getElementById('news-modal');
+     modal = document.getElementById('news-modal');
     if (!modal) return;
 
-    const titleEl = document.getElementById('modal-title');
-    const subtitleEl = document.getElementById('modal-subtitle');
-    const imageEl = document.getElementById('modal-image');
-    const contentEl = document.getElementById('modal-content');
+     titleEl = document.getElementById('modal-title');
+     subtitleEl = document.getElementById('modal-subtitle');
+     imageEl = document.getElementById('modal-image');
+     contentEl = document.getElementById('modal-content');
 
     if (titleEl) titleEl.textContent = data.title || '';
     if (subtitleEl) subtitleEl.textContent = data.subtitle || '';
@@ -116,20 +116,22 @@ function openNewsModal(data) {
 }
 
 function closeNewsModal() {
-    const modal = document.getElementById('news-modal');
+     modal = document.getElementById('news-modal');
     if (modal) modal.classList.remove('active');
 }
 
 // ===== GOOGLE SHEETS CONFIG =====
-const SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48';
+ SHEET_ID = '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48';
 
-const SHEET_NAMES = {
+ SHEET_NAMES = {
     classifica: 'Classifica!A2:E',
     marcatori: 'ClassificaMarcatori', // <-- classifica marcatori ordinata
     infortunati: 'Infortunati',
     analisiFantacalcio: 'AnalisiFantacalcio',
     pronostici: 'Pronostici',
     risultatiGiornata: 'RisultatiGiornata'
+    playerPicks: "PlayerPicks",
+
 };
 
 // Fetch + parse robusto da Google Sheets (gviz)
@@ -924,6 +926,169 @@ async function populatePronostici(selectedGiornata = null) {
 // ===== RISULTATI GIORNATA (PAGINA RISULTATI) =====
 // ===== RISULTATI GIORNATA (PAGINA RISULTATI) =====
 let RESULTS_DATA_CACHE = null;
+
+// ===== PREVISIONI: round globale + hero picks + match carousel =====
+let CURRENT_PRED_ROUND = null;
+
+function getUniqueRoundsFromRows(rows, fieldName = "Giornata") {
+  const nums = (rows || [])
+    .map(r => Number(r[fieldName]))
+    .filter(n => Number.isFinite(n) && n >= 1 && n <= 38);
+  return Array.from(new Set(nums)).sort((a, b) => a - b);
+}
+
+function normalizePickType(type) {
+  const t = String(type || "").trim().toLowerCase();
+  if (t === "certezza") return "Certezza";
+  if (t === "scommessa") return "Scommessa";
+  if (t === "da evitare" || t === "evitare") return "Da Evitare";
+  return "";
+}
+
+function pickTypeToClass(type) {
+  const t = normalizePickType(type);
+  if (t === "Certezza") return "certezza";
+  if (t === "Scommessa") return "scommessa";
+  if (t === "Da Evitare") return "evitare";
+  return "";
+}
+
+async function populateGlobalRoundSelect() {
+  const selectGlobal = document.getElementById("select-giornata-global");
+  if (!selectGlobal) return;
+
+  const fantaData = await fetchSheetDataJson(SHEETNAMES.analisiFantacalcio);
+  const rounds = getUniqueRoundsFromRows(fantaData, "Giornata");
+  if (!rounds.length) return;
+
+  selectGlobal.innerHTML = "";
+  rounds.forEach(r => {
+    const opt = document.createElement("option");
+    opt.value = String(r);
+    opt.textContent = `Giornata ${r}`;
+    selectGlobal.appendChild(opt);
+  });
+
+  const defaultRound = rounds[rounds.length - 1];
+  selectGlobal.value = String(defaultRound);
+
+  selectGlobal.onchange = () => setPredictionsRound(selectGlobal.value);
+  await setPredictionsRound(defaultRound);
+}
+
+async function setPredictionsRound(roundValue) {
+  const r = Number(roundValue);
+  if (!Number.isFinite(r)) return;
+  CURRENT_PRED_ROUND = r;
+
+  const roundLabel = document.getElementById("pred-round-label");
+  const heroRound = document.getElementById("pred-hero-giornata");
+  if (roundLabel) roundLabel.textContent = String(r);
+  if (heroRound) heroRound.textContent = `Giornata ${r}`;
+
+  // Sync dropdown vecchi (se li lasci)
+  const fantaSel = document.getElementById("select-giornata-fanta");
+  const pronoSel = document.getElementById("select-giornata-prono");
+  if (fantaSel) fantaSel.value = String(r);
+  if (pronoSel) pronoSel.value = String(r);
+
+  await populateAnalisiFantacalcio(String(r));
+  await populatePronostici(String(r));
+
+  await renderPlayerPicks(String(r));
+  await renderMatchCarouselFromFanta(String(r));
+}
+
+async function renderPlayerPicks(roundValue) {
+  const container = document.getElementById("pred-hero-picks");
+  if (!container) return;
+
+  const data = await fetchSheetDataJson(SHEETNAMES.playerPicks);
+  if (!Array.isArray(data) || !data.length) return;
+
+  const rows = data
+    .filter(r => Number(r.Giornata) === Number(roundValue))
+    .map(r => ({
+      tipo: normalizePickType(r.Tipo),
+      giocatore: r.Giocatore || "-",
+      motivazione: r.Motivazione || ""
+    }))
+    .filter(r => r.tipo);
+
+  const order = ["Certezza", "Scommessa", "Da Evitare"];
+  const byType = {};
+  rows.forEach(r => (byType[r.tipo] = r));
+
+  container.innerHTML = "";
+
+  order.forEach(tipo => {
+    const item = byType[tipo] || { tipo, giocatore: "-", motivazione: "" };
+    const cls = pickTypeToClass(tipo);
+
+    const card = document.createElement("article");
+    card.className = `pred-hero-card ${cls}`;
+
+    card.innerHTML = `
+      <div class="pred-hero-card-inner">
+        <div class="pred-hero-card-top">
+          <span class="pred-hero-chip">${tipo === "Da Evitare" ? "Da evitare" : "La " + tipo}</span>
+        </div>
+        <div class="pred-hero-card-body">
+          <h2 class="pred-hero-player">${item.giocatore}</h2>
+          <p class="pred-hero-reason">${item.motivazione}</p>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+async function renderMatchCarouselFromFanta(roundValue) {
+  const track = document.getElementById("pred-match-track");
+  if (!track) return;
+
+  const fantaData = await fetchSheetDataJson(SHEETNAMES.analisiFantacalcio);
+  if (!Array.isArray(fantaData) || !fantaData.length) return;
+
+  const rows = fantaData
+    .filter(r => String(r.Giornata) === String(roundValue))
+    .slice();
+
+  // Se hai Orario valorizzato in formato ordinabile, ordiniamo; altrimenti resta l'ordine del foglio
+  rows.sort((a, b) => String(a.Orario || "").localeCompare(String(b.Orario || "")));
+
+  track.innerHTML = "";
+
+  rows.forEach(row => {
+    const casa = row.SquadraCasa || "-";
+    const trasferta = row.SquadraTrasferta || "-";
+    const logoCasa = CLUBLOGOS[casa];
+    const logoTrasferta = CLUBLOGOS[trasferta];
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "pred-match-pill";
+
+    btn.innerHTML = `
+      <span class="pred-match-pill-side">
+        ${logoCasa ? `<img class="pred-match-pill-logo" src="${logoCasa}" alt="${casa}">` : ""}
+        <span class="pred-match-pill-team">${casa}</span>
+      </span>
+      <span class="pred-match-pill-vs">vs</span>
+      <span class="pred-match-pill-side">
+        ${logoTrasferta ? `<img class="pred-match-pill-logo" src="${logoTrasferta}" alt="${trasferta}">` : ""}
+        <span class="pred-match-pill-team">${trasferta}</span>
+      </span>
+    `;
+
+    // Click = apri direttamente la modal Analisi Fantacalcio (riuso funzione già presente)
+    btn.addEventListener("click", () => openFantaMatchModal(row));
+
+    track.appendChild(btn);
+  });
+}
+
 
 async function populateRisultatiGiornata(selectedRound = 'all') {
   // 1. Prendo i dati (con cache)
