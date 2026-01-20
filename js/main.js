@@ -597,20 +597,23 @@ async function populateGlobalRoundSelect() {
   const fantaData = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
   if (!Array.isArray(fantaData) || !fantaData.length) return;
 
-  // 1) considero "valida" una riga se ha Giornata + almeno le squadre
-  const validRows = fantaData.filter(r =>
-    Number(r.Giornata) &&
-    String(r.SquadraCasa || r['SquadraCasa'] || '').trim() !== '' &&
-    String(r.SquadraTrasferta || r['SquadraTrasferta'] || '').trim() !== ''
-  );
+  // Una riga è "pubblicata" se:
+  // - ha una Giornata valida
+  // - la colonna Consigliati non è vuota (quindi l'hai compilata davvero)
+  const publishedRows = fantaData.filter(r => {
+    const g = Number(r.Giornata);
+    const cons = String(r.Consigliati || "").trim();
+    return Number.isFinite(g) && g >= 1 && g <= 38 && cons !== "";
+  });
 
+  // Giorni che hanno almeno 1 riga pubblicata
   const rounds = Array.from(new Set(
-    validRows.map(r => Number(r.Giornata)).filter(n => Number.isFinite(n))
+    publishedRows.map(r => Number(r.Giornata))
   )).sort((a, b) => a - b);
 
   if (!rounds.length) return;
 
-  // 2) popolo select con SOLO le giornate realmente presenti
+  // Popola select SOLO con le giornate pubblicate
   selectGlobal.innerHTML = "";
   rounds.forEach(r => {
     const opt = document.createElement("option");
@@ -619,7 +622,7 @@ async function populateGlobalRoundSelect() {
     selectGlobal.appendChild(opt);
   });
 
-  // 3) default = ultima giornata realmente presente (corrente)
+  // Default = ultima giornata pubblicata (corrente)
   const defaultRound = rounds[rounds.length - 1];
   selectGlobal.value = String(defaultRound);
 
