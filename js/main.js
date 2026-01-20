@@ -830,16 +830,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     await populateMarcatori();
     await populateInfortunati();
 
-    // MASTER: select globale (sincronizza tutto)
-    await populateGlobalRoundSelect();
-
-    const fullFantaBtn = document.getElementById('open-full-fanta');
-    if (fullFantaBtn) fullFantaBtn.addEventListener('click', (e) => { e.preventDefault(); openFirstFantaMatchInTable(); });
-
-    const fullPronoBtn = document.getElementById('open-full-prono');
-    if (fullPronoBtn) fullPronoBtn.addEventListener('click', (e) => { e.preventDefault(); openFirstPronoMatchInTable(); });
-  }
-
   // Home
   if (path.endsWith('/') || path.endsWith('/index.html')) {
     await populateClassifica();
