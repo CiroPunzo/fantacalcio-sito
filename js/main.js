@@ -697,7 +697,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   if (path.endsWith('/') || path.endsWith('/index.html')) {
     await populateClassifica();
     await populateMarcatori();
-    await populateInfortunati();
+    // await populateInfortunati();
   }
 
   // PAGINA RISULTATI (track-record.html)
