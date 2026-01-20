@@ -663,9 +663,10 @@ document.addEventListener('DOMContentLoaded', async function() {
   if (path.includes('predictions')) {
     await populateClassifica();
     await populateMarcatori();
-    await populateInfortunati();
+    // await populateInfortunati();
     await populateAnalisiFantacalcio();
     await populatePronostici();
+    await populateGlobalRoundSelect();
 
     const fullFantaBtn = document.getElementById('open-full-fanta');
     if (fullFantaBtn) {
@@ -693,6 +694,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         heroGiornataEl.textContent = giornate[giornate.length - 1];
       }
     }
+     const fullFantaBtn = document.getElementById('open-full-fanta');
+  if (fullFantaBtn) fullFantaBtn.addEventListener('click', e => { e.preventDefault(); openFirstFantaMatchInTable(); });
+
+  const fullPronoBtn = document.getElementById('open-full-prono');
+  if (fullPronoBtn) fullPronoBtn.addEventListener('click', e => { e.preventDefault(); openFirstPronoMatchInTable(); });
   }
 
   // HOME
