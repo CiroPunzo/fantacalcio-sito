@@ -830,12 +830,18 @@ document.addEventListener('DOMContentLoaded', async function () {
     await populateMarcatori();
     await populateInfortunati();
 
+    // IMPORTANTISSIMO: questa fa partire tutto il resto (fanta/prono/picks/carousel)
+    await populateGlobalRoundSelect();
+  }
+
   // Home
   if (path.endsWith('/') || path.endsWith('/index.html')) {
     await populateClassifica();
     await populateMarcatori();
     await populateInfortunati();
   }
+});
+
 });
 
 
