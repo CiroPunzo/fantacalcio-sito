@@ -1017,7 +1017,8 @@ async function renderPlayerPicks(roundValue) {
     .map(r => ({
       tipo: normalizePickType(r.Tipo),
       giocatore: r.Giocatore || "-",
-      motivazione: r.Motivazione || ""
+      motivazione: r.Motivazione || "",
+      immagine: r.Immagine || ""   // NEW
     }))
     .filter(r => r.tipo);
 
@@ -1028,13 +1029,20 @@ async function renderPlayerPicks(roundValue) {
   container.innerHTML = "";
 
   order.forEach(tipo => {
-    const item = byType[tipo] || { tipo, giocatore: "-", motivazione: "" };
+    const item = byType[tipo] || { tipo, giocatore: "-", motivazione: "", immagine: "" };
     const cls = pickTypeToClass(tipo);
+
+    const imgHTML = item.immagine
+      ? `<div class="pred-hero-media">
+           <img src="${item.immagine}" alt="${item.giocatore}" loading="lazy">
+         </div>`
+      : "";
 
     const card = document.createElement("article");
     card.className = `pred-hero-card ${cls}`;
 
     card.innerHTML = `
+      ${imgHTML}
       <div class="pred-hero-card-inner">
         <div class="pred-hero-card-top">
           <span class="pred-hero-chip">${tipo === "Da Evitare" ? "Da evitare" : "La " + tipo}</span>
@@ -1048,6 +1056,8 @@ async function renderPlayerPicks(roundValue) {
 
     container.appendChild(card);
   });
+}
+
 }
 
 async function renderMatchCarouselFromFanta(roundValue) {
