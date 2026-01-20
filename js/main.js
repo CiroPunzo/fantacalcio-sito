@@ -129,7 +129,7 @@ function closeNewsModal() {
     infortunati: 'Infortunati',
     analisiFantacalcio: 'AnalisiFantacalcio',
     pronostici: 'Pronostici',
-    risultatiGiornata: 'RisultatiGiornata'
+    risultatiGiornata: 'RisultatiGiornata',
     playerPicks: "PlayerPicks",
 
 };
@@ -963,7 +963,7 @@ async function populateGlobalRoundSelect() {
   const selectGlobal = document.getElementById("select-giornata-global");
   if (!selectGlobal) return;
 
-  const fantaData = await fetchSheetDataJson(SHEETNAMES.analisiFantacalcio);
+  const fantaData = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
   const rounds = getUniqueRoundsFromRows(fantaData, "Giornata");
   if (!rounds.length) return;
 
@@ -1009,7 +1009,7 @@ async function renderPlayerPicks(roundValue) {
   const container = document.getElementById("pred-hero-picks");
   if (!container) return;
 
-  const data = await fetchSheetDataJson(SHEETNAMES.playerPicks);
+  const data = await fetchSheetDataJson(SHEET_NAMES.playerPicks);
   if (!Array.isArray(data) || !data.length) return;
 
   const rows = data
@@ -1064,7 +1064,7 @@ async function renderMatchCarouselFromFanta(roundValue) {
   const track = document.getElementById("pred-match-track");
   if (!track) return;
 
-  const fantaData = await fetchSheetDataJson(SHEETNAMES.analisiFantacalcio);
+  const fantaData = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
   if (!Array.isArray(fantaData) || !fantaData.length) return;
 
   const rows = fantaData
@@ -1079,8 +1079,8 @@ async function renderMatchCarouselFromFanta(roundValue) {
   rows.forEach(row => {
     const casa = row.SquadraCasa || "-";
     const trasferta = row.SquadraTrasferta || "-";
-    const logoCasa = CLUBLOGOS[casa];
-    const logoTrasferta = CLUBLOGOS[trasferta];
+    const logoCasa = CLUB_LOGOS[casa];
+    const logoTrasferta = CLUB_LOGOS[trasferta];
 
     const btn = document.createElement("button");
     btn.type = "button";
@@ -1334,7 +1334,7 @@ document.addEventListener('click', function(e) {
 // =====  =====
 document.addEventListener('DOMContentLoaded', async function() {
   // Slider + navbar + tabs sempre
-  HeroSlider();
+  initHeroSlider();
   setupMobileNavbar();
   setupDashboardTabs();
 
