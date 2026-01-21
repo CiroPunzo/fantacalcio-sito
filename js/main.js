@@ -842,25 +842,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 });
 
-const LEADS_ENDPOINT = "INCOLLA_QUI_URL_WEB_APP"; // Apps Script
-
-async function fileToDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-async function submitLeadToSheets(payload) {
-  const res = await fetch(LEADS_ENDPOINT, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-  return res.json();
-
   // ===== PRO FANTASY LEADS (Apps Script Web App) =====
 const LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzRoOMavDjAm9RsGfmNH_grD5fWO6Af7A8-uAU2XFGP7x6OtdAi-L_SvD5Oq7bPYC41/exec";
 
