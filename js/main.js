@@ -843,12 +843,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
   // ===== PRO FANTASY LEADS (Apps Script Web App) =====
+// ===== PRO FANTASY LEADS (Apps Script Web App) =====
 const LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxptgDb7fbF-qLo9dm0jMUGsX9RWF-FzVcjyydEXzBboWIk7Wm0LdWBVlYpyVpz9xwQ/exec";
-
-// (Consigliato) Token anti-spam: aggiungilo anche lato Apps Script se vuoi
-const LEADS_TOKEN = ""; // es: "pf_2026_secret"
-
-const DRIVE_FOLDER_ID = "AKfycbxptgDb7fbF-qLo9dm0jMUGsX9RWF-FzVcjyydEXzBboWIk7Wm0LdWBVlYpyVpz9xwQ";
 
 function setLeadStatus(msg, isError = false) {
   const el = document.getElementById("lead-status");
@@ -861,7 +857,7 @@ function setLeadStatus(msg, isError = false) {
 function fileToPngBase64(file) {
   return new Promise((resolve, reject) => {
     const r = new FileReader();
-    r.onload = () => resolve(String(r.result)); // data:image/png;base64,...
+    r.onload = () => resolve(String(r.result));
     r.onerror = reject;
     r.readAsDataURL(file);
   });
@@ -871,9 +867,13 @@ async function postLead(payload) {
   const res = await fetch(LEADS_ENDPOINT, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   });
-  return res.json();
+
+  // Se Apps Script risponde non-JSON, qui esplode: lo vogliamo vedere.
+  const text = await res.text();
+  try { return JSON.parse(text); }
+  catch { return { ok: false, error: "Risposta non JSON: " + text.slice(0, 120) }; }
 }
 
 async function fetchJoinList() {
@@ -886,11 +886,6 @@ function openModalById(id) {
   if (modal) modal.classList.add("active");
 }
 
-function closeModalById(id) {
-  const modal = document.getElementById(id);
-  if (modal) modal.classList.remove("active");
-}
-
 function renderJoinRows(rows) {
   const tbody = document.getElementById("join-body");
   if (!tbody) return;
@@ -901,7 +896,6 @@ function renderJoinRows(rows) {
     const squadra = r["Squadra"] || "-";
     const nome = r["Nome Partecipante"] || "-";
     const club = r["Club"] || "-";
-
     const isExclusive = String(club).toLowerCase().includes("exclusive");
 
     const logoHtml = logoUrl
@@ -931,7 +925,7 @@ function setupLeadForm() {
   const preview = document.getElementById("lead-logo-preview");
 
   if (logoInput && preview) {
-    logoInput.addEventListener("change", async () => {
+    logoInput.addEventListener("change", () => {
       const file = logoInput.files && logoInput.files[0];
       if (!file) { preview.style.display = "none"; return; }
       if (file.type !== "image/png") {
@@ -964,16 +958,9 @@ function setupLeadForm() {
 
     let logoBase64 = "";
     const file = logoInput?.files?.[0];
-    if (file) {
-      if (file.type !== "image/png") {
-        setLeadStatus("Errore: il logo deve essere PNG.", true);
-        return;
-      }
-      logoBase64 = await fileToPngBase64(file);
-    }
+    if (file) logoBase64 = await fileToPngBase64(file);
 
     const payload = {
-      token: LEADS_TOKEN,
       nome,
       squadra,
       telefono: whatsapp,
@@ -982,24 +969,20 @@ function setupLeadForm() {
       logoBase64
     };
 
-    try {
-      const out = await postLead(payload);
-      if (!out || !out.ok) {
-        setLeadStatus("Errore invio: " + (out?.error || "riprova tra poco."), true);
-        return;
-      }
+    const out = await postLead(payload);
 
-      form.reset();
-      if (preview) preview.style.display = "none";
-      setLeadStatus("Perfetto! Sei stato aggiunto alla lista. Ti contatteremo a breve.", false);
-
-    } catch (err) {
-      setLeadStatus("Errore di rete: " + String(err), true);
+    if (!out || !out.ok) {
+      setLeadStatus("Errore invio: " + (out?.error || "riprova tra poco."), true);
+      return;
     }
+
+    form.reset();
+    if (preview) preview.style.display = "none";
+    setLeadStatus("Perfetto! Sei stato aggiunto alla lista.", false);
   });
 }
 
-async function setupJoinModal() {
+function setupJoinModal() {
   const btn = document.getElementById("open-join-modal");
   if (!btn) return;
 
@@ -1021,11 +1004,11 @@ async function setupJoinModal() {
   });
 }
 
-// Hook nel tuo init esistente
 document.addEventListener("DOMContentLoaded", () => {
   setupLeadForm();
   setupJoinModal();
 });
+
 
 }
 
