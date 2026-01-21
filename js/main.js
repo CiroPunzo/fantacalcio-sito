@@ -860,6 +860,190 @@ async function submitLeadToSheets(payload) {
     body: JSON.stringify(payload)
   });
   return res.json();
+
+  // ===== PRO FANTASY LEADS (Apps Script Web App) =====
+const LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzRoOMavDjAm9RsGfmNH_grD5fWO6Af7A8-uAU2XFGP7x6OtdAi-L_SvD5Oq7bPYC41/exec";
+
+// (Consigliato) Token anti-spam: aggiungilo anche lato Apps Script se vuoi
+const LEADS_TOKEN = ""; // es: "pf_2026_secret"
+
+function setLeadStatus(msg, isError = false) {
+  const el = document.getElementById("lead-status");
+  if (!el) return;
+  el.style.display = "block";
+  el.style.color = isError ? "rgba(255,120,120,0.95)" : "rgba(255,255,255,0.92)";
+  el.textContent = msg;
+}
+
+function fileToPngBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result)); // data:image/png;base64,...
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+async function postLead(payload) {
+  const res = await fetch(LEADS_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  return res.json();
+}
+
+async function fetchJoinList() {
+  const res = await fetch(LEADS_ENDPOINT, { method: "GET" });
+  return res.json();
+}
+
+function openModalById(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.add("active");
+}
+
+function closeModalById(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.remove("active");
+}
+
+function renderJoinRows(rows) {
+  const tbody = document.getElementById("join-body");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+
+  rows.slice().reverse().slice(0, 80).forEach(r => {
+    const logoUrl = r["Logo"] || "";
+    const squadra = r["Squadra"] || "-";
+    const nome = r["Nome Partecipante"] || "-";
+    const club = r["Club"] || "-";
+
+    const isExclusive = String(club).toLowerCase().includes("exclusive");
+
+    const logoHtml = logoUrl
+      ? `<div class="logo-pill"><img src="${logoUrl}" alt="${squadra} logo"></div>`
+      : `<div class="logo-pill"><span style="opacity:.7;">—</span></div>`;
+
+    const clubHtml = isExclusive
+      ? `<span class="badge-pill" style="border-color: rgba(184,149,107,0.65); color: #B8956B; background: rgba(184,149,107,0.10);">EXCLUSIVE</span>`
+      : `<span class="badge-pill badge-soft">OPEN</span>`;
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="logo-cell">${logoHtml}</td>
+      <td>${squadra}</td>
+      <td>${nome}</td>
+      <td>${clubHtml}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function setupLeadForm() {
+  const form = document.getElementById("lead-form");
+  if (!form) return;
+
+  const logoInput = document.getElementById("lead-logo");
+  const preview = document.getElementById("lead-logo-preview");
+
+  if (logoInput && preview) {
+    logoInput.addEventListener("change", async () => {
+      const file = logoInput.files && logoInput.files[0];
+      if (!file) { preview.style.display = "none"; return; }
+      if (file.type !== "image/png") {
+        setLeadStatus("Errore: carica solo un file PNG.", true);
+        logoInput.value = "";
+        preview.style.display = "none";
+        return;
+      }
+      preview.src = URL.createObjectURL(file);
+      preview.style.display = "block";
+    });
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nome = document.getElementById("lead-nome")?.value?.trim() || "";
+    const squadra = document.getElementById("lead-squadra")?.value?.trim() || "";
+    const email = document.getElementById("lead-email")?.value?.trim() || "";
+    const whatsapp = document.getElementById("lead-whatsapp")?.value?.trim() || "";
+    const club = document.getElementById("lead-club")?.value?.trim() || "Open";
+    const consent = document.getElementById("lead-consent")?.checked;
+
+    if (!consent) {
+      setLeadStatus("Devi accettare la Privacy Policy per inviare la richiesta.", true);
+      return;
+    }
+
+    setLeadStatus("Invio in corso...", false);
+
+    let logoBase64 = "";
+    const file = logoInput?.files?.[0];
+    if (file) {
+      if (file.type !== "image/png") {
+        setLeadStatus("Errore: il logo deve essere PNG.", true);
+        return;
+      }
+      logoBase64 = await fileToPngBase64(file);
+    }
+
+    const payload = {
+      token: LEADS_TOKEN,
+      nome,
+      squadra,
+      telefono: whatsapp,
+      email,
+      club,
+      logoBase64
+    };
+
+    try {
+      const out = await postLead(payload);
+      if (!out || !out.ok) {
+        setLeadStatus("Errore invio: " + (out?.error || "riprova tra poco."), true);
+        return;
+      }
+
+      form.reset();
+      if (preview) preview.style.display = "none";
+      setLeadStatus("Perfetto! Sei stato aggiunto alla lista. Ti contatteremo a breve.", false);
+
+    } catch (err) {
+      setLeadStatus("Errore di rete: " + String(err), true);
+    }
+  });
+}
+
+async function setupJoinModal() {
+  const btn = document.getElementById("open-join-modal");
+  if (!btn) return;
+
+  btn.addEventListener("click", async () => {
+    openModalById("join-modal");
+    const tbody = document.getElementById("join-body");
+    if (tbody) tbody.innerHTML = `<tr><td colspan="4" style="opacity:.75;">Caricamento...</td></tr>`;
+
+    try {
+      const data = await fetchJoinList();
+      if (!data || !data.ok) {
+        if (tbody) tbody.innerHTML = `<tr><td colspan="4" style="color: rgba(255,120,120,0.95);">Errore: ${data?.error || "impossibile caricare."}</td></tr>`;
+        return;
+      }
+      renderJoinRows(data.rows || []);
+    } catch (err) {
+      if (tbody) tbody.innerHTML = `<tr><td colspan="4" style="color: rgba(255,120,120,0.95);">Errore rete: ${String(err)}</td></tr>`;
+    }
+  });
+}
+
+// Hook nel tuo init esistente
+document.addEventListener("DOMContentLoaded", () => {
+  setupLeadForm();
+  setupJoinModal();
+});
+
 }
 
 
