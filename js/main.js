@@ -843,7 +843,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
   // ===== PRO FANTASY LEADS (Apps Script Web App) =====
-const LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzRoOMavDjAm9RsGfmNH_grD5fWO6Af7A8-uAU2XFGP7x6OtdAi-L_SvD5Oq7bPYC41/exec";
+const LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxptgDb7fbF-qLo9dm0jMUGsX9RWF-FzVcjyydEXzBboWIk7Wm0LdWBVlYpyVpz9xwQ/exec";
 
 // (Consigliato) Token anti-spam: aggiungilo anche lato Apps Script se vuoi
 const LEADS_TOKEN = ""; // es: "pf_2026_secret"
