@@ -23,10 +23,14 @@
       --pf-gold: #B8956B;
       --pf-gold-2: #A67D52;
 
+      /* Neon CTA (friendly ma premium) */
+      --pf-neon-violet: #A855F7; /* violet 500 */
+      --pf-neon-magenta: #EC4899; /* pink 500 */
+      --pf-neon-cyan: #22D3EE; /* cyan 400 */
+
       --pf-white: rgba(255,255,255,0.96);
       --pf-text: rgba(255,255,255,0.88);
       --pf-text-strong: rgba(255,255,255,0.92);
-      --pf-muted: rgba(255,255,255,0.78);
 
       --pf-radius: 18px;
     }
@@ -224,7 +228,7 @@
       color: rgba(255,255,255,0.72);
     }
 
-    /* ===== SEZIONE CLUB (no stacchi) ===== */
+    /* ===== SEZIONE CLUB ===== */
     .league-section{
       position: relative;
       padding: 58px 0;
@@ -388,15 +392,16 @@
       filter: brightness(1.03);
     }
 
-    /* ===== CTA (testi centrati + sottotitolo più bianco + layout pulito) ===== */
+    /* ===== CTA (NUOVO: neon friendly che attira) ===== */
     .cta-section{
       position: relative;
-      padding: 66px 0 76px;
+      padding: 70px 0 82px;
       background:
-        radial-gradient(circle at 20% 18%, rgba(184,149,107,0.14) 0%, rgba(0,0,0,0) 48%),
-        radial-gradient(circle at 80% 22%, rgba(0,132,255,0.10) 0%, rgba(0,0,0,0) 48%),
+        radial-gradient(circle at 18% 24%, rgba(168,85,247,0.16) 0%, rgba(0,0,0,0) 52%),
+        radial-gradient(circle at 82% 22%, rgba(236,72,153,0.12) 0%, rgba(0,0,0,0) 54%),
+        radial-gradient(circle at 50% 90%, rgba(34,211,238,0.10) 0%, rgba(0,0,0,0) 55%),
         linear-gradient(135deg, var(--pf-navy) 0%, var(--pf-deep) 55%, var(--pf-deeper) 100%);
-      border-top: 1px solid rgba(184,149,107,0.18);
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
 
     .cta-section::after{
@@ -405,70 +410,106 @@
       inset:0;
       background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
       background-size: 18px 18px;
-      opacity: 0.12;
+      opacity: 0.10;
       pointer-events:none;
     }
 
     .cta-card{
       position: relative;
       border-radius: 22px;
-      background: radial-gradient(circle at top left, rgba(184,149,107,0.16) 0%, rgba(10,0,40,0.55) 45%, rgba(5,5,25,0.92) 100%);
-      border: 1px solid rgba(184,149,107,0.35);
-      padding: 26px 22px;
+      padding: 28px 22px;
       overflow:hidden;
-      box-shadow: 0 26px 92px rgba(0,0,0,0.65);
-      backdrop-filter: blur(10px);
-      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+
+      /* Qui cambia davvero l’impatto: “neon glass” */
+      background:
+        radial-gradient(circle at 18% 12%, rgba(168,85,247,0.24) 0%, rgba(0,0,0,0) 40%),
+        radial-gradient(circle at 82% 18%, rgba(236,72,153,0.18) 0%, rgba(0,0,0,0) 42%),
+        radial-gradient(circle at 45% 92%, rgba(34,211,238,0.14) 0%, rgba(0,0,0,0) 50%),
+        linear-gradient(135deg, rgba(10,0,40,0.68) 0%, rgba(2,0,65,0.58) 55%, rgba(1,0,32,0.72) 100%);
+
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow:
+        0 26px 96px rgba(0,0,0,0.70),
+        0 0 0 1px rgba(168,85,247,0.12),
+        0 0 40px rgba(168,85,247,0.12),
+        0 0 44px rgba(236,72,153,0.08);
+
+      backdrop-filter: blur(12px);
+      transform: translateY(0);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
     }
 
     .cta-card:hover{
-      transform: translateY(-8px);
-      border-color: rgba(184,149,107,0.70);
-      box-shadow: 0 32px 110px rgba(0,0,0,0.72);
+      transform: translateY(-10px);
+      border-color: rgba(255,255,255,0.22);
+      box-shadow:
+        0 34px 120px rgba(0,0,0,0.78),
+        0 0 0 1px rgba(168,85,247,0.18),
+        0 0 58px rgba(168,85,247,0.18),
+        0 0 62px rgba(236,72,153,0.12);
     }
 
+    /* sheen animata “premium” */
     .cta-card::before{
       content:"";
       position:absolute;
-      inset:-140px;
-      background:
-        radial-gradient(circle at 25% 25%, rgba(184,149,107,0.18), rgba(0,0,0,0) 56%),
-        radial-gradient(circle at 75% 35%, rgba(0,132,255,0.10), rgba(0,0,0,0) 56%);
-      filter: blur(18px);
+      top:-40%;
+      left:-30%;
+      width: 90%;
+      height: 180%;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.08) 45%,
+        rgba(255,255,255,0) 70%);
+      transform: rotate(12deg);
+      opacity: 0.0;
+      transition: opacity .25s ease;
       pointer-events:none;
-      opacity: 0.95;
     }
+    .cta-card:hover::before{ opacity: 1; }
 
     .cta-card-inner{
       position:relative;
       z-index:1;
-      text-align: center;               /* CENTRA TESTI */
+      text-align: center;
       display:flex;
       flex-direction: column;
-      align-items: center;               /* CENTRA CONTENUTO */
+      align-items: center;
     }
 
     .cta-title{
       margin: 0 0 10px;
-      color: var(--pf-gold);
       font-family: "Anton", sans-serif;
-      letter-spacing: .4px;
-      font-size: 42px;
+      letter-spacing: .5px;
+      font-size: 44px;
       line-height: 1.02;
       text-transform: uppercase;
-      text-shadow: 0 0 14px rgba(184,149,107,0.28);
+
+      /* “neon premium” ma leggibile */
+      color: rgba(255,255,255,0.98);
+      text-shadow:
+        0 0 14px rgba(168,85,247,0.28),
+        0 0 18px rgba(236,72,153,0.18),
+        0 10px 26px rgba(0,0,0,0.55);
+    }
+
+    .cta-title .gold{
+      color: var(--pf-gold);
+      text-shadow:
+        0 0 12px rgba(184,149,107,0.30),
+        0 10px 26px rgba(0,0,0,0.55);
     }
 
     .cta-sub{
       margin: 0 0 18px;
-      color: rgba(255,255,255,0.92);     /* PIÙ BIANCO, PIÙ ELEGANTE */
+      color: rgba(255,255,255,0.92);
       line-height: 1.75;
       max-width: 72ch;
     }
 
     .lead-form{
       width: 100%;
-      max-width: 920px;                 /* PER NON “ALLARGARSI” TROPPO */
+      max-width: 920px;
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
@@ -483,7 +524,7 @@
       display:flex;
       flex-direction: column;
       gap: 8px;
-      text-align: left;                  /* LABEL/INPUT restano leggibili */
+      text-align: left;
     }
 
     .field label{
@@ -497,21 +538,20 @@
     .field input{
       padding: 12px 12px;
       border-radius: 14px;
-      border: 1px solid rgba(184,149,107,0.38);
-      background: rgba(2,0,65,0.50);
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(2,0,65,0.44);
       color: rgba(255,255,255,0.96);
       outline: none;
       transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
     }
 
     .field input:focus{
-      border-color: rgba(184,149,107,0.85);
-      box-shadow: 0 0 0 4px rgba(184,149,107,0.14);
-      background: rgba(2,0,65,0.62);
+      border-color: rgba(168,85,247,0.60);
+      box-shadow: 0 0 0 4px rgba(168,85,247,0.18);
+      background: rgba(2,0,65,0.58);
     }
 
     .field input::placeholder{ color: rgba(255,255,255,0.55); }
-
     .field-full{ grid-column: 1 / -1; }
 
     .consent{
@@ -519,13 +559,13 @@
       display:flex;
       gap: 10px;
       align-items:flex-start;
-      color: rgba(255,255,255,0.88);
+      color: rgba(255,255,255,0.90);
       font-size: .92rem;
       line-height: 1.55;
       padding: 12px 12px;
       border-radius: 14px;
-      background: rgba(184,149,107,0.08);
-      border: 1px solid rgba(184,149,107,0.24);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
       text-align: left;
     }
 
@@ -545,10 +585,11 @@
       flex-wrap: wrap;
       gap: 12px;
       align-items:center;
-      justify-content: center;           /* BOTTONI CENTRATI */
+      justify-content: center;
       margin-top: 12px;
     }
 
+    /* Primary CTA: neon */
     .cta-actions button{
       cursor: pointer;
       border: 0;
@@ -558,18 +599,25 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-size: 0.86rem;
-      color: var(--pf-navy);
-      background: linear-gradient(135deg, var(--pf-gold) 0%, var(--pf-gold-2) 100%);
-      box-shadow: 0 14px 44px rgba(184,149,107,0.34);
-      border: 1px solid rgba(184,149,107,0.55);
+      color: rgba(255,255,255,0.96);
+
+      background: linear-gradient(135deg, var(--pf-neon-violet) 0%, var(--pf-neon-magenta) 55%, var(--pf-neon-cyan) 120%);
+      box-shadow:
+        0 16px 56px rgba(168,85,247,0.22),
+        0 16px 56px rgba(236,72,153,0.18);
+      border: 1px solid rgba(255,255,255,0.14);
+
       transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
     }
     .cta-actions button:hover{
       transform: translateY(-2px);
-      box-shadow: 0 18px 56px rgba(184,149,107,0.44);
-      filter: brightness(1.02);
+      filter: brightness(1.06);
+      box-shadow:
+        0 22px 74px rgba(168,85,247,0.28),
+        0 22px 74px rgba(236,72,153,0.22);
     }
 
+    /* Secondary CTA: premium gold glass */
     .cta-actions a{
       text-decoration:none;
       color: rgba(255,255,255,0.92);
@@ -579,29 +627,31 @@
       font-size: 0.86rem;
       padding: 12px 18px;
       border-radius: 999px;
-      border: 1px solid rgba(184,149,107,0.35);
-      background: rgba(184,149,107,0.10);
+
+      border: 1px solid rgba(184,149,107,0.40);
+      background: rgba(184,149,107,0.12);
+
       transition: transform .18s ease, background .18s ease, border-color .18s ease;
     }
     .cta-actions a:hover{
       transform: translateY(-2px);
-      background: rgba(184,149,107,0.16);
-      border-color: rgba(184,149,107,0.60);
+      background: rgba(184,149,107,0.18);
+      border-color: rgba(184,149,107,0.70);
     }
 
     .smallprint{
       margin-top: 12px;
-      color: rgba(255,255,255,0.74);
+      color: rgba(255,255,255,0.76);
       font-size: .88rem;
       line-height: 1.55;
-      text-align: center;               /* CENTRATO */
+      text-align: center;
       max-width: 80ch;
     }
   </style>
 </head>
 
 <body>
-  <!-- NAVBAR (stessa struttura/link) -->
+  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="container navbar-inner">
       <div class="logo">
@@ -722,7 +772,7 @@
       <div class="container">
         <div class="cta-card">
           <div class="cta-card-inner">
-            <h2 class="cta-title">Lascia i tuoi contatti</h2>
+            <h2 class="cta-title">Lascia i tuoi <span class="gold">contatti</span></h2>
             <p class="cta-sub">
               Inserisci Email e WhatsApp: il Team ProFantasy ti contatterà con regolamento, modalità di iscrizione,
               conferma posti e tutte le info su premi e struttura.
@@ -767,7 +817,7 @@
     </section>
   </main>
 
-  <!-- FOOTER (stessa struttura/link) -->
+  <!-- FOOTER -->
   <footer class="footer-premium">
     <div class="footer-container">
       <div class="footer-cta-banner">
