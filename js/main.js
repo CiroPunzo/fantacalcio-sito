@@ -865,13 +865,14 @@ function fileToPngBase64(file) {
 
 async function postLead(payload) {
   const controller = new AbortController();
-  const t = setTimeout(() => controller.abort(), 12000); // 12s
+  const t = setTimeout(() => controller.abort(), 12000);
 
   try {
     const res = await fetch(LEADS_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(payload),
+      redirect: "follow",
       signal: controller.signal
     });
 
@@ -884,6 +885,7 @@ async function postLead(payload) {
     clearTimeout(t);
   }
 }
+
 
 
 async function fetchJoinList() {
