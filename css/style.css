@@ -3682,7 +3682,15 @@ img {
   font-weight: 700;
 }
 
-
+/* ===== FIX MOBILE PARTECIPA ===== */
+@media (max-width: 520px){
+  .cta-section{ padding: 48px 0 60px; }
+  .cta-card{ padding: 18px 14px; }
+  .cta-title{ font-size: 36px; }
+  .lead-form{ gap: 10px; }
+  .cta-actions{ flex-direction: column; }
+  .cta-actions button{ width: 100%; }
+}
 
 
 
