@@ -864,17 +864,27 @@ function fileToPngBase64(file) {
 }
 
 async function postLead(payload) {
-  const res = await fetch(LEADS_ENDPOINT, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+  const controller = new AbortController();
+  const t = setTimeout(() => controller.abort(), 12000); // 12s
 
-  // Se Apps Script risponde non-JSON, qui esplode: lo vogliamo vedere.
-  const text = await res.text();
-  try { return JSON.parse(text); }
-  catch { return { ok: false, error: "Risposta non JSON: " + text.slice(0, 120) }; }
+  try {
+    const res = await fetch(LEADS_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+
+    const text = await res.text();
+    try { return JSON.parse(text); }
+    catch { return { ok: false, error: "Risposta non JSON: " + text.slice(0, 160) }; }
+  } catch (err) {
+    return { ok: false, error: "Fetch failed: " + String(err) };
+  } finally {
+    clearTimeout(t);
+  }
 }
+
 
 async function fetchJoinList() {
   const res = await fetch(LEADS_ENDPOINT, { method: "GET" });
