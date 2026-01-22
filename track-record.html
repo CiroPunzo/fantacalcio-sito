@@ -790,85 +790,189 @@
     </div>
   </header>
 
-  <main>
+   <main>
+    <!-- SEZIONE CLUB -->
+    <section id="club" class="league-section">
+      <div class="container">
+        <div class="league-grid">
 
-  <!-- HERO PARTECIPA (riusa stile hero-results per non toccare CSS) -->
-  <header class="hero-results">
-    <div class="container hero-results-inner">
-      <div class="hero-results-content">
-        <span class="hero-tag">Partecipa</span>
-        <h1 class="hero-results-title">Entra nei ProFantasy Club</h1>
-        <p class="hero-results-text">
-          Lascia i tuoi contatti, scegli il club e ti contattiamo per completare l’iscrizione.
-        </p>
-        <div class="hero-results-meta">
-          <span class="badge-pill">Posti limitati</span>
-          <span class="badge-pill badge-soft">Risposta entro 24–48h</span>
+          <!-- EXCLUSIVE -->
+          <article class="league-card">
+            <div class="exclusive-rosette" aria-label="Exclusive">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M8 4h8v3a4 4 0 0 1-8 0V4Z" stroke="rgba(2,0,65,0.95)" stroke-width="2" />
+                <path d="M6 7H4a2 2 0 0 0 2 2" stroke="rgba(2,0,65,0.95)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M18 7h2a2 2 0 0 1-2 2" stroke="rgba(2,0,65,0.95)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 12v3" stroke="rgba(2,0,65,0.95)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M9 19h6" stroke="rgba(2,0,65,0.95)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10 15h4" stroke="rgba(2,0,65,0.95)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <div class="league-card-inner">
+              <div class="league-badge badge-exclusive">ProFantasy Exclusive Club</div>
+              <h2>Formula premium, numero chiuso</h2>
+              <p>
+                Il club per chi vuole la versione più competitiva e “seria”: posti limitati e quota più alta,
+                con premi più importanti e un’esperienza curata.
+              </p>
+
+              <ul class="league-specs">
+                <li><span class="league-dot dot-gold"></span><span><strong>Quota:</strong> 100€ a partecipante (una tantum).</span></li>
+                <li><span class="league-dot dot-gold"></span><span><strong>Partecipanti:</strong> 50 (numero chiuso).</span></li>
+                <li><span class="league-dot dot-gold"></span><span><strong>Premi:</strong> top prize + premi settimanali (definizione finale con il Team).</span></li>
+                <li><span class="league-dot dot-gold"></span><span><strong>Gestione:</strong> supporto dedicato e comunicazioni prioritarie.</span></li>
+              </ul>
+
+              <div class="league-card-actions">
+                <a class="btn-download" href="docs/regolamento-profantasy-exclusive.pdf" download>Scarica il regolamento</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- OPEN -->
+          <article class="league-card">
+            <div class="league-card-inner">
+              <div class="league-badge badge-open">ProFantasy Open Club</div>
+              <h2>Accessibile, premi e community</h2>
+              <p>
+                Il club “entry” per entrare nel mondo ProFantasy: quota più bassa, tanti partecipanti,
+                competizione e premi distribuiti in modo smart.
+              </p>
+
+              <ul class="league-specs">
+                <li><span class="league-dot dot-cyan"></span><span><strong>Quota:</strong> 25€ a partecipante.</span></li>
+                <li><span class="league-dot dot-cyan"></span><span><strong>Partecipanti:</strong> ampia disponibilità (struttura definitiva in definizione).</span></li>
+                <li><span class="league-dot dot-cyan"></span><span><strong>Premi:</strong> più premi “a obiettivi” + finali (definizione finale con il Team).</span></li>
+                <li><span class="league-dot dot-cyan"></span><span><strong>Esperienza:</strong> community attiva + aggiornamenti e consigli ProFantasy.</span></li>
+              </ul>
+
+              <div class="league-card-actions">
+                <a class="btn-download" href="docs/regolamento-profantasy-open.pdf" download>Scarica il regolamento</a>
+              </div>
+            </div>
+          </article>
+
         </div>
       </div>
+    </section>
 
-      <div class="hero-results-side">
-        <div class="res-hero-badge">
-          <span class="res-hero-badge-label">Step</span>
-          <span class="res-hero-badge-value">1/2</span>
-        </div>
+   <!-- CTA / FORM (UNICA) -->
+<section id="cta-partecipa" class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <div class="cta-card-inner">
+        <h2 class="cta-title">Lascia i tuoi contatti</h2>
+        <p class="cta-sub">
+          Compila i dati: ti aggiungiamo alla lista e il Team ti contatta.
+          Seleziona il club e carica un logo PNG (opzionale).
+        </p>
+
+        <form class="lead-form" id="lead-form" autocomplete="on">
+          <div class="field">
+            <label for="lead-nome">Nome partecipante</label>
+ <input
+  id="lead-nome"
+  name="nome"
+  type="text"
+  placeholder="Nome e Cognome"
+  autocomplete="off"
+  autocapitalize="words"
+  autocorrect="off"
+  spellcheck="false"
+  required
+>
+
+          </div>
+
+          <div class="field">
+            <label for="lead-squadra">Nome squadra</label>
+            <input
+              id="lead-squadra"
+              name="squadra"
+              type="text"
+              placeholder="FC ProFantasy"
+              autocomplete="organization"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="lead-email">Email</label>
+            <input
+              id="lead-email"
+              name="email"
+              type="email"
+              placeholder="nome@email.com"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="lead-whatsapp">Numero WhatsApp</label>
+            <input
+              id="lead-whatsapp"
+              name="whatsapp"
+              type="tel"
+              placeholder="+39 3xx xxx xxxx"
+              autocomplete="tel"
+              inputmode="tel"
+              required
+            >
+          </div>
+
+          <div class="field field-full">
+            <label for="lead-club">Club scelto</label>
+            <select id="lead-club" name="club">
+              <option value="Open">ProFantasy Open Club</option>
+              <option value="Exclusive">ProFantasy Exclusive Club</option>
+            </select>
+          </div>
+
+          <div class="field field-full">
+            <label for="lead-logo">Logo (PNG opzionale)</label>
+            <input id="lead-logo" name="logo" type="file" accept="image/png">
+            <p style="margin:6px 0 0; color: rgba(255,255,255,0.70); font-size:0.88rem;">
+              Solo PNG. Se non lo carichi, puoi aggiungerlo in seguito.
+            </p>
+            <img
+              id="lead-logo-preview"
+              alt="Preview logo"
+              style="display:none; margin-top:10px; width:64px; height:64px; object-fit:contain; border-radius:14px; border:1px solid rgba(255,255,255,0.16); background: rgba(2,0,65,0.35); padding:8px;"
+            >
+          </div>
+
+          <div class="field field-full">
+            <div class="consent">
+              <input id="lead-consent" name="consenso" type="checkbox" required>
+              <label for="lead-consent">
+                Acconsento ad essere contattato dal Team ProFantasy e dichiaro di aver letto la
+                <a href="legal.html#privacy">Privacy Policy</a>.
+              </label>
+            </div>
+          </div>
+
+          <div class="field field-full">
+            <div class="cta-actions">
+              <button type="submit" id="lead-submit">Invia richiesta</button>
+              <button
+                type="button"
+                id="open-join-modal"
+                style="background: rgba(184,149,107,0.12); border:1px solid rgba(184,149,107,0.40);"
+              >
+                Scopri i club
+              </button>
+            </div>
+
+            <p class="smallprint" id="lead-status" style="display:none;"></p>
+          </div>
+        </form>
+
       </div>
     </div>
-  </header>
-
-  <!-- FORM PARTECIPA -->
-  <section class="results-history">
-    <div class="container">
-      <div class="results-history-header">
-        <h2 class="results-history-title">Partecipa ora</h2>
-        <p class="results-history-subtitle">
-          Compila il form: useremo i dati solo per ricontattarti e gestire la richiesta.
-        </p>
-      </div>
-
-      <form class="contact-form" id="partecipa-form">
-        <div class="form-group">
-          <label for="nome">Nome *</label>
-          <input id="nome" name="nome" type="text" required>
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email *</label>
-          <input id="email" name="email" type="email" required>
-        </div>
-
-        <div class="form-group">
-          <label for="telefono">Telefono (WhatsApp)</label>
-          <input id="telefono" name="telefono" type="tel" placeholder="+39 ...">
-        </div>
-
-        <div class="form-group">
-          <label for="club">Scegli il club *</label>
-          <select id="club" name="club" required>
-            <option value="" selected disabled>Seleziona…</option>
-            <option value="open">ProFantasy Club Open</option>
-            <option value="exclusive">ProFantasy Club Exclusive</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="messaggio">Messaggio</label>
-          <textarea id="messaggio" name="messaggio" rows="4" placeholder="Obiettivi, lega, budget, regole…"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="logo">Logo team (PNG opzionale)</label>
-          <input id="logo" name="logo" type="file" accept="image/png">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Invia richiesta</button>
-        <p style="margin-top:10px; color:#a0a0a0; font-size:0.9rem;">
-          Inviando accetti Privacy Policy e Termini (vedi Note legali).
-        </p>
-      </form>
-    </div>
-  </section>
-
+  </div>
+</section>
 </main>
 
 
