@@ -842,9 +842,11 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 });
 
-  // ===== PRO FANTASY LEADS (Apps Script Web App) =====
 // ===== PRO FANTASY LEADS (Apps Script Web App) =====
 const LEADS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxptgDb7fbF-qLo9dm0jMUGsX9RWF-FzVcjyydEXzBboWIk7Wm0LdWBVlYpyVpz9xwQ/exec";
+
+const DRIVE_FOLDER_ID = "1Oya5aWoRTuVDN_kI07UfUfrIynhNMglD";
+
 
 function setLeadStatus(msg, isError = false) {
   const el = document.getElementById("lead-status");
