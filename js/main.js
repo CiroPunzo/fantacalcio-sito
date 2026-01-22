@@ -821,6 +821,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   initHeroSlider();
   setupMobileNavbar();
   setupDashboardTabs();
+  setupJoinModalHandlers();
 
   const path = window.location.pathname.toLowerCase();
 
@@ -1019,6 +1020,73 @@ document.addEventListener("DOMContentLoaded", () => {
   setupLeadForm();
   setupJoinModal();
 });
+
+// ====== PARTECIPA: JOIN MODAL (PartecipantiSicuri) ======
+const GENERIC_LOGO = "img/loghi/generic.png"; // crea questo file
+
+function openJoinModal() {
+  const modal = document.getElementById("join-modal");
+  if (modal) modal.classList.add("active");
+}
+
+async function loadPartecipantiSicuri() {
+  const tbody = document.getElementById("join-body");
+  if (!tbody) return;
+
+  tbody.innerHTML = `<tr><td colspan="4">Caricamento...</td></tr>`;
+
+  // TODO: sostituisci con la tua WEB APP URL (quella /exec)
+  const url = `${LEADS_SCRIPT_URL}?list=sicuri`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (!data?.ok || !Array.isArray(data.rows)) {
+    tbody.innerHTML = `<tr><td colspan="4">Nessun dato disponibile.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = "";
+  data.rows.forEach(r => {
+    const logo = (r.Logo && String(r.Logo).trim()) ? r.Logo : GENERIC_LOGO;
+    const squadra = r.Squadra || "-";
+    const partecipante = r.Partecipante || r.Nome || "-";
+    const club = r.Club || "-";
+
+    const tr = document.createElement("tr");
+    if (String(club).toLowerCase().includes("exclusive")) tr.style.background = "rgba(184,149,107,0.10)";
+    tr.innerHTML = `
+      <td><img src="${logo}" alt="Logo" style="width:28px;height:28px;object-fit:contain;"></td>
+      <td>${squadra}</td>
+      <td>${partecipante}</td>
+      <td>${club}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function setupJoinModalHandlers() {
+  // bottone in CTA
+  const btnCta = document.getElementById("open-join-modal");
+  if (btnCta) {
+    btnCta.addEventListener("click", async () => {
+      openJoinModal();
+      await loadPartecipantiSicuri();
+    });
+  }
+
+  // bottone in HERO (quello <a href="#club">Scopri i club</a>)
+  // meglio: lo trasformiamo in apertura modal, non scroll
+  const heroLink = document.querySelector('.btn-secondary-premium[href="#club"]');
+  if (heroLink) {
+    heroLink.addEventListener("click", async (e) => {
+      e.preventDefault();
+      openJoinModal();
+      await loadPartecipantiSicuri();
+    });
+  }
+}
+
 
 
 
