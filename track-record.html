@@ -835,82 +835,120 @@
       </div>
     </section>
 
-    <!-- CTA / FORM (UNICA) -->
-    <section id="cta-partecipa" class="cta-section">
-      <div class="container">
-        <div class="cta-card">
-          <div class="cta-card-inner">
-            <h2 class="cta-title">Lascia i tuoi contatti</h2>
-            <p class="cta-sub">
-              Compila i dati: ti aggiungiamo alla lista e il Team ti contatta.
-              Seleziona il club e carica un logo PNG (opzionale).
-            </p>
+   <!-- CTA / FORM (UNICA) -->
+<section id="cta-partecipa" class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <div class="cta-card-inner">
+        <h2 class="cta-title">Lascia i tuoi contatti</h2>
+        <p class="cta-sub">
+          Compila i dati: ti aggiungiamo alla lista e il Team ti contatta.
+          Seleziona il club e carica un logo PNG (opzionale).
+        </p>
 
-            <form class="lead-form" id="lead-form" autocomplete="on">
-              <div class="field">
-                <label for="lead-nome">Nome partecipante</label>
-                <input id="lead-nome" name="nome" type="text" placeholder="Nome e Cognome" required>
-              </div>
-
-              <div class="field">
-                <label for="lead-squadra">Nome squadra</label>
-                <input id="lead-squadra" name="squadra" type="text" placeholder="FC ProFantasy" required>
-              </div>
-
-              <div class="field">
-                <label for="lead-email">Email</label>
-                <input id="lead-email" name="email" type="email" placeholder="nome@email.com" required>
-              </div>
-
-              <div class="field">
-                <label for="lead-whatsapp">Numero WhatsApp</label>
-                <input id="lead-whatsapp" name="whatsapp" type="tel" placeholder="+39 3xx xxx xxxx" required>
-              </div>
-
-              <div class="field field-full">
-                <label for="lead-club">Club scelto</label>
-                <select id="lead-club" name="club">
-                  <option value="Open">ProFantasy Open Club</option>
-                  <option value="Exclusive">ProFantasy Exclusive Club</option>
-                </select>
-              </div>
-
-              <div class="field field-full">
-                <label for="lead-logo">Logo (PNG opzionale)</label>
-                <input id="lead-logo" name="logo" type="file" accept="image/png">
-                <p style="margin:6px 0 0; color: rgba(255,255,255,0.70); font-size:0.88rem;">
-                  Solo PNG. Se non lo carichi, puoi aggiungerlo in seguito.
-                </p>
-                <img id="lead-logo-preview" alt="Preview logo" style="display:none; margin-top:10px; width:64px; height:64px; object-fit:contain; border-radius:14px; border:1px solid rgba(255,255,255,0.16); background: rgba(2,0,65,0.35); padding:8px;">
-              </div>
-
-              <div class="field field-full">
-                <div class="consent">
-                  <input id="lead-consent" name="consenso" type="checkbox" required>
-                  <label for="lead-consent">
-                    Acconsento ad essere contattato dal Team ProFantasy e dichiaro di aver letto la
-                    <a href="legal.html#privacy">Privacy Policy</a>.
-                  </label>
-                </div>
-              </div>
-
-              <div class="field field-full">
-                <div class="cta-actions">
-                  <button type="submit" id="lead-submit">Invia richiesta</button>
-                  <button type="button" id="open-join-modal" style="background: rgba(184,149,107,0.12); border:1px solid rgba(184,149,107,0.40);">
-                    Scopri i club
-                  </button>
-                </div>
-
-                <p class="smallprint" id="lead-status" style="display:none;"></p>
-              </div>
-            </form>
-
+        <form class="lead-form" id="lead-form" autocomplete="on">
+          <div class="field">
+            <label for="lead-nome">Nome partecipante</label>
+            <input
+              id="lead-nome"
+              name="nome"
+              type="text"
+              placeholder="Nome e Cognome"
+              autocomplete="name"
+              required
+            >
           </div>
-        </div>
+
+          <div class="field">
+            <label for="lead-squadra">Nome squadra</label>
+            <input
+              id="lead-squadra"
+              name="squadra"
+              type="text"
+              placeholder="FC ProFantasy"
+              autocomplete="organization"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="lead-email">Email</label>
+            <input
+              id="lead-email"
+              name="email"
+              type="email"
+              placeholder="nome@email.com"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="lead-whatsapp">Numero WhatsApp</label>
+            <input
+              id="lead-whatsapp"
+              name="whatsapp"
+              type="tel"
+              placeholder="+39 3xx xxx xxxx"
+              autocomplete="tel"
+              inputmode="tel"
+              required
+            >
+          </div>
+
+          <div class="field field-full">
+            <label for="lead-club">Club scelto</label>
+            <select id="lead-club" name="club">
+              <option value="Open">ProFantasy Open Club</option>
+              <option value="Exclusive">ProFantasy Exclusive Club</option>
+            </select>
+          </div>
+
+          <div class="field field-full">
+            <label for="lead-logo">Logo (PNG opzionale)</label>
+            <input id="lead-logo" name="logo" type="file" accept="image/png">
+            <p style="margin:6px 0 0; color: rgba(255,255,255,0.70); font-size:0.88rem;">
+              Solo PNG. Se non lo carichi, puoi aggiungerlo in seguito.
+            </p>
+            <img
+              id="lead-logo-preview"
+              alt="Preview logo"
+              style="display:none; margin-top:10px; width:64px; height:64px; object-fit:contain; border-radius:14px; border:1px solid rgba(255,255,255,0.16); background: rgba(2,0,65,0.35); padding:8px;"
+            >
+          </div>
+
+          <div class="field field-full">
+            <div class="consent">
+              <input id="lead-consent" name="consenso" type="checkbox" required>
+              <label for="lead-consent">
+                Acconsento ad essere contattato dal Team ProFantasy e dichiaro di aver letto la
+                <a href="legal.html#privacy">Privacy Policy</a>.
+              </label>
+            </div>
+          </div>
+
+          <div class="field field-full">
+            <div class="cta-actions">
+              <button type="submit" id="lead-submit">Invia richiesta</button>
+              <button
+                type="button"
+                id="open-join-modal"
+                style="background: rgba(184,149,107,0.12); border:1px solid rgba(184,149,107,0.40);"
+              >
+                Scopri i club
+              </button>
+            </div>
+
+            <p class="smallprint" id="lead-status" style="display:none;"></p>
+          </div>
+        </form>
+
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
+</section>
+</main>
+
 
   <!-- JOIN MODAL (fuori dal footer, prima dello script) -->
   <div id="join-modal" class="modal">
