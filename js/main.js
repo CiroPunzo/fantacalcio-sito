@@ -822,6 +822,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   setupMobileNavbar();
   setupDashboardTabs();
   setupJoinModalHandlers();
+  setupFullTablesModals();
 
   const path = window.location.pathname.toLowerCase();
 
@@ -1087,9 +1088,95 @@ function setupJoinModalHandlers() {
   }
 }
 
+async function populateClassificaFull() {
+  const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
+  const tbody = document.getElementById('classifica-full-body');
+  if (!tbody || !Array.isArray(data) || data.length === 0) return;
 
+  tbody.innerHTML = '';
 
+  data
+    .sort((a, b) => Number(a['Posizione']) - Number(b['Posizione']))
+    .forEach(row => {
+      const tr = document.createElement('tr');
+      const pos = Number(row['Posizione']);
+      const squadra = row['Squadra'] || '-';
 
+      let zonaHTML = '';
+      if (pos >= 1 && pos <= 4) zonaHTML = `<div class="zona-badge zona-champions" title="Champions League"><img src="img/icon-cl-champions.png" alt="Champions League"></div>`;
+      else if (pos >= 5 && pos <= 6) zonaHTML = `<div class="zona-badge zona-europa" title="Europa League"><img src="img/icon-el-europa.png" alt="Europa League"></div>`;
+      else if (pos === 7) zonaHTML = `<div class="zona-badge zona-conference" title="Conference League"><img src="img/icon-conf-conference.png" alt="Conference League"></div>`;
+      else if (pos >= 18) zonaHTML = `<div class="zona-badge zona-relegation" title="Retrocessione"><span></span></div>`;
+
+      const logoUrl = CLUB_LOGOS[squadra] || '';
+      tr.innerHTML = `
+        <td>${row['Posizione'] || '-'}</td>
+        <td>${zonaHTML}</td>
+        <td>
+          <div class="table-team">
+            ${logoUrl ? `<img src="${logoUrl}" alt="${squadra}" class="table-logo">` : ''}
+            <span><strong>${squadra}</strong></span>
+          </div>
+        </td>
+        <td>${row['PG'] || '-'}</td>
+        <td>${row['xG'] || '-'}</td>
+        <td>${row['Punti'] || '-'}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+}
+
+async function populateMarcatoriFull() {
+  const data = await fetchSheetDataJson(SHEET_NAMES.marcatori);
+  const tbody = document.getElementById('marcatori-full-body');
+  if (!tbody || !Array.isArray(data) || data.length === 0) return;
+
+  tbody.innerHTML = '';
+
+  data
+    .filter(row => row['Posizione'])
+    .sort((a, b) => Number(a['Posizione']) - Number(b['Posizione']))
+    .forEach(row => {
+      const tr = document.createElement('tr');
+      const giocatore = row['Nome Giocatore'] || '-';
+      const club = row['Squadra'] || '-';
+      const gol = row['Gol'] || '-';
+
+      const logoUrl = CLUB_LOGOS[club] || '';
+      const clubHTML = logoUrl
+        ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
+        : club;
+
+      tr.innerHTML = `
+        <td>${row['Posizione'] || '-'}</td>
+        <td><strong>${giocatore}</strong></td>
+        <td>${clubHTML}</td>
+        <td>${gol}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+}
+
+function setupFullTablesModals() {
+  const btnClassifica = document.getElementById('open-full-classifica');
+  const btnMarcatori = document.getElementById('open-full-marcatori');
+
+  if (btnClassifica) {
+    btnClassifica.addEventListener('click', async (e) => {
+      if (e) e.preventDefault(); // (se in futuro torna <a>) [web:6]
+      document.getElementById('classifica-modal')?.classList.add('active');
+      await populateClassificaFull();
+    });
+  }
+
+  if (btnMarcatori) {
+    btnMarcatori.addEventListener('click', async (e) => {
+      if (e) e.preventDefault(); // (se in futuro torna <a>) [web:6]
+      document.getElementById('marcatori-modal')?.classList.add('active');
+      await populateMarcatoriFull();
+    });
+  }
+}
 
 
 
