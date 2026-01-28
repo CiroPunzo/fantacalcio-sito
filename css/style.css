@@ -1062,20 +1062,48 @@ img {
     background: rgba(184, 149, 107, 0.15);
 }
 
-/* LINK */
+/* LINK (button/link style premium) */
 .dashboard-link {
-    color: #B8956B;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s;
-    display: inline-block;
-    margin-top: 10px;
+  display: inline-block;
+  margin-top: 10px;
+
+  background: transparent;
+  border: 0;
+  padding: 0;
+
+  font-weight: 600;
+  font: inherit;
+
+  color: #B8956B;           /* oro (il tuo) */
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: .02em;
+
+  transition: color .2s ease, text-shadow .2s ease;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .dashboard-link:hover {
-    color: #d4c5a0;
-    text-decoration: underline;
+  color: #d4c5a0;
+  text-shadow: 0 0 14px rgba(184,149,107,.22);
+  text-decoration: underline;
 }
+
+/* Focus accessibile (tastiera) */
+.dashboard-link:focus-visible {
+  outline: 2px solid rgba(184,149,107,.55);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+/* Fix extra padding interno su Firefox */
+button.dashboard-link::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+
 
 /* LOGHI IN TABELLE */
 .table-team {
