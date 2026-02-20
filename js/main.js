@@ -119,6 +119,9 @@ const SHEET_NAMES = {
   pronostici: 'Pronostici',
   risultatiGiornata: 'RisultatiGiornata',
   playerPicks: 'PlayerPicks'
+  config: "Config",
+classificaAssist: "ClassificaAssist",
+risultatiGiornata: "RisultatiGiornata"
 };
 
 async function fetchSheetDataJson(sheetName) {
@@ -1177,6 +1180,424 @@ function setupFullTablesModals() {
     });
   }
 }
+
+// =====================
+// NEON HOME: Results + Compare + Assist (v1)
+// =====================
+(function neonHomeInit() {
+  // Se non siamo in home, esci
+  const isHome = /(^|\/)index\.html$/.test(location.pathname) || location.pathname === "/" || location.pathname === "";
+  if (!isHome) return;
+
+  // Helpers
+  const $ = (id) => document.getElementById(id);
+
+  const els = {
+    btnCur: $("btn-matchday-current"),
+    btnPrev: $("btn-matchday-prev"),
+    status: $("matchday-status-text"),
+    track: $("results-carousel-track"),
+    prevArrow: $("results-prev"),
+    nextArrow: $("results-next"),
+    aSel: $("player-a-select"),
+    bSel: $("player-b-select"),
+    btnCompare: $("btn-compare"),
+    kpis: $("compare-kpis"),
+    radar: $("player-radar"),
+  };
+
+  // Se la home non è quella nuova, evita errori
+  if (!els.track || !els.aSel || !els.bSel || !els.radar) return;
+
+  let currentMatchday = null;
+  let selectedMatchday = null;
+  let radarChart = null;
+
+  // --- Config matchday ---
+  async function loadConfigMatchday() {
+    try {
+      const rows = await fetchSheetDataJson(SHEET_NAMES.config);
+      // Formato atteso: 2 colonne, es. key | value
+      // key: current_matchday, matchday_status
+      const map = {};
+      rows.forEach(r => {
+        const k = String(r.key || r.Key || r.KEY || "").trim();
+        const v = r.value ?? r.Value ?? r.VALUE;
+        if (k) map[k] = v;
+      });
+
+      const cm = parseInt(map.current_matchday, 10);
+      if (!Number.isFinite(cm)) throw new Error("Config: current_matchday non valido");
+
+      currentMatchday = cm;
+      selectedMatchday = cm;
+
+      const status = String(map.matchday_status || "").trim();
+      els.status.textContent = status ? `Giornata ${cm} • ${status}` : `Giornata ${cm}`;
+      setMatchdayButtons();
+    } catch (e) {
+      console.error("Errore Config matchday:", e);
+      els.status.textContent = "Config giornata non disponibile";
+      // fallback: proviamo comunque a caricare risultati con giornata massima dai dati
+      currentMatchday = null;
+      selectedMatchday = null;
+    }
+  }
+
+  function setMatchdayButtons() {
+    if (!els.btnCur || !els.btnPrev) return;
+    const isCur = selectedMatchday === currentMatchday;
+    els.btnCur.classList.toggle("neo-pill-active", isCur);
+    els.btnPrev.classList.toggle("neo-pill-active", !isCur);
+  }
+
+  function pickPreviousMatchday() {
+    if (Number.isFinite(currentMatchday)) return Math.max(1, currentMatchday - 1);
+    return null;
+  }
+
+  // --- Risultati carousel ---
+  function renderResultsSkeleton(text) {
+    els.track.innerHTML = `<div class="neo-card neo-card-skeleton">${text}</div>`;
+  }
+
+  function mkResultCard({ home, away, homeGoals, awayGoals, badgeText, badgeClass }) {
+    const safe = (s) => String(s ?? "").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    return `
+      <article class="neo-card neo-match-card">
+        <div class="neo-match-head">
+          <span class="neo-badge ${badgeClass || ""}">${safe(badgeText || "")}</span>
+          <div class="neo-score">${safe(homeGoals)} - ${safe(awayGoals)}</div>
+        </div>
+        <h3 class="neo-match-title">${safe(home)} vs ${safe(away)}</h3>
+      </article>
+    `;
+  }
+
+  async function loadResultsForMatchday(matchdayWanted) {
+    try {
+      renderResultsSkeleton("Carico i risultati…");
+
+      const rows = await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
+
+      // Atteso: colonne tipo Giornata, HomeTeam, AwayTeam, HomeGoals, AwayGoals, Status
+      const normalized = rows.map(r => ({
+        matchday: parseInt(r.Giornata ?? r.giornata ?? r.Matchday ?? r.matchday, 10),
+        home: r.HomeTeam ?? r.home ?? r.Casa ?? r.SquadraCasa ?? r.Home,
+        away: r.AwayTeam ?? r.away ?? r.Trasferta ?? r.SquadraTrasferta ?? r.Away,
+        homeGoals: r.HomeGoals ?? r.homeGoals ?? r.GolCasa ?? r.GolHome ?? r.GFHome ?? "-",
+        awayGoals: r.AwayGoals ?? r.awayGoals ?? r.GolTrasferta ?? r.GolAway ?? r.GFAway ?? "-",
+        status: r.Status ?? r.status ?? "",
+      })).filter(x => Number.isFinite(x.matchday));
+
+      // fallback: se matchdayWanted è null, prendiamo la max giornata presente
+      let md = matchdayWanted;
+      if (!Number.isFinite(md)) {
+        md = normalized.reduce((m, x) => Math.max(m, x.matchday), 0) || 1;
+        selectedMatchday = md;
+        els.status.textContent = `Giornata ${md}`;
+        setMatchdayButtons();
+      }
+
+      const list = normalized.filter(x => x.matchday === md);
+
+      if (!list.length) {
+        renderResultsSkeleton(`Nessun risultato per giornata ${md}.`);
+        return;
+      }
+
+      const cards = list.map(x => mkResultCard({
+        home: x.home,
+        away: x.away,
+        homeGoals: x.homeGoals,
+        awayGoals: x.awayGoals,
+        badgeText: x.status ? x.status : `Giornata ${md}`,
+        badgeClass: String(x.status).toUpperCase().includes("LIVE") ? "live" : "",
+      })).join("");
+
+      els.track.innerHTML = cards;
+    } catch (e) {
+      console.error("Errore risultati:", e);
+      renderResultsSkeleton("Errore caricamento risultati.");
+    }
+  }
+
+  function hookCarouselArrows() {
+    if (!els.prevArrow || !els.nextArrow) return;
+
+    const scrollByCard = (dir) => {
+      const card = els.track.querySelector(".neo-match-card");
+      const dx = card ? (card.getBoundingClientRect().width + 12) : 320;
+      els.track.scrollBy({ left: dir * dx, behavior: "smooth" });
+    };
+
+    els.prevArrow.addEventListener("click", () => scrollByCard(-1));
+    els.nextArrow.addEventListener("click", () => scrollByCard(1));
+  }
+
+  // --- Assist tab (riempiamo solo i tbody presenti) ---
+  function fillAssistTables(rows) {
+    const bodies = [
+      document.getElementById("assist-body"),
+      document.getElementById("assist-body-mobile"),
+    ].filter(Boolean);
+
+    bodies.forEach(tbody => {
+      tbody.innerHTML = "";
+      rows.slice(0, 15).forEach((r, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td><strong>${r.player}</strong></td>
+          <td>${r.club}</td>
+          <td>${r.assist}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    });
+  }
+
+  // --- Comparatore (Gol + Assist) + Radar ---
+  function normalize(value, max) {
+    const v = Number(value) || 0;
+    const m = Number(max) || 1;
+    return Math.max(0, Math.min(100, Math.round((v / m) * 100)));
+  }
+
+  function buildRadarData(p, maxG, maxA) {
+    const g = Number(p.gol) || 0;
+    const a = Number(p.assist) || 0;
+
+    const gN = normalize(g, maxG);
+    const aN = normalize(a, maxA);
+    const imp = normalize(g + a, maxG + maxA);
+
+    const bonusIdx = normalize((0.7 * g) + (0.3 * a), (0.7 * maxG) + (0.3 * maxA));
+
+    return {
+      labels: ["Gol", "Assist", "Attacco", "Creatività", "Impatto", "Bonus"],
+      values: [gN, aN, gN, aN, imp, bonusIdx]
+    };
+  }
+
+  function renderCompareKpis(A, B) {
+    const safe = (s) => String(s ?? "").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    els.kpis.innerHTML = `
+      <div class="neo-mini-card">
+        <div style="font-weight:700; margin-bottom:6px;">${safe(A.player)} (${safe(A.club)})</div>
+        <div>Gol: <strong>${safe(A.gol)}</strong> · Assist: <strong>${safe(A.assist)}</strong></div>
+      </div>
+      <div class="neo-mini-card">
+        <div style="font-weight:700; margin-bottom:6px;">${safe(B.player)} (${safe(B.club)})</div>
+        <div>Gol: <strong>${safe(B.gol)}</strong> · Assist: <strong>${safe(B.assist)}</strong></div>
+      </div>
+    `;
+  }
+
+  function renderRadar(A, B, maxG, maxA) {
+    const aData = buildRadarData(A, maxG, maxA);
+    const bData = buildRadarData(B, maxG, maxA);
+
+    const ctx = els.radar.getContext("2d");
+
+    if (radarChart) radarChart.destroy();
+
+    radarChart = new Chart(ctx, {
+      type: "radar",
+      data: {
+        labels: aData.labels,
+        datasets: [
+          {
+            label: A.player,
+            data: aData.values,
+            fill: true,
+            backgroundColor: "rgba(102,247,255,0.14)",
+            borderColor: "rgba(102,247,255,0.85)",
+            pointBackgroundColor: "rgba(102,247,255,0.95)",
+            pointRadius: 2,
+            borderWidth: 2
+          },
+          {
+            label: B.player,
+            data: bData.values,
+            fill: true,
+            backgroundColor: "rgba(176,108,255,0.12)",
+            borderColor: "rgba(176,108,255,0.85)",
+            pointBackgroundColor: "rgba(176,108,255,0.95)",
+            pointRadius: 2,
+            borderWidth: 2
+          }
+        ]
+      },
+      options: {
+        plugins: {
+          legend: { labels: { color: "#eaf2ff" } }
+        },
+        scales: {
+          r: {
+            min: 0,
+            max: 100,
+            ticks: { display: false },
+            grid: { color: "rgba(234,242,255,0.10)" },
+            angleLines: { color: "rgba(234,242,255,0.10)" },
+            pointLabels: { color: "rgba(234,242,255,0.80)", font: { size: 12 } }
+          }
+        }
+      }
+    });
+  }
+
+  async function loadPlayersForCompare() {
+    try {
+      const [golRows, assistRows] = await Promise.all([
+        fetchSheetDataJson(SHEET_NAMES.classificaMarcatori),
+        fetchSheetDataJson(SHEET_NAMES.classificaAssist),
+      ]);
+
+      // Normalizza: mappa per giocatore
+      const map = new Map();
+
+      golRows.forEach(r => {
+        const player = (r.Giocatore ?? r.giocatore ?? r.Player ?? r.player ?? "").trim();
+        if (!player) return;
+        const club = (r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
+        const gol = Number(r.Gol ?? r.gol ?? 0) || 0;
+
+        map.set(player, { player, club, gol, assist: 0 });
+      });
+
+      assistRows.forEach(r => {
+        const player = (r.Giocatore ?? r.giocatore ?? r.Player ?? r.player ?? "").trim();
+        if (!player) return;
+        const club = (r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
+        const assist = Number(r.Assist ?? r.assist ?? 0) || 0;
+
+        if (!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
+        const obj = map.get(player);
+        obj.assist = assist;
+        if (!obj.club && club) obj.club = club;
+      });
+
+      const players = Array.from(map.values())
+        .sort((a,b) => a.player.localeCompare(b.player, "it"));
+
+      if (!players.length) {
+        els.kpis.innerHTML = `<div class="neo-mini-card">Nessun giocatore trovato.</div>`;
+        return;
+      }
+
+      // max per normalizzazione
+      const maxG = Math.max(1, ...players.map(p => p.gol || 0));
+      const maxA = Math.max(1, ...players.map(p => p.assist || 0));
+
+      // Popola select
+      const opt = players.map(p => `<option value="${encodeURIComponent(p.player)}">${p.player}</option>`).join("");
+      els.aSel.innerHTML = opt;
+      els.bSel.innerHTML = opt;
+
+      // Default: primi due diversi
+      els.aSel.selectedIndex = 0;
+      els.bSel.selectedIndex = Math.min(1, players.length - 1);
+
+      function getSelected(sel) {
+        const name = decodeURIComponent(sel.value || "");
+        return players.find(p => p.player === name) || players[0];
+      }
+
+      const doCompare = () => {
+        const A = getSelected(els.aSel);
+        const B = getSelected(els.bSel);
+        renderCompareKpis(A, B);
+        renderRadar(A, B, maxG, maxA);
+      };
+
+      els.btnCompare.addEventListener("click", doCompare);
+      els.aSel.addEventListener("change", doCompare);
+      els.bSel.addEventListener("change", doCompare);
+
+      // Prima render
+      doCompare();
+
+      // Riempie tab assist (preview)
+      fillAssistTables(
+        players
+          .slice()
+          .sort((a,b) => (b.assist - a.assist) || (b.gol - a.gol) || a.player.localeCompare(b.player,"it"))
+          .map(p => ({ player: p.player, club: p.club || "-", assist: p.assist }))
+      );
+
+    } catch (e) {
+      console.error("Errore comparatore:", e);
+      els.kpis.innerHTML = `<div class="neo-mini-card">Errore caricamento giocatori.</div>`;
+    }
+  }
+
+  // --- Tabs neon (desktop + mobile) ---
+  function hookNeoTabs() {
+    document.querySelectorAll(".neo-tabs .neo-tab").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const wrap = btn.closest(".neo-card") || btn.closest("aside") || document;
+        const tabName = btn.getAttribute("data-neo-tab");
+
+        // Buttons
+        btn.parentElement.querySelectorAll(".neo-tab").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        // Panels mapping
+        const map = {
+          "classifica": "neo-panel-classifica",
+          "marcatori": "neo-panel-marcatori",
+          "assist": "neo-panel-assist",
+          "m-classifica": "neo-panel-m-classifica",
+          "m-marcatori": "neo-panel-m-marcatori",
+          "m-assist": "neo-panel-m-assist",
+        };
+
+        const panelId = map[tabName];
+        if (!panelId) return;
+
+        // Panels (solo dentro il blocco più vicino)
+        (wrap.querySelectorAll(".neo-panel") || []).forEach(p => p.classList.remove("active"));
+        const panel = wrap.querySelector("#" + panelId) || document.getElementById(panelId);
+        if (panel) panel.classList.add("active");
+      });
+    });
+  }
+
+  // --- Matchday buttons ---
+  function hookMatchdayButtons() {
+    if (els.btnCur) {
+      els.btnCur.addEventListener("click", async () => {
+        if (!Number.isFinite(currentMatchday)) return;
+        selectedMatchday = currentMatchday;
+        setMatchdayButtons();
+        els.status.textContent = `Giornata ${selectedMatchday} • ${String(els.status.textContent).split("•")[1]?.trim() || ""}`.trim();
+        await loadResultsForMatchday(selectedMatchday);
+      });
+    }
+    if (els.btnPrev) {
+      els.btnPrev.addEventListener("click", async () => {
+        const prev = pickPreviousMatchday();
+        if (!Number.isFinite(prev)) return;
+        selectedMatchday = prev;
+        setMatchdayButtons();
+        els.status.textContent = `Giornata ${selectedMatchday}`;
+        await loadResultsForMatchday(selectedMatchday);
+      });
+    }
+  }
+
+  // RUN
+  hookCarouselArrows();
+  hookNeoTabs();
+  hookMatchdayButtons();
+
+  (async () => {
+    await loadConfigMatchday();
+    await loadResultsForMatchday(selectedMatchday);
+    await loadPlayersForCompare();
+  })();
+})();
 
 
 
