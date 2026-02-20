@@ -335,7 +335,7 @@ function openInfortunioModal(row) {
 }
 
 // =====================
-// PREVISIONI (analisi + pronostici) – mantengo la tua logica
+// PREVISIONI (analisi + pronostici)
 // =====================
 async function populateAnalisiFantacalcio(selectedGiornata = null) {
   const data = await fetchSheetDataJson(SHEET_NAMES.analisiFantacalcio);
@@ -747,7 +747,6 @@ function setupFullTablesModals() {
     });
   }
 
-  // Se nella nuova home usi anche i bottoni mobile duplicati:
   const btnClassificaM = document.getElementById("open-full-classifica-mobile");
   const btnMarcatoriM = document.getElementById("open-full-marcatori-mobile");
 
@@ -760,165 +759,7 @@ function setupFullTablesModals() {
 }
 
 // =====================
-// NEON HOME: Results + Compare + Assist (v1)
-// =====================
-function neonHomeInit() {
-  const isHome =
-    /(^|\/)index\.html$/.test(location.pathname) ||
-    location.pathname === "/" ||
-    location.pathname === "";
-
-  if (!isHome) return;
-
-  const $ = (id) => document.getElementById(id);
-
-  const els = {
-    btnCur: $("btn-matchday-current"),
-    btnPrev: $("btn-matchday-prev"),
-    status: $("matchday-status-text"),
-    track: $("results-carousel-track"),
-    prevArrow: $("results-prev"),
-    nextArrow: $("results-next"),
-    aSel: $("player-a-select"),
-    bSel: $("player-b-select"),
-    btnCompare: $("btn-compare"),
-    kpis: $("compare-kpis"),
-    radar: $("player-radar"),
-  };
-
-  if (!els.track || !els.aSel || !els.bSel || !els.radar) return;
-
-  let currentMatchday = null;
-  let selectedMatchday = null;
-  let radarChart = null;
-
-  function setMatchdayButtons() {
-    if (!els.btnCur || !els.btnPrev) return;
-    const isCur = selectedMatchday === currentMatchday;
-    els.btnCur.classList.toggle("neo-pill-active", isCur);
-    els.btnPrev.classList.toggle("neo-pill-active", !isCur);
-  }
-
-  function pickPreviousMatchday() {
-    if (Number.isFinite(currentMatchday)) return Math.max(1, currentMatchday - 1);
-    return null;
-  }
-
-  async function loadConfigMatchday() {
-    try {
-      const rows = await fetchSheetDataJson(SHEET_NAMES.config);
-
-      const map = {};
-      rows.forEach(r => {
-        const k = String(r.key || r.Key || r.KEY || "").trim();
-        const v = r.value ?? r.Value ?? r.VALUE;
-        if (k) map[k] = v;
-      });
-
-      const cm = parseInt(map.current_matchday, 10);
-      if (!Number.isFinite(cm)) throw new Error("Config: current_matchday non valido");
-
-      currentMatchday = cm;
-      selectedMatchday = cm;
-
-      const status = String(map.matchday_status || "").trim();
-      els.status.textContent = status ? `Giornata ${cm} • ${status}` : `Giornata ${cm}`;
-      setMatchdayButtons();
-    } catch (e) {
-      console.error("Errore Config matchday:", e);
-      els.status.textContent = "Config giornata non disponibile";
-      currentMatchday = null;
-      selectedMatchday = null;
-    }
-  }
-
-  function renderResultsSkeleton(text) {
-    els.track.innerHTML = `<div class="neo-card neo-card-skeleton">${text}</div>`;
-  }
-
- function mkResultCard({ home, away, homeGoals, awayGoals, badgeText, badgeClass }) {
-  const safe = (s) => String(s ?? "").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-
-  // Compatibilità: nel tuo progetto la mappa loghi può chiamarsi CLUB_LOGOS oppure CLUBLOGOS
-  const LOGOS = (typeof CLUB_LOGOS !== "undefined" && CLUB_LOGOS) || (typeof CLUBLOGOS !== "undefined" && CLUBLOGOS) || {};
-
-  const homeLogo = LOGOS[home] || "";
-  const awayLogo = LOGOS[away] || "";
-
-  const homeLogoHTML = homeLogo ? `<img class="neo-team-logo" src="${homeLogo}" alt="${safe(home)}" loading="lazy">` : "";
-  const awayLogoHTML = awayLogo ? `<img class="neo-team-logo" src="${awayLogo}" alt="${safe(away)}" loading="lazy">` : "";
-
-  return `
-    <article class="neo-card neo-match-card">
-      <div class="neo-match-head">
-        <span class="neo-badge ${badgeClass || ""}">${safe(badgeText || "")}</span>
-        <div class="neo-score">${safe(homeGoals)} - ${safe(awayGoals)}</div>
-      </div>
-
-      <div class="neo-match-teams">
-        <div class="neo-team">
-          ${homeLogoHTML}
-          <span class="neo-team-name">${safe(home)}</span>
-        </div>
-        <span class="neo-vs">vs</span>
-        <div class="neo-team">
-          ${awayLogoHTML}
-          <span class="neo-team-name">${safe(away)}</span>
-        </div>
-      </div>
-    </article>
-  `;
-}
-
-  async function loadResultsForMatchday(matchdayWanted) {
-    try {
-      renderResultsSkeleton("Carico i risultati…");
-      const rows = await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
-
-      const normalized = rows
-        .map(r => ({
-          matchday: parseInt(r.Giornata ?? r.giornata ?? r.Matchday ?? r.matchday, 10),
-          home: r.HomeTeam ?? r.home ?? r.Casa ?? r.SquadraCasa ?? r.Home,
-          away: r.AwayTeam ?? r.away ?? r.Trasferta ?? r.SquadraTrasferta ?? r.Away,
-          homeGoals: r.HomeGoals ?? r.homeGoals ?? r.GolCasa ?? r.GolHome ?? r.GFHome ?? "-",
-          awayGoals: r.AwayGoals ?? r.awayGoals ?? r.GolTrasferta ?? r.GolAway ?? r.GFAway ?? "-",
-          status: r.Status ?? r.status ?? "",
-        }))
-        .filter(x => Number.isFinite(x.matchday));
-
-      let md = matchdayWanted;
-      if (!Number.isFinite(md)) {
-        md = normalized.reduce((m, x) => Math.max(m, x.matchday), 0) || 1;
-        selectedMatchday = md;
-        els.status.textContent = `Giornata ${md}`;
-        setMatchdayButtons();
-      }
-
-      const list = normalized.filter(x => x.matchday === md);
-      if (!list.length) {
-        renderResultsSkeleton(`Nessun risultato per giornata ${md}.`);
-        return;
-      }
-
-      const cards = list
-        .map(x => mkResultCard({
-          home: x.home,
-          away: x.away,
-          homeGoals: x.homeGoals,
-          awayGoals: x.awayGoals,
-          badgeText: x.status ? x.status : `Giornata ${md}`,
-          badgeClass: String(x.status).toUpperCase().includes("LIVE") ? "live" : "",
-        }))
-        .join("");
-
-      els.track.innerHTML = cards;
-    } catch (e) {
-      console.error("Errore risultati:", e);
-      renderResultsSkeleton("Errore caricamento risultati.");
-    }
-  }
-// =====================
-// NEON HOME: Results + Compare + Assist (v1) — CLEAN
+// NEON HOME: Results + Compare + Assist — CLEAN
 // =====================
 function neonHomeInit() {
   const isHome =
@@ -951,7 +792,6 @@ function neonHomeInit() {
   let selectedMatchday = null;
   let radarChart = null;
 
-  // ---------- Matchday ----------
   function setMatchdayButtons() {
     if (!els.btnCur || !els.btnPrev) return;
     const isCur = selectedMatchday === currentMatchday;
@@ -992,7 +832,6 @@ function neonHomeInit() {
     }
   }
 
-  // ---------- Results carousel ----------
   function renderResultsSkeleton(text) {
     els.track.innerHTML = `<div class="neo-card neo-card-skeleton">${text}</div>`;
   }
@@ -1094,7 +933,6 @@ function neonHomeInit() {
     els.nextArrow.addEventListener("click", () => scrollByCard(1));
   }
 
-  // ---------- Assist tables (preview) ----------
   function fillAssistTables(rows) {
     const bodies = [
       document.getElementById("assist-body"),
@@ -1116,7 +954,6 @@ function neonHomeInit() {
     });
   }
 
-  // ---------- Radar ----------
   function normalize(value, max) {
     const v = Number(value) || 0;
     const m = Number(max) || 1;
@@ -1342,9 +1179,6 @@ function neonHomeInit() {
     if (e.key === "Escape") closePicker();
   });
 
-  // =====================
-  // LOAD PLAYERS (Serie A)
-  // =====================
   async function loadPlayersForCompare() {
     try {
       const [rosaRows, golRows, assistRows] = await Promise.all([
@@ -1398,9 +1232,7 @@ function neonHomeInit() {
       const maxG = Math.max(1, ...players.map((p) => p.gol || 0));
       const maxA = Math.max(1, ...players.map((p) => p.assist || 0));
 
-      const opt = players
-        .map((p) => `<option value="${encodeURIComponent(p.player)}">${p.player}</option>`)
-        .join("");
+      const opt = players.map((p) => `<option value="${encodeURIComponent(p.player)}">${p.player}</option>`).join("");
 
       els.aSel.innerHTML = opt;
       els.bSel.innerHTML = opt;
@@ -1428,7 +1260,6 @@ function neonHomeInit() {
       doCompare();
       renderPickerList("");
 
-      // Assist preview
       fillAssistTables(
         players
           .slice()
@@ -1441,7 +1272,6 @@ function neonHomeInit() {
     }
   }
 
-  // ---------- Tabs + buttons ----------
   function hookNeoTabs() {
     document.querySelectorAll(".neo-tabs .neo-tab").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -1500,7 +1330,6 @@ function neonHomeInit() {
   })();
 }
 
-
 // =====================
 // INIT (UNA SOLA VOLTA)
 // =====================
@@ -1526,14 +1355,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     await populateClassifica();
     await populateMarcatori();
     await populateInfortunati();
-    // Se vuoi, qui puoi richiamare eventuali funzioni extra per il selettore giornate global
-    // (le tue esistenti possono restare, ma le reinseriamo quando mi mandi la tua versione "pulita" della pagina predictions)
     await populateAnalisiFantacalcio();
     await populatePronostici();
   }
 });
-
-}
 
 
 
