@@ -8,7 +8,6 @@
   <meta name="description" content="Analisi professionali per fantacalcio e calcio: modello proprietario sui marcatori, dati avanzati e lettura tattica delle partite.">
   <meta name="keywords" content="fantacalcio, previsioni, analisi calcio, marcatori, ciro profantasy">
 
-  <!-- SEO / Open Graph -->
   <link rel="canonical" href="https://www.ciroprofantasy.it/" />
 
   <meta property="og:type" content="website" />
@@ -24,9 +23,7 @@
   <meta name="twitter:title" content="Ciro ProFantasy – Analisi Fantacalcio Professionali" />
   <meta name="twitter:description" content="Analisi professionali per fantacalcio e calcio: marcatori, dati avanzati e lettura tattica delle partite." />
   <meta name="twitter:image" content="https://www.ciroprofantasy.it/img/og-cover.jpg" />
-  <!-- /SEO / Open Graph -->
 
-  <!-- FONT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -40,565 +37,523 @@
     src="https://cdn-cookieyes.com/client_data/632f288ce1ebe1b7d38335aa7a3ff5ff/script.js">
   </script>
   <!-- End Cookie Consent by CookieYes -->
+
+  <!-- Chart.js (radar) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 
-
-
 <body>
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="container navbar-inner">
-            <div class="logo">
-                <a href="index.html" class="logo-link">
-                    <img src="img/logo-ciro-profantasy.png" alt="Ciro Profantasy" class="logo-image">
-                    <span class="logo-text">Ciro Profantasy</span>
-                </a>
+
+  <!-- NAVBAR (identica alla tua) -->
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <div class="logo">
+        <a href="index.html" class="logo-link">
+          <img src="img/logo-ciro-profantasy.png" alt="Ciro Profantasy" class="logo-image">
+          <span class="logo-text">Ciro Profantasy</span>
+        </a>
+      </div>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="predictions.html">Previsioni</a></li>
+        <li><a href="track-record.html">Partecipa</a></li>
+        <li><a href="chi-sono.html">Chi Sono</a></li>
+        <li><a href="contatti.html">Contatti</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO / TOP (NEON) -->
+  <header class="neo-hero">
+    <div class="container neo-hero-inner">
+      <div class="neo-hero-left">
+        <span class="neo-kicker">ProFantasy Neon</span>
+        <h1 class="neo-title">Live Data & Tools</h1>
+        <p class="neo-subtitle">Risultati • Confronto giocatori • Classifiche</p>
+      </div>
+
+      <div class="neo-hero-right">
+        <div class="neo-matchday-picker">
+          <button type="button" class="neo-pill neo-pill-active" id="btn-matchday-current">
+            Giornata attuale
+          </button>
+          <button type="button" class="neo-pill" id="btn-matchday-prev">
+            Scorsa
+          </button>
+        </div>
+        <p class="neo-hint" id="matchday-status-text">Caricamento giornata…</p>
+      </div>
+    </div>
+
+    <div class="neo-hero-glow"></div>
+  </header>
+
+  <!-- SEZIONE 1: RISULTATI (CAROUSEL) -->
+  <section class="neo-section" id="home-risultati">
+    <div class="container">
+      <div class="neo-section-head">
+        <h2 class="neo-section-title">Risultati di giornata</h2>
+        <div class="neo-section-actions">
+          <a class="neo-link" href="predictions.html">Vai a Previsioni →</a>
+        </div>
+      </div>
+
+      <div class="neo-carousel">
+        <button class="neo-carousel-arrow neo-carousel-prev" type="button" aria-label="Precedente" id="results-prev">‹</button>
+
+        <div class="neo-carousel-track" id="results-carousel-track">
+          <!-- JS: cards risultati -->
+          <div class="neo-card neo-card-skeleton">Carico i risultati…</div>
+        </div>
+
+        <button class="neo-carousel-arrow neo-carousel-next" type="button" aria-label="Successivo" id="results-next">›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEZIONE 2: COMPARATORE -->
+  <section class="neo-section" id="home-comparatore">
+    <div class="container">
+      <div class="neo-section-head">
+        <h2 class="neo-section-title">Comparatore giocatori</h2>
+        <p class="neo-section-subtitle">Confronta Gol e Assist (e radar stile FIFA).</p>
+      </div>
+
+      <div class="neo-compare-grid">
+        <div class="neo-card neo-card-compare">
+          <div class="neo-compare-controls">
+            <div class="neo-field">
+              <label class="neo-label" for="player-a-select">Giocatore A</label>
+              <select id="player-a-select" class="neo-select"></select>
             </div>
 
-            <!-- HAMBURGER -->
-            <button class="nav-toggle" id="nav-toggle" aria-label="Apri menu" aria-expanded="false">
-                <span class="nav-toggle-bar"></span>
-                <span class="nav-toggle-bar"></span>
-                <span class="nav-toggle-bar"></span>
+            <div class="neo-field">
+              <label class="neo-label" for="player-b-select">Giocatore B</label>
+              <select id="player-b-select" class="neo-select"></select>
+            </div>
+
+            <button type="button" class="neo-btn" id="btn-compare">
+              Confronta
             </button>
-
-            <ul class="nav-links" id="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="predictions.html">Previsioni</a></li>
-                <li><a href="track-record.html">Partecipa</a></li>
-                <li><a href="chi-sono.html">Chi Sono</a></li>
-                <li><a href="contatti.html">Contatti</a></li>
-            </ul>
-        </div>
-    </nav>
-
-<!-- HERO SLIDER -->
-<header class="hero-slider">
-
-  <!-- SLIDE 1 - Lista infortunati -->
- <!-- <div class="hero-slide active" data-index="1">
-    <img src="img/hero-slide-6.jpg" alt="Lista infortunati" class="hero-slide-image">
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <span class="hero-tag">Lista infortunati</span>
-      <h1 class="hero-title">
-        Lista infortunati aggiornata
-      </h1>
-      <p class="hero-text">
-        Ballottaggi, indisponibili e condizioni aggiornate in tempo reale.
-      </p>
-
-      <a href="#sezione-infortunati" class="hero-cta-inline">
-        <span>Vai alla lista infortunati</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6"
-                fill="none" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </a>
-    </div>
-  </div>
-    --!>
-
-  <!-- SLIDE 2 - Formazioni -->
-  <div class="hero-slide" data-index="2">
-    <img src="img/hero-slide-2.jpg" alt="Chi schierare oggi" class="hero-slide-image">
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <span class="hero-tag">Formazioni</span>
-      <h1 class="hero-title">Chi schierare oggi</h1>
-      <p class="hero-text">Consigli ruolo per ruolo.</p>
-
-      <a href="predictions.html" class="hero-cta-inline">
-        <span>Vedi lista consigliati</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6"
-                fill="none" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </a>
-    </div>
-  </div>
-
-  <!-- SLIDE 3 - Marcatori -->
-  <div class="hero-slide" data-index="3">
-    <img src="img/hero-slide-3.jpg" alt="Pronostici marcatori" class="hero-slide-image">
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <span class="hero-tag">Marcatori</span>
-      <h1 class="hero-title">Pronostici marcatori</h1>
-      <p class="hero-text">I nomi più caldi della giornata.</p>
-
-      <a href="predictions.html" class="hero-cta-inline">
-        <span>Vai ai marcatori</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6"
-                fill="none" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </a>
-    </div>
-  </div>
-
-  <!-- SLIDE 4 - Trend -->
-  <div class="hero-slide" data-index="4">
-    <img src="img/hero-slide-4.jpg" alt="Trend di giornata" class="hero-slide-image">
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <span class="hero-tag">Trend</span>
-      <h1 class="hero-title">Trend di giornata</h1>
-      <p class="hero-text">Dati, xG e momentum.</p>
-
-      <a href="predictions.html" class="hero-cta-inline">
-        <span>Analizza i trend</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6"
-                fill="none" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </a>
-    </div>
-  </div>
-
-  <!-- SLIDE 5 - Forma -->
-  <div class="hero-slide" data-index="5">
-    <img src="img/hero-slide-5.jpg" alt="Giocatori in forma" class="hero-slide-image">
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <span class="hero-tag">Forma</span>
-      <h1 class="hero-title">Giocatori più in forma</h1>
-      <p class="hero-text">Chi sta overperformando.</p>
-
-      <a href="predictions.html" class="hero-cta-inline">
-        <span>Scopri i giocatori caldi</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6"
-                fill="none" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </a>
-    </div>
-  </div>
-     <div class="hero-dots">
-    <button class="hero-dot active"></button>
-    <button class="hero-dot"></button>
-    <button class="hero-dot"></button>
-    <button class="hero-dot"></button>
-    <button class="hero-dot"></button>
-  </div>
-
-
-</header>
-
-
-
-
-        <!-- FRECCE -->
-        <button class="hero-arrow hero-arrow-prev" onclick="prevHeroSlide()" aria-label="Slide precedente">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-        </button>
-        <button class="hero-arrow hero-arrow-next" onclick="nextHeroSlide()" aria-label="Slide successiva">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-        </button>
-    </header>
-
-    <!-- DASHBOARD ANALITICA -->
-    <section class="dashboard-section">
-      <div class="container">
-        <h2 class="dashboard-title">Live Data della Giornata</h2>
-        
-        <!-- TABS -->
-        <div class="dashboard-tabs">
-          <button class="tab-btn active" data-tab="classifica">Classifica</button>
-          <button class="tab-btn" data-tab="marcatori">Marcatori</button>
-          <!-- <button class="tab-btn" data-tab="infortunati">Indisponibili</button> --!>
-        </div>
-
-        <!-- TAB CONTENT -->
-        <div class="dashboard-content">
-          <!-- CLASSIFICA -->
-          <div id="classifica" class="tab-content active">
-            <div class="dashboard-table-wrapper">
-              <table class="table classifica-table">
-                <thead>
-                  <tr>
-                    <th>Pos</th>
-                    <th></th>
-                    <th>Squadra</th>
-                    <th>PG</th>
-                    <th>xG</th>
-                    <th>Punti</th>
-                  </tr>
-                </thead>
-                <tbody id="classifica-body"></tbody>
-              </table>
-            </div>
-            <button type="button" class="dashboard-link" id="open-full-classifica">
-  Vedi tutte le squadre →
-</button>
           </div>
 
-          <!-- MARCATORI -->
-          <div id="marcatori" class="tab-content">
-            <div class="dashboard-table-wrapper">
-              <table class="dashboard-table">
-                <thead>
-                  <tr>
-                    <th>Pos</th>
-                    <th>Giocatore</th>
-                    <th>Club</th>
-                    <th>Gol</th>
-                  </tr>
-                </thead>
-                <tbody id="marcatori-body"></tbody>
-              </table>
+          <div class="neo-compare-output">
+            <div class="neo-compare-kpis" id="compare-kpis">
+              <div class="neo-mini-card">Seleziona due giocatori.</div>
             </div>
-            <button type="button" class="dashboard-link" id="open-full-marcatori">
-  Vedi la classifica completa →
-</button>
+
+            <div class="neo-radar-wrap">
+              <canvas id="player-radar" height="240"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- DESKTOP SIDEBAR: CLASSIFICHE -->
+        <aside class="neo-card neo-card-sidebar" id="desktop-standings">
+          <div class="neo-tabs">
+            <button class="neo-tab active" data-neo-tab="classifica">Classifica</button>
+            <button class="neo-tab" data-neo-tab="marcatori">Marcatori</button>
+            <button class="neo-tab" data-neo-tab="assist">Assist</button>
           </div>
 
-          <!-- INFORTUNATI -->
-          <div id="infortunati" class="tab-content">
-            <div class="dashboard-table-wrapper">
-              <table class="dashboard-table">
-                <thead>
-                  <tr>
-                    <th>Giocatore</th>
-                    <th>Club</th>
-                    <th>Rientro Previsto</th>
-                    <th>Tipo Infortunio</th>
-                  </tr>
-                </thead>
-                <tbody id="infortunati-body"></tbody>
-              </table>
+          <div class="neo-tab-panels">
+            <div class="neo-panel active" id="neo-panel-classifica">
+              <div class="neo-table-wrap">
+                <table class="table classifica-table">
+                  <thead>
+                    <tr>
+                      <th>Pos</th>
+                      <th></th>
+                      <th>Squadra</th>
+                      <th>PG</th>
+                      <th>xG</th>
+                      <th>Punti</th>
+                    </tr>
+                  </thead>
+                  <tbody id="classifica-body"></tbody>
+                </table>
+              </div>
+              <button type="button" class="dashboard-link" id="open-full-classifica">Vedi tutte le squadre →</button>
             </div>
-            <a href="#" class="dashboard-link" id="open-full-infortunati">
-              Vedi la lista completa →
-            </a>
+
+            <div class="neo-panel" id="neo-panel-marcatori">
+              <div class="neo-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Pos</th>
+                      <th>Giocatore</th>
+                      <th>Club</th>
+                      <th>Gol</th>
+                    </tr>
+                  </thead>
+                  <tbody id="marcatori-body"></tbody>
+                </table>
+              </div>
+              <button type="button" class="dashboard-link" id="open-full-marcatori">Vedi la classifica completa →</button>
+            </div>
+
+            <div class="neo-panel" id="neo-panel-assist">
+              <div class="neo-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Pos</th>
+                      <th>Giocatore</th>
+                      <th>Club</th>
+                      <th>Assist</th>
+                    </tr>
+                  </thead>
+                  <tbody id="assist-body"></tbody>
+                </table>
+              </div>
+              <button type="button" class="dashboard-link" id="open-full-assist">Vedi la classifica completa →</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- MOBILE: CLASSIFICHE SOTTO -->
+      <div class="neo-mobile-standings" id="mobile-standings">
+        <div class="neo-card">
+          <h3 class="neo-subhead">Classifiche</h3>
+          <div class="neo-tabs neo-tabs-mobile">
+            <button class="neo-tab active" data-neo-tab="m-classifica">Classifica</button>
+            <button class="neo-tab" data-neo-tab="m-marcatori">Marcatori</button>
+            <button class="neo-tab" data-neo-tab="m-assist">Assist</button>
+          </div>
+
+          <div class="neo-tab-panels">
+            <div class="neo-panel active" id="neo-panel-m-classifica">
+              <div class="neo-table-wrap">
+                <table class="table classifica-table">
+                  <thead>
+                    <tr>
+                      <th>Pos</th>
+                      <th></th>
+                      <th>Squadra</th>
+                      <th>PG</th>
+                      <th>xG</th>
+                      <th>Punti</th>
+                    </tr>
+                  </thead>
+                  <tbody id="classifica-body-mobile"></tbody>
+                </table>
+              </div>
+              <button type="button" class="dashboard-link" id="open-full-classifica-mobile">Vedi tutte le squadre →</button>
+            </div>
+
+            <div class="neo-panel" id="neo-panel-m-marcatori">
+              <div class="neo-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Pos</th>
+                      <th>Giocatore</th>
+                      <th>Club</th>
+                      <th>Gol</th>
+                    </tr>
+                  </thead>
+                  <tbody id="marcatori-body-mobile"></tbody>
+                </table>
+              </div>
+              <button type="button" class="dashboard-link" id="open-full-marcatori-mobile">Vedi la classifica completa →</button>
+            </div>
+
+            <div class="neo-panel" id="neo-panel-m-assist">
+              <div class="neo-table-wrap">
+                <table class="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Pos</th>
+                      <th>Giocatore</th>
+                      <th>Club</th>
+                      <th>Assist</th>
+                    </tr>
+                  </thead>
+                  <tbody id="assist-body-mobile"></tbody>
+                </table>
+              </div>
+              <button type="button" class="dashboard-link" id="open-full-assist-mobile">Vedi la classifica completa →</button>
+            </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- STATISTICHE DI IMPATTO -->
-    <section class="stats-section">
-        <div class="container">
-            <h2 class="stats-title">Statistiche e Impatto</h2>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">📊</div>
-                    <div class="stat-number">92%</div>
-                    <div class="stat-label">Win Rate</div>
-                </div>
+    </div>
+  </section>
 
-                <div class="stat-card">
-                    <div class="stat-icon">🎯</div>
-                    <div class="stat-number">79%</div>
-                    <div class="stat-label">Marcatori Indovinati</div>
-                    <div class="stat-small">(118/150)</div>
-                </div>
+  <!-- DA QUI IN POI: lascio le tue sezioni “come sono” per ora -->
+  <!-- STATISTICHE DI IMPATTO -->
+  <section class="stats-section">
+    <div class="container">
+      <h2 class="stats-title">Statistiche e Impatto</h2>
 
-                <div class="stat-card stat-card-clickable">
-                    <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer" class="stat-link">
-                        <div class="stat-icon">👥</div>
-                        <div class="stat-number" id="tiktok-followers">11.1K+</div>
-                        <div class="stat-label">Followers TikTok</div>
-                        <div class="stat-small">*real-time</div>
-                    </a>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-number">4.8</div>
-                    <div class="stat-label">Rating Utenti</div>
-                </div>
-            </div>
-
-            <p class="stats-disclaimer">Dati aggiornati al 11 Dicembre 2025</p>
-        </div>
-    </section>
-
-    <!-- TELEGRAM CTA - PREMIUM -->
-    <section id="telegram-cta" class="telegram-section-premium">
-        <div class="telegram-container">
-            <div class="telegram-content">
-                <h2 class="telegram-title">Entra nella Community</h2>
-                <p class="telegram-subtitle">
-                    Accesso esclusivo alle analisi giornaliere, pronostici sui marcatori e dritte sugli infortunati prima di ogni giornata.
-                </p>
-
-                <div class="telegram-features">
-                    <div class="telegram-feature">
-                        <span class="telegram-feature-icon">💬</span>
-                        <div>
-                            <strong>Analisi Giornaliera</strong>
-                            <p>Consigli dettagliati ogni mattina prima delle giornate</p>
-                        </div>
-                    </div>
-
-                    <div class="telegram-feature">
-                        <span class="telegram-feature-icon">⚡</span>
-                        <div>
-                            <strong>Aggiornamenti Real-time</strong>
-                            <p>Notifiche istantanee su infortunati e ultimi cambi</p>
-                        </div>
-                    </div>
-
-                    <div class="telegram-feature">
-                        <span class="telegram-feature-icon">👥</span>
-                        <div>
-                            <strong>Community Attiva</strong>
-                            <p>Connettiti con altri appassionati di fantacalcio</p>
-                        </div>
-                    </div>
-
-                    <div class="telegram-feature">
-                        <span class="telegram-feature-icon">🎯</span>
-                        <div>
-                            <strong>Supporto Diretto</strong>
-                            <p>Rispondi alle tue domande sulla formazione</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="telegram-cta-buttons">
-                    <a href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="btn-telegram-primary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.487-1.302.487-.428 0-1.255-.241-1.87-.44-.752-.245-1.349-.338-1.297-.893.027-.467.536-.1.968-.248 3.913-1.231 6.513-1.881 7.846-3.12.404-.338.763-.646 1.068-.84z"/>
-                        </svg>
-                        Entra su Telegram
-                    </a>
-                    
-                    <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer" class="btn-telegram-secondary">
-                        Seguimi su TikTok
-                    </a>
-                </div>
-
-                <p class="telegram-guarantee">
-                    ✓ Gratuito · ✓ Senza Spam · ✓ Cancellati quando vuoi
-                </p>
-            </div>
-
-            <div class="telegram-visual">
-                <div class="telegram-qr-box">
-                    <p class="telegram-qr-label">Scansiona il QR Code</p>
-                    <img src="img/telegram-qr.png" alt="QR Code Telegram" class="telegram-qr-image">
-                    <p class="telegram-qr-hint">O clicca il pulsante a sinistra</p>
-                </div>
-            </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-number">92%</div>
+          <div class="stat-label">Win Rate</div>
         </div>
 
-        <div class="telegram-decoration telegram-deco-1"></div>
-        <div class="telegram-decoration telegram-deco-2"></div>
-    </section>
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-number">79%</div>
+          <div class="stat-label">Marcatori Indovinati</div>
+          <div class="stat-small">(118/150)</div>
+        </div>
 
-    <!-- FOOTER - PREMIUM -->
-    <footer class="footer-premium">
-        <div class="footer-container">
-            <div class="footer-cta-banner">
-                <h3>Non perdere gli aggiornamenti</h3>
-                <p>Iscriviti al canale Telegram per le analisi quotidiane</p>
-                <a href="https://t.me/+hpq210YBS18yN2E8" class="footer-cta-btn" target="_blank" rel="noopener noreferrer">
-                    Entra su Telegram
-                </a>
+        <div class="stat-card stat-card-clickable">
+          <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer" class="stat-link">
+            <div class="stat-icon">👥</div>
+            <div class="stat-number" id="tiktok-followers">11.1K+</div>
+            <div class="stat-label">Followers TikTok</div>
+            <div class="stat-small">*real-time</div>
+          </a>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-number">4.8</div>
+          <div class="stat-label">Rating Utenti</div>
+        </div>
+      </div>
+
+      <p class="stats-disclaimer">Dati aggiornati al 11 Dicembre 2025</p>
+    </div>
+  </section>
+
+  <!-- TELEGRAM CTA - PREMIUM -->
+  <section id="telegram-cta" class="telegram-section-premium">
+    <!-- identica alla tua -->
+    <div class="telegram-container">
+      <div class="telegram-content">
+        <h2 class="telegram-title">Entra nella Community</h2>
+        <p class="telegram-subtitle">
+          Accesso esclusivo alle analisi giornaliere, pronostici sui marcatori e dritte sugli infortunati prima di ogni giornata.
+        </p>
+
+        <div class="telegram-features">
+          <div class="telegram-feature">
+            <span class="telegram-feature-icon">💬</span>
+            <div>
+              <strong>Analisi Giornaliera</strong>
+              <p>Consigli dettagliati ogni mattina prima delle giornate</p>
             </div>
+          </div>
 
-            <div class="footer-main">
-                <div class="footer-col footer-col-brand">
-                    <div class="footer-logo">
-                        <img src="img/logo-ciro-profantasy.png" alt="Ciro Profantasy" class="footer-logo-img">
-                        <div>
-                            <h4>Ciro Profantasy</h4>
-                            <p>Analisi Fantacalcio Professionali</p>
-                        </div>
-                    </div>
-                    <p class="footer-bio">
-                        Strategie avanzate, dati e lettura tattica per dominare il fantacalcio.
-                    </p>
-                    <div class="footer-socials">
-                        <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="TikTok">
-                            <span>TikTok</span>
-                        </a>
-                        <a href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Telegram">
-                            <span>Telegram</span>
-                        </a>
-                        <a href="https://www.instagram.com/ciro_profantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Instagram">
-                            <span>Instagram</span>
-                        </a>
-                    </div>
-                </div>
+          <div class="telegram-feature">
+            <span class="telegram-feature-icon">⚡</span>
+            <div>
+              <strong>Aggiornamenti Real-time</strong>
+              <p>Notifiche istantanee su infortunati e ultimi cambi</p>
+            </div>
+          </div>
 
-                <div class="footer-col">
-                    <h5 class="footer-col-title">Esplora</h5>
-                    <ul class="footer-links">
-                      <li><a href="index.html">Home</a></li>
+          <div class="telegram-feature">
+            <span class="telegram-feature-icon">👥</span>
+            <div>
+              <strong>Community Attiva</strong>
+              <p>Connettiti con altri appassionati di fantacalcio</p>
+            </div>
+          </div>
+
+          <div class="telegram-feature">
+            <span class="telegram-feature-icon">🎯</span>
+            <div>
+              <strong>Supporto Diretto</strong>
+              <p>Rispondi alle tue domande sulla formazione</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="telegram-cta-buttons">
+          <a href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="btn-telegram-primary">
+            Entra su Telegram
+          </a>
+
+          <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer" class="btn-telegram-secondary">
+            Seguimi su TikTok
+          </a>
+        </div>
+
+        <p class="telegram-guarantee">✓ Gratuito · ✓ Senza Spam · ✓ Cancellati quando vuoi</p>
+      </div>
+
+      <div class="telegram-visual">
+        <div class="telegram-qr-box">
+          <p class="telegram-qr-label">Scansiona il QR Code</p>
+          <img src="img/telegram-qr.png" alt="QR Code Telegram" class="telegram-qr-image">
+          <p class="telegram-qr-hint">O clicca il pulsante a sinistra</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="telegram-decoration telegram-deco-1"></div>
+    <div class="telegram-decoration telegram-deco-2"></div>
+  </section>
+
+  <!-- FOOTER (identico al tuo) -->
+  <footer class="footer-premium">
+    <div class="footer-container">
+      <div class="footer-cta-banner">
+        <h3>Non perdere gli aggiornamenti</h3>
+        <p>Iscriviti al canale Telegram per le analisi quotidiane</p>
+        <a href="https://t.me/+hpq210YBS18yN2E8" class="footer-cta-btn" target="_blank" rel="noopener noreferrer">
+          Entra su Telegram
+        </a>
+      </div>
+
+      <div class="footer-main">
+        <div class="footer-col footer-col-brand">
+          <div class="footer-logo">
+            <img src="img/logo-ciro-profantasy.png" alt="Ciro Profantasy" class="footer-logo-img">
+            <div>
+              <h4>Ciro Profantasy</h4>
+              <p>Analisi Fantacalcio Professionali</p>
+            </div>
+          </div>
+          <p class="footer-bio">
+            Strategie avanzate, dati e lettura tattica per dominare il fantacalcio.
+          </p>
+          <div class="footer-socials">
+            <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="TikTok"><span>TikTok</span></a>
+            <a href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Telegram"><span>Telegram</span></a>
+            <a href="https://www.instagram.com/ciro_profantasy" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Instagram"><span>Instagram</span></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5 class="footer-col-title">Esplora</h5>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
             <li><a href="predictions.html">Previsioni</a></li>
             <li><a href="track-record.html">Partecipa</a></li>
             <li><a href="chi-sono.html">Chi Sono</a></li>
             <li><a href="contatti.html">Contatti</a></li>
           </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h5 class="footer-col-title">Risorse</h5>
-                    <ul class="footer-links">
-                        <li><a href="legal.html#privacy">Privacy Policy</a></li>
-<li><a href="legal.html#terms">Terms of Service</a></li>
-<li><a href="legal.html#disclaimer">Disclaimer</a></li>
-<li><a href="legal.html#faq">FAQ</a></li>
-<li><a href="legal.html#contact">Contact Us</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col footer-col-stats">
-                    <h5 class="footer-col-title">Statistiche</h5>
-                    <div class="footer-stat">
-                        <span class="footer-stat-value">92%</span>
-                        <span class="footer-stat-label">Win Rate</span>
-                    </div>
-                    <div class="footer-stat">
-                        <span class="footer-stat-value">79%</span>
-                        <span class="footer-stat-label">Marcatori</span>
-                    </div>
-                    <div class="footer-stat">
-                        <span class="footer-stat-value">4.8★</span>
-                        <span class="footer-stat-label">Rating</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p class="footer-copyright">
-                    &copy; 2025 Ciro Profantasy. Tutti i diritti riservati.
-                </p>
-                <p class="footer-disclaimer">
-                    Le analisi fornite sono a scopo informativo. Non sono consigli di investimento. 
-                    Gioca responsabilmente.
-                </p>
-            </div>
         </div>
 
-        <div class="footer-decoration"></div>
-    </footer>
-
-    <!-- NEWS MODAL -->
-    <div id="news-modal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" type="button">&times;</button>
-            <img id="modal-image" src="" alt="" class="modal-image">
-            <div class="modal-body">
-                <h2 id="modal-title"></h2>
-                <p id="modal-subtitle" class="modal-subtitle"></p>
-                <p id="modal-content" class="modal-text"></p>
-            </div>
+        <div class="footer-col">
+          <h5 class="footer-col-title">Risorse</h5>
+          <ul class="footer-links">
+            <li><a href="legal.html#privacy">Privacy Policy</a></li>
+            <li><a href="legal.html#terms">Terms of Service</a></li>
+            <li><a href="legal.html#disclaimer">Disclaimer</a></li>
+            <li><a href="legal.html#faq">FAQ</a></li>
+            <li><a href="legal.html#contact">Contact Us</a></li>
+          </ul>
         </div>
-    </div>
 
-    <!-- INFORTUNIO MODAL -->
-    <div id="infortunio-modal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" type="button">&times;</button>
-            <div class="modal-body">
-                <h3 id="modal-giocatore"></h3>
-                <p id="modal-club"></p>
-                <div class="modal-details">
-                    <p><strong>Status:</strong> <span id="modal-status"></span></p>
-                    <p><strong>Tipo Infortunio:</strong> <span id="modal-infortunio"></span></p>
-                    <p><strong>Ritorno previsto:</strong> <span id="modal-ritorno"></span></p>
-                </div>
-            </div>
+        <div class="footer-col footer-col-stats">
+          <h5 class="footer-col-title">Statistiche</h5>
+          <div class="footer-stat"><span class="footer-stat-value">92%</span><span class="footer-stat-label">Win Rate</span></div>
+          <div class="footer-stat"><span class="footer-stat-value">79%</span><span class="footer-stat-label">Marcatori</span></div>
+          <div class="footer-stat"><span class="footer-stat-value">4.8★</span><span class="footer-stat-label">Rating</span></div>
         </div>
-    </div>
+      </div>
 
-    <!-- MODAL CLASSIFICA COMPLETA -->
-    <div id="classifica-modal" class="modal">
-      <div class="modal-content modal-content-wide">
-        <button class="modal-close" type="button">&times;</button>
-        <div class="modal-body">
-          <h2>Classifica completa Serie A</h2>
-          <p class="modal-subtitle">Tutte le squadre, dati aggiornati al Google Sheets.</p>
-
-          <div class="modal-table-wrapper">
-            <table class="table classifica-table">
-                <thead>
-                    <tr>
-                        <th>Pos</th>
-                        <th></th>
-                        <th>Squadra</th>
-                        <th>PG</th>
-                        <th>xG</th>
-                        <th>Punti</th>
-                    </tr>
-                </thead>
-                <tbody id="classifica-full-body"></tbody>
-            </table>
-          </div>
-        </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2025 Ciro Profantasy. Tutti i diritti riservati.</p>
+        <p class="footer-disclaimer">Le analisi fornite sono a scopo informativo. Non sono consigli di investimento. Gioca responsabilmente.</p>
       </div>
     </div>
 
-    <!-- MODAL MARCATORI COMPLETA -->
-    <div id="marcatori-modal" class="modal">
-      <div class="modal-content modal-content-wide">
-        <button class="modal-close" type="button">&times;</button>
-        <div class="modal-body">
-          <h2>Classifica completa marcatori</h2>
-          <p class="modal-subtitle">Tutti i marcatori della stagione.</p>
+    <div class="footer-decoration"></div>
+  </footer>
 
-          <div class="modal-table-wrapper">
-            <table class="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Pos</th>
-                  <th>Giocatore</th>
-                  <th>Club</th>
-                  <th>Gol</th>
-                </tr>
-              </thead>
-              <tbody id="marcatori-full-body"></tbody>
-            </table>
-          </div>
+  <!-- MODALI: identiche alle tue (le lascio uguali per non rompere nulla) -->
+  <div id="news-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" type="button">&times;</button>
+      <img id="modal-image" src="" alt="" class="modal-image">
+      <div class="modal-body">
+        <h2 id="modal-title"></h2>
+        <p id="modal-subtitle" class="modal-subtitle"></p>
+        <p id="modal-content" class="modal-text"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="infortunio-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" type="button">&times;</button>
+      <div class="modal-body">
+        <h3 id="modal-giocatore"></h3>
+        <p id="modal-club"></p>
+        <div class="modal-details">
+          <p><strong>Status:</strong> <span id="modal-status"></span></p>
+          <p><strong>Tipo Infortunio:</strong> <span id="modal-infortunio"></span></p>
+          <p><strong>Ritorno previsto:</strong> <span id="modal-ritorno"></span></p>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- MODAL INFORTUNATI COMPLETA -->
-    <div id="infortunati-modal" class="modal">
-      <div class="modal-content modal-content-wide">
-        <button class="modal-close" type="button">&times;</button>
-        <div class="modal-body">
-          <h2>Lista completa indisponibili</h2>
-          <p class="modal-subtitle">Tutti gli infortunati con rientro previsto.</p>
-
-          <div class="modal-table-wrapper">
-            <table class="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Giocatore</th>
-                  <th>Club</th>
-                  <th>Rientro Previsto</th>
-                  <th>Tipo Infortunio</th>
-                </tr>
-              </thead>
-              <tbody id="infortunati-full-body"></tbody>
-            </table>
-          </div>
+  <div id="classifica-modal" class="modal">
+    <div class="modal-content modal-content-wide">
+      <button class="modal-close" type="button">&times;</button>
+      <div class="modal-body">
+        <h2>Classifica completa Serie A</h2>
+        <p class="modal-subtitle">Tutte le squadre, dati aggiornati al Google Sheets.</p>
+        <div class="modal-table-wrapper">
+          <table class="table classifica-table">
+            <thead>
+              <tr>
+                <th>Pos</th><th></th><th>Squadra</th><th>PG</th><th>xG</th><th>Punti</th>
+              </tr>
+            </thead>
+            <tbody id="classifica-full-body"></tbody>
+          </table>
         </div>
       </div>
     </div>
+  </div>
 
-    <script src="js/main.js"></script>
+  <div id="marcatori-modal" class="modal">
+    <div class="modal-content modal-content-wide">
+      <button class="modal-close" type="button">&times;</button>
+      <div class="modal-body">
+        <h2>Classifica completa marcatori</h2>
+        <p class="modal-subtitle">Tutti i marcatori della stagione.</p>
+        <div class="modal-table-wrapper">
+          <table class="dashboard-table">
+            <thead>
+              <tr><th>Pos</th><th>Giocatore</th><th>Club</th><th>Gol</th></tr>
+            </thead>
+            <tbody id="marcatori-full-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="infortunati-modal" class="modal">
+    <div class="modal-content modal-content-wide">
+      <button class="modal-close" type="button">&times;</button>
+      <div class="modal-body">
+        <h2>Lista completa indisponibili</h2>
+        <p class="modal-subtitle">Tutti gli infortunati con rientro previsto.</p>
+        <div class="modal-table-wrapper">
+          <table class="dashboard-table">
+            <thead>
+              <tr><th>Giocatore</th><th>Club</th><th>Rientro Previsto</th><th>Tipo Infortunio</th></tr>
+            </thead>
+            <tbody id="infortunati-full-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
 
