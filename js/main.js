@@ -917,8 +917,295 @@ function neonHomeInit() {
       renderResultsSkeleton("Errore caricamento risultati.");
     }
   }
-    // =====================
-  // PICKER UI (CARDS -> OVERLAY -> SELECT)
+// =====================
+// NEON HOME: Results + Compare + Assist (v1) — CLEAN
+// =====================
+function neonHomeInit() {
+  const isHome =
+    /(^|\/)index\.html$/.test(location.pathname) ||
+    location.pathname === "/" ||
+    location.pathname === "";
+
+  if (!isHome) return;
+
+  const $ = (id) => document.getElementById(id);
+
+  const els = {
+    btnCur: $("btn-matchday-current"),
+    btnPrev: $("btn-matchday-prev"),
+    status: $("matchday-status-text"),
+    track: $("results-carousel-track"),
+    prevArrow: $("results-prev"),
+    nextArrow: $("results-next"),
+
+    aSel: $("player-a-select"),
+    bSel: $("player-b-select"),
+    btnCompare: $("btn-compare"),
+    kpis: $("compare-kpis"),
+    radar: $("player-radar"),
+  };
+
+  if (!els.track || !els.aSel || !els.bSel || !els.radar) return;
+
+  let currentMatchday = null;
+  let selectedMatchday = null;
+  let radarChart = null;
+
+  // ---------- Matchday ----------
+  function setMatchdayButtons() {
+    if (!els.btnCur || !els.btnPrev) return;
+    const isCur = selectedMatchday === currentMatchday;
+    els.btnCur.classList.toggle("neo-pill-active", isCur);
+    els.btnPrev.classList.toggle("neo-pill-active", !isCur);
+  }
+
+  function pickPreviousMatchday() {
+    if (Number.isFinite(currentMatchday)) return Math.max(1, currentMatchday - 1);
+    return null;
+  }
+
+  async function loadConfigMatchday() {
+    try {
+      const rows = await fetchSheetDataJson(SHEET_NAMES.config);
+
+      const map = {};
+      rows.forEach((r) => {
+        const k = String(r.key || r.Key || r.KEY || "").trim();
+        const v = r.value ?? r.Value ?? r.VALUE;
+        if (k) map[k] = v;
+      });
+
+      const cm = parseInt(map.current_matchday, 10);
+      if (!Number.isFinite(cm)) throw new Error("Config: current_matchday non valido");
+
+      currentMatchday = cm;
+      selectedMatchday = cm;
+
+      const status = String(map.matchday_status || "").trim();
+      els.status.textContent = status ? `Giornata ${cm} • ${status}` : `Giornata ${cm}`;
+      setMatchdayButtons();
+    } catch (e) {
+      console.error("Errore Config matchday:", e);
+      els.status.textContent = "Config giornata non disponibile";
+      currentMatchday = null;
+      selectedMatchday = null;
+    }
+  }
+
+  // ---------- Results carousel ----------
+  function renderResultsSkeleton(text) {
+    els.track.innerHTML = `<div class="neo-card neo-card-skeleton">${text}</div>`;
+  }
+
+  function mkResultCard({ home, away, homeGoals, awayGoals, badgeText, badgeClass }) {
+    const safe = (s) => String(s ?? "").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+
+    const LOGOS =
+      (typeof CLUB_LOGOS !== "undefined" && CLUB_LOGOS) ||
+      (typeof CLUBLOGOS !== "undefined" && CLUBLOGOS) ||
+      {};
+
+    const homeLogo = LOGOS[home] || "";
+    const awayLogo = LOGOS[away] || "";
+
+    const homeLogoHTML = homeLogo ? `<img class="neo-team-logo" src="${homeLogo}" alt="${safe(home)}" loading="lazy">` : "";
+    const awayLogoHTML = awayLogo ? `<img class="neo-team-logo" src="${awayLogo}" alt="${safe(away)}" loading="lazy">` : "";
+
+    return `
+      <article class="neo-card neo-match-card">
+        <div class="neo-match-head">
+          <span class="neo-badge ${badgeClass || ""}">${safe(badgeText || "")}</span>
+          <div class="neo-score">${safe(homeGoals)} - ${safe(awayGoals)}</div>
+        </div>
+
+        <div class="neo-match-teams">
+          <div class="neo-team">
+            ${homeLogoHTML}
+            <span class="neo-team-name">${safe(home)}</span>
+          </div>
+          <span class="neo-vs">vs</span>
+          <div class="neo-team">
+            ${awayLogoHTML}
+            <span class="neo-team-name">${safe(away)}</span>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  async function loadResultsForMatchday(matchdayWanted) {
+    try {
+      renderResultsSkeleton("Carico i risultati…");
+      const rows = await fetchSheetDataJson(SHEET_NAMES.risultatiGiornata);
+
+      const normalized = rows
+        .map((r) => ({
+          matchday: parseInt(r.Giornata ?? r.giornata ?? r.Matchday ?? r.matchday, 10),
+          home: r.HomeTeam ?? r.home ?? r.Casa ?? r.SquadraCasa ?? r.Home,
+          away: r.AwayTeam ?? r.away ?? r.Trasferta ?? r.SquadraTrasferta ?? r.Away,
+          homeGoals: r.HomeGoals ?? r.homeGoals ?? r.GolCasa ?? r.GolHome ?? r.GFHome ?? "-",
+          awayGoals: r.AwayGoals ?? r.awayGoals ?? r.GolTrasferta ?? r.GolAway ?? r.GFAway ?? "-",
+          status: r.Status ?? r.status ?? "",
+        }))
+        .filter((x) => Number.isFinite(x.matchday));
+
+      let md = matchdayWanted;
+      if (!Number.isFinite(md)) {
+        md = normalized.reduce((m, x) => Math.max(m, x.matchday), 0) || 1;
+        selectedMatchday = md;
+        els.status.textContent = `Giornata ${md}`;
+        setMatchdayButtons();
+      }
+
+      const list = normalized.filter((x) => x.matchday === md);
+      if (!list.length) {
+        renderResultsSkeleton(`Nessun risultato per giornata ${md}.`);
+        return;
+      }
+
+      els.track.innerHTML = list
+        .map((x) =>
+          mkResultCard({
+            home: x.home,
+            away: x.away,
+            homeGoals: x.homeGoals,
+            awayGoals: x.awayGoals,
+            badgeText: x.status ? x.status : `Giornata ${md}`,
+            badgeClass: String(x.status).toUpperCase().includes("LIVE") ? "live" : "",
+          })
+        )
+        .join("");
+    } catch (e) {
+      console.error("Errore risultati:", e);
+      renderResultsSkeleton("Errore caricamento risultati.");
+    }
+  }
+
+  function hookCarouselArrows() {
+    if (!els.prevArrow || !els.nextArrow) return;
+
+    const scrollByCard = (dir) => {
+      const card = els.track.querySelector(".neo-match-card");
+      const dx = card ? card.getBoundingClientRect().width + 12 : 320;
+      els.track.scrollBy({ left: dir * dx, behavior: "smooth" });
+    };
+
+    els.prevArrow.addEventListener("click", () => scrollByCard(-1));
+    els.nextArrow.addEventListener("click", () => scrollByCard(1));
+  }
+
+  // ---------- Assist tables (preview) ----------
+  function fillAssistTables(rows) {
+    const bodies = [
+      document.getElementById("assist-body"),
+      document.getElementById("assist-body-mobile"),
+    ].filter(Boolean);
+
+    bodies.forEach((tbody) => {
+      tbody.innerHTML = "";
+      rows.slice(0, 15).forEach((r, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td><strong>${r.player}</strong></td>
+          <td>${r.club}</td>
+          <td>${r.assist}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    });
+  }
+
+  // ---------- Radar ----------
+  function normalize(value, max) {
+    const v = Number(value) || 0;
+    const m = Number(max) || 1;
+    return Math.max(0, Math.min(100, Math.round((v / m) * 100)));
+  }
+
+  function buildRadarData(p, maxG, maxA) {
+    const g = Number(p.gol) || 0;
+    const a = Number(p.assist) || 0;
+
+    const gN = normalize(g, maxG);
+    const aN = normalize(a, maxA);
+    const imp = normalize(g + a, maxG + maxA);
+    const bonusIdx = normalize((0.7 * g) + (0.3 * a), (0.7 * maxG) + (0.3 * maxA));
+
+    return {
+      labels: ["Gol", "Assist", "Attacco", "Creatività", "Impatto", "Bonus"],
+      values: [gN, aN, gN, aN, imp, bonusIdx],
+    };
+  }
+
+  function renderCompareKpis(A, B) {
+    const safe = (s) => String(s ?? "").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    els.kpis.innerHTML = `
+      <div class="neo-mini-card">
+        <div style="font-weight:700; margin-bottom:6px;">${safe(A.player)} (${safe(A.club)})</div>
+        <div>Gol: <strong>${safe(A.gol)}</strong> · Assist: <strong>${safe(A.assist)}</strong></div>
+      </div>
+      <div class="neo-mini-card">
+        <div style="font-weight:700; margin-bottom:6px;">${safe(B.player)} (${safe(B.club)})</div>
+        <div>Gol: <strong>${safe(B.gol)}</strong> · Assist: <strong>${safe(B.assist)}</strong></div>
+      </div>
+    `;
+  }
+
+  function renderRadar(A, B, maxG, maxA) {
+    if (typeof Chart === "undefined") return;
+
+    const aData = buildRadarData(A, maxG, maxA);
+    const bData = buildRadarData(B, maxG, maxA);
+
+    const ctx = els.radar.getContext("2d");
+    if (radarChart) radarChart.destroy();
+
+    radarChart = new Chart(ctx, {
+      type: "radar",
+      data: {
+        labels: aData.labels,
+        datasets: [
+          {
+            label: A.player,
+            data: aData.values,
+            fill: true,
+            backgroundColor: "rgba(102,247,255,0.14)",
+            borderColor: "rgba(102,247,255,0.85)",
+            pointBackgroundColor: "rgba(102,247,255,0.95)",
+            pointRadius: 2,
+            borderWidth: 2,
+          },
+          {
+            label: B.player,
+            data: bData.values,
+            fill: true,
+            backgroundColor: "rgba(176,108,255,0.12)",
+            borderColor: "rgba(176,108,255,0.85)",
+            pointBackgroundColor: "rgba(176,108,255,0.95)",
+            pointRadius: 2,
+            borderWidth: 2,
+          },
+        ],
+      },
+      options: {
+        plugins: { legend: { labels: { color: "#eaf2ff" } } },
+        scales: {
+          r: {
+            min: 0,
+            max: 100,
+            ticks: { display: false },
+            grid: { color: "rgba(234,242,255,0.10)" },
+            angleLines: { color: "rgba(234,242,255,0.10)" },
+            pointLabels: { color: "rgba(234,242,255,0.80)", font: { size: 12 } },
+          },
+        },
+      },
+    });
+  }
+
+  // =====================
+  // PICKER UI (active)
   // =====================
   const LOGOS =
     (typeof CLUB_LOGOS !== "undefined" && CLUB_LOGOS) ||
@@ -978,9 +1265,7 @@ function neonHomeInit() {
     if (!pick.wrap || !pick.list) return;
     pickingTarget = target;
 
-    if (pick.title) {
-      pick.title.textContent = target === "A" ? "Scegli giocatore A" : "Scegli giocatore B";
-    }
+    if (pick.title) pick.title.textContent = target === "A" ? "Scegli giocatore A" : "Scegli giocatore B";
 
     pick.wrap.classList.add("active");
     pick.wrap.setAttribute("aria-hidden", "false");
@@ -1005,32 +1290,36 @@ function neonHomeInit() {
 
     const filtered = !query
       ? ALL_PLAYERS
-      : ALL_PLAYERS.filter(p =>
+      : ALL_PLAYERS.filter((p) =>
           (p.player || "").toLowerCase().includes(query) ||
           String(p.club || "").toLowerCase().includes(query)
         );
 
-    pick.list.innerHTML = filtered.slice(0, 120).map(p => `
-      <button type="button" class="neo-picker-item" data-player="${encodeURIComponent(p.player)}">
-        <div class="neo-picker-item-logo">${clubLogoHTML(p.club)}</div>
-        <div class="neo-picker-item-main">
-          <div class="neo-picker-item-name">${p.player}</div>
-          <div class="neo-picker-item-sub">${p.club || "-"}</div>
-        </div>
-        <div class="neo-picker-item-badge">${p.gol || 0}G • ${p.assist || 0}A</div>
-      </button>
-    `).join("");
+    pick.list.innerHTML = filtered
+      .slice(0, 120)
+      .map(
+        (p) => `
+        <button type="button" class="neo-picker-item" data-player="${encodeURIComponent(p.player)}">
+          <div class="neo-picker-item-logo">${clubLogoHTML(p.club)}</div>
+          <div class="neo-picker-item-main">
+            <div class="neo-picker-item-name">${p.player}</div>
+            <div class="neo-picker-item-sub">${p.club || "-"}</div>
+          </div>
+          <div class="neo-picker-item-badge">${p.gol || 0}G • ${p.assist || 0}A</div>
+        </button>
+      `
+      )
+      .join("");
 
-    pick.list.querySelectorAll(".neo-picker-item").forEach(btn => {
+    pick.list.querySelectorAll(".neo-picker-item").forEach((btn) => {
       btn.addEventListener("click", () => {
         const name = decodeURIComponent(btn.getAttribute("data-player") || "");
-        const idx = ALL_PLAYERS.findIndex(x => x.player === name);
+        const idx = ALL_PLAYERS.findIndex((x) => x.player === name);
         if (idx < 0) return;
 
         if (pickingTarget === "A") els.aSel.selectedIndex = idx;
         else els.bSel.selectedIndex = idx;
 
-        // Trigger come se avessi cambiato select
         els.aSel.dispatchEvent(new Event("change", { bubbles: true }));
         els.bSel.dispatchEvent(new Event("change", { bubbles: true }));
 
@@ -1039,10 +1328,8 @@ function neonHomeInit() {
     });
   }
 
-  // Hook UI
   pick.aBtn?.addEventListener("click", () => openPicker("A"));
   pick.bBtn?.addEventListener("click", () => openPicker("B"));
-
   pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
 
   pick.wrap?.addEventListener("click", (e) => {
@@ -1055,400 +1342,119 @@ function neonHomeInit() {
     if (e.key === "Escape") closePicker();
   });
 
+  // =====================
+  // LOAD PLAYERS (Serie A)
+  // =====================
+  async function loadPlayersForCompare() {
+    try {
+      const [rosaRows, golRows, assistRows] = await Promise.all([
+        fetchSheetDataJson(SHEET_NAMES.rosaSerieA),
+        fetchSheetDataJson(SHEET_NAMES.classificaMarcatori),
+        fetchSheetDataJson(SHEET_NAMES.classificaAssist),
+      ]);
 
-  function hookCarouselArrows() {
-    if (!els.prevArrow || !els.nextArrow) return;
+      const map = new Map();
 
-    const scrollByCard = (dir) => {
-      const card = els.track.querySelector(".neo-match-card");
-      const dx = card ? (card.getBoundingClientRect().width + 12) : 320;
-      els.track.scrollBy({ left: dir * dx, behavior: "smooth" });
-    };
-
-    els.prevArrow.addEventListener("click", () => scrollByCard(-1));
-    els.nextArrow.addEventListener("click", () => scrollByCard(1));
-  }
-
-  function fillAssistTables(rows) {
-    const bodies = [
-      document.getElementById("assist-body"),
-      document.getElementById("assist-body-mobile"),
-    ].filter(Boolean);
-
-    bodies.forEach(tbody => {
-      tbody.innerHTML = "";
-      rows.slice(0, 15).forEach((r, idx) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${idx + 1}</td>
-          <td><strong>${r.player}</strong></td>
-          <td>${r.club}</td>
-          <td>${r.assist}</td>
-        `;
-        tbody.appendChild(tr);
+      (rosaRows || []).forEach((r) => {
+        const player = String(r.Giocatore ?? r.Player ?? r.Nome ?? "").trim();
+        if (!player) return;
+        const club = String(r.Squadra ?? r.Club ?? "").trim();
+        map.set(player, { player, club, gol: 0, assist: 0 });
       });
-    });
-  }
 
-  function normalize(value, max) {
-    const v = Number(value) || 0;
-    const m = Number(max) || 1;
-    return Math.max(0, Math.min(100, Math.round((v / m) * 100)));
-  }
+      (golRows || []).forEach((r) => {
+        const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
+        if (!player) return;
+        const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
+        const gol = Number(r.Gol ?? r.gol ?? 0) || 0;
 
-  function buildRadarData(p, maxG, maxA) {
-    const g = Number(p.gol) || 0;
-    const a = Number(p.assist) || 0;
+        if (!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
+        const obj = map.get(player);
+        obj.gol = gol;
+        if (!obj.club && club) obj.club = club;
+      });
 
-    const gN = normalize(g, maxG);
-    const aN = normalize(a, maxA);
-    const imp = normalize(g + a, maxG + maxA);
-    const bonusIdx = normalize((0.7 * g) + (0.3 * a), (0.7 * maxG) + (0.3 * maxA));
+      (assistRows || []).forEach((r) => {
+        const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
+        if (!player) return;
+        const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
+        const assist = Number(r.Assist ?? r.assist ?? 0) || 0;
 
-    return {
-      labels: ["Gol", "Assist", "Attacco", "Creatività", "Impatto", "Bonus"],
-      values: [gN, aN, gN, aN, imp, bonusIdx]
-    };
-  }
+        if (!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
+        const obj = map.get(player);
+        obj.assist = assist;
+        if (!obj.club && club) obj.club = club;
+      });
 
-  function renderCompareKpis(A, B) {
-    const safe = (s) => String(s ?? "").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-    els.kpis.innerHTML = `
-      <div class="neo-mini-card">
-        <div style="font-weight:700; margin-bottom:6px;">${safe(A.player)} (${safe(A.club)})</div>
-        <div>Gol: <strong>${safe(A.gol)}</strong> · Assist: <strong>${safe(A.assist)}</strong></div>
-      </div>
-      <div class="neo-mini-card">
-        <div style="font-weight:700; margin-bottom:6px;">${safe(B.player)} (${safe(B.club)})</div>
-        <div>Gol: <strong>${safe(B.gol)}</strong> · Assist: <strong>${safe(B.assist)}</strong></div>
-      </div>
-    `;
-  }
+      const players = Array.from(map.values()).sort((a, b) => a.player.localeCompare(b.player, "it"));
 
-  function renderRadar(A, B, maxG, maxA) {
-    if (typeof Chart === "undefined") return;
-
-    const aData = buildRadarData(A, maxG, maxA);
-    const bData = buildRadarData(B, maxG, maxA);
-
-    const ctx = els.radar.getContext("2d");
-    if (radarChart) radarChart.destroy();
-
-    radarChart = new Chart(ctx, {
-      type: "radar",
-      data: {
-        labels: aData.labels,
-        datasets: [
-          {
-            label: A.player,
-            data: aData.values,
-            fill: true,
-            backgroundColor: "rgba(102,247,255,0.14)",
-            borderColor: "rgba(102,247,255,0.85)",
-            pointBackgroundColor: "rgba(102,247,255,0.95)",
-            pointRadius: 2,
-            borderWidth: 2
-          },
-          {
-            label: B.player,
-            data: bData.values,
-            fill: true,
-            backgroundColor: "rgba(176,108,255,0.12)",
-            borderColor: "rgba(176,108,255,0.85)",
-            pointBackgroundColor: "rgba(176,108,255,0.95)",
-            pointRadius: 2,
-            borderWidth: 2
-          }
-        ]
-      },
-      options: {
-        plugins: {
-          legend: { labels: { color: "#eaf2ff" } }
-        },
-        scales: {
-          r: {
-            min: 0,
-            max: 100,
-            ticks: { display: false },
-            grid: { color: "rgba(234,242,255,0.10)" },
-            angleLines: { color: "rgba(234,242,255,0.10)" },
-            pointLabels: { color: "rgba(234,242,255,0.80)", font: { size: 12 } }
-          }
-        }
+      if (!players.length) {
+        els.kpis.innerHTML = `<div class="neo-mini-card">Nessun giocatore trovato.</div>`;
+        return;
       }
-    });
-  }
 
-async function loadPlayersForCompare(){
-  try{
-    const [rosaRows, golRows, assistRows] = await Promise.all([
-      fetchSheetDataJson(SHEETNAMES.rosaSerieA),
-      fetchSheetDataJson(SHEETNAMES.classificaMarcatori),
-      fetchSheetDataJson(SHEETNAMES.classificaAssist),
-    ]);
+      ALL_PLAYERS = players;
 
-    const map = new Map();
+      const maxG = Math.max(1, ...players.map((p) => p.gol || 0));
+      const maxA = Math.max(1, ...players.map((p) => p.assist || 0));
 
-    // Base: TUTTI i giocatori
-    (rosaRows || []).forEach(r => {
-      const player = String(r.Giocatore ?? r.Player ?? r.Nome ?? "").trim();
-      if(!player) return;
-      const club = String(r.Squadra ?? r.Club ?? "").trim();
-      map.set(player, { player, club, gol: 0, assist: 0 });
-    });
+      const opt = players
+        .map((p) => `<option value="${encodeURIComponent(p.player)}">${p.player}</option>`)
+        .join("");
 
-    // Aggancia gol
-    (golRows || []).forEach(r => {
-      const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
-      if(!player) return;
-      const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
-      const gol = Number(r.Gol ?? r.gol ?? 0) || 0;
+      els.aSel.innerHTML = opt;
+      els.bSel.innerHTML = opt;
 
-      if(!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
-      const obj = map.get(player);
-      obj.gol = gol;
-      if(!obj.club && club) obj.club = club;
-    });
+      els.aSel.selectedIndex = 0;
+      els.bSel.selectedIndex = Math.min(1, players.length - 1);
 
-    // Aggancia assist
-    (assistRows || []).forEach(r => {
-      const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
-      if(!player) return;
-      const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
-      const assist = Number(r.Assist ?? r.assist ?? 0) || 0;
+      function getSelected(sel) {
+        const name = decodeURIComponent(sel.value || "");
+        return players.find((p) => p.player === name) || players[0];
+      }
 
-      if(!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
-      const obj = map.get(player);
-      obj.assist = assist;
-      if(!obj.club && club) obj.club = club;
-    });
+      const doCompare = () => {
+        const A = getSelected(els.aSel);
+        const B = getSelected(els.bSel);
+        renderCompareKpis(A, B);
+        renderRadar(A, B, maxG, maxA);
+        paintCards(A, B);
+      };
 
-    const players = Array.from(map.values())
-      .sort((a,b) => a.player.localeCompare(b.player, "it"));
+      els.btnCompare?.addEventListener("click", doCompare);
+      els.aSel.addEventListener("change", doCompare);
+      els.bSel.addEventListener("change", doCompare);
 
-    if(!players.length){
-      els.kpis.innerHTML = `<div class="neo-mini-card">Nessun giocatore trovato.</div>`;
-      return;
-    }
-
-    // Serve al picker overlay
-    ALL_PLAYERS = players;
-
-    const maxG = Math.max(1, ...players.map(p => p.gol || 0));
-    const maxA = Math.max(1, ...players.map(p => p.assist || 0));
-
-    const opt = players
-      .map(p => `<option value="${encodeURIComponent(p.player)}">${p.player}</option>`)
-      .join("");
-
-    els.aSel.innerHTML = opt;
-    els.bSel.innerHTML = opt;
-
-    els.aSel.selectedIndex = 0;
-    els.bSel.selectedIndex = Math.min(1, players.length - 1);
-
-    function getSelected(sel){
-      const name = decodeURIComponent(sel.value || "");
-      return players.find(p => p.player === name) || players[0];
-    }
-
-    const doCompare = () => {
-      const A = getSelected(els.aSel);
-      const B = getSelected(els.bSel);
-      renderCompareKpis(A, B);
-      renderRadar(A, B, maxG, maxA);
-      if (typeof paintCards === "function") paintCards(A, B);
-    };
-
-    // Listener
-    els.btnCompare?.addEventListener("click", doCompare);
-    els.aSel.addEventListener("change", doCompare);
-    els.bSel.addEventListener("change", doCompare);
-
-    // Prima render UI
-    doCompare();
-    if (typeof renderPickerList === "function") renderPickerList("");
-
-  }catch(e){
-    console.error("Errore comparatore:", e);
-    els.kpis.innerHTML = `<div class="neo-mini-card">Errore caricamento giocatori.</div>`;
-  }
-}
-
-
-
-    // Nota: evita di ri-attaccare listener mille volte se richiami la funzione
-    els.btnCompare?.removeEventListener("click", doCompare);
-    els.aSel.onchange = doCompare;
-    els.bSel.onchange = doCompare;
-    els.btnCompare?.addEventListener("click", doCompare);
-
-    doCompare();
-
-    // Se nel tuo file originale avevi anche la tab assist preview, lasciala:
-    // fillAssistTables(...)
-
-  }catch(e){
-    console.error("Errore comparatore:", e);
-    els.kpis.innerHTML = `<div class="neo-mini-card">Errore caricamento giocatori.</div>`;
-  }
-}
-
-      // ---- UI videogame picker ----
-const LOGOS =
-  (typeof CLUB_LOGOS !== "undefined" && CLUB_LOGOS) ||
-  (typeof CLUBLOGOS !== "undefined" && CLUBLOGOS) ||
-  {};
-
-const pick = {
-  wrap: document.getElementById("neo-player-picker"),
-  title: document.getElementById("neo-picker-title"),
-  search: document.getElementById("neo-picker-search"),
-  list: document.getElementById("neo-picker-list"),
-  aBtn: document.getElementById("pick-a"),
-  bBtn: document.getElementById("pick-b"),
-  aLogo: document.getElementById("pick-a-logo"),
-  bLogo: document.getElementById("pick-b-logo"),
-  aName: document.getElementById("pick-a-name"),
-  bName: document.getElementById("pick-b-name"),
-  aSub: document.getElementById("pick-a-sub"),
-  bSub: document.getElementById("pick-b-sub"),
-  aStats: document.getElementById("pick-a-stats"),
-  bStats: document.getElementById("pick-b-stats"),
-};
-
-let pickingTarget = "A";
-
-function clubLogoHTML(club) {
-  const url = LOGOS[club];
-  return url ? `<img src="${url}" alt="${club}" loading="lazy">` : "";
-}
-
-function chipsHTML(p) {
-  return `
-    <span class="neo-stat-chip">Gol: <strong>${p.gol}</strong></span>
-    <span class="neo-stat-chip">Assist: <strong>${p.assist}</strong></span>
-  `;
-}
-
-function renderPickCards() {
-  const A = getSelected(els.aSel);
-  const B = getSelected(els.bSel);
-
-  if (pick.aLogo) pick.aLogo.innerHTML = clubLogoHTML(A.club);
-  if (pick.bLogo) pick.bLogo.innerHTML = clubLogoHTML(B.club);
-
-  if (pick.aName) pick.aName.textContent = A.player || "Seleziona";
-  if (pick.bName) pick.bName.textContent = B.player || "Seleziona";
-
-  if (pick.aSub) pick.aSub.textContent = A.club ? A.club : "Clicca per scegliere";
-  if (pick.bSub) pick.bSub.textContent = B.club ? B.club : "Clicca per scegliere";
-
-  if (pick.aStats) pick.aStats.innerHTML = chipsHTML(A);
-  if (pick.bStats) pick.bStats.innerHTML = chipsHTML(B);
-}
-
-function openPicker(target) {
-  if (!pick.wrap || !pick.list) return;
-  pickingTarget = target;
-  if (pick.title) pick.title.textContent = target === "A" ? "Scegli giocatore A" : "Scegli giocatore B";
-  pick.wrap.classList.add("open");
-  pick.wrap.setAttribute("aria-hidden", "false");
-  if (pick.search) {
-    pick.search.value = "";
-    pick.search.focus();
-  }
-  renderPickerList("");
-}
-
-function closePicker() {
-  if (!pick.wrap) return;
-  pick.wrap.classList.remove("open");
-  pick.wrap.setAttribute("aria-hidden", "true");
-}
-
-function renderPickerList(q) {
-  const query = String(q || "").trim().toLowerCase();
-  const filtered = !query
-    ? players
-    : players.filter(p =>
-        p.player.toLowerCase().includes(query) ||
-        String(p.club || "").toLowerCase().includes(query)
-      );
-
-  pick.list.innerHTML = filtered.slice(0, 80).map(p => `
-    <button type="button" class="neo-picker-item" data-player="${encodeURIComponent(p.player)}">
-      <div class="neo-picker-item-logo">${clubLogoHTML(p.club || "")}</div>
-      <div>
-        <div class="neo-picker-item-name">${p.player}</div>
-        <div class="neo-picker-item-sub">${p.club || "-"}</div>
-      </div>
-      <div class="neo-picker-item-badge">${p.gol}G · ${p.assist}A</div>
-    </button>
-  `).join("");
-
-  pick.list.querySelectorAll(".neo-picker-item").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const name = decodeURIComponent(btn.getAttribute("data-player") || "");
-      const idx = players.findIndex(x => x.player === name);
-      if (idx < 0) return;
-
-      if (pickingTarget === "A") els.aSel.selectedIndex = idx;
-      else els.bSel.selectedIndex = idx;
-
-      // aggiorna tutto
-      closePicker();
       doCompare();
-      renderPickCards();
-    });
-  });
-}
+      renderPickerList("");
 
-// Hook
-pick.aBtn?.addEventListener("click", () => openPicker("A"));
-pick.bBtn?.addEventListener("click", () => openPicker("B"));
-pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
-
-pick.wrap?.addEventListener("click", (e) => {
-  const el = e.target;
-  if (el && el.getAttribute && el.getAttribute("data-close") === "1") closePicker();
-  if (el && el.dataset && el.dataset.close === "1") closePicker();
-});
-
-// ESC to close
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closePicker();
-});
-
-// Prima render delle card
-renderPickCards();
-
+      // Assist preview
       fillAssistTables(
         players
           .slice()
           .sort((a, b) => (b.assist - a.assist) || (b.gol - a.gol) || a.player.localeCompare(b.player, "it"))
-          .map(p => ({ player: p.player, club: p.club || "-", assist: p.assist }))
+          .map((p) => ({ player: p.player, club: p.club || "-", assist: p.assist || 0 }))
       );
-
     } catch (e) {
       console.error("Errore comparatore:", e);
       els.kpis.innerHTML = `<div class="neo-mini-card">Errore caricamento giocatori.</div>`;
     }
   }
 
+  // ---------- Tabs + buttons ----------
   function hookNeoTabs() {
-    document.querySelectorAll(".neo-tabs .neo-tab").forEach(btn => {
+    document.querySelectorAll(".neo-tabs .neo-tab").forEach((btn) => {
       btn.addEventListener("click", () => {
         const wrap = btn.closest(".neo-card") || btn.closest("aside") || document;
         const tabName = btn.getAttribute("data-neo-tab");
 
-        btn.parentElement.querySelectorAll(".neo-tab").forEach(b => b.classList.remove("active"));
+        btn.parentElement.querySelectorAll(".neo-tab").forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
 
         const map = {
-          "classifica": "neo-panel-classifica",
-          "marcatori": "neo-panel-marcatori",
-          "assist": "neo-panel-assist",
+          classifica: "neo-panel-classifica",
+          marcatori: "neo-panel-marcatori",
+          assist: "neo-panel-assist",
           "m-classifica": "neo-panel-m-classifica",
           "m-marcatori": "neo-panel-m-marcatori",
           "m-assist": "neo-panel-m-assist",
@@ -1457,7 +1463,7 @@ renderPickCards();
         const panelId = map[tabName];
         if (!panelId) return;
 
-        wrap.querySelectorAll(".neo-panel").forEach(p => p.classList.remove("active"));
+        wrap.querySelectorAll(".neo-panel").forEach((p) => p.classList.remove("active"));
         const panel = wrap.querySelector("#" + panelId) || document.getElementById(panelId);
         if (panel) panel.classList.add("active");
       });
@@ -1493,6 +1499,7 @@ renderPickCards();
     await loadPlayersForCompare();
   })();
 }
+
 
 // =====================
 // INIT (UNA SOLA VOLTA)
