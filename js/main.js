@@ -1533,7 +1533,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-});
+}
 
 
 
