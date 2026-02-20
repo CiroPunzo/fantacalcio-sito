@@ -4125,5 +4125,42 @@ body{
   }
 }
 
+.neo-match-teams{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.neo-team{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.neo-team-logo{
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(102,247,255,.10));
+}
+
+.neo-team-name{
+  font-weight: 700;
+  color: rgba(234,242,255,.92);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.neo-vs{
+  color: rgba(234,242,255,.55);
+  font-size: .95rem;
+}
+
+
 
 
