@@ -121,7 +121,7 @@ const SHEET_NAMES = {
   playerPicks: 'PlayerPicks'
   config: "Config",
 classificaAssist: "ClassificaAssist",
-risultatiGiornata: "RisultatiGiornata"
+risultatiGiornata: "RisultatiGiornata",
 };
 
 async function fetchSheetDataJson(sheetName) {
