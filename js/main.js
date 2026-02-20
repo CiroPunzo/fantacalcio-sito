@@ -934,29 +934,34 @@ function neonHomeInit() {
   }
 
   function fillAssistTables(rows) {
-    const bodies = [
-      document.getElementById("assist-body"),
-      document.getElementById("assist-body-mobile"),
-    ].filter(Boolean);
+  const bodies = [
+    document.getElementById("assist-body"),
+    document.getElementById("assist-body-mobile"),
+  ].filter(Boolean);
 
-    bodies.forEach((tbody) => {
-      tbody.innerHTML = "";
-      rows.slice(0, 15).forEach((r, idx) => {
-       const logoUrl = CLUB_LOGOS[r.club];
-        const clubHTML = logoUrl
-          ? `<div class="table-team"><img src="${logoUrl}" alt="${r.club}" class="table-logo"><span>${r.club}</span></div>`
-          : (r.club || "-");
+  bodies.forEach((tbody) => {
+    tbody.innerHTML = "";
 
-        tr.innerHTML = `
-          <td>${idx + 1}</td>
-          <td><strong>${r.player}</strong></td>
-          <td>${clubHTML}</td>
-          <td>${r.assist}</td>
-        `;
-        tbody.appendChild(tr);
-      });
+    rows.slice(0, 15).forEach((r, idx) => {
+      const tr = document.createElement("tr");
+
+      const club = r.club || "-";
+      const logoUrl = CLUB_LOGOS?.[club];
+      const clubHTML = logoUrl
+        ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
+        : club;
+
+      tr.innerHTML = `
+        <td>${idx + 1}</td>
+        <td><strong>${r.player}</strong></td>
+        <td>${clubHTML}</td>
+        <td>${r.assist}</td>
+      `;
+
+      tbody.appendChild(tr);
     });
-  }
+  });
+}
 
   function normalize(value, max) {
     const v = Number(value) || 0;
@@ -1172,6 +1177,16 @@ function neonHomeInit() {
   pick.aBtn?.addEventListener("click", () => openPicker("A"));
   pick.bBtn?.addEventListener("click", () => openPicker("B"));
   pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
+
+  const cardA = pick.aBtn?.closest(".neo-pick-card") || pick.aBtn?.parentElement;
+const cardB = pick.bBtn?.closest(".neo-pick-card") || pick.bBtn?.parentElement;
+
+[ [cardA, "A"], [cardB, "B"] ].forEach(([el, t]) => {
+  if (!el) return;
+  el.style.cursor = "pointer";
+  el.addEventListener("click", () => openPicker(t));
+});
+
 
     // Rende cliccabile tutta la card (non solo il bottone interno)
   const cardA = document.getElementById("pick-a-card") || pick.aBtn?.closest(".neo-pick-card") || pick.aBtn?.closest(".neo-card") || pick.aBtn;
