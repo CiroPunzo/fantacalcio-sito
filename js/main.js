@@ -114,7 +114,7 @@ function closeNewsModal() {
 // =====================
 // GOOGLE SHEETS CONFIG
 // =====================
-const SHEET_ID = "1ujW6MthrdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48";
+const SHEET_ID = "1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48";
 
 /**
  * ATTENZIONE:
