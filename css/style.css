@@ -4282,15 +4282,18 @@ body{
 }
 
 .neo-pick-name{
-  font-weight: 900;
-  font-size: 1.05rem;
-  margin-top: 2px;
+  color: #ffffff !important;
+  text-shadow:
+    0 0 10px rgba(176,108,255,.55),
+    0 0 18px rgba(176,108,255,.35);
 }
 
 .neo-pick-sub{
+  color: rgba(234,242,255,.78);
+}
+
+.neo-pick-kicker{
   color: rgba(234,242,255,.70);
-  font-size: .9rem;
-  margin-top: 2px;
 }
 
 .neo-pick-stats{
