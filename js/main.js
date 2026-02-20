@@ -942,11 +942,15 @@ function neonHomeInit() {
     bodies.forEach((tbody) => {
       tbody.innerHTML = "";
       rows.slice(0, 15).forEach((r, idx) => {
-        const tr = document.createElement("tr");
+       const logoUrl = CLUB_LOGOS[r.club];
+        const clubHTML = logoUrl
+          ? `<div class="table-team"><img src="${logoUrl}" alt="${r.club}" class="table-logo"><span>${r.club}</span></div>`
+          : (r.club || "-");
+
         tr.innerHTML = `
           <td>${idx + 1}</td>
           <td><strong>${r.player}</strong></td>
-          <td>${r.club}</td>
+          <td>${clubHTML}</td>
           <td>${r.assist}</td>
         `;
         tbody.appendChild(tr);
@@ -1169,6 +1173,47 @@ function neonHomeInit() {
   pick.bBtn?.addEventListener("click", () => openPicker("B"));
   pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
 
+    // Rende cliccabile tutta la card (non solo il bottone interno)
+  const cardA = document.getElementById("pick-a-card") || pick.aBtn?.closest(".neo-pick-card") || pick.aBtn?.closest(".neo-card") || pick.aBtn;
+  const cardB = document.getElementById("pick-b-card") || pick.bBtn?.closest(".neo-pick-card") || pick.bBtn?.closest(".neo-card") || pick.bBtn;
+
+  const makeClickable = (el, target) => {
+    if (!el) return;
+    el.style.cursor = "pointer";
+    el.setAttribute("role", "button");
+    el.setAttribute("tabindex", "0");
+
+    el.addEventListener("click", () => openPicker(target));
+
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openPicker(target);
+      }
+    });
+
+    // Effetto hover/active stile bottone (inline così non dipende dal CSS)
+    el.addEventListener("mouseenter", () => el.classList.add("neo-hover"));
+    el.addEventListener("mouseleave", () => el.classList.remove("neo-hover"));
+    el.addEventListener("mousedown", () => el.classList.add("neo-pressed"));
+    el.addEventListener("mouseup", () => el.classList.remove("neo-pressed"));
+  };
+
+  makeClickable(cardA, "A");
+  makeClickable(cardB, "B");
+
+  // Inietta stile hover/pressed se non esiste già nel CSS
+  if (!document.getElementById("neo-inline-hover-style")) {
+    const st = document.createElement("style");
+    st.id = "neo-inline-hover-style";
+    st.textContent = `
+      .neo-hover { transform: translateY(-1px); filter: brightness(1.06); }
+      .neo-pressed { transform: translateY(0px) scale(0.99); filter: brightness(0.98); }
+    `;
+    document.head.appendChild(st);
+  }
+
+
   pick.wrap?.addEventListener("click", (e) => {
     const el = e.target;
     if (el?.getAttribute?.("data-close") === "1") closePicker();
@@ -1322,6 +1367,15 @@ function neonHomeInit() {
   hookCarouselArrows();
   hookNeoTabs();
   hookMatchdayButtons();
+
+   // Hover/pressed anche sui bottoni classici (pill)
+  [els.btnCur, els.btnPrev].filter(Boolean).forEach((b) => {
+    b.style.cursor = "pointer";
+    b.addEventListener("mouseenter", () => b.classList.add("neo-hover"));
+    b.addEventListener("mouseleave", () => b.classList.remove("neo-hover"));
+    b.addEventListener("mousedown", () => b.classList.add("neo-pressed"));
+    b.addEventListener("mouseup", () => b.classList.remove("neo-pressed"));
+  });
 
   (async () => {
     await loadConfigMatchday();
