@@ -835,18 +835,39 @@ function neonHomeInit() {
     els.track.innerHTML = `<div class="neo-card neo-card-skeleton">${text}</div>`;
   }
 
-  function mkResultCard({ home, away, homeGoals, awayGoals, badgeText, badgeClass }) {
-    const safe = (s) => String(s ?? "").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-    return `
-      <article class="neo-card neo-match-card">
-        <div class="neo-match-head">
-          <span class="neo-badge ${badgeClass || ""}">${safe(badgeText || "")}</span>
-          <div class="neo-score">${safe(homeGoals)} - ${safe(awayGoals)}</div>
+ function mkResultCard({ home, away, homeGoals, awayGoals, badgeText, badgeClass }) {
+  const safe = (s) => String(s ?? "").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+
+  // Compatibilità: nel tuo progetto la mappa loghi può chiamarsi CLUB_LOGOS oppure CLUBLOGOS
+  const LOGOS = (typeof CLUB_LOGOS !== "undefined" && CLUB_LOGOS) || (typeof CLUBLOGOS !== "undefined" && CLUBLOGOS) || {};
+
+  const homeLogo = LOGOS[home] || "";
+  const awayLogo = LOGOS[away] || "";
+
+  const homeLogoHTML = homeLogo ? `<img class="neo-team-logo" src="${homeLogo}" alt="${safe(home)}" loading="lazy">` : "";
+  const awayLogoHTML = awayLogo ? `<img class="neo-team-logo" src="${awayLogo}" alt="${safe(away)}" loading="lazy">` : "";
+
+  return `
+    <article class="neo-card neo-match-card">
+      <div class="neo-match-head">
+        <span class="neo-badge ${badgeClass || ""}">${safe(badgeText || "")}</span>
+        <div class="neo-score">${safe(homeGoals)} - ${safe(awayGoals)}</div>
+      </div>
+
+      <div class="neo-match-teams">
+        <div class="neo-team">
+          ${homeLogoHTML}
+          <span class="neo-team-name">${safe(home)}</span>
         </div>
-        <h3 class="neo-match-title">${safe(home)} vs ${safe(away)}</h3>
-      </article>
-    `;
-  }
+        <span class="neo-vs">vs</span>
+        <div class="neo-team">
+          ${awayLogoHTML}
+          <span class="neo-team-name">${safe(away)}</span>
+        </div>
+      </div>
+    </article>
+  `;
+}
 
   async function loadResultsForMatchday(matchdayWanted) {
     try {
