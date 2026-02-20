@@ -1102,6 +1102,135 @@ function neonHomeInit() {
       els.bSel.addEventListener("change", doCompare);
       doCompare();
 
+      // ---- UI videogame picker ----
+const LOGOS =
+  (typeof CLUB_LOGOS !== "undefined" && CLUB_LOGOS) ||
+  (typeof CLUBLOGOS !== "undefined" && CLUBLOGOS) ||
+  {};
+
+const pick = {
+  wrap: document.getElementById("neo-player-picker"),
+  title: document.getElementById("neo-picker-title"),
+  search: document.getElementById("neo-picker-search"),
+  list: document.getElementById("neo-picker-list"),
+  aBtn: document.getElementById("pick-a"),
+  bBtn: document.getElementById("pick-b"),
+  aLogo: document.getElementById("pick-a-logo"),
+  bLogo: document.getElementById("pick-b-logo"),
+  aName: document.getElementById("pick-a-name"),
+  bName: document.getElementById("pick-b-name"),
+  aSub: document.getElementById("pick-a-sub"),
+  bSub: document.getElementById("pick-b-sub"),
+  aStats: document.getElementById("pick-a-stats"),
+  bStats: document.getElementById("pick-b-stats"),
+};
+
+let pickingTarget = "A";
+
+function clubLogoHTML(club) {
+  const url = LOGOS[club];
+  return url ? `<img src="${url}" alt="${club}" loading="lazy">` : "";
+}
+
+function chipsHTML(p) {
+  return `
+    <span class="neo-stat-chip">Gol: <strong>${p.gol}</strong></span>
+    <span class="neo-stat-chip">Assist: <strong>${p.assist}</strong></span>
+  `;
+}
+
+function renderPickCards() {
+  const A = getSelected(els.aSel);
+  const B = getSelected(els.bSel);
+
+  if (pick.aLogo) pick.aLogo.innerHTML = clubLogoHTML(A.club);
+  if (pick.bLogo) pick.bLogo.innerHTML = clubLogoHTML(B.club);
+
+  if (pick.aName) pick.aName.textContent = A.player || "Seleziona";
+  if (pick.bName) pick.bName.textContent = B.player || "Seleziona";
+
+  if (pick.aSub) pick.aSub.textContent = A.club ? A.club : "Clicca per scegliere";
+  if (pick.bSub) pick.bSub.textContent = B.club ? B.club : "Clicca per scegliere";
+
+  if (pick.aStats) pick.aStats.innerHTML = chipsHTML(A);
+  if (pick.bStats) pick.bStats.innerHTML = chipsHTML(B);
+}
+
+function openPicker(target) {
+  if (!pick.wrap || !pick.list) return;
+  pickingTarget = target;
+  if (pick.title) pick.title.textContent = target === "A" ? "Scegli giocatore A" : "Scegli giocatore B";
+  pick.wrap.classList.add("open");
+  pick.wrap.setAttribute("aria-hidden", "false");
+  if (pick.search) {
+    pick.search.value = "";
+    pick.search.focus();
+  }
+  renderPickerList("");
+}
+
+function closePicker() {
+  if (!pick.wrap) return;
+  pick.wrap.classList.remove("open");
+  pick.wrap.setAttribute("aria-hidden", "true");
+}
+
+function renderPickerList(q) {
+  const query = String(q || "").trim().toLowerCase();
+  const filtered = !query
+    ? players
+    : players.filter(p =>
+        p.player.toLowerCase().includes(query) ||
+        String(p.club || "").toLowerCase().includes(query)
+      );
+
+  pick.list.innerHTML = filtered.slice(0, 80).map(p => `
+    <button type="button" class="neo-picker-item" data-player="${encodeURIComponent(p.player)}">
+      <div class="neo-picker-item-logo">${clubLogoHTML(p.club || "")}</div>
+      <div>
+        <div class="neo-picker-item-name">${p.player}</div>
+        <div class="neo-picker-item-sub">${p.club || "-"}</div>
+      </div>
+      <div class="neo-picker-item-badge">${p.gol}G · ${p.assist}A</div>
+    </button>
+  `).join("");
+
+  pick.list.querySelectorAll(".neo-picker-item").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const name = decodeURIComponent(btn.getAttribute("data-player") || "");
+      const idx = players.findIndex(x => x.player === name);
+      if (idx < 0) return;
+
+      if (pickingTarget === "A") els.aSel.selectedIndex = idx;
+      else els.bSel.selectedIndex = idx;
+
+      // aggiorna tutto
+      closePicker();
+      doCompare();
+      renderPickCards();
+    });
+  });
+}
+
+// Hook
+pick.aBtn?.addEventListener("click", () => openPicker("A"));
+pick.bBtn?.addEventListener("click", () => openPicker("B"));
+pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
+
+pick.wrap?.addEventListener("click", (e) => {
+  const el = e.target;
+  if (el && el.getAttribute && el.getAttribute("data-close") === "1") closePicker();
+  if (el && el.dataset && el.dataset.close === "1") closePicker();
+});
+
+// ESC to close
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closePicker();
+});
+
+// Prima render delle card
+renderPickCards();
+
       fillAssistTables(
         players
           .slice()
