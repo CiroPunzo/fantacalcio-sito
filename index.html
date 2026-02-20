@@ -128,22 +128,39 @@
 
       <div class="neo-compare-grid">
         <div class="neo-card neo-card-compare">
-          <div class="neo-compare-controls">
-            <div class="neo-field">
-              <label class="neo-label" for="player-a-select">Giocatore A</label>
-              <select id="player-a-select" class="neo-select"></select>
-            </div>
 
-            <div class="neo-field">
-              <label class="neo-label" for="player-b-select">Giocatore B</label>
-              <select id="player-b-select" class="neo-select"></select>
-            </div>
+          <!-- CONTROLLI MODIFICATI: da select "menu" a card cliccabili -->
+          <div class="neo-compare-controls neo-compare-controls-game">
 
-            <button type="button" class="neo-btn" id="btn-compare">
-              Confronta
+            <!-- Select reali (servono al JS), nascosti -->
+            <select id="player-a-select" class="neo-select neo-select-hidden" aria-hidden="true" tabindex="-1"></select>
+            <select id="player-b-select" class="neo-select neo-select-hidden" aria-hidden="true" tabindex="-1"></select>
+
+            <!-- Card cliccabili -->
+            <button type="button" id="pick-a" class="neo-pick-card" aria-label="Seleziona giocatore A">
+              <div class="neo-pick-logo" id="pick-a-logo"></div>
+              <div class="neo-pick-meta">
+                <div class="neo-pick-kicker">Giocatore A</div>
+                <div class="neo-pick-name" id="pick-a-name">Seleziona</div>
+                <div class="neo-pick-sub" id="pick-a-sub">Clicca per scegliere</div>
+                <div class="neo-pick-stats" id="pick-a-stats"></div>
+              </div>
+              <div class="neo-pick-cta">Cambia</div>
+            </button>
+
+            <button type="button" id="pick-b" class="neo-pick-card" aria-label="Seleziona giocatore B">
+              <div class="neo-pick-logo" id="pick-b-logo"></div>
+              <div class="neo-pick-meta">
+                <div class="neo-pick-kicker">Giocatore B</div>
+                <div class="neo-pick-name" id="pick-b-name">Seleziona</div>
+                <div class="neo-pick-sub" id="pick-b-sub">Clicca per scegliere</div>
+                <div class="neo-pick-stats" id="pick-b-stats"></div>
+              </div>
+              <div class="neo-pick-cta">Cambia</div>
             </button>
           </div>
 
+          <!-- Output comparatore (uguale) -->
           <div class="neo-compare-output">
             <div class="neo-compare-kpis" id="compare-kpis">
               <div class="neo-mini-card">Seleziona due giocatori.</div>
@@ -289,6 +306,23 @@
 
     </div>
   </section>
+
+  <!-- Picker overlay (NUOVO) -->
+  <div id="neo-player-picker" class="neo-picker" aria-hidden="true">
+    <div class="neo-picker-backdrop" data-close="1"></div>
+    <div class="neo-picker-panel neo-card">
+      <div class="neo-picker-head">
+        <div class="neo-picker-title" id="neo-picker-title">Scegli giocatore</div>
+        <button type="button" class="neo-picker-close" data-close="1">×</button>
+      </div>
+
+      <div class="neo-picker-search">
+        <input id="neo-picker-search" class="neo-select" placeholder="Cerca giocatore..." />
+      </div>
+
+      <div id="neo-picker-list" class="neo-picker-list"></div>
+    </div>
+  </div>
 
   <!-- DA QUI IN POI: lascio le tue sezioni “come sono” per ora -->
   <!-- STATISTICHE DI IMPATTO -->
@@ -556,6 +590,7 @@
   <script src="js/main.js"></script>
 </body>
 </html>
+
 
 
 
