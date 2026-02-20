@@ -4161,6 +4161,63 @@ body{
   font-size: .95rem;
 }
 
+/* Fix loghi nelle match-card */
+.neo-match-card{
+  padding: 14px;
+}
+
+.neo-match-teams{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.neo-team{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.neo-team.right{
+  justify-content: flex-end;
+}
+
+.neo-team-logo{
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  flex: 0 0 34px;
+  background: rgba(10,12,40,.35);
+  border: 1px solid rgba(120,245,255,.18);
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0 10px 26px rgba(0,0,0,.35);
+}
+
+/* Evita che qualche regola globale allarghi le img */
+.neo-match-card img{
+  max-width: 34px !important;
+  max-height: 34px !important;
+}
+
+.neo-team-name{
+  font-weight: 800;
+  color: rgba(234,242,255,.92);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+}
+
+.neo-vs{
+  color: rgba(234,242,255,.55);
+  font-size: .95rem;
+}
+
+
 
 
 
