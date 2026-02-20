@@ -132,6 +132,7 @@ const SHEET_NAMES = {
   risultatiGiornata: "RisultatiGiornata",
   playerPicks: "PlayerPicks",
   config: "Config",
+  rosaSerieA: "RosaSerieA",
 };
 
 async function fetchSheetDataJson(sheetName) {
@@ -1040,67 +1041,99 @@ function neonHomeInit() {
     });
   }
 
-  async function loadPlayersForCompare() {
-    try {
-      const [golRows, assistRows] = await Promise.all([
-        fetchSheetDataJson(SHEET_NAMES.classificaMarcatori),
-        fetchSheetDataJson(SHEET_NAMES.classificaAssist),
-      ]);
+async function loadPlayersForCompare(){
+  try{
+    const [rosaRows, golRows, assistRows] = await Promise.all([
+      fetchSheetDataJson(SHEETNAMES.rosaSerieA),
+      fetchSheetDataJson(SHEETNAMES.classificaMarcatori),
+      fetchSheetDataJson(SHEETNAMES.classificaAssist),
+    ]);
 
-      const map = new Map();
+    // Base: TUTTI i giocatori
+    const map = new Map();
 
-      golRows.forEach(r => {
-        const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
-        if (!player) return;
-        const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
-        const gol = Number(r.Gol ?? r.gol ?? 0) || 0;
-        map.set(player, { player, club, gol, assist: 0 });
-      });
+    (rosaRows || []).forEach(r => {
+      const player = String(r.Giocatore ?? r.Player ?? r.Nome ?? "").trim();
+      if(!player) return;
+      const club = String(r.Squadra ?? r.Club ?? "").trim();
+      map.set(player, { player, club, gol: 0, assist: 0 });
+    });
 
-      assistRows.forEach(r => {
-        const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
-        if (!player) return;
-        const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
-        const assist = Number(r.Assist ?? r.assist ?? 0) || 0;
+    // Aggancia gol
+    (golRows || []).forEach(r => {
+      const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
+      if(!player) return;
+      const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
+      const gol = Number(r.Gol ?? r.gol ?? 0) || 0;
 
-        if (!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
-        const obj = map.get(player);
-        obj.assist = assist;
-        if (!obj.club && club) obj.club = club;
-      });
+      if(!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
+      const obj = map.get(player);
+      obj.gol = gol;
+      if(!obj.club && club) obj.club = club;
+    });
 
-      const players = Array.from(map.values()).sort((a, b) => a.player.localeCompare(b.player, "it"));
-      if (!players.length) {
-        els.kpis.innerHTML = `<div class="neo-mini-card">Nessun giocatore trovato.</div>`;
-        return;
-      }
+    // Aggancia assist (UNA SOLA VOLTA)
+    (assistRows || []).forEach(r => {
+      const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
+      if(!player) return;
+      const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
+      const assist = Number(r.Assist ?? r.assist ?? 0) || 0;
 
-      const maxG = Math.max(1, ...players.map(p => p.gol || 0));
-      const maxA = Math.max(1, ...players.map(p => p.assist || 0));
+      if(!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
+      const obj = map.get(player);
+      obj.assist = assist;
+      if(!obj.club && club) obj.club = club;
+    });
 
-      const opt = players.map(p => `<option value="${encodeURIComponent(p.player)}">${p.player}</option>`).join("");
-      els.aSel.innerHTML = opt;
-      els.bSel.innerHTML = opt;
+    const players = Array.from(map.values())
+      .sort((a,b) => a.player.localeCompare(b.player, "it"));
 
-      els.aSel.selectedIndex = 0;
-      els.bSel.selectedIndex = Math.min(1, players.length - 1);
+    if(!players.length){
+      els.kpis.innerHTML = `<div class="neo-mini-card">Nessun giocatore trovato.</div>`;
+      return;
+    }
 
-      function getSelected(sel) {
-        const name = decodeURIComponent(sel.value || "");
-        return players.find(p => p.player === name) || players[0];
-      }
+    const maxG = Math.max(1, ...players.map(p => p.gol || 0));
+    const maxA = Math.max(1, ...players.map(p => p.assist || 0));
 
-      const doCompare = () => {
-        const A = getSelected(els.aSel);
-        const B = getSelected(els.bSel);
-        renderCompareKpis(A, B);
-        renderRadar(A, B, maxG, maxA);
-      };
+    const opt = players
+      .map(p => `<option value="${encodeURIComponent(p.player)}">${p.player}</option>`)
+      .join("");
 
-      els.btnCompare?.addEventListener("click", doCompare);
-      els.aSel.addEventListener("change", doCompare);
-      els.bSel.addEventListener("change", doCompare);
-      doCompare();
+    els.aSel.innerHTML = opt;
+    els.bSel.innerHTML = opt;
+
+    els.aSel.selectedIndex = 0;
+    els.bSel.selectedIndex = Math.min(1, players.length - 1);
+
+    function getSelected(sel){
+      const name = decodeURIComponent(sel.value || "");
+      return players.find(p => p.player === name) || players[0];
+    }
+
+    const doCompare = () => {
+      const A = getSelected(els.aSel);
+      const B = getSelected(els.bSel);
+      renderCompareKpis(A, B);
+      renderRadar(A, B, maxG, maxA);
+    };
+
+    // Nota: evita di ri-attaccare listener mille volte se richiami la funzione
+    els.btnCompare?.removeEventListener("click", doCompare);
+    els.aSel.onchange = doCompare;
+    els.bSel.onchange = doCompare;
+    els.btnCompare?.addEventListener("click", doCompare);
+
+    doCompare();
+
+    // Se nel tuo file originale avevi anche la tab assist preview, lasciala:
+    // fillAssistTables(...)
+
+  }catch(e){
+    console.error("Errore comparatore:", e);
+    els.kpis.innerHTML = `<div class="neo-mini-card">Errore caricamento giocatori.</div>`;
+  }
+}
 
       // ---- UI videogame picker ----
 const LOGOS =
