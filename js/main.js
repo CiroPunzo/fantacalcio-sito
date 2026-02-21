@@ -973,18 +973,23 @@ function neonHomeInit() {
   }
 
   function buildRadarData(p, maxG, maxA) {
-    const g = Number(p.gol) || 0;
-    const a = Number(p.assist) || 0;
+  const g = Number(p.gol || 0);
+  const a = Number(p.assist || 0);
 
-    const gN = normalize(g, maxG);
-    const aN = normalize(a, maxA);
-    const imp = normalize(g + a, maxG + maxA);
-    const bonusIdx = normalize((0.7 * g) + (0.3 * a), (0.7 * maxG) + (0.3 * maxA));
+  const gN = normalize(g, maxG);
+  const aN = normalize(a, maxA);
 
-    return {
-      labels: ["Gol", "Assist", "Attacco", "Creatività", "Impatto", "Bonus"],
-      values: [gN, aN, gN, aN, imp, bonusIdx],
-    };
+  // Calendario: 1 (facile) -> 100, 5 (difficile) -> 0
+  const fic = Number(p.fantaIndexCalendario);
+  const calN = Number.isFinite(fic) ? Math.round((5 - Math.max(1, Math.min(5, fic))) / 4 * 100) : 50;
+
+  // “Impatto” = produzione (semplice e leggibile)
+  const prod = normalize(g + 0.7 * a, maxG + 0.7 * maxA);
+
+  return {
+    labels: ["Gol", "Assist", "Produzione", "Calendario", "Impatto", "Bonus"],
+    values: [gN, aN, prod, calN, prod, prod],
+  };
   }
 
   function renderCompareKpis(A, B) {
