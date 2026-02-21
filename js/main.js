@@ -887,79 +887,47 @@ function neonHomeInit() {
     kpis: $("compare-kpis"),
     radar: $("player-radar"),
   };
-  // ✅ AGGIUNGI QUESTO CHECK
-if (!els.track || !els.aSel || !els.bSel || !els.radar) return;
-
-// ✅ INCOLLA QUI IL BLOCCO LOCK
-const LOCK_KEY = "pf_compare_unlocked";
-const lockEl = document.getElementById("compare-lock");
-const cardCompare = lockEl?.closest(".neo-card-compare");
-const tgDoneBtn = document.getElementById("unlock-after-telegram");
-const emailBtn = document.getElementById("unlock-with-email");
-
-function setLocked(locked) {
-  if (cardCompare) cardCompare.classList.toggle("neo-compare-locked", locked);
-  if (lockEl) lockEl.classList.toggle("active", locked);
-}
-
-function unlock() {
-  localStorage.setItem(LOCK_KEY, "1");
-  setLocked(false);
-}
-
-// stato iniziale
-setLocked(localStorage.getItem(LOCK_KEY) !== "1");
-
-// click “ho joinato”
-tgDoneBtn?.addEventListener("click", unlock);
-
-// click “sblocca con email” => apri join-modal
-emailBtn?.addEventListener("click", (e) => {
-  e.preventDefault();
-  document.getElementById("join-modal")?.classList.add("active");
-});
-
-// ...da qui in poi il resto della tua neonHomeInit
-  
-  const LOCK_KEY = "pf_compare_unlocked";
-const lockEl = document.getElementById("compare-lock");
-const unlockBtn = document.getElementById("unlock-with-email");
-
-function setLockedState(locked){
-  const card = lockEl?.closest(".neo-card-compare") || document.querySelector(".neo-card-compare");
-  if (!card || !lockEl) return;
-
-  card.classList.toggle("neo-compare-locked", locked);
-  lockEl.classList.toggle("active", locked);
-  lockEl.setAttribute("aria-hidden", locked ? "false" : "true");
-}
-
-function isUnlocked(){
-  return localStorage.getItem(LOCK_KEY) === "1";
-}
-
-setLockedState(!isUnlocked());
-
-unlockBtn?.addEventListener("click", () => {
-  document.getElementById("join-modal")?.classList.add("active");
-});
-  const emailBtn = document.getElementById("unlock-with-email");
-emailBtn?.addEventListener("click", (e) => {
-  e.preventDefault();
-  document.getElementById("join-modal")?.classList.add("active");
-});
-
-
-// chiamala quando l’utente completa email (tuo submit): 
-window.unlockCompare = function(){
-  localStorage.setItem(LOCK_KEY, "1");
-  setLockedState(false);
-};
-
-
+   // elementi minimi per home neon
   if (!els.track || !els.aSel || !els.bSel || !els.radar) return;
 
-  let currentMatchday = null;
+  // ====== LOCK COMPARATORE (UNA SOLA VOLTA) ======
+  const LOCK_KEY = "pf_compare_unlocked";
+
+  const lockEl = document.getElementById("compare-lock");
+  const cardCompare = lockEl?.closest(".neo-card-compare");
+
+  const tgDoneBtn = document.getElementById("unlock-after-telegram");
+  const emailBtn  = document.getElementById("unlock-with-email");
+
+  function setLocked(locked) {
+    if (cardCompare) cardCompare.classList.toggle("neo-compare-locked", locked);
+    if (lockEl) {
+      lockEl.classList.toggle("active", locked);
+      lockEl.setAttribute("aria-hidden", locked ? "false" : "true");
+    }
+  }
+
+  function unlockCompare() {
+    localStorage.setItem(LOCK_KEY, "1");
+    setLocked(false);
+  }
+
+  // init stato
+  setLocked(localStorage.getItem(LOCK_KEY) !== "1");
+
+  // click “ho joinato”
+  tgDoneBtn?.addEventListener("click", unlockCompare);
+
+  // click “sblocca con email” => apri join-modal
+  emailBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    document.getElementById("join-modal")?.classList.add("active");
+  });
+
+  // se ti serve richiamarlo dopo submit email:
+  window.unlockCompare = unlockCompare;
+  // =================================================
+
   let selectedMatchday = null;
   let radarChart = null;
 
