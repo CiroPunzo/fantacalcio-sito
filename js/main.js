@@ -1086,35 +1086,9 @@ function neonHomeInit() {
     bStats: document.getElementById("pick-b-stats"),
   };
 
-  // ===== Ensure picker modal exists (fallback) =====
-if (!pick.wrap || !pick.list || !pick.search || !pick.title) {
-  // Se non esiste in HTML, lo creo runtime
-  const modal = document.createElement("div");
-  modal.id = "neo-player-picker";
-  modal.className = "neo-player-picker-modal";
-  modal.setAttribute("aria-hidden", "true");
-
-  modal.innerHTML = `
-    <div class="neo-picker-backdrop" data-close="1"></div>
-    <div class="neo-picker-panel" role="dialog" aria-modal="true">
-      <div class="neo-picker-head">
-        <div id="neo-picker-title" class="neo-picker-title">Scegli giocatore</div>
-        <button type="button" class="neo-picker-close" data-close="1" aria-label="Chiudi">×</button>
-      </div>
-      <div class="neo-picker-body">
-        <input id="neo-picker-search" class="neo-picker-search" type="search" placeholder="Cerca giocatore o squadra..." autocomplete="off">
-        <div id="neo-picker-list" class="neo-picker-list"></div>
-      </div>
-    </div>
-  `;
-
-  document.body.appendChild(modal);
-
-  // Rebind riferimenti
-  pick.wrap = document.getElementById("neo-player-picker");
-  pick.title = document.getElementById("neo-picker-title");
-  pick.search = document.getElementById("neo-picker-search");
-  pick.list = document.getElementById("neo-picker-list");
+ if (!pick.wrap || !pick.list || !pick.search || !pick.title) {
+  console.error("Picker HTML non trovato: controlla gli ID neo-player-picker / neo-picker-*");
+  return;
 }
 
   let tradeA = null;
