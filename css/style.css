@@ -4453,6 +4453,21 @@ body{
   .trade-grid{ grid-template-columns:1fr; }
 }
 
+/* Picker overlay: fix click/z-index */
+#neo-player-picker{ position:fixed; inset:0; z-index:9999; display:none; }
+#neo-player-picker.active{ display:block; }
+
+#neo-player-picker .neo-picker-backdrop{
+  position:absolute; inset:0; z-index:1;
+}
+
+#neo-player-picker .neo-picker-panel{
+  position:absolute; left:50%; top:50%;
+  transform:translate(-50%,-50%);
+  z-index:2;
+}
+
+
 
 
 
