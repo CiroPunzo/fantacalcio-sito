@@ -204,13 +204,18 @@ const CLUB_LOGOS = {
 // =====================
 // HOME: CLASSIFICA / MARCATORI / INFORTUNATI (preview)
 // =====================
+function getBodies(ids){
+  return ids.map(id => document.getElementById(id)).filter(Boolean);
+}
+
 async function populateClassifica() {
   const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
   const tbody = document.getElementById("classifica-body");
+  const tbodies = getBodies(["classifica-body", "classifica-body-mobile"]);
   if (!tbody) return;
   if (!Array.isArray(data) || !data.length) return;
 
-  tbody.innerHTML = "";
+  tbodies.forEach(t => t.innerHTML = "");
 
   data
     .sort((a, b) => Number(a["Posizione"]) - Number(b["Posizione"]))
@@ -246,17 +251,18 @@ async function populateClassifica() {
         <td>${row["Punti"] || "-"}</td>
       `;
 
-      tbody.appendChild(tr);
+     tbodies.forEach(t => t.appendChild(tr.cloneNode(true)));
     });
 }
 
 async function populateMarcatori() {
   const data = await fetchSheetDataJson(SHEET_NAMES.classificaMarcatori);
   const tbody = document.getElementById("marcatori-body");
+  const tbodies = getBodies(["marcatori-body", "marcatori-body-mobile"]);
   if (!tbody) return;
   if (!Array.isArray(data) || !data.length) return;
 
-  tbody.innerHTML = "";
+  tbodies.forEach(t => t.innerHTML = "");
 
   data
     .filter((r) => r["Posizione"])
@@ -281,7 +287,7 @@ async function populateMarcatori() {
         <td>${gol}</td>
       `;
 
-      tbody.appendChild(tr);
+      tbodies.forEach(t => t.appendChild(tr.cloneNode(true)));
     });
 }
 
