@@ -1380,6 +1380,78 @@ if (!document.getElementById("neo-picker-fallback-style")) {
     }
   }
 
+  function toInt(x) {
+  const n = parseInt(x, 10);
+  return Number.isFinite(n) ? n : null;
+}
+
+function normTeamName(s) {
+  return String(s || "").trim();
+}
+
+function buildTeamDifficultyMap(rows) {
+  const map = new Map();
+  (rows || []).forEach(r => {
+    const team = normTeamName(r.Squadra || r.squadra);
+    const d = Number(r.Difficulty ?? r.difficulty);
+    if (team) map.set(team, Number.isFinite(d) ? d : 3);
+  });
+  return map;
+}
+
+function buildMatchesByTeam(calendarRows) {
+  const byTeam = new Map();
+
+  (calendarRows || []).forEach(r => {
+    const md = toInt(r.Giornata || r.giornata);
+    const casa = normTeamName(r.Casa || r.casa);
+    const trasf = normTeamName(r.Trasferta || r.trasferta);
+
+    if (!md || !casa || !trasf) return;
+
+    const m1 = { matchday: md, home: casa, away: trasf };
+    const m2 = { matchday: md, home: casa, away: trasf };
+
+    if (!byTeam.has(casa)) byTeam.set(casa, []);
+    if (!byTeam.has(trasf)) byTeam.set(trasf, []);
+
+    byTeam.get(casa).push(m1);
+    byTeam.get(trasf).push(m2);
+  });
+
+  // Ordina per giornata
+  byTeam.forEach(list => list.sort((a, b) => a.matchday - b.matchday));
+  return byTeam;
+}
+
+function calcFantaIndexCalendario(team, currentMd, horizon, weights, matchesByTeam, diffMap) {
+  const t = normTeamName(team);
+  if (!t || !Number.isFinite(currentMd)) return null;
+
+  const list = matchesByTeam.get(t) || [];
+  const upcoming = list.filter(m => m.matchday > currentMd).slice(0, horizon);
+
+  if (!upcoming.length) return null;
+
+  let num = 0;
+  let den = 0;
+
+  upcoming.forEach((m, i) => {
+    const w = Number(weights[i] ?? 1);
+    if (!Number.isFinite(w) || w <= 0) return;
+
+    const opponent = (m.home === t) ? m.away : m.home;
+    const d = Number(diffMap.get(opponent) ?? 3);
+
+    num += w * d;
+    den += w;
+  });
+
+  if (den === 0) return null;
+  return Math.round((num / den) * 100) / 100; // 2 decimali
+}
+
+
   function hookNeoTabs() {
     document.querySelectorAll(".neo-tabs .neo-tab").forEach((btn) => {
       btn.addEventListener("click", () => {
