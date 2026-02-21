@@ -1062,31 +1062,180 @@ function neonHomeInit() {
   }
 
   // =====================
-  // PICKER UI (active)
-  // =====================
-  const LOGOS =
-    (typeof CLUB_LOGOS !== "undefined" && CLUB_LOGOS) ||
-    (typeof CLUBLOGOS !== "undefined" && CLUBLOGOS) ||
-    {};
+ // ---------- PICKER UI (UNICO) ----------
+window.ALLPLAYERS = window.ALLPLAYERS || [];
 
-  const pick = {
-    wrap: document.getElementById("neo-player-picker"),
-    title: document.getElementById("neo-picker-title"),
-    search: document.getElementById("neo-picker-search"),
-    list: document.getElementById("neo-picker-list"),
+const LOGOS = (typeof CLUBLOGOS !== "undefined") ? CLUBLOGOS : {};
 
-    aBtn: document.getElementById("pick-a"),
-    bBtn: document.getElementById("pick-b"),
+const pick = {
+  wrap: document.getElementById("neo-player-picker"),
+  title: document.getElementById("neo-picker-title"),
+  search: document.getElementById("neo-picker-search"),
+  list: document.getElementById("neo-picker-list"),
+  aBtn: document.getElementById("pick-a"),
+  bBtn: document.getElementById("pick-b"),
+  aLogo: document.getElementById("pick-a-logo"),
+  bLogo: document.getElementById("pick-b-logo"),
+  aName: document.getElementById("pick-a-name"),
+  bName: document.getElementById("pick-b-name"),
+  aSub: document.getElementById("pick-a-sub"),
+  bSub: document.getElementById("pick-b-sub"),
+  aStats: document.getElementById("pick-a-stats"),
+  bStats: document.getElementById("pick-b-stats"),
+};
 
-    aLogo: document.getElementById("pick-a-logo"),
-    bLogo: document.getElementById("pick-b-logo"),
-    aName: document.getElementById("pick-a-name"),
-    bName: document.getElementById("pick-b-name"),
-    aSub: document.getElementById("pick-a-sub"),
-    bSub: document.getElementById("pick-b-sub"),
-    aStats: document.getElementById("pick-a-stats"),
-    bStats: document.getElementById("pick-b-stats"),
-  };
+if (!pick.wrap || !pick.list || !pick.search || !pick.title) {
+  console.error("Picker HTML non trovato: controlla gli ID neo-player-picker / neo-picker-*");
+  return;
+}
+
+// Tool scambi (sezione nuova)
+let tradeA = null;
+let tradeB = null;
+
+const tradeEls = {
+  aBtn: document.getElementById("trade-pick-a"),
+  bBtn: document.getElementById("trade-pick-b"),
+  aLogo: document.getElementById("trade-a-logo"),
+  bLogo: document.getElementById("trade-b-logo"),
+  aName: document.getElementById("trade-a-name"),
+  bName: document.getElementById("trade-b-name"),
+  aSub: document.getElementById("trade-a-sub"),
+  bSub: document.getElementById("trade-b-sub"),
+  aStats: document.getElementById("trade-a-stats"),
+  bStats: document.getElementById("trade-b-stats"),
+  cal: document.getElementById("trade-calendar"),
+  dec: document.getElementById("trade-decision"),
+};
+
+// Stato picker
+let pickingTarget = "A";          // per comparatore classico
+let pickingMode = "compare";      // "compare" | "trade"
+let tradeTarget = "A";            // "A" | "B" quando pickingMode==="trade"
+
+function clubLogoHTML(club) {
+  const url = LOGOS?.[club];
+  return url ? `<img src="${url}" alt="${club}" loading="lazy">` : "";
+}
+
+function chipsHTML(p) {
+  if (!p) return "";
+  const fic = (p.fantaIndexCalendario != null) ? p.fantaIndexCalendario : "-";
+  return `
+    <span class="neo-stat-chip">Gol <strong>${p.gol ?? 0}</strong></span>
+    <span class="neo-stat-chip">Assist <strong>${p.assist ?? 0}</strong></span>
+    <span class="neo-stat-chip">FIC <strong>${fic}</strong></span>
+  `;
+}
+
+function paintCompareCards(A, B) {
+  if (pick.aLogo) pick.aLogo.innerHTML = clubLogoHTML(A?.club);
+  if (pick.bLogo) pick.bLogo.innerHTML = clubLogoHTML(B?.club);
+  if (pick.aName) pick.aName.textContent = A?.player || "Seleziona";
+  if (pick.bName) pick.bName.textContent = B?.player || "Seleziona";
+  if (pick.aSub) pick.aSub.textContent = A?.club ? A.club : "Clicca per scegliere";
+  if (pick.bSub) pick.bSub.textContent = B?.club ? B.club : "Clicca per scegliere";
+  if (pick.aStats) pick.aStats.innerHTML = chipsHTML(A);
+  if (pick.bStats) pick.bStats.innerHTML = chipsHTML(B);
+}
+
+function openPicker(target) {
+  // Non aprire se non ho ancora i giocatori
+  if (!window.ALLPLAYERS || !window.ALLPLAYERS.length) {
+    console.warn("Giocatori non ancora caricati");
+    return;
+  }
+
+  pickingTarget = target;
+  if (pick.title) pick.title.textContent = (target === "A") ? "Scegli giocatore A" : "Scegli giocatore B";
+  pick.wrap.classList.add("active");
+  pick.wrap.setAttribute("aria-hidden", "false");
+  if (pick.search) {
+    pick.search.value = "";
+    pick.search.focus();
+  }
+  renderPickerList("");
+}
+
+function closePicker() {
+  pick.wrap.classList.remove("active");
+  pick.wrap.setAttribute("aria-hidden", "true");
+}
+
+function renderPickerList(q) {
+  const query = String(q || "").trim().toLowerCase();
+  const arr = window.ALLPLAYERS || [];
+
+  const filtered = !query
+    ? arr
+    : arr.filter(p =>
+        String(p.player || "").toLowerCase().includes(query) ||
+        String(p.club || "").toLowerCase().includes(query)
+      );
+
+  pick.list.innerHTML = filtered.slice(0, 140).map(p => `
+    <button type="button" class="neo-picker-item" data-player="${encodeURIComponent(p.player)}">
+      <div class="neo-picker-item-logo">${clubLogoHTML(p.club)}</div>
+      <div class="neo-picker-item-main">
+        <div class="neo-picker-item-name">${p.player}</div>
+        <div class="neo-picker-item-sub">${p.club || "-"}</div>
+      </div>
+      <div class="neo-picker-item-badge">${p.gol ?? 0}G • ${p.assist ?? 0}A</div>
+    </button>
+  `).join("");
+}
+
+// Delegation: click sempre funzionante anche dopo render
+pick.list.addEventListener("click", (e) => {
+  const btn = e.target.closest(".neo-picker-item");
+  if (!btn) return;
+
+  const name = decodeURIComponent(btn.getAttribute("data-player") || "");
+  if (!name) return;
+
+  const idx = (window.ALLPLAYERS || []).findIndex(x => x.player === name);
+  if (idx < 0) return;
+
+  const chosen = window.ALLPLAYERS[idx];
+
+  if (pickingMode === "trade") {
+    if (tradeTarget === "A") tradeA = chosen;
+    else tradeB = chosen;
+    if (typeof rerenderTrade === "function") rerenderTrade();
+    closePicker();
+    return;
+  }
+
+  // Default: comparatore classico
+  if (pickingTarget === "A") els.aSel.selectedIndex = idx;
+  else els.bSel.selectedIndex = idx;
+
+  els.aSel.dispatchEvent(new Event("change", { bubbles: true }));
+  els.bSel.dispatchEvent(new Event("change", { bubbles: true }));
+  closePicker();
+});
+
+// Apertura picker (comparatore)
+pick.aBtn?.addEventListener("click", () => { pickingMode = "compare"; openPicker("A"); });
+pick.bBtn?.addEventListener("click", () => { pickingMode = "compare"; openPicker("B"); });
+
+// Apertura picker (scambi)
+tradeEls.aBtn?.addEventListener("click", () => { pickingMode = "trade"; tradeTarget = "A"; openPicker("A"); });
+tradeEls.bBtn?.addEventListener("click", () => { pickingMode = "trade"; tradeTarget = "B"; openPicker("B"); });
+
+// Search
+pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
+
+// Close su backdrop / X
+pick.wrap.addEventListener("click", (e) => {
+  const el = e.target;
+  if (el?.getAttribute?.("data-close") === "1") closePicker();
+  if (el?.dataset?.close === "1") closePicker();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closePicker();
+});
+
 
  if (!pick.wrap || !pick.list || !pick.search || !pick.title) {
   console.error("Picker HTML non trovato: controlla gli ID neo-player-picker / neo-picker-*");
