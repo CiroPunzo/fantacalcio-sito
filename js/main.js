@@ -1289,11 +1289,14 @@ if (!document.getElementById("neo-picker-fallback-style")) {
 
   async function loadPlayersForCompare() {
     try {
-      const [rosaRows, golRows, assistRows] = await Promise.all([
-        fetchSheetDataJson(SHEET_NAMES.rosaSerieA),
-        fetchSheetDataJson(SHEET_NAMES.classificaMarcatori),
-        fetchSheetDataJson(SHEET_NAMES.classificaAssist),
-      ]);
+      const [rosaRows, golRows, assistRows, calRows, ratingRows, cfgRows] = await Promise.all([
+  fetchSheetDataJson(SHEET_NAMES.rosaSerieA),
+  fetchSheetDataJson(SHEET_NAMES.classificaMarcatori),
+  fetchSheetDataJson(SHEET_NAMES.classificaAssist),
+  fetchSheetDataJson(SHEET_NAMES.calendario),
+  fetchSheetDataJson(SHEET_NAMES.teamRatings),
+  fetchSheetDataJson(SHEET_NAMES.config),
+]);
 
       const map = new Map();
 
