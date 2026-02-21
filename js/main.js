@@ -1245,28 +1245,56 @@ let tradeB = null;
       )
       .join("");
 
-    pick.list.querySelectorAll(".neo-picker-item").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const name = decodeURIComponent(btn.getAttribute("data-player") || "");
-        const idx = ALL_PLAYERS.findIndex((x) => x.player === name);
-        if (idx < 0) return;
+    pick.list.querySelectorAll(".neo-picker-item").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const name = decodeURIComponent(btn.getAttribute("data-player"));
+    const idx = ALLPLAYERS.findIndex(x => x.player === name);
+    if (idx < 0) return;
 
-        if (pickingTarget === "A") els.aSel.selectedIndex = idx;
-        else els.bSel.selectedIndex = idx;
+    const chosen = ALLPLAYERS[idx];
 
-        els.aSel.dispatchEvent(new Event("change", { bubbles: true }));
-        els.bSel.dispatchEvent(new Event("change", { bubbles: true }));
+    if (pickingMode === "trade") {
+      if (tradeTarget === "A") tradeA = chosen;
+      else tradeB = chosen;
 
-        closePicker();
-      });
-    });
+      renderTradeCards?.();      // se hai queste funzioni
+      renderTradeCalendar?.();
+      renderTradeDecision?.();
+      // oppure una sola:
+      rerenderTrade?.();
+
+      closePicker();
+      return;
+    }
+
+    // default: comparatore classico
+    if (pickingTarget === "A") els.aSel.selectedIndex = idx;
+    else els.bSel.selectedIndex = idx;
+
+    els.aSel.dispatchEvent(new Event("change", { bubbles:true }));
+    els.bSel.dispatchEvent(new Event("change", { bubbles:true }));
+
+    closePicker();
+  });
+});
+
   }
 
   pick.aBtn?.addEventListener("click", () => openPicker("A"));
   pick.bBtn?.addEventListener("click", () => openPicker("B"));
   pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
-  document.getElementById("trade-pick-a")?.addEventListener("click", () => openPicker("A"));
-document.getElementById("trade-pick-b")?.addEventListener("click", () => openPicker("B"));
+ document.getElementById("trade-pick-a")?.addEventListener("click", () => {
+  pickingMode = "trade";
+  tradeTarget = "A";
+  openPicker("A"); // qui il parametro serve solo per titolo, puoi anche ignorarlo
+});
+
+document.getElementById("trade-pick-b")?.addEventListener("click", () => {
+  pickingMode = "trade";
+  tradeTarget = "B";
+  openPicker("B");
+});
+
 
 
 
