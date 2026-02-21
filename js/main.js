@@ -1265,8 +1265,6 @@ if (!document.getElementById("neo-picker-fallback-style")) {
   document.head.appendChild(st);
 }
 
-  let pickingMode = "compare"; // "compare" | "trade"
-let tradeTarget = "A";       // "A" | "B;
 
   function clubLogoHTML(club) {
     const url = LOGOS?.[club];
