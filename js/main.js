@@ -1381,11 +1381,19 @@ function readConfigMap(rows) {
       const map = new Map();
 
       (rosaRows || []).forEach((r) => {
-        const player = String(r.Giocatore ?? r.Player ?? r.Nome ?? "").trim();
-        if (!player) return;
-        const club = String(r.Squadra ?? r.Club ?? "").trim();
-        map.set(player, { player, club, gol: 0, assist: 0 });
-      });
+  const player = String(r.Giocatore ?? r.Player ?? r.Nome ?? "").trim();
+
+  // Scarta righe spazzatura: vuote, solo numeri, o senza lettere
+  if (!player) return;
+  if (/^\d+$/.test(player)) return;
+  if (!/[a-zàèéìòù]/i.test(player)) return;
+        if (/^\d+\s+/.test(player)) return;
+
+
+  const club = String(r.Squadra ?? r.Club ?? "").trim();
+  map.set(player, { player, club, gol: 0, assist: 0 });
+});
+
 
       (golRows || []).forEach((r) => {
         const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
