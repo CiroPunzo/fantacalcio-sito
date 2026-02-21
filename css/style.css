@@ -4760,6 +4760,53 @@ body{
 }
 
 
+/* =========================================================
+   NEON OVERRIDE — MODALS (classifica/marcatori/infortunati)
+   ========================================================= */
+
+#classifica-modal .modal-content,
+#marcatori-modal .modal-content,
+#infortunati-modal .modal-content{
+  background: linear-gradient(180deg, rgba(10,12,40,.92), rgba(6,7,22,.88));
+  border: 1px solid rgba(120,245,255,.18);
+  border-radius: 18px;
+  box-shadow: 0 22px 80px rgba(0,0,0,.65);
+  backdrop-filter: blur(12px);
+  color: var(--neo-text);
+}
+
+#classifica-modal .modal-close,
+#marcatori-modal .modal-close,
+#infortunati-modal .modal-close{
+  color: rgba(234,242,255,.85);
+}
+#classifica-modal .modal-close:hover,
+#marcatori-modal .modal-close:hover,
+#infortunati-modal .modal-close:hover{
+  color: rgba(102,247,255,.95);
+}
+
+#classifica-modal h2, #classifica-modal h3,
+#marcatori-modal h2, #marcatori-modal h3,
+#infortunati-modal h2, #infortunati-modal h3{
+  color: var(--neo-text);
+  text-shadow: 0 0 18px rgba(102,247,255,.14);
+}
+
+/* Tabelle dentro le modali (full table) */
+#classifica-modal .dashboard-table,
+#marcatori-modal .dashboard-table{
+  border-color: rgba(120,245,255,.14);
+}
+#classifica-modal .dashboard-table th,
+#marcatori-modal .dashboard-table th{
+  color: rgba(234,242,255,.78);
+}
+#classifica-modal .dashboard-table tbody tr:hover,
+#marcatori-modal .dashboard-table tbody tr:hover{
+  background: rgba(102,247,255,.06);
+}
+
 
 
 
