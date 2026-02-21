@@ -973,17 +973,18 @@ function neonHomeInit() {
   }
 
   function buildRadarData(p, maxG, maxA) {
-  const g = Number(p.gol || 0);
-  const a = Number(p.assist || 0);
+  const g = Number(p?.gol || 0);
+  const a = Number(p?.assist || 0);
 
   const gN = normalize(g, maxG);
   const aN = normalize(a, maxA);
 
   // Calendario: 1 (facile) -> 100, 5 (difficile) -> 0
-  const fic = Number(p.fantaIndexCalendario);
-  const calN = Number.isFinite(fic) ? Math.round((5 - Math.max(1, Math.min(5, fic))) / 4 * 100) : 50;
+  const fic = Number(p?.fantaIndexCalendario);
+  const calClamped = Number.isFinite(fic) ? Math.max(1, Math.min(5, fic)) : 3;
+  const calN = Math.round((5 - calClamped) / 4 * 100);
 
-  // “Impatto” = produzione (semplice e leggibile)
+  // Produzione: pesiamo un po' di più il gol
   const prod = normalize(g + 0.7 * a, maxG + 0.7 * maxA);
 
   return {
