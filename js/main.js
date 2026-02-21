@@ -1093,21 +1093,6 @@ if (!pick.wrap || !pick.list || !pick.search || !pick.title) {
 let tradeA = null;
 let tradeB = null;
 
-const tradeEls = {
-  aBtn: document.getElementById("trade-pick-a"),
-  bBtn: document.getElementById("trade-pick-b"),
-  aLogo: document.getElementById("trade-a-logo"),
-  bLogo: document.getElementById("trade-b-logo"),
-  aName: document.getElementById("trade-a-name"),
-  bName: document.getElementById("trade-b-name"),
-  aSub: document.getElementById("trade-a-sub"),
-  bSub: document.getElementById("trade-b-sub"),
-  aStats: document.getElementById("trade-a-stats"),
-  bStats: document.getElementById("trade-b-stats"),
-  cal: document.getElementById("trade-calendar"),
-  dec: document.getElementById("trade-decision"),
-};
-
 // Stato picker
 let pickingTarget = "A";          // per comparatore classico
 let pickingMode = "compare";      // "compare" | "trade"
