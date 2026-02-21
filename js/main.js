@@ -1150,13 +1150,13 @@ function closePicker() {
 function renderPickerList(q) {
   const query = String(q || "").trim().toLowerCase();
   const arr = window.ALLPLAYERS || [];
+const filtered = !query
+  ? arr
+  : arr.filter((p) =>
+      (p.player || "").toLowerCase().includes(query) ||
+      String(p.club || "").toLowerCase().includes(query)
+    );
 
-  const filtered = !query
-    ? arr
-    : arr.filter(p =>
-        String(p.player || "").toLowerCase().includes(query) ||
-        String(p.club || "").toLowerCase().includes(query)
-      );
 
   pick.list.innerHTML = filtered.slice(0, 140).map(p => `
     <button type="button" class="neo-picker-item" data-player="${encodeURIComponent(p.player)}">
