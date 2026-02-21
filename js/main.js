@@ -1322,11 +1322,13 @@ if (!document.getElementById("neo-picker-fallback-style")) {
     if (!pick.list) return;
     const query = String(q || "").trim().toLowerCase();
 
-    const filtered = !query
-      : ALL_PLAYERS.filter((p) =>
-          (p.player || "").toLowerCase().includes(query) ||
-          String(p.club || "").toLowerCase().includes(query)
-        );
+  const filtered = !query
+  ? ALLPLAYERS
+  : ALLPLAYERS.filter((p) =>
+      (p.player || "").toLowerCase().includes(query) ||
+      String(p.club || "").toLowerCase().includes(query)
+    );
+
 
     pick.list.innerHTML = filtered
       .slice(0, 120)
