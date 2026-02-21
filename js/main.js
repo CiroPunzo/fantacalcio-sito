@@ -1365,40 +1365,6 @@ let tradeTarget = "A";       // "A" | "B;
       `
       )
       .join("");
-
-    pick.list.querySelectorAll(".neo-picker-item").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const name = decodeURIComponent(btn.getAttribute("data-player"));
-    const idx = ALLPLAYERS.findIndex(x => x.player === name);
-    if (idx < 0) return;
-
-    const chosen = ALLPLAYERS[idx];
-
-    if (pickingMode === "trade") {
-      if (tradeTarget === "A") tradeA = chosen;
-      else tradeB = chosen;
-
-      renderTradeCards?.();      // se hai queste funzioni
-      renderTradeCalendar?.();
-      renderTradeDecision?.();
-      // oppure una sola:
-      rerenderTrade?.();
-
-      closePicker();
-      return;
-    }
-
-    // default: comparatore classico
-    if (pickingTarget === "A") els.aSel.selectedIndex = idx;
-    else els.bSel.selectedIndex = idx;
-
-    els.aSel.dispatchEvent(new Event("change", { bubbles:true }));
-    els.bSel.dispatchEvent(new Event("change", { bubbles:true }));
-
-    closePicker();
-  });
-});
-
   }
 
   pick.list.addEventListener("click", (e) => {
@@ -1710,6 +1676,8 @@ players.forEach(p => {
       console.error("Errore comparatore:", e);
       els.kpis.innerHTML = `<div class="neo-mini-card">Errore caricamento giocatori.</div>`;
     }
+    window.ALLPLAYERS = players;
+
   }
 
   function toInt(x) {
