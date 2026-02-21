@@ -1261,6 +1261,9 @@ if (!document.getElementById("neo-picker-fallback-style")) {
   pick.aBtn?.addEventListener("click", () => openPicker("A"));
   pick.bBtn?.addEventListener("click", () => openPicker("B"));
   pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
+  document.getElementById("trade-pick-a")?.addEventListener("click", () => openPicker("A"));
+document.getElementById("trade-pick-b")?.addEventListener("click", () => openPicker("B"));
+
 
 
     // Rende cliccabile tutta la card (non solo il bottone interno)
