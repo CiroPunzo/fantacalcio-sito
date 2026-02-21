@@ -887,6 +887,35 @@ function neonHomeInit() {
     kpis: $("compare-kpis"),
     radar: $("player-radar"),
   };
+  const LOCK_KEY = "pf_compare_unlocked";
+const lockEl = document.getElementById("compare-lock");
+const unlockBtn = document.getElementById("unlock-with-email");
+
+function setLockedState(locked){
+  const card = lockEl?.closest(".neo-card-compare") || document.querySelector(".neo-card-compare");
+  if (!card || !lockEl) return;
+
+  card.classList.toggle("neo-compare-locked", locked);
+  lockEl.classList.toggle("active", locked);
+  lockEl.setAttribute("aria-hidden", locked ? "false" : "true");
+}
+
+function isUnlocked(){
+  return localStorage.getItem(LOCK_KEY) === "1";
+}
+
+setLockedState(!isUnlocked());
+
+unlockBtn?.addEventListener("click", () => {
+  document.getElementById("join-modal")?.classList.add("active");
+});
+
+// chiamala quando l’utente completa email (tuo submit): 
+window.unlockCompare = function(){
+  localStorage.setItem(LOCK_KEY, "1");
+  setLockedState(false);
+};
+
 
   if (!els.track || !els.aSel || !els.bSel || !els.radar) return;
 
