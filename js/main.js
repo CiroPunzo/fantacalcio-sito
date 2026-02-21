@@ -1077,6 +1077,60 @@ function neonHomeInit() {
     bStats: document.getElementById("pick-b-stats"),
   };
 
+  // ===== Ensure picker modal exists (fallback) =====
+if (!pick.wrap || !pick.list || !pick.search || !pick.title) {
+  // Se non esiste in HTML, lo creo runtime
+  const modal = document.createElement("div");
+  modal.id = "neo-player-picker";
+  modal.className = "neo-player-picker-modal";
+  modal.setAttribute("aria-hidden", "true");
+
+  modal.innerHTML = `
+    <div class="neo-picker-backdrop" data-close="1"></div>
+    <div class="neo-picker-panel" role="dialog" aria-modal="true">
+      <div class="neo-picker-head">
+        <div id="neo-picker-title" class="neo-picker-title">Scegli giocatore</div>
+        <button type="button" class="neo-picker-close" data-close="1" aria-label="Chiudi">×</button>
+      </div>
+      <div class="neo-picker-body">
+        <input id="neo-picker-search" class="neo-picker-search" type="search" placeholder="Cerca giocatore o squadra..." autocomplete="off">
+        <div id="neo-picker-list" class="neo-picker-list"></div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  // Rebind riferimenti
+  pick.wrap = document.getElementById("neo-player-picker");
+  pick.title = document.getElementById("neo-picker-title");
+  pick.search = document.getElementById("neo-picker-search");
+  pick.list = document.getElementById("neo-picker-list");
+}
+
+// CSS minimo per renderlo visibile
+if (!document.getElementById("neo-picker-fallback-style")) {
+  const st = document.createElement("style");
+  st.id = "neo-picker-fallback-style";
+  st.textContent = `
+    #neo-player-picker{position:fixed;inset:0;display:none;z-index:9999}
+    #neo-player-picker.active{display:block}
+    #neo-player-picker .neo-picker-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+    #neo-player-picker .neo-picker-panel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:min(760px,92vw);max-height:80vh;overflow:auto;
+      background:rgba(10,14,30,.92);border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;box-shadow:0 20px 80px rgba(0,0,0,.6);padding:14px}
+    #neo-player-picker .neo-picker-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    #neo-player-picker .neo-picker-title{font-weight:700;color:#eaf2ff}
+    #neo-player-picker .neo-picker-close{background:transparent;border:0;color:#eaf2ff;font-size:26px;cursor:pointer;line-height:1}
+    #neo-player-picker .neo-picker-search{width:100%;margin:10px 0;padding:10px 12px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#eaf2ff}
+    #neo-player-picker .neo-picker-list{display:flex;flex-direction:column;gap:8px}
+  `;
+  document.head.appendChild(st);
+}
+
+
   let pickingTarget = "A";
   let ALL_PLAYERS = [];
 
