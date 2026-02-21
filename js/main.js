@@ -1252,6 +1252,37 @@ let tradeTarget = "A";       // "A" | "B"
 
   }
 
+  pick.list.addEventListener("click", (e) => {
+  const btn = e.target.closest(".neo-picker-item");
+  if (!btn) return;
+
+  const name = decodeURIComponent(btn.getAttribute("data-player") || "");
+  if (!name) return;
+
+  const idx = ALLPLAYERS.findIndex(x => x.player === name);
+  if (idx < 0) return;
+
+  const chosen = ALLPLAYERS[idx];
+
+  // MODE SWITCH (trade vs compare)
+  if (pickingMode === "trade") {
+    if (tradeTarget === "A") tradeA = chosen;
+    else tradeB = chosen;
+    rerenderTrade();
+    closePicker();
+    return;
+  }
+
+  // Default: comparatore classico
+  if (pickingTarget === "A") els.aSel.selectedIndex = idx;
+  else els.bSel.selectedIndex = idx;
+
+  els.aSel.dispatchEvent(new Event("change", { bubbles: true }));
+  els.bSel.dispatchEvent(new Event("change", { bubbles: true }));
+  closePicker();
+});
+
+
   pick.aBtn?.addEventListener("click", () => openPicker("A"));
   pick.bBtn?.addEventListener("click", () => openPicker("B"));
   pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
