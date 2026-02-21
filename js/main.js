@@ -133,6 +133,9 @@ const SHEET_NAMES = {
   playerPicks: "PlayerPicks",
   config: "Config",
   rosaSerieA: "RosaSerieA",
+    calendario: "Calendario",
+  teamRatings: "TeamRatings",
+
 };
 
 async function fetchSheetDataJson(sheetName) {
