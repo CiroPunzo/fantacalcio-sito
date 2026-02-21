@@ -1196,7 +1196,6 @@ let tradeTarget = "A";       // "A" | "B;
     const query = String(q || "").trim().toLowerCase();
 
     const filtered = !query
-      ? ALL_PLAYERS
       : ALL_PLAYERS.filter((p) =>
           (p.player || "").toLowerCase().includes(query) ||
           String(p.club || "").toLowerCase().includes(query)
@@ -1290,7 +1289,7 @@ let tradeTarget = "A";       // "A" | "B;
  document.getElementById("trade-pick-a")?.addEventListener("click", () => {
   pickingMode = "trade";
   tradeTarget = "A";
-  openPicker("A"); // qui il parametro serve solo per titolo, puoi anche ignorarlo
+  // openPicker("A"); // qui il parametro serve solo per titolo, puoi anche ignorarlo
 });
 
 document.getElementById("trade-pick-b")?.addEventListener("click", () => {
