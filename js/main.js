@@ -1654,6 +1654,91 @@ function calcFantaIndexCalendario(team, currentMd, horizon, weights, matchesByTe
     await loadResultsForMatchday(selectedMatchday);
     await loadPlayersForCompare();
   })();
+
+  function renderTradeCards(){
+  const clubLogo = (club) => {
+    const url = CLUBLOGOS?.[club];
+    return url ? `<img src="${url}" alt="${club}" loading="lazy">` : "";
+  };
+  const chips = (p) => {
+    if (!p) return "";
+    const fic = (p.fantaIndexCalendario != null) ? p.fantaIndexCalendario : "-";
+    return `
+      <span class="neo-stat-chip">Gol <strong>${p.gol ?? 0}</strong></span>
+      <span class="neo-stat-chip">Assist <strong>${p.assist ?? 0}</strong></span>
+      <span class="neo-stat-chip">FIC <strong>${fic}</strong></span>
+    `;
+  };
+
+  if (tradeEls.aLogo) tradeEls.aLogo.innerHTML = clubLogo(tradeA?.club);
+  if (tradeEls.bLogo) tradeEls.bLogo.innerHTML = clubLogo(tradeB?.club);
+  if (tradeEls.aName) tradeEls.aName.textContent = tradeA?.player || "Seleziona";
+  if (tradeEls.bName) tradeEls.bName.textContent = tradeB?.player || "Seleziona";
+  if (tradeEls.aSub) tradeEls.aSub.textContent = tradeA?.club ? tradeA.club : "Clicca per scegliere";
+  if (tradeEls.bSub) tradeEls.bSub.textContent = tradeB?.club ? tradeB.club : "Clicca per scegliere";
+  if (tradeEls.aStats) tradeEls.aStats.innerHTML = chips(tradeA);
+  if (tradeEls.bStats) tradeEls.bStats.innerHTML = chips(tradeB);
+}
+
+function fmtMatch(team, m){
+  const opp = (m.home === team) ? m.away : m.home;
+  const ha = (m.home === team) ? "H" : "A";
+  return `${ha} vs ${opp}`;
+}
+
+function renderTradeCalendar(){
+  if (!tradeEls.cal) return;
+
+  if (!tradeA || !tradeB){
+    tradeEls.cal.innerHTML = `<div class="neo-mini-card">Seleziona due giocatori per vedere il calendario.</div>`;
+    return;
+  }
+
+  const aList = (tradeA.upcomingMatches || []).map(m => fmtMatch(tradeA.club, m));
+  const bList = (tradeB.upcomingMatches || []).map(m => fmtMatch(tradeB.club, m));
+
+  tradeEls.cal.innerHTML = `
+    <div style="font-weight:800;margin-bottom:8px">Calendario (prossime ${Math.max(aList.length,bList.length,5)} )</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div>
+        <div style="opacity:.9;margin-bottom:6px">${tradeA.player} • ${tradeA.club} • FIC <strong>${tradeA.fantaIndexCalendario ?? "-"}</strong></div>
+        <div style="opacity:.85">${aList.join("<br>") || "-"}</div>
+      </div>
+      <div>
+        <div style="opacity:.9;margin-bottom:6px">${tradeB.player} • ${tradeB.club} • FIC <strong>${tradeB.fantaIndexCalendario ?? "-"}</strong></div>
+        <div style="opacity:.85">${bList.join("<br>") || "-"}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderTradeDecision(){
+  if (!tradeEls.dec) return;
+
+  if (!tradeA || !tradeB || tradeA.fantaIndexCalendario == null || tradeB.fantaIndexCalendario == null){
+    tradeEls.dec.innerHTML = `<div class="neo-mini-card">Decisione: dati calendario non disponibili per uno dei due.</div>`;
+    return;
+  }
+
+  const a = Number(tradeA.fantaIndexCalendario);
+  const b = Number(tradeB.fantaIndexCalendario);
+
+  let text = "Calendario equivalente: guarda anche forma, titolarità e ruolo.";
+  if (b < a) text = `In base al calendario sceglierei <strong>${tradeB.player}</strong> (FIC più basso).`;
+  if (a < b) text = `In base al calendario sceglierei <strong>${tradeA.player}</strong> (FIC più basso).`;
+
+  tradeEls.dec.innerHTML = `
+    <div style="font-weight:800;margin-bottom:8px">Scelta consigliata (solo calendario)</div>
+    <div>${text}</div>
+  `;
+}
+
+function rerenderTrade(){
+  renderTradeCards();
+  renderTradeCalendar();
+  renderTradeDecision();
+}
+
 }
 
 // =====================
