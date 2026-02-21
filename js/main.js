@@ -3,6 +3,8 @@
 // =====================
 let currentHeroSlide = 0;
 let autoRotateInterval = null;
+window.ALLPLAYERS = window.ALLPLAYERS || [];
+
 
 function initHeroSlider() {
   const slides = document.querySelectorAll(".hero-slide");
