@@ -4,14 +4,13 @@
 let currentHeroSlide = 0;
 let autoRotateInterval = null;
 
-
 function initHeroSlider() {
   const slides = document.querySelectorAll(".hero-slide");
   const dots = document.querySelectorAll(".hero-dot");
   if (!slides.length || !dots.length) return;
 
-  slides.forEach(s => s.classList.remove("active"));
-  dots.forEach(d => d.classList.remove("active"));
+  slides.forEach((s) => s.classList.remove("active"));
+  dots.forEach((d) => d.classList.remove("active"));
 
   slides[0].classList.add("active");
   dots[0].classList.add("active");
@@ -30,7 +29,9 @@ function initHeroSlider() {
 
     heroSlider.addEventListener(
       "touchstart",
-      (e) => { touchStartX = e.changedTouches[0].clientX; },
+      (e) => {
+        touchStartX = e.changedTouches[0].clientX;
+      },
       { passive: true }
     );
 
@@ -62,10 +63,10 @@ function showHeroSlide(index) {
   if (index < 0) index = total - 1;
   currentHeroSlide = index;
 
-  slides.forEach(s => s.classList.remove("active"));
+  slides.forEach((s) => s.classList.remove("active"));
   slides[index].classList.add("active");
 
-  dots.forEach(d => d.classList.remove("active"));
+  dots.forEach((d) => d.classList.remove("active"));
   if (dots[index]) dots[index].classList.add("active");
 }
 
@@ -134,14 +135,15 @@ const SHEET_NAMES = {
   playerPicks: "PlayerPicks",
   config: "Config",
   rosaSerieA: "RosaSerieA",
-    calendario: "Calendario",
+  calendario: "Calendario",
   teamRatings: "TeamRatings",
-
 };
 
 async function fetchSheetDataJson(sheetName) {
   try {
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(
+      sheetName
+    )}`;
     const response = await fetch(url);
     const text = await response.text();
 
@@ -156,8 +158,8 @@ async function fetchSheetDataJson(sheetName) {
     const jsonString = text.substring(jsonStart, jsonEnd + 1);
     const json = JSON.parse(jsonString);
 
-    const cols = json.table.cols.map(col => col.label);
-    const rows = json.table.rows.map(row => {
+    const cols = json.table.cols.map((col) => col.label);
+    const rows = json.table.rows.map((row) => {
       const obj = {};
       cols.forEach((col, idx) => {
         obj[col] = row.c[idx]?.v ?? "";
@@ -213,7 +215,7 @@ async function populateClassifica() {
   data
     .sort((a, b) => Number(a["Posizione"]) - Number(b["Posizione"]))
     .slice(0, 10)
-    .forEach(row => {
+    .forEach((row) => {
       const tr = document.createElement("tr");
 
       const pos = Number(row["Posizione"]);
@@ -243,6 +245,7 @@ async function populateClassifica() {
         <td>${row["xG"] || "-"}</td>
         <td>${row["Punti"] || "-"}</td>
       `;
+
       tbody.appendChild(tr);
     });
 }
@@ -256,10 +259,10 @@ async function populateMarcatori() {
   tbody.innerHTML = "";
 
   data
-    .filter(r => r["Posizione"])
+    .filter((r) => r["Posizione"])
     .sort((a, b) => Number(a["Posizione"]) - Number(b["Posizione"]))
     .slice(0, 10)
-    .forEach(row => {
+    .forEach((row) => {
       const tr = document.createElement("tr");
 
       const giocatore = row["Nome Giocatore"] || row["Giocatore"] || "-";
@@ -277,6 +280,7 @@ async function populateMarcatori() {
         <td>${clubHTML}</td>
         <td>${gol}</td>
       `;
+
       tbody.appendChild(tr);
     });
 }
@@ -287,10 +291,14 @@ async function populateInfortunati() {
   if (!tbody) return;
   if (!Array.isArray(data) || !data.length) return;
 
-  const rows = data.filter(r => (r["Giocatore"] || "").trim() && (r["Giocatore"] || "").trim().toLowerCase() !== "giocatore");
+  const rows = data.filter(
+    (r) =>
+      (r["Giocatore"] || "").trim() &&
+      (r["Giocatore"] || "").trim().toLowerCase() !== "giocatore"
+  );
   tbody.innerHTML = "";
 
-  rows.slice(0, 10).forEach(row => {
+  rows.slice(0, 10).forEach((row) => {
     const tr = document.createElement("tr");
     tr.className = "clickable";
 
@@ -347,11 +355,12 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
   const select = document.getElementById("select-giornata-fanta");
   if (!tbody || !Array.isArray(data) || !data.length) return;
 
-  const giornate = Array.from(new Set(data.map(r => r["Giornata"]).filter(Boolean)))
-    .sort((a, b) => Number(a) - Number(b));
+  const giornate = Array.from(new Set(data.map((r) => r["Giornata"]).filter(Boolean))).sort(
+    (a, b) => Number(a) - Number(b)
+  );
 
   if (select && select.options.length === 0) {
-    giornate.forEach(g => {
+    giornate.forEach((g) => {
       const opt = document.createElement("option");
       opt.value = g;
       opt.textContent = `Giornata ${g}`;
@@ -364,10 +373,10 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
   if (!giornataCorrente) return;
   if (select) select.value = String(giornataCorrente);
 
-  const filtrati = data.filter(r => String(r["Giornata"]) === String(giornataCorrente));
+  const filtrati = data.filter((r) => String(r["Giornata"]) === String(giornataCorrente));
   tbody.innerHTML = "";
 
-  filtrati.forEach(row => {
+  filtrati.forEach((row) => {
     const tr = document.createElement("tr");
     tr.classList.add("clickable");
 
@@ -462,11 +471,12 @@ async function populatePronostici(selectedGiornata = null) {
   const select = document.getElementById("select-giornata-prono");
   if (!tbody || !Array.isArray(data) || !data.length) return;
 
-  const giornate = Array.from(new Set(data.map(r => r["Giornata"]).filter(Boolean)))
-    .sort((a, b) => Number(a) - Number(b));
+  const giornate = Array.from(new Set(data.map((r) => r["Giornata"]).filter(Boolean))).sort(
+    (a, b) => Number(a) - Number(b)
+  );
 
   if (select && select.options.length === 0) {
-    giornate.forEach(g => {
+    giornate.forEach((g) => {
       const opt = document.createElement("option");
       opt.value = g;
       opt.textContent = `Giornata ${g}`;
@@ -479,10 +489,10 @@ async function populatePronostici(selectedGiornata = null) {
   if (!giornataCorrente) return;
   if (select) select.value = String(giornataCorrente);
 
-  const filtrati = data.filter(r => String(r["Giornata"]) === String(giornataCorrente));
+  const filtrati = data.filter((r) => String(r["Giornata"]) === String(giornataCorrente));
   tbody.innerHTML = "";
 
-  filtrati.forEach(row => {
+  filtrati.forEach((row) => {
     const tr = document.createElement("tr");
     tr.classList.add("clickable");
 
@@ -562,7 +572,8 @@ function openPronoMatchModal(row) {
       </div>
     </div>
 
-    ${(alt1 || alt2) ? `
+    ${(alt1 || alt2)
+      ? `
       <div class="pred-modal-section">
         <h3>Altri esiti considerati</h3>
         <ul class="pred-prono-alt-list">
@@ -570,7 +581,8 @@ function openPronoMatchModal(row) {
           ${alt2 ? `<li>${alt2}</li>` : ""}
         </ul>
       </div>
-    ` : ""}
+    `
+      : ""}
 
     <div class="pred-modal-section">
       <h3>Motivazione</h3>
@@ -589,12 +601,12 @@ function setupDashboardTabs() {
   const contents = document.querySelectorAll(".tab-content");
   if (!tabs.length || !contents.length) return;
 
-  tabs.forEach(tab => {
+  tabs.forEach((tab) => {
     tab.addEventListener("click", (e) => {
       const tabName = e.currentTarget.dataset.tab;
 
-      tabs.forEach(t => t.classList.remove("active"));
-      contents.forEach(c => c.classList.remove("active"));
+      tabs.forEach((t) => t.classList.remove("active"));
+      contents.forEach((c) => c.classList.remove("active"));
 
       e.currentTarget.classList.add("active");
       const tabContent = document.getElementById(tabName);
@@ -618,9 +630,12 @@ function setupMobileNavbar() {
   };
 
   navToggle.addEventListener("click", toggleMenu);
-  navToggle.addEventListener("touchend", (e) => { e.preventDefault(); toggleMenu(e); });
+  navToggle.addEventListener("touchend", (e) => {
+    e.preventDefault();
+    toggleMenu(e);
+  });
 
-  navLinks.querySelectorAll("a").forEach(link => {
+  navLinks.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => {
       navLinks.classList.remove("nav-open");
       navToggle.classList.remove("nav-open");
@@ -645,7 +660,7 @@ function setupGlobalModalClose() {
       "join-modal",
     ];
 
-    ids.forEach(id => {
+    ids.forEach((id) => {
       const m = document.getElementById(id);
       if (m && e.target === m) m.classList.remove("active");
     });
@@ -668,7 +683,7 @@ async function populateClassificaFull() {
   tbody.innerHTML = "";
   data
     .sort((a, b) => Number(a["Posizione"]) - Number(b["Posizione"]))
-    .forEach(row => {
+    .forEach((row) => {
       const tr = document.createElement("tr");
       const pos = Number(row["Posizione"]);
       const squadra = row["Squadra"] || "-";
@@ -708,9 +723,9 @@ async function populateMarcatoriFull() {
 
   tbody.innerHTML = "";
   data
-    .filter(r => r["Posizione"])
+    .filter((r) => r["Posizione"])
     .sort((a, b) => Number(a["Posizione"]) - Number(b["Posizione"]))
-    .forEach(row => {
+    .forEach((row) => {
       const tr = document.createElement("tr");
       const giocatore = row["Nome Giocatore"] || row["Giocatore"] || "-";
       const club = row["Squadra"] || row["Club"] || "-";
@@ -755,22 +770,99 @@ function setupFullTablesModals() {
   const btnMarcatoriM = document.getElementById("open-full-marcatori-mobile");
 
   if (btnClassificaM && btnClassifica) {
-    btnClassificaM.addEventListener("click", (e) => { e.preventDefault(); btnClassifica.click(); });
+    btnClassificaM.addEventListener("click", (e) => {
+      e.preventDefault();
+      btnClassifica.click();
+    });
   }
   if (btnMarcatoriM && btnMarcatori) {
-    btnMarcatoriM.addEventListener("click", (e) => { e.preventDefault(); btnMarcatori.click(); });
+    btnMarcatoriM.addEventListener("click", (e) => {
+      e.preventDefault();
+      btnMarcatori.click();
+    });
   }
 }
 
 // =====================
-// NEON HOME: Results + Compare + Assist — CLEAN
+// Helper calendario / FIC (una sola volta)
+// =====================
+function toInt(x) {
+  const n = parseInt(x, 10);
+  return Number.isFinite(n) ? n : null;
+}
+function normTeamName(s) {
+  return String(s || "").trim();
+}
+function buildTeamDifficultyMap(rows) {
+  const map = new Map();
+  (rows || []).forEach((r) => {
+    const team = normTeamName(r.Squadra || r.squadra);
+    const d = Number(r.Difficulty ?? r.difficulty);
+    if (team) map.set(team, Number.isFinite(d) ? d : 3);
+  });
+  return map;
+}
+function buildMatchesByTeam(calendarRows) {
+  const byTeam = new Map();
+  (calendarRows || []).forEach((r) => {
+    const md = toInt(r.Giornata || r.giornata);
+    const casa = normTeamName(r.Casa || r.casa);
+    const trasf = normTeamName(r.Trasferta || r.trasferta);
+    if (!md || !casa || !trasf) return;
+
+    const m = { matchday: md, home: casa, away: trasf };
+
+    if (!byTeam.has(casa)) byTeam.set(casa, []);
+    if (!byTeam.has(trasf)) byTeam.set(trasf, []);
+
+    byTeam.get(casa).push(m);
+    byTeam.get(trasf).push(m);
+  });
+
+  byTeam.forEach((list) => list.sort((a, b) => a.matchday - b.matchday));
+  return byTeam;
+}
+function calcFantaIndexCalendario(team, currentMd, horizon, weights, matchesByTeam, diffMap) {
+  const t = normTeamName(team);
+  if (!t || !Number.isFinite(currentMd)) return null;
+
+  const list = matchesByTeam.get(t) || [];
+  const upcoming = list.filter((m) => m.matchday > currentMd).slice(0, horizon);
+  if (!upcoming.length) return null;
+
+  let num = 0;
+  let den = 0;
+
+  upcoming.forEach((m, i) => {
+    const w = Number(weights[i] ?? 1);
+    if (!Number.isFinite(w) || w <= 0) return;
+
+    const opponent = m.home === t ? m.away : m.home;
+    const d = Number(diffMap.get(opponent) ?? 3);
+
+    num += w * d;
+    den += w;
+  });
+
+  if (den === 0) return null;
+  return Math.round((num / den) * 100) / 100;
+}
+function readConfigMap(rows) {
+  const cfg = {};
+  (rows || []).forEach((r) => {
+    const k = String(r.key ?? r.Key ?? r.KEY ?? "").trim();
+    const v = r.value ?? r.Value ?? r.VALUE;
+    if (k) cfg[k] = v;
+  });
+  return cfg;
+}
+
+// =====================
+// NEON HOME: Results + Compare + Assist + Trade tool
 // =====================
 function neonHomeInit() {
   const isHome =
-    /(^|\/)index\.html$/.test(location.pathname) ||
-    location.pathname === "/" ||
-    location.pathname === "";
-
+    /(^|\/)index\.html$/.test(location.pathname) || location.pathname === "/" || location.pathname === "";
   if (!isHome) return;
 
   const $ = (id) => document.getElementById(id);
@@ -842,17 +934,17 @@ function neonHomeInit() {
 
   function mkResultCard({ home, away, homeGoals, awayGoals, badgeText, badgeClass }) {
     const safe = (s) => String(s ?? "").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-
-    const LOGOS =
-      (typeof CLUB_LOGOS !== "undefined" && CLUB_LOGOS) ||
-      (typeof CLUBLOGOS !== "undefined" && CLUBLOGOS) ||
-      {};
+    const LOGOS = CLUB_LOGOS || {};
 
     const homeLogo = LOGOS[home] || "";
     const awayLogo = LOGOS[away] || "";
 
-    const homeLogoHTML = homeLogo ? `<img class="neo-team-logo" src="${homeLogo}" alt="${safe(home)}" loading="lazy">` : "";
-    const awayLogoHTML = awayLogo ? `<img class="neo-team-logo" src="${awayLogo}" alt="${safe(away)}" loading="lazy">` : "";
+    const homeLogoHTML = homeLogo
+      ? `<img class="neo-team-logo" src="${homeLogo}" alt="${safe(home)}" loading="lazy">`
+      : "";
+    const awayLogoHTML = awayLogo
+      ? `<img class="neo-team-logo" src="${awayLogo}" alt="${safe(away)}" loading="lazy">`
+      : "";
 
     return `
       <article class="neo-card neo-match-card">
@@ -938,34 +1030,33 @@ function neonHomeInit() {
   }
 
   function fillAssistTables(rows) {
-  const bodies = [
-    document.getElementById("assist-body"),
-    document.getElementById("assist-body-mobile"),
-  ].filter(Boolean);
+    const bodies = [document.getElementById("assist-body"), document.getElementById("assist-body-mobile")].filter(
+      Boolean
+    );
 
-  bodies.forEach((tbody) => {
-    tbody.innerHTML = "";
+    bodies.forEach((tbody) => {
+      tbody.innerHTML = "";
 
-    rows.slice(0, 15).forEach((r, idx) => {
-      const tr = document.createElement("tr");
+      rows.slice(0, 15).forEach((r, idx) => {
+        const tr = document.createElement("tr");
 
-      const club = r.club || "-";
-      const logoUrl = CLUB_LOGOS?.[club];
-      const clubHTML = logoUrl
-        ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
-        : club;
+        const club = r.club || "-";
+        const logoUrl = CLUB_LOGOS?.[club];
+        const clubHTML = logoUrl
+          ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
+          : club;
 
-      tr.innerHTML = `
-        <td>${idx + 1}</td>
-        <td><strong>${r.player}</strong></td>
-        <td>${clubHTML}</td>
-        <td>${r.assist}</td>
-      `;
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td><strong>${r.player}</strong></td>
+          <td>${clubHTML}</td>
+          <td>${r.assist}</td>
+        `;
 
-      tbody.appendChild(tr);
+        tbody.appendChild(tr);
+      });
     });
-  });
-}
+  }
 
   function normalize(value, max) {
     const v = Number(value) || 0;
@@ -974,24 +1065,24 @@ function neonHomeInit() {
   }
 
   function buildRadarData(p, maxG, maxA) {
-  const g = Number(p?.gol || 0);
-  const a = Number(p?.assist || 0);
+    const g = Number(p?.gol || 0);
+    const a = Number(p?.assist || 0);
 
-  const gN = normalize(g, maxG);
-  const aN = normalize(a, maxA);
+    const gN = normalize(g, maxG);
+    const aN = normalize(a, maxA);
 
-  // Calendario: 1 (facile) -> 100, 5 (difficile) -> 0
-  const fic = Number(p?.fantaIndexCalendario);
-  const calClamped = Number.isFinite(fic) ? Math.max(1, Math.min(5, fic)) : 3;
-  const calN = Math.round((5 - calClamped) / 4 * 100);
+    // Calendario: 1 (facile) -> 100, 5 (difficile) -> 0
+    const fic = Number(p?.fantaIndexCalendario);
+    const calClamped = Number.isFinite(fic) ? Math.max(1, Math.min(5, fic)) : 3;
+    const calN = Math.round(((5 - calClamped) / 4) * 100);
 
-  // Produzione: pesiamo un po' di più il gol
-  const prod = normalize(g + 0.7 * a, maxG + 0.7 * maxA);
+    // Produzione: pesiamo un po' di più il gol
+    const prod = normalize(g + 0.7 * a, maxG + 0.7 * maxA);
 
-  return {
-    labels: ["Gol", "Assist", "Produzione", "Calendario", "Impatto", "Bonus"],
-    values: [gN, aN, prod, calN, prod, prod],
-  };
+    return {
+      labels: ["Gol", "Assist", "Produzione", "Calendario", "Impatto", "Bonus"],
+      values: [gN, aN, prod, calN, prod, prod],
+    };
   }
 
   function renderCompareKpis(A, B) {
@@ -1061,226 +1152,70 @@ function neonHomeInit() {
   }
 
   // =====================
- // ---------- PICKER UI (UNICO) ----------
-window.ALLPLAYERS = window.ALLPLAYERS || [];
+  // Picker & Trade tool (UNA SOLA VOLTA)
+  // =====================
+  window.ALLPLAYERS = window.ALLPLAYERS || [];
 
-const LOGOS = (typeof CLUBLOGOS !== "undefined") ? CLUBLOGOS : {};
+  const pick = {
+    wrap: document.getElementById("neo-player-picker"),
+    title: document.getElementById("neo-picker-title"),
+    search: document.getElementById("neo-picker-search"),
+    list: document.getElementById("neo-picker-list"),
 
-const pick = {
-  wrap: document.getElementById("neo-player-picker"),
-  title: document.getElementById("neo-picker-title"),
-  search: document.getElementById("neo-picker-search"),
-  list: document.getElementById("neo-picker-list"),
-  aBtn: document.getElementById("pick-a"),
-  bBtn: document.getElementById("pick-b"),
-  aLogo: document.getElementById("pick-a-logo"),
-  bLogo: document.getElementById("pick-b-logo"),
-  aName: document.getElementById("pick-a-name"),
-  bName: document.getElementById("pick-b-name"),
-  aSub: document.getElementById("pick-a-sub"),
-  bSub: document.getElementById("pick-b-sub"),
-  aStats: document.getElementById("pick-a-stats"),
-  bStats: document.getElementById("pick-b-stats"),
-};
+    aBtn: document.getElementById("pick-a"),
+    bBtn: document.getElementById("pick-b"),
 
-if (!pick.wrap || !pick.list || !pick.search || !pick.title) {
-  console.error("Picker HTML non trovato: controlla gli ID neo-player-picker / neo-picker-*");
-  return;
-}
+    aLogo: document.getElementById("pick-a-logo"),
+    bLogo: document.getElementById("pick-b-logo"),
+    aName: document.getElementById("pick-a-name"),
+    bName: document.getElementById("pick-b-name"),
+    aSub: document.getElementById("pick-a-sub"),
+    bSub: document.getElementById("pick-b-sub"),
+    aStats: document.getElementById("pick-a-stats"),
+    bStats: document.getElementById("pick-b-stats"),
+  };
 
-// Tool scambi (sezione nuova)
-let tradeA = null;
-let tradeB = null;
+  const tradeEls = {
+    aBtn: document.getElementById("trade-pick-a"),
+    bBtn: document.getElementById("trade-pick-b"),
+    aLogo: document.getElementById("trade-a-logo"),
+    bLogo: document.getElementById("trade-b-logo"),
+    aName: document.getElementById("trade-a-name"),
+    bName: document.getElementById("trade-b-name"),
+    aSub: document.getElementById("trade-a-sub"),
+    bSub: document.getElementById("trade-b-sub"),
+    aStats: document.getElementById("trade-a-stats"),
+    bStats: document.getElementById("trade-b-stats"),
+    cal: document.getElementById("trade-calendar"),
+    dec: document.getElementById("trade-decision"),
+  };
 
-// Stato picker
-let pickingTarget = "A";          // per comparatore classico
-let pickingMode = "compare";      // "compare" | "trade"
-let tradeTarget = "A";            // "A" | "B" quando pickingMode==="trade"
+  // Stato trade
+  let tradeA = null;
+  let tradeB = null;
 
-function clubLogoHTML(club) {
-  const url = LOGOS?.[club];
-  return url ? `<img src="${url}" alt="${club}" loading="lazy">` : "";
-}
+  // Stato picker
+  let pickingTarget = "A"; // per compare
+  let pickingMode = "compare"; // compare | trade
+  let tradeTarget = "A"; // A | B
 
-function chipsHTML(p) {
-  if (!p) return "";
-  const fic = (p.fantaIndexCalendario != null) ? p.fantaIndexCalendario : "-";
-  return `
-    <span class="neo-stat-chip">Gol <strong>${p.gol ?? 0}</strong></span>
-    <span class="neo-stat-chip">Assist <strong>${p.assist ?? 0}</strong></span>
-    <span class="neo-stat-chip">FIC <strong>${fic}</strong></span>
-  `;
-}
-
-function paintCompareCards(A, B) {
-  if (pick.aLogo) pick.aLogo.innerHTML = clubLogoHTML(A?.club);
-  if (pick.bLogo) pick.bLogo.innerHTML = clubLogoHTML(B?.club);
-  if (pick.aName) pick.aName.textContent = A?.player || "Seleziona";
-  if (pick.bName) pick.bName.textContent = B?.player || "Seleziona";
-  if (pick.aSub) pick.aSub.textContent = A?.club ? A.club : "Clicca per scegliere";
-  if (pick.bSub) pick.bSub.textContent = B?.club ? B.club : "Clicca per scegliere";
-  if (pick.aStats) pick.aStats.innerHTML = chipsHTML(A);
-  if (pick.bStats) pick.bStats.innerHTML = chipsHTML(B);
-}
-
-function openPicker(target) {
-  // Non aprire se non ho ancora i giocatori
-  if (!window.ALLPLAYERS || !window.ALLPLAYERS.length) {
-    console.warn("Giocatori non ancora caricati");
-    return;
-  }
-
-  pickingTarget = target;
-  if (pick.title) pick.title.textContent = (target === "A") ? "Scegli giocatore A" : "Scegli giocatore B";
-  pick.wrap.classList.add("active");
-  pick.wrap.setAttribute("aria-hidden", "false");
-  if (pick.search) {
-    pick.search.value = "";
-    pick.search.focus();
-  }
-  renderPickerList("");
-}
-
-function closePicker() {
-  pick.wrap.classList.remove("active");
-  pick.wrap.setAttribute("aria-hidden", "true");
-}
-
-function renderPickerList(q) {
-  const query = String(q || "").trim().toLowerCase();
-  const arr = window.ALLPLAYERS || [];
-const filtered = !query
-  ? arr
-  : arr.filter((p) =>
-      (p.player || "").toLowerCase().includes(query) ||
-      String(p.club || "").toLowerCase().includes(query)
-    );
-
-
-  pick.list.innerHTML = filtered.slice(0, 140).map(p => `
-    <button type="button" class="neo-picker-item" data-player="${encodeURIComponent(p.player)}">
-      <div class="neo-picker-item-logo">${clubLogoHTML(p.club)}</div>
-      <div class="neo-picker-item-main">
-        <div class="neo-picker-item-name">${p.player}</div>
-        <div class="neo-picker-item-sub">${p.club || "-"}</div>
-      </div>
-      <div class="neo-picker-item-badge">${p.gol ?? 0}G • ${p.assist ?? 0}A</div>
-    </button>
-  `).join("");
-}
-
-// Delegation: click sempre funzionante anche dopo render
-pick.list.addEventListener("click", (e) => {
-  const btn = e.target.closest(".neo-picker-item");
-  if (!btn) return;
-
-  const name = decodeURIComponent(btn.getAttribute("data-player") || "");
-  if (!name) return;
-
-  const idx = (window.ALLPLAYERS || []).findIndex(x => x.player === name);
-  if (idx < 0) return;
-
-  const chosen = window.ALLPLAYERS[idx];
-
-  if (pickingMode === "trade") {
-    if (tradeTarget === "A") tradeA = chosen;
-    else tradeB = chosen;
-    if (typeof rerenderTrade === "function") rerenderTrade();
-    closePicker();
-    return;
-  }
-
-  // Default: comparatore classico
-  if (pickingTarget === "A") els.aSel.selectedIndex = idx;
-  else els.bSel.selectedIndex = idx;
-
-  els.aSel.dispatchEvent(new Event("change", { bubbles: true }));
-  els.bSel.dispatchEvent(new Event("change", { bubbles: true }));
-  closePicker();
-});
-
-// Apertura picker (comparatore)
-pick.aBtn?.addEventListener("click", () => { pickingMode = "compare"; openPicker("A"); });
-pick.bBtn?.addEventListener("click", () => { pickingMode = "compare"; openPicker("B"); });
-
-// Apertura picker (scambi)
-tradeEls.aBtn?.addEventListener("click", () => { pickingMode = "trade"; tradeTarget = "A"; openPicker("A"); });
-tradeEls.bBtn?.addEventListener("click", () => { pickingMode = "trade"; tradeTarget = "B"; openPicker("B"); });
-
-// Search
-pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
-
-// Close su backdrop / X
-pick.wrap.addEventListener("click", (e) => {
-  const el = e.target;
-  if (el?.getAttribute?.("data-close") === "1") closePicker();
-  if (el?.dataset?.close === "1") closePicker();
-});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closePicker();
-});
-
-
- if (!pick.wrap || !pick.list || !pick.search || !pick.title) {
-  console.error("Picker HTML non trovato: controlla gli ID neo-player-picker / neo-picker-*");
-  return;
-}
-
-const tradeEls = {
-  aBtn: document.getElementById("trade-pick-a"),
-  bBtn: document.getElementById("trade-pick-b"),
-  aLogo: document.getElementById("trade-a-logo"),
-  bLogo: document.getElementById("trade-b-logo"),
-  aName: document.getElementById("trade-a-name"),
-  bName: document.getElementById("trade-b-name"),
-  aSub: document.getElementById("trade-a-sub"),
-  bSub: document.getElementById("trade-b-sub"),
-  aStats: document.getElementById("trade-a-stats"),
-  bStats: document.getElementById("trade-b-stats"),
-  cal: document.getElementById("trade-calendar"),
-  dec: document.getElementById("trade-decision"),
-};
-
-
-// CSS minimo per renderlo visibile
-if (!document.getElementById("neo-picker-fallback-style")) {
-  const st = document.createElement("style");
-  st.id = "neo-picker-fallback-style";
-  st.textContent = `
-    #neo-player-picker{position:fixed;inset:0;display:none;z-index:9999}
-    #neo-player-picker.active{display:block}
-    #neo-player-picker .neo-picker-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55)}
-    #neo-player-picker .neo-picker-panel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      width:min(760px,92vw);max-height:80vh;overflow:auto;
-      background:rgba(10,14,30,.92);border:1px solid rgba(255,255,255,.12);
-      border-radius:16px;box-shadow:0 20px 80px rgba(0,0,0,.6);padding:14px}
-    #neo-player-picker .neo-picker-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
-    #neo-player-picker .neo-picker-title{font-weight:700;color:#eaf2ff}
-    #neo-player-picker .neo-picker-close{background:transparent;border:0;color:#eaf2ff;font-size:26px;cursor:pointer;line-height:1}
-    #neo-player-picker .neo-picker-search{width:100%;margin:10px 0;padding:10px 12px;border-radius:12px;
-      border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#eaf2ff}
-    #neo-player-picker .neo-picker-list{display:flex;flex-direction:column;gap:8px}
-  `;
-  document.head.appendChild(st);
-}
-
-
+  // Logo helper
   function clubLogoHTML(club) {
-    const url = LOGOS?.[club];
+    const url = CLUB_LOGOS?.[club];
     return url ? `<img src="${url}" alt="${club}" loading="lazy">` : "";
   }
 
   function chipsHTML(p) {
-  if (!p) return "";
-  const fic = (p.fantaIndexCalendario != null) ? p.fantaIndexCalendario : "-";
-  return `
-    <span class="neo-stat-chip">Gol <strong>${p.gol || 0}</strong></span>
-    <span class="neo-stat-chip">Assist <strong>${p.assist || 0}</strong></span>
-    <span class="neo-stat-chip">Calendario <strong>${fic}</strong></span>
-  `;
-}
+    if (!p) return "";
+    const fic = p.fantaIndexCalendario != null ? p.fantaIndexCalendario : "-";
+    return `
+      <span class="neo-stat-chip">Gol <strong>${p.gol ?? 0}</strong></span>
+      <span class="neo-stat-chip">Assist <strong>${p.assist ?? 0}</strong></span>
+      <span class="neo-stat-chip">FIC <strong>${fic}</strong></span>
+    `;
+  }
 
-  function paintCards(A, B) {
+  function paintCompareCards(A, B) {
     if (pick.aLogo) pick.aLogo.innerHTML = clubLogoHTML(A?.club);
     if (pick.bLogo) pick.bLogo.innerHTML = clubLogoHTML(B?.club);
 
@@ -1295,19 +1230,20 @@ if (!document.getElementById("neo-picker-fallback-style")) {
   }
 
   function openPicker(target) {
-    if (!pick.wrap || !pick.list) return;
+    if (!pick.wrap || !pick.list || !pick.search || !pick.title) return;
+
+    if (!window.ALLPLAYERS || !window.ALLPLAYERS.length) {
+      console.warn("Giocatori non ancora caricati");
+      return;
+    }
+
     pickingTarget = target;
-
-    if (pick.title) pick.title.textContent = target === "A" ? "Scegli giocatore A" : "Scegli giocatore B";
-
+    pick.title.textContent = target === "A" ? "Scegli giocatore A" : "Scegli giocatore B";
     pick.wrap.classList.add("active");
     pick.wrap.setAttribute("aria-hidden", "false");
 
-    if (pick.search) {
-      pick.search.value = "";
-      pick.search.focus();
-    }
-
+    pick.search.value = "";
+    pick.search.focus();
     renderPickerList("");
   }
 
@@ -1319,18 +1255,20 @@ if (!document.getElementById("neo-picker-fallback-style")) {
 
   function renderPickerList(q) {
     if (!pick.list) return;
+
     const query = String(q || "").trim().toLowerCase();
+    const arr = window.ALLPLAYERS || [];
 
-  const filtered = !query
-  ? ALLPLAYERS
-  : ALLPLAYERS.filter((p) =>
-      (p.player || "").toLowerCase().includes(query) ||
-      String(p.club || "").toLowerCase().includes(query)
-    );
-
+    const filtered = !query
+      ? arr
+      : arr.filter(
+          (p) =>
+            (p.player || "").toLowerCase().includes(query) ||
+            String(p.club || "").toLowerCase().includes(query)
+        );
 
     pick.list.innerHTML = filtered
-      .slice(0, 120)
+      .slice(0, 140)
       .map(
         (p) => `
         <button type="button" class="neo-picker-item" data-player="${encodeURIComponent(p.player)}">
@@ -1339,102 +1277,66 @@ if (!document.getElementById("neo-picker-fallback-style")) {
             <div class="neo-picker-item-name">${p.player}</div>
             <div class="neo-picker-item-sub">${p.club || "-"}</div>
           </div>
-          <div class="neo-picker-item-badge">${p.gol || 0}G • ${p.assist || 0}A</div>
+          <div class="neo-picker-item-badge">${p.gol ?? 0}G • ${p.assist ?? 0}A</div>
         </button>
       `
       )
       .join("");
   }
 
-  pick.list.addEventListener("click", (e) => {
-  const btn = e.target.closest(".neo-picker-item");
-  if (!btn) return;
+  // Delegation (una sola volta)
+  if (pick.list) {
+    pick.list.addEventListener("click", (e) => {
+      const btn = e.target.closest(".neo-picker-item");
+      if (!btn) return;
 
-  const name = decodeURIComponent(btn.getAttribute("data-player") || "");
-  if (!name) return;
+      const name = decodeURIComponent(btn.getAttribute("data-player") || "");
+      if (!name) return;
 
-  const idx = ALLPLAYERS.findIndex(x => x.player === name);
-  if (idx < 0) return;
+      const idx = (window.ALLPLAYERS || []).findIndex((x) => x.player === name);
+      if (idx < 0) return;
 
-  const chosen = ALLPLAYERS[idx];
+      const chosen = window.ALLPLAYERS[idx];
 
-  // MODE SWITCH (trade vs compare)
-  if (pickingMode === "trade") {
-    if (tradeTarget === "A") tradeA = chosen;
-    else tradeB = chosen;
-    rerenderTrade();
-    closePicker();
-    return;
-  }
-
-  // Default: comparatore classico
-  if (pickingTarget === "A") els.aSel.selectedIndex = idx;
-  else els.bSel.selectedIndex = idx;
-
-  els.aSel.dispatchEvent(new Event("change", { bubbles: true }));
-  els.bSel.dispatchEvent(new Event("change", { bubbles: true }));
-  closePicker();
-});
-
-
-  pick.aBtn?.addEventListener("click", () => openPicker("A"));
-  pick.bBtn?.addEventListener("click", () => openPicker("B"));
-  pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
- document.getElementById("trade-pick-a")?.addEventListener("click", () => {
-  pickingMode = "trade";
-  tradeTarget = "A";
-  // openPicker("A"); // qui il parametro serve solo per titolo, puoi anche ignorarlo
-});
-
-document.getElementById("trade-pick-b")?.addEventListener("click", () => {
-  pickingMode = "trade";
-  tradeTarget = "B";
-  openPicker("B");
-});
-
-
-
-
-    // Rende cliccabile tutta la card (non solo il bottone interno)
-  const cardA = document.getElementById("pick-a-card") || pick.aBtn?.closest(".neo-pick-card") || pick.aBtn?.closest(".neo-card") || pick.aBtn;
-  const cardB = document.getElementById("pick-b-card") || pick.bBtn?.closest(".neo-pick-card") || pick.bBtn?.closest(".neo-card") || pick.bBtn;
-
-  const makeClickable = (el, target) => {
-    if (!el) return;
-    el.style.cursor = "pointer";
-    el.setAttribute("role", "button");
-    el.setAttribute("tabindex", "0");
-
-    el.addEventListener("click", () => openPicker(target));
-
-    el.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        openPicker(target);
+      if (pickingMode === "trade") {
+        if (tradeTarget === "A") tradeA = chosen;
+        else tradeB = chosen;
+        rerenderTrade();
+        closePicker();
+        return;
       }
+
+      // compare
+      if (pickingTarget === "A") els.aSel.selectedIndex = idx;
+      else els.bSel.selectedIndex = idx;
+
+      els.aSel.dispatchEvent(new Event("change", { bubbles: true }));
+      els.bSel.dispatchEvent(new Event("change", { bubbles: true }));
+      closePicker();
     });
-
-    // Effetto hover/active stile bottone (inline così non dipende dal CSS)
-    el.addEventListener("mouseenter", () => el.classList.add("neo-hover"));
-    el.addEventListener("mouseleave", () => el.classList.remove("neo-hover"));
-    el.addEventListener("mousedown", () => el.classList.add("neo-pressed"));
-    el.addEventListener("mouseup", () => el.classList.remove("neo-pressed"));
-  };
-
-  makeClickable(cardA, "A");
-  makeClickable(cardB, "B");
-
-  // Inietta stile hover/pressed se non esiste già nel CSS
-  if (!document.getElementById("neo-inline-hover-style")) {
-    const st = document.createElement("style");
-    st.id = "neo-inline-hover-style";
-    st.textContent = `
-      .neo-hover { transform: translateY(-1px); filter: brightness(1.06); }
-      .neo-pressed { transform: translateY(0px) scale(0.99); filter: brightness(0.98); }
-    `;
-    document.head.appendChild(st);
   }
 
+  pick.aBtn?.addEventListener("click", () => {
+    pickingMode = "compare";
+    openPicker("A");
+  });
+  pick.bBtn?.addEventListener("click", () => {
+    pickingMode = "compare";
+    openPicker("B");
+  });
+
+  tradeEls.aBtn?.addEventListener("click", () => {
+    pickingMode = "trade";
+    tradeTarget = "A";
+    openPicker("A");
+  });
+  tradeEls.bBtn?.addEventListener("click", () => {
+    pickingMode = "trade";
+    tradeTarget = "B";
+    openPicker("B");
+  });
+
+  pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
 
   pick.wrap?.addEventListener("click", (e) => {
     const el = e.target;
@@ -1446,291 +1348,99 @@ document.getElementById("trade-pick-b")?.addEventListener("click", () => {
     if (e.key === "Escape") closePicker();
   });
 
-  function toInt(x) {
-  const n = parseInt(x, 10);
-  return Number.isFinite(n) ? n : null;
-}
-function normTeamName(s) {
-  return String(s || "").trim();
-}
-function buildTeamDifficultyMap(rows) {
-  const map = new Map();
-  (rows || []).forEach(r => {
-    const team = normTeamName(r.Squadra || r.squadra);
-    const d = Number(r.Difficulty ?? r.difficulty);
-    if (team) map.set(team, Number.isFinite(d) ? d : 3);
-  });
-  return map;
-}
-function buildMatchesByTeam(calendarRows) {
-  const byTeam = new Map();
-  (calendarRows || []).forEach(r => {
-    const md = toInt(r.Giornata || r.giornata);
-    const casa = normTeamName(r.Casa || r.casa);
-    const trasf = normTeamName(r.Trasferta || r.trasferta);
-    if (!md || !casa || !trasf) return;
+  // Trade render
+  function renderTradeCards() {
+    const chips = (p) => {
+      if (!p) return "";
+      const fic = p.fantaIndexCalendario != null ? p.fantaIndexCalendario : "-";
+      return `
+        <span class="neo-stat-chip">Gol <strong>${p.gol ?? 0}</strong></span>
+        <span class="neo-stat-chip">Assist <strong>${p.assist ?? 0}</strong></span>
+        <span class="neo-stat-chip">FIC <strong>${fic}</strong></span>
+      `;
+    };
 
-    const m = { matchday: md, home: casa, away: trasf };
+    if (tradeEls.aLogo) tradeEls.aLogo.innerHTML = clubLogoHTML(tradeA?.club);
+    if (tradeEls.bLogo) tradeEls.bLogo.innerHTML = clubLogoHTML(tradeB?.club);
 
-    if (!byTeam.has(casa)) byTeam.set(casa, []);
-    if (!byTeam.has(trasf)) byTeam.set(trasf, []);
+    if (tradeEls.aName) tradeEls.aName.textContent = tradeA?.player || "Seleziona";
+    if (tradeEls.bName) tradeEls.bName.textContent = tradeB?.player || "Seleziona";
 
-    byTeam.get(casa).push(m);
-    byTeam.get(trasf).push(m);
-  });
+    if (tradeEls.aSub) tradeEls.aSub.textContent = tradeA?.club ? tradeA.club : "Clicca per scegliere";
+    if (tradeEls.bSub) tradeEls.bSub.textContent = tradeB?.club ? tradeB.club : "Clicca per scegliere";
 
-  byTeam.forEach(list => list.sort((a, b) => a.matchday - b.matchday));
-  return byTeam;
-}
-function calcFantaIndexCalendario(team, currentMd, horizon, weights, matchesByTeam, diffMap) {
-  const t = normTeamName(team);
-  if (!t || !Number.isFinite(currentMd)) return null;
-
-  const list = matchesByTeam.get(t) || [];
-  const upcoming = list.filter(m => m.matchday > currentMd).slice(0, horizon);
-  if (!upcoming.length) return null;
-
-  let num = 0;
-  let den = 0;
-
-  upcoming.forEach((m, i) => {
-    const w = Number(weights[i] ?? 1);
-    if (!Number.isFinite(w) || w <= 0) return;
-
-    const opponent = (m.home === t) ? m.away : m.home;
-    const d = Number(diffMap.get(opponent) ?? 3);
-
-    num += w * d;
-    den += w;
-  });
-
-  if (den === 0) return null;
-  return Math.round((num / den) * 100) / 100;
-}
-function readConfigMap(rows) {
-  const cfg = {};
-  (rows || []).forEach(r => {
-    const k = String(r.key ?? r.Key ?? r.KEY ?? "").trim();
-    const v = r.value ?? r.Value ?? r.VALUE;
-    if (k) cfg[k] = v;
-  });
-  return cfg;
-}
-
-
-  async function loadPlayersForCompare() {
-    try {
-      const [rosaRows, golRows, assistRows, calRows, ratingRows, cfgRows] = await Promise.all([
-  fetchSheetDataJson(SHEET_NAMES.rosaSerieA),
-  fetchSheetDataJson(SHEET_NAMES.classificaMarcatori),
-  fetchSheetDataJson(SHEET_NAMES.classificaAssist),
-  fetchSheetDataJson(SHEET_NAMES.calendario),
-  fetchSheetDataJson(SHEET_NAMES.teamRatings),
-  fetchSheetDataJson(SHEET_NAMES.config),
-]);
-
-      const map = new Map();
-
-      (rosaRows || []).forEach((r) => {
-  const player = String(r.Giocatore ?? r.Player ?? r.Nome ?? "").trim();
-
-  // Scarta righe spazzatura: vuote, solo numeri, o senza lettere
-  if (!player) return;
-  if (/^\d+$/.test(player)) return;
-  if (!/[a-zàèéìòù]/i.test(player)) return;
-        if (/^\d+\s+/.test(player)) return;
-
-
-  const club = String(r.Squadra ?? r.Club ?? "").trim();
-  map.set(player, { player, club, gol: 0, assist: 0 });
-});
-
-
-      (golRows || []).forEach((r) => {
-        const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
-        if (!player) return;
-        const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
-        const gol = Number(r.Gol ?? r.gol ?? 0) || 0;
-
-        if (!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
-        const obj = map.get(player);
-        obj.gol = gol;
-        if (!obj.club && club) obj.club = club;
-      });
-
-      (assistRows || []).forEach((r) => {
-        const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
-        if (!player) return;
-        const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
-        const assist = Number(r.Assist ?? r.assist ?? 0) || 0;
-
-        if (!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
-        const obj = map.get(player);
-        obj.assist = assist;
-        if (!obj.club && club) obj.club = club;
-      });
-
-      const players = Array.from(map.values()).sort((a, b) => a.player.localeCompare(b.player, "it"));
-
-      // --- FantaIndexCalendario ---
-const cfg = readConfigMap(cfgRows);
-const horizon = Number(cfg.calendar_horizon || 5) || 5;
-
-const weights = [
-  Number(cfg.calendar_w1 ?? 1.0),
-  Number(cfg.calendar_w2 ?? 0.95),
-  Number(cfg.calendar_w3 ?? 0.90),
-  Number(cfg.calendar_w4 ?? 0.85),
-  Number(cfg.calendar_w5 ?? 0.80),
-].slice(0, horizon);
-
-const diffMap = buildTeamDifficultyMap(ratingRows);
-const matchesByTeam = buildMatchesByTeam(calRows);
-
-      function getUpcomingMatches(team, currentMd, horizon, matchesByTeam) {
-  const t = normTeamName(team);
-  const list = matchesByTeam.get(t) || [];
-  return list.filter(m => m.matchday > currentMd).slice(0, horizon);
-}
-
-
-players.forEach(p => {
-  p.fantaIndexCalendario = calcFantaIndexCalendario(
-    p.club,
-    currentMatchday,   // variabile già esistente in neonHomeInit (settata da loadConfigMatchday)
-    horizon,
-    weights,
-    matchesByTeam,
-    diffMap
-  );
-  p.upcomingMatches = getUpcomingMatches(p.club, currentMatchday, horizon, matchesByTeam);
-});
-
-
-      if (!players.length) {
-        els.kpis.innerHTML = `<div class="neo-mini-card">Nessun giocatore trovato.</div>`;
-        return;
-      }
-
-      ALL_PLAYERS = players;
-
-      const maxG = Math.max(1, ...players.map((p) => p.gol || 0));
-      const maxA = Math.max(1, ...players.map((p) => p.assist || 0));
-
-      const opt = players.map((p) => `<option value="${encodeURIComponent(p.player)}">${p.player}</option>`).join("");
-
-      els.aSel.innerHTML = opt;
-      els.bSel.innerHTML = opt;
-
-      els.aSel.selectedIndex = 0;
-      els.bSel.selectedIndex = Math.min(1, players.length - 1);
-
-      function getSelected(sel) {
-        const name = decodeURIComponent(sel.value || "");
-        return players.find((p) => p.player === name) || players[0];
-      }
-
-      const doCompare = () => {
-        const A = getSelected(els.aSel);
-        const B = getSelected(els.bSel);
-        renderCompareKpis(A, B);
-        renderRadar(A, B, maxG, maxA);
-        paintCards(A, B);
-      };
-
-      els.btnCompare?.addEventListener("click", doCompare);
-      els.aSel.addEventListener("change", doCompare);
-      els.bSel.addEventListener("change", doCompare);
-
-      doCompare();
-      renderPickerList("");
-
-      fillAssistTables(
-        players
-          .slice()
-          .sort((a, b) => (b.assist - a.assist) || (b.gol - a.gol) || a.player.localeCompare(b.player, "it"))
-          .map((p) => ({ player: p.player, club: p.club || "-", assist: p.assist || 0 }))
-      );
-    } catch (e) {
-      console.error("Errore comparatore:", e);
-      els.kpis.innerHTML = `<div class="neo-mini-card">Errore caricamento giocatori.</div>`;
-    }
-    window.ALLPLAYERS = players;
-
+    if (tradeEls.aStats) tradeEls.aStats.innerHTML = chips(tradeA);
+    if (tradeEls.bStats) tradeEls.bStats.innerHTML = chips(tradeB);
   }
 
-  function toInt(x) {
-  const n = parseInt(x, 10);
-  return Number.isFinite(n) ? n : null;
-}
+  function fmtMatch(team, m) {
+    const opp = m.home === team ? m.away : m.home;
+    const ha = m.home === team ? "H" : "A";
+    return `${ha} vs ${opp}`;
+  }
 
-function normTeamName(s) {
-  return String(s || "").trim();
-}
+  function renderTradeCalendar() {
+    if (!tradeEls.cal) return;
 
-function buildTeamDifficultyMap(rows) {
-  const map = new Map();
-  (rows || []).forEach(r => {
-    const team = normTeamName(r.Squadra || r.squadra);
-    const d = Number(r.Difficulty ?? r.difficulty);
-    if (team) map.set(team, Number.isFinite(d) ? d : 3);
-  });
-  return map;
-}
+    if (!tradeA || !tradeB) {
+      tradeEls.cal.innerHTML = `<div class="neo-mini-card">Seleziona due giocatori per vedere il calendario.</div>`;
+      return;
+    }
 
-function buildMatchesByTeam(calendarRows) {
-  const byTeam = new Map();
+    const aList = (tradeA.upcomingMatches || []).map((m) => fmtMatch(tradeA.club, m));
+    const bList = (tradeB.upcomingMatches || []).map((m) => fmtMatch(tradeB.club, m));
 
-  (calendarRows || []).forEach(r => {
-    const md = toInt(r.Giornata || r.giornata);
-    const casa = normTeamName(r.Casa || r.casa);
-    const trasf = normTeamName(r.Trasferta || r.trasferta);
+    tradeEls.cal.innerHTML = `
+      <div style="font-weight:800;margin-bottom:8px">Calendario (prossime ${Math.max(
+        aList.length,
+        bList.length,
+        5
+      )})</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div style="opacity:.9;margin-bottom:6px">${tradeA.player} • ${tradeA.club} • FIC <strong>${
+      tradeA.fantaIndexCalendario ?? "-"
+    }</strong></div>
+          <div style="opacity:.85">${aList.join("<br>") || "-"}</div>
+        </div>
+        <div>
+          <div style="opacity:.9;margin-bottom:6px">${tradeB.player} • ${tradeB.club} • FIC <strong>${
+      tradeB.fantaIndexCalendario ?? "-"
+    }</strong></div>
+          <div style="opacity:.85">${bList.join("<br>") || "-"}</div>
+        </div>
+      </div>
+    `;
+  }
 
-    if (!md || !casa || !trasf) return;
+  function renderTradeDecision() {
+    if (!tradeEls.dec) return;
 
-    const m1 = { matchday: md, home: casa, away: trasf };
-    const m2 = { matchday: md, home: casa, away: trasf };
+    if (!tradeA || !tradeB || tradeA.fantaIndexCalendario == null || tradeB.fantaIndexCalendario == null) {
+      tradeEls.dec.innerHTML = `<div class="neo-mini-card">Decisione: dati calendario non disponibili per uno dei due.</div>`;
+      return;
+    }
 
-    if (!byTeam.has(casa)) byTeam.set(casa, []);
-    if (!byTeam.has(trasf)) byTeam.set(trasf, []);
+    const a = Number(tradeA.fantaIndexCalendario);
+    const b = Number(tradeB.fantaIndexCalendario);
 
-    byTeam.get(casa).push(m1);
-    byTeam.get(trasf).push(m2);
-  });
+    let text = "Calendario equivalente: guarda anche forma, titolarità e ruolo.";
+    if (b < a) text = `In base al calendario sceglierei <strong>${tradeB.player}</strong> (FIC più basso).`;
+    if (a < b) text = `In base al calendario sceglierei <strong>${tradeA.player}</strong> (FIC più basso).`;
 
-  // Ordina per giornata
-  byTeam.forEach(list => list.sort((a, b) => a.matchday - b.matchday));
-  return byTeam;
-}
+    tradeEls.dec.innerHTML = `
+      <div style="font-weight:800;margin-bottom:8px">Scelta consigliata (solo calendario)</div>
+      <div>${text}</div>
+    `;
+  }
 
-function calcFantaIndexCalendario(team, currentMd, horizon, weights, matchesByTeam, diffMap) {
-  const t = normTeamName(team);
-  if (!t || !Number.isFinite(currentMd)) return null;
+  function rerenderTrade() {
+    renderTradeCards();
+    renderTradeCalendar();
+    renderTradeDecision();
+  }
 
-  const list = matchesByTeam.get(t) || [];
-  const upcoming = list.filter(m => m.matchday > currentMd).slice(0, horizon);
-
-  if (!upcoming.length) return null;
-
-  let num = 0;
-  let den = 0;
-
-  upcoming.forEach((m, i) => {
-    const w = Number(weights[i] ?? 1);
-    if (!Number.isFinite(w) || w <= 0) return;
-
-    const opponent = (m.home === t) ? m.away : m.home;
-    const d = Number(diffMap.get(opponent) ?? 3);
-
-    num += w * d;
-    den += w;
-  });
-
-  if (den === 0) return null;
-  return Math.round((num / den) * 100) / 100; // 2 decimali
-}
-
-
+  // Tabs neon
   function hookNeoTabs() {
     document.querySelectorAll(".neo-tabs .neo-tab").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -1778,11 +1488,147 @@ function calcFantaIndexCalendario(team, currentMd, horizon, weights, matchesByTe
     });
   }
 
+  async function loadPlayersForCompare() {
+    try {
+      const [rosaRows, golRows, assistRows, calRows, ratingRows, cfgRows] = await Promise.all([
+        fetchSheetDataJson(SHEET_NAMES.rosaSerieA),
+        fetchSheetDataJson(SHEET_NAMES.classificaMarcatori),
+        fetchSheetDataJson(SHEET_NAMES.classificaAssist),
+        fetchSheetDataJson(SHEET_NAMES.calendario),
+        fetchSheetDataJson(SHEET_NAMES.teamRatings),
+        fetchSheetDataJson(SHEET_NAMES.config),
+      ]);
+
+      const map = new Map();
+
+      (rosaRows || []).forEach((r) => {
+        const player = String(r.Giocatore ?? r.Player ?? r.Nome ?? "").trim();
+
+        // Scarta righe spazzatura
+        if (!player) return;
+        if (/^\d+$/.test(player)) return;
+        if (!/[a-zàèéìòù]/i.test(player)) return;
+        if (/^\d+\s+/.test(player)) return;
+
+        const club = String(r.Squadra ?? r.Club ?? "").trim();
+        map.set(player, { player, club, gol: 0, assist: 0 });
+      });
+
+      (golRows || []).forEach((r) => {
+        const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
+        if (!player) return;
+        const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
+        const gol = Number(r.Gol ?? r.gol ?? 0) || 0;
+
+        if (!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
+        const obj = map.get(player);
+        obj.gol = gol;
+        if (!obj.club && club) obj.club = club;
+      });
+
+      (assistRows || []).forEach((r) => {
+        const player = String(r.Giocatore ?? r["Nome Giocatore"] ?? r.Player ?? r.player ?? "").trim();
+        if (!player) return;
+        const club = String(r.Club ?? r.Squadra ?? r.club ?? r.squadra ?? "").trim();
+        const assist = Number(r.Assist ?? r.assist ?? 0) || 0;
+
+        if (!map.has(player)) map.set(player, { player, club, gol: 0, assist: 0 });
+        const obj = map.get(player);
+        obj.assist = assist;
+        if (!obj.club && club) obj.club = club;
+      });
+
+      const players = Array.from(map.values()).sort((a, b) => a.player.localeCompare(b.player, "it"));
+
+      const cfg = readConfigMap(cfgRows);
+      const horizon = Number(cfg.calendar_horizon || 5) || 5;
+
+      const weights = [
+        Number(cfg.calendar_w1 ?? 1.0),
+        Number(cfg.calendar_w2 ?? 0.95),
+        Number(cfg.calendar_w3 ?? 0.9),
+        Number(cfg.calendar_w4 ?? 0.85),
+        Number(cfg.calendar_w5 ?? 0.8),
+      ].slice(0, horizon);
+
+      const diffMap = buildTeamDifficultyMap(ratingRows);
+      const matchesByTeam = buildMatchesByTeam(calRows);
+
+      function getUpcomingMatches(team, currentMd, horizonLocal, matchesByTeamLocal) {
+        const t = normTeamName(team);
+        const list = matchesByTeamLocal.get(t) || [];
+        return list.filter((m) => m.matchday > currentMd).slice(0, horizonLocal);
+      }
+
+      players.forEach((p) => {
+        p.fantaIndexCalendario = calcFantaIndexCalendario(
+          p.club,
+          currentMatchday,
+          horizon,
+          weights,
+          matchesByTeam,
+          diffMap
+        );
+        p.upcomingMatches = getUpcomingMatches(p.club, currentMatchday, horizon, matchesByTeam);
+      });
+
+      if (!players.length) {
+        els.kpis.innerHTML = `<div class="neo-mini-card">Nessun giocatore trovato.</div>`;
+        return;
+      }
+
+      // SORGENTE UNICA
+      window.ALLPLAYERS = players;
+
+      const maxG = Math.max(1, ...players.map((p) => p.gol || 0));
+      const maxA = Math.max(1, ...players.map((p) => p.assist || 0));
+
+      const opt = players
+        .map((p) => `<option value="${encodeURIComponent(p.player)}">${p.player}</option>`)
+        .join("");
+
+      els.aSel.innerHTML = opt;
+      els.bSel.innerHTML = opt;
+
+      els.aSel.selectedIndex = 0;
+      els.bSel.selectedIndex = Math.min(1, players.length - 1);
+
+      function getSelected(sel) {
+        const name = decodeURIComponent(sel.value || "");
+        return players.find((p) => p.player === name) || players[0];
+      }
+
+      const doCompare = () => {
+        const A = getSelected(els.aSel);
+        const B = getSelected(els.bSel);
+        renderCompareKpis(A, B);
+        renderRadar(A, B, maxG, maxA);
+        paintCompareCards(A, B);
+      };
+
+      els.btnCompare?.addEventListener("click", doCompare);
+      els.aSel.addEventListener("change", doCompare);
+      els.bSel.addEventListener("change", doCompare);
+
+      doCompare();
+      renderPickerList("");
+
+      fillAssistTables(
+        players
+          .slice()
+          .sort((a, b) => b.assist - a.assist || b.gol - a.gol || a.player.localeCompare(b.player, "it"))
+          .map((p) => ({ player: p.player, club: p.club || "-", assist: p.assist || 0 }))
+      );
+    } catch (e) {
+      console.error("Errore comparatore:", e);
+      els.kpis.innerHTML = `<div class="neo-mini-card">Errore caricamento giocatori.</div>`;
+    }
+  }
+
   hookCarouselArrows();
   hookNeoTabs();
   hookMatchdayButtons();
 
-   // Hover/pressed anche sui bottoni classici (pill)
   [els.btnCur, els.btnPrev].filter(Boolean).forEach((b) => {
     b.style.cursor = "pointer";
     b.addEventListener("mouseenter", () => b.classList.add("neo-hover"));
@@ -1796,91 +1642,6 @@ function calcFantaIndexCalendario(team, currentMd, horizon, weights, matchesByTe
     await loadResultsForMatchday(selectedMatchday);
     await loadPlayersForCompare();
   })();
-
-  function renderTradeCards(){
-  const clubLogo = (club) => {
-    const url = CLUBLOGOS?.[club];
-    return url ? `<img src="${url}" alt="${club}" loading="lazy">` : "";
-  };
-  const chips = (p) => {
-    if (!p) return "";
-    const fic = (p.fantaIndexCalendario != null) ? p.fantaIndexCalendario : "-";
-    return `
-      <span class="neo-stat-chip">Gol <strong>${p.gol ?? 0}</strong></span>
-      <span class="neo-stat-chip">Assist <strong>${p.assist ?? 0}</strong></span>
-      <span class="neo-stat-chip">FIC <strong>${fic}</strong></span>
-    `;
-  };
-
-  if (tradeEls.aLogo) tradeEls.aLogo.innerHTML = clubLogo(tradeA?.club);
-  if (tradeEls.bLogo) tradeEls.bLogo.innerHTML = clubLogo(tradeB?.club);
-  if (tradeEls.aName) tradeEls.aName.textContent = tradeA?.player || "Seleziona";
-  if (tradeEls.bName) tradeEls.bName.textContent = tradeB?.player || "Seleziona";
-  if (tradeEls.aSub) tradeEls.aSub.textContent = tradeA?.club ? tradeA.club : "Clicca per scegliere";
-  if (tradeEls.bSub) tradeEls.bSub.textContent = tradeB?.club ? tradeB.club : "Clicca per scegliere";
-  if (tradeEls.aStats) tradeEls.aStats.innerHTML = chips(tradeA);
-  if (tradeEls.bStats) tradeEls.bStats.innerHTML = chips(tradeB);
-}
-
-function fmtMatch(team, m){
-  const opp = (m.home === team) ? m.away : m.home;
-  const ha = (m.home === team) ? "H" : "A";
-  return `${ha} vs ${opp}`;
-}
-
-function renderTradeCalendar(){
-  if (!tradeEls.cal) return;
-
-  if (!tradeA || !tradeB){
-    tradeEls.cal.innerHTML = `<div class="neo-mini-card">Seleziona due giocatori per vedere il calendario.</div>`;
-    return;
-  }
-
-  const aList = (tradeA.upcomingMatches || []).map(m => fmtMatch(tradeA.club, m));
-  const bList = (tradeB.upcomingMatches || []).map(m => fmtMatch(tradeB.club, m));
-
-  tradeEls.cal.innerHTML = `
-    <div style="font-weight:800;margin-bottom:8px">Calendario (prossime ${Math.max(aList.length,bList.length,5)} )</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div>
-        <div style="opacity:.9;margin-bottom:6px">${tradeA.player} • ${tradeA.club} • FIC <strong>${tradeA.fantaIndexCalendario ?? "-"}</strong></div>
-        <div style="opacity:.85">${aList.join("<br>") || "-"}</div>
-      </div>
-      <div>
-        <div style="opacity:.9;margin-bottom:6px">${tradeB.player} • ${tradeB.club} • FIC <strong>${tradeB.fantaIndexCalendario ?? "-"}</strong></div>
-        <div style="opacity:.85">${bList.join("<br>") || "-"}</div>
-      </div>
-    </div>
-  `;
-}
-
-function renderTradeDecision(){
-  if (!tradeEls.dec) return;
-
-  if (!tradeA || !tradeB || tradeA.fantaIndexCalendario == null || tradeB.fantaIndexCalendario == null){
-    tradeEls.dec.innerHTML = `<div class="neo-mini-card">Decisione: dati calendario non disponibili per uno dei due.</div>`;
-    return;
-  }
-
-  const a = Number(tradeA.fantaIndexCalendario);
-  const b = Number(tradeB.fantaIndexCalendario);
-
-  let text = "Calendario equivalente: guarda anche forma, titolarità e ruolo.";
-  if (b < a) text = `In base al calendario sceglierei <strong>${tradeB.player}</strong> (FIC più basso).`;
-  if (a < b) text = `In base al calendario sceglierei <strong>${tradeA.player}</strong> (FIC più basso).`;
-
-  tradeEls.dec.innerHTML = `
-    <div style="font-weight:800;margin-bottom:8px">Scelta consigliata (solo calendario)</div>
-    <div>${text}</div>
-  `;
-}
-
-function rerenderTrade(){
-  renderTradeCards();
-  renderTradeCalendar();
-  renderTradeDecision();
-}
-
 }
 
 // =====================
