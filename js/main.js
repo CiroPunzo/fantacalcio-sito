@@ -1455,6 +1455,13 @@ const weights = [
 const diffMap = buildTeamDifficultyMap(ratingRows);
 const matchesByTeam = buildMatchesByTeam(calRows);
 
+      function getUpcomingMatches(team, currentMd, horizon, matchesByTeam) {
+  const t = normTeamName(team);
+  const list = matchesByTeam.get(t) || [];
+  return list.filter(m => m.matchday > currentMd).slice(0, horizon);
+}
+
+
 players.forEach(p => {
   p.fantaIndexCalendario = calcFantaIndexCalendario(
     p.club,
@@ -1464,6 +1471,7 @@ players.forEach(p => {
     matchesByTeam,
     diffMap
   );
+  p.upcomingMatches = getUpcomingMatches(p.club, currentMatchday, horizon, matchesByTeam);
 });
 
 
