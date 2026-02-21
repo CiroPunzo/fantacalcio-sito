@@ -4467,6 +4467,177 @@ body{
   z-index:2;
 }
 
+/* =========================================================
+   NEON OVERRIDE — TELEGRAM CTA
+   Incolla in fondo a style.css
+   ========================================================= */
+
+#telegram-cta.telegram-section-premium{
+  /* usa palette Neo invece del gold */
+  background:
+    radial-gradient(900px 520px at 12% 25%, rgba(102,247,255,.14), transparent 60%),
+    radial-gradient(900px 520px at 85% 65%, rgba(176,108,255,.14), transparent 60%),
+    linear-gradient(180deg, var(--neo-bg), var(--neo-bg-2));
+  border-top: 1px solid rgba(120,245,255,.14);
+  border-bottom: 1px solid rgba(176,108,255,.12);
+  padding: 72px 20px;
+}
+
+#telegram-cta .telegram-decoration{ opacity: .22; } /* prima era 0.05 gold */ /* [file:159] */
+#telegram-cta .telegram-deco-1{
+  background: radial-gradient(circle at 30% 30%, rgba(102,247,255,.35), transparent 60%);
+}
+#telegram-cta .telegram-deco-2{
+  background: radial-gradient(circle at 30% 30%, rgba(176,108,255,.30), transparent 60%);
+}
+
+#telegram-cta .telegram-container{
+  gap: 28px;
+  grid-template-columns: 1.25fr .75fr;
+  align-items: start;
+}
+@media (max-width: 980px){
+  #telegram-cta .telegram-container{ grid-template-columns: 1fr; }
+}
+
+#telegram-cta .telegram-title{
+  color: var(--neo-text);
+  text-shadow: 0 0 22px rgba(102,247,255,.14);
+  font-size: clamp(26px, 3vw, 40px);
+}
+
+#telegram-cta .telegram-subtitle{
+  color: var(--neo-muted);
+  font-size: 1.02rem;
+}
+
+/* Features: da “gold left border” -> mini neo cards */
+#telegram-cta .telegram-features{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0 6px;
+}
+@media (max-width: 720px){
+  #telegram-cta .telegram-features{ grid-template-columns: 1fr; }
+}
+
+#telegram-cta .telegram-feature{
+  border-left: none;
+  border-radius: 16px;
+  background: rgba(10,12,40,.30);
+  border: 1px solid rgba(120,245,255,.12);
+  padding: 14px 14px;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, filter .15s ease;
+}
+
+#telegram-cta .telegram-feature:hover{
+  padding-left: 14px; /* annulla l’effetto “shift” vecchio */
+  transform: translateY(-2px);
+  border-color: rgba(102,247,255,.28);
+  box-shadow: 0 0 0 3px rgba(102,247,255,.08);
+  filter: brightness(1.06);
+}
+
+#telegram-cta .telegram-feature-icon{
+  width: 38px;
+  min-width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(102,247,255,.08);
+  border: 1px solid rgba(102,247,255,.18);
+  font-size: 18px;
+}
+
+#telegram-cta .telegram-feature strong{
+  color: rgba(234,242,255,.92);
+  font-size: .95rem;
+}
+
+#telegram-cta .telegram-feature p{
+  color: rgba(234,242,255,.70);
+}
+
+/* Bottoni: rimangono le tue classi, ma li facciamo “pill neo” */
+#telegram-cta .telegram-cta-buttons{
+  gap: 12px;
+  margin: 16px 0 0;
+}
+
+#telegram-cta .btn-telegram-primary,
+#telegram-cta .btn-telegram-secondary{
+  border-radius: 999px;
+  padding: 12px 16px;
+  font-size: .9rem;
+  border: 1px solid rgba(120,245,255,.18);
+}
+
+#telegram-cta .btn-telegram-primary{
+  background: linear-gradient(90deg, rgba(176,108,255,.28), rgba(102,247,255,.20));
+  color: var(--neo-text);
+  box-shadow: 0 0 0 3px rgba(176,108,255,.08), 0 16px 44px rgba(0,0,0,.35);
+}
+
+#telegram-cta .btn-telegram-primary:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px rgba(176,108,255,.10), 0 0 28px rgba(102,247,255,.10);
+}
+
+#telegram-cta .btn-telegram-secondary{
+  background: rgba(10,12,40,.25);
+  color: rgba(234,242,255,.86);
+  border-color: rgba(176,108,255,.18);
+}
+
+#telegram-cta .btn-telegram-secondary:hover{
+  background: rgba(176,108,255,.10);
+  border-color: rgba(176,108,255,.35);
+  box-shadow: 0 0 0 3px rgba(176,108,255,.08);
+  transform: translateY(-2px);
+}
+
+#telegram-cta .telegram-guarantee{
+  color: rgba(234,242,255,.60);
+  font-size: .85rem;
+}
+
+/* QR box: da gold -> neo glass */
+#telegram-cta .telegram-qr-box{
+  background: rgba(10,12,40,.30);
+  border: 1px solid rgba(120,245,255,.14);
+  border-radius: 18px;
+  padding: 18px;
+  max-width: 320px;
+}
+
+#telegram-cta .telegram-qr-box:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 3px rgba(102,247,255,.08), 0 22px 60px rgba(0,0,0,.50);
+  border-color: rgba(102,247,255,.28);
+  background: rgba(10,12,40,.34);
+}
+
+#telegram-cta .telegram-qr-label{
+  color: rgba(234,242,255,.80);
+  letter-spacing: .10em;
+  font-size: .78rem;
+}
+
+#telegram-cta .telegram-qr-image{
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,.12);
+}
+
+#telegram-cta .telegram-qr-hint{
+  color: rgba(234,242,255,.60);
+  font-style: normal;
+}
+
+
 
 
 
