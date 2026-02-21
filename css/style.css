@@ -4637,6 +4637,129 @@ body{
   font-style: normal;
 }
 
+/* =========================================================
+   NEON OVERRIDE — FOOTER
+   Target: footer.footer-premium + banner interno
+   Incolla in fondo a style.css
+   ========================================================= */
+
+.footer-premium{
+  background:
+    radial-gradient(900px 520px at 12% 30%, rgba(102,247,255,.10), transparent 60%),
+    radial-gradient(900px 520px at 85% 75%, rgba(176,108,255,.10), transparent 60%),
+    linear-gradient(180deg, var(--neo-bg-2), #030518);
+  border-top: 1px solid rgba(120,245,255,.14);
+  color: var(--neo-text);
+}
+
+.footer-premium .footer-decoration{
+  background: radial-gradient(circle, rgba(176,108,255,.10), transparent 62%);
+  opacity: 1;
+}
+
+/* CTA banner */
+.footer-premium .footer-cta-banner{
+  background: rgba(10,12,40,.30);
+  border: 1px solid rgba(120,245,255,.14);
+  border-radius: 18px;
+  box-shadow: 0 18px 70px rgba(0,0,0,.45);
+  backdrop-filter: blur(10px);
+}
+
+.footer-premium .footer-cta-banner h3{
+  color: var(--neo-text);
+  text-shadow: 0 0 18px rgba(102,247,255,.14);
+}
+
+.footer-premium .footer-cta-banner p{
+  color: var(--neo-muted);
+}
+
+.footer-premium .footer-cta-btn{
+  border-radius: 999px;
+  padding: 12px 18px;
+  border: 1px solid rgba(176,108,255,.38);
+  background: linear-gradient(90deg, rgba(176,108,255,.28), rgba(102,247,255,.20));
+  color: var(--neo-text);
+  box-shadow: 0 0 0 3px rgba(176,108,255,.08), 0 16px 44px rgba(0,0,0,.35);
+}
+
+.footer-premium .footer-cta-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px rgba(176,108,255,.10), 0 0 28px rgba(102,247,255,.10);
+}
+
+/* Main grid separator */
+.footer-premium .footer-main{
+  border-bottom: 1px solid rgba(120,245,255,.10);
+}
+
+/* Brand */
+.footer-premium .footer-logo h4{
+  color: var(--neo-text);
+}
+.footer-premium .footer-logo p,
+.footer-premium .footer-bio{
+  color: rgba(234,242,255,.70);
+}
+
+/* Col titles */
+.footer-premium .footer-col-title{
+  color: rgba(234,242,255,.82);
+}
+
+/* Links */
+.footer-premium .footer-links a{
+  color: rgba(234,242,255,.76);
+}
+.footer-premium .footer-links a:hover{
+  color: rgba(102,247,255,.95);
+  padding-left: 4px;
+}
+
+/* Social chips */
+.footer-premium .footer-social-link{
+  background: rgba(10,12,40,.30);
+  border: 1px solid rgba(120,245,255,.14);
+  color: rgba(234,242,255,.86);
+  border-radius: 999px;
+}
+
+.footer-premium .footer-social-link:hover{
+  border-color: rgba(102,247,255,.30);
+  box-shadow: 0 0 0 3px rgba(102,247,255,.08);
+  color: rgba(102,247,255,.95);
+}
+
+/* Stats column: da “left border gold” -> neo mini cards */
+.footer-premium .footer-stat{
+  background: rgba(10,12,40,.30);
+  border: 1px solid rgba(176,108,255,.16);
+  border-left: none;
+  border-radius: 14px;
+}
+
+.footer-premium .footer-stat-value{
+  color: rgba(102,247,255,.95);
+  text-shadow: 0 0 14px rgba(102,247,255,.18);
+}
+
+.footer-premium .footer-stat-label{
+  color: rgba(234,242,255,.62);
+}
+
+/* Bottom line */
+.footer-premium .footer-bottom{
+  border-top: 1px solid rgba(120,245,255,.10);
+}
+.footer-premium .footer-copyright{
+  color: rgba(234,242,255,.72);
+}
+.footer-premium .footer-disclaimer{
+  color: rgba(234,242,255,.52);
+}
+
+
 
 
 
