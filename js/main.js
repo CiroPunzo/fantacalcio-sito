@@ -1143,12 +1143,14 @@ if (!document.getElementById("neo-picker-fallback-style")) {
   }
 
   function chipsHTML(p) {
-    if (!p) return "";
-    return `
-      <span class="neo-stat-chip">Gol <strong>${p.gol || 0}</strong></span>
-      <span class="neo-stat-chip">Assist <strong>${p.assist || 0}</strong></span>
-    `;
-  }
+  if (!p) return "";
+  const fic = (p.fantaIndexCalendario != null) ? p.fantaIndexCalendario : "-";
+  return `
+    <span class="neo-stat-chip">Gol <strong>${p.gol || 0}</strong></span>
+    <span class="neo-stat-chip">Assist <strong>${p.assist || 0}</strong></span>
+    <span class="neo-stat-chip">Calendario <strong>${fic}</strong></span>
+  `;
+}
 
   function paintCards(A, B) {
     if (pick.aLogo) pick.aLogo.innerHTML = clubLogoHTML(A?.club);
@@ -1404,6 +1406,33 @@ function readConfigMap(rows) {
       });
 
       const players = Array.from(map.values()).sort((a, b) => a.player.localeCompare(b.player, "it"));
+
+      // --- FantaIndexCalendario ---
+const cfg = readConfigMap(cfgRows);
+const horizon = Number(cfg.calendar_horizon || 5) || 5;
+
+const weights = [
+  Number(cfg.calendar_w1 ?? 1.0),
+  Number(cfg.calendar_w2 ?? 0.95),
+  Number(cfg.calendar_w3 ?? 0.90),
+  Number(cfg.calendar_w4 ?? 0.85),
+  Number(cfg.calendar_w5 ?? 0.80),
+].slice(0, horizon);
+
+const diffMap = buildTeamDifficultyMap(ratingRows);
+const matchesByTeam = buildMatchesByTeam(calRows);
+
+players.forEach(p => {
+  p.fantaIndexCalendario = calcFantaIndexCalendario(
+    p.club,
+    currentMatchday,   // variabile già esistente in neonHomeInit (settata da loadConfigMatchday)
+    horizon,
+    weights,
+    matchesByTeam,
+    diffMap
+  );
+});
+
 
       if (!players.length) {
         els.kpis.innerHTML = `<div class="neo-mini-card">Nessun giocatore trovato.</div>`;
