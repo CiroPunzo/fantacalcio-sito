@@ -1160,6 +1160,10 @@ if (!document.getElementById("neo-picker-fallback-style")) {
 
 
   let pickingTarget = "A";
+  let pickingMode = "compare"; // "compare" | "trade"
+let tradeTarget = "A";       // "A" | "B"
+let tradeA = null;
+let tradeB = null;
   let ALL_PLAYERS = [];
 
   function clubLogoHTML(club) {
