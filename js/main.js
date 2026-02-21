@@ -1242,9 +1242,6 @@ document.addEventListener("keydown", (e) => {
   return;
 }
 
-  let tradeA = null;
-let tradeB = null;
-
 const tradeEls = {
   aBtn: document.getElementById("trade-pick-a"),
   bBtn: document.getElementById("trade-pick-b"),
