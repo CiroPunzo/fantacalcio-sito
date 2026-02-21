@@ -1137,8 +1137,7 @@ if (!document.getElementById("neo-picker-fallback-style")) {
 
   let pickingTarget = "A";
   let pickingMode = "compare"; // "compare" | "trade"
-let tradeTarget = "A";       // "A" | "B"
-  let ALL_PLAYERS = [];
+let tradeTarget = "A";       // "A" | "B;
 
   function clubLogoHTML(club) {
     const url = LOGOS?.[club];
