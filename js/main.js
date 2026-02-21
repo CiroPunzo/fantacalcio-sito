@@ -1678,6 +1678,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await populateAnalisiFantacalcio();
     await populatePronostici();
   }
+
 });
 
 
