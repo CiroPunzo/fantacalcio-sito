@@ -1178,15 +1178,6 @@ function neonHomeInit() {
   pick.bBtn?.addEventListener("click", () => openPicker("B"));
   pick.search?.addEventListener("input", (e) => renderPickerList(e.target.value));
 
-  const cardA = pick.aBtn?.closest(".neo-pick-card") || pick.aBtn?.parentElement;
-const cardB = pick.bBtn?.closest(".neo-pick-card") || pick.bBtn?.parentElement;
-
-[ [cardA, "A"], [cardB, "B"] ].forEach(([el, t]) => {
-  if (!el) return;
-  el.style.cursor = "pointer";
-  el.addEventListener("click", () => openPicker(t));
-});
-
 
     // Rende cliccabile tutta la card (non solo il bottone interno)
   const cardA = document.getElementById("pick-a-card") || pick.aBtn?.closest(".neo-pick-card") || pick.aBtn?.closest(".neo-card") || pick.aBtn;
