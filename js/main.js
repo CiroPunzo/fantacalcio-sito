@@ -909,6 +909,12 @@ setLockedState(!isUnlocked());
 unlockBtn?.addEventListener("click", () => {
   document.getElementById("join-modal")?.classList.add("active");
 });
+  const emailBtn = document.getElementById("unlock-with-email");
+emailBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  document.getElementById("join-modal")?.classList.add("active");
+});
+
 
 // chiamala quando l’utente completa email (tuo submit): 
 window.unlockCompare = function(){
