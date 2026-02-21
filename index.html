@@ -324,45 +324,54 @@
     </div>
   </div>
 
-  <!-- DA QUI IN POI: lascio le tue sezioni “come sono” per ora -->
-  <!-- STATISTICHE DI IMPATTO -->
-  <section class="stats-section">
-    <div class="container">
-      <h2 class="stats-title">Statistiche e Impatto</h2>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon">📊</div>
-          <div class="stat-number">92%</div>
-          <div class="stat-label">Win Rate</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">🎯</div>
-          <div class="stat-number">79%</div>
-          <div class="stat-label">Marcatori Indovinati</div>
-          <div class="stat-small">(118/150)</div>
-        </div>
-
-        <div class="stat-card stat-card-clickable">
-          <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer" class="stat-link">
-            <div class="stat-icon">👥</div>
-            <div class="stat-number" id="tiktok-followers">11.1K+</div>
-            <div class="stat-label">Followers TikTok</div>
-            <div class="stat-small">*real-time</div>
-          </a>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">⭐</div>
-          <div class="stat-number">4.8</div>
-          <div class="stat-label">Rating Utenti</div>
-        </div>
-      </div>
-
-      <p class="stats-disclaimer">Dati aggiornati al 11 Dicembre 2025</p>
+<!-- TOOL: CONFRONTO SCAMBI (nuovo) -->
+<section class="neo-section" id="trade-tool">
+  <div class="container">
+    <div class="neo-section-head">
+      <h2 class="neo-section-title">Confronto scambi</h2>
+      <p class="neo-section-subtitle">Due giocatori + calendario futuro + consiglio basato sul FantaIndexCalendario.</p>
     </div>
-  </section>
+
+    <div class="neo-card" style="padding:16px">
+      <div class="trade-grid">
+        <!-- SINISTRA: giocatore che dai -->
+        <button type="button" id="trade-pick-a" class="neo-pick-card" aria-label="Seleziona giocatore da cedere">
+          <div class="neo-pick-logo" id="trade-a-logo"></div>
+          <div class="neo-pick-meta">
+            <div class="neo-pick-kicker">Cedi</div>
+            <div class="neo-pick-name" id="trade-a-name">Seleziona</div>
+            <div class="neo-pick-sub" id="trade-a-sub">Clicca per scegliere</div>
+            <div class="neo-pick-stats" id="trade-a-stats"></div>
+          </div>
+          <div class="neo-pick-cta">Cambia</div>
+        </button>
+
+        <!-- CENTRO: calendario + decisione -->
+        <div class="trade-mid">
+          <div class="neo-card" id="trade-calendar" style="padding:14px;margin-bottom:12px">
+            <div class="neo-mini-card">Seleziona due giocatori per vedere calendario e FIC.</div>
+          </div>
+
+          <div class="neo-card" id="trade-decision" style="padding:14px">
+            <div class="neo-mini-card">Decisione: in attesa di selezione.</div>
+          </div>
+        </div>
+
+        <!-- DESTRA: giocatore che prendi -->
+        <button type="button" id="trade-pick-b" class="neo-pick-card" aria-label="Seleziona giocatore da prendere">
+          <div class="neo-pick-logo" id="trade-b-logo"></div>
+          <div class="neo-pick-meta">
+            <div class="neo-pick-kicker">Prendi</div>
+            <div class="neo-pick-name" id="trade-b-name">Seleziona</div>
+            <div class="neo-pick-sub" id="trade-b-sub">Clicca per scegliere</div>
+            <div class="neo-pick-stats" id="trade-b-stats"></div>
+          </div>
+          <div class="neo-pick-cta">Cambia</div>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- TELEGRAM CTA - PREMIUM -->
   <section id="telegram-cta" class="telegram-section-premium">
