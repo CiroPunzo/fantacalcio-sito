@@ -676,21 +676,6 @@ function setupGlobalModalClose() {
       if (parentModal) parentModal.classList.remove("active");
     }
   });
-
-  function setupJoinModal() {
-  const form = document.getElementById("join-form");
-  if (!form) return;
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    // TODO: invio email vero (Sheets / endpoint)
-    window.unlockCompare?.(); // sblocca comparatore se il lock è stato inizializzato
-
-    document.getElementById("join-modal")?.classList.remove("active");
-  });
-}
-
 }
 
 // =====================
@@ -1697,6 +1682,18 @@ let radarChart = null;
     await loadPlayersForCompare();
   })();
 }
+
+function setupJoinModal() {
+  const form = document.getElementById("join-form");
+  if (!form) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    window.unlockCompare?.();
+    document.getElementById("join-modal")?.classList.remove("active");
+  });
+}
+
 
 // =====================
 // INIT (UNA SOLA VOLTA)
