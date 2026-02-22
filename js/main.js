@@ -676,6 +676,21 @@ function setupGlobalModalClose() {
       if (parentModal) parentModal.classList.remove("active");
     }
   });
+
+  function setupJoinModal() {
+  const form = document.getElementById("join-form");
+  if (!form) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // TODO: invio email vero (Sheets / endpoint)
+    window.unlockCompare?.(); // sblocca comparatore se il lock è stato inizializzato
+
+    document.getElementById("join-modal")?.classList.remove("active");
+  });
+}
+
 }
 
 // =====================
@@ -1691,6 +1706,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupMobileNavbar();
   setupDashboardTabs();
   setupGlobalModalClose();
+  setupJoinModal();  
   setupFullTablesModals();
 
   const path = window.location.pathname.toLowerCase();
@@ -1711,6 +1727,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await populateAnalisiFantacalcio();
     await populatePronostici();
   }
+
 
 });
 
