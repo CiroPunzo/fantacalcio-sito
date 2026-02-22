@@ -4951,6 +4951,15 @@ body{
   margin-top: 12px;
 }
 
+/* Join modal: label "Email" bianca */
+#join-modal label {
+  color: rgba(234, 242, 255, .90) !important;
+}
+
+/* (opzionale) anche il testo placeholder un po' più chiaro */
+#join-modal input::placeholder {
+  color: rgba(234, 242, 255, .45);
+}
 
 
 
