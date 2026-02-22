@@ -890,46 +890,42 @@ function neonHomeInit() {
    // elementi minimi per home neon
   if (!els.track || !els.aSel || !els.bSel || !els.radar) return;
 
-  // ====== LOCK COMPARATORE (UNA SOLA VOLTA) ======
-  const LOCK_KEY = "pf_compare_unlocked";
+  // ===== LOCK compare =====
+const LOCK_KEY = "pf_compare_unlocked";
 
-  const lockEl = document.getElementById("compare-lock");
-  const cardCompare = lockEl?.closest(".neo-card-compare");
+const lockEl = document.getElementById("compare-lock");
+const cardCompare = lockEl?.closest(".neo-card-compare");
 
-  const tgDoneBtn = document.getElementById("unlock-after-telegram");
-  const emailBtn  = document.getElementById("unlock-with-email");
+const tgDoneBtn = document.getElementById("unlock-after-telegram");
+const emailBtn  = document.getElementById("unlock-with-email");
 
-  function setLocked(locked) {
-    if (cardCompare) cardCompare.classList.toggle("neo-compare-locked", locked);
-    if (lockEl) {
-      lockEl.classList.toggle("active", locked);
-      lockEl.setAttribute("aria-hidden", locked ? "false" : "true");
-    }
-  }
+function setLocked(locked) {
+  if (cardCompare) cardCompare.classList.toggle("neo-compare-locked", locked);
+  if (lockEl) lockEl.classList.toggle("active", locked);
+}
 
-  function unlockCompare() {
-    localStorage.setItem(LOCK_KEY, "1");
-    setLocked(false);
-  }
+function unlockCompare() {
+  localStorage.setItem(LOCK_KEY, "1");
+  setLocked(false);
+}
 
-  // init stato
-  setLocked(localStorage.getItem(LOCK_KEY) !== "1");
+setLocked(localStorage.getItem(LOCK_KEY) !== "1");
 
-  // click “ho joinato”
-  tgDoneBtn?.addEventListener("click", unlockCompare);
+tgDoneBtn?.addEventListener("click", unlockCompare);
 
-  // click “sblocca con email” => apri join-modal
-  emailBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    document.getElementById("join-modal")?.classList.add("active");
-  });
+emailBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  document.getElementById("join-modal")?.classList.add("active");
+});
 
-  // se ti serve richiamarlo dopo submit email:
-  window.unlockCompare = unlockCompare;
-  // =================================================
+// utile se vuoi sbloccare dopo submit email
+window.unlockCompare = unlockCompare;
+// =======================
 
-  let selectedMatchday = null;
-  let radarChart = null;
+  let currentMatchday = null;
+let selectedMatchday = null;
+let radarChart = null;
+
 
   function setMatchdayButtons() {
     if (!els.btnCur || !els.btnPrev) return;
