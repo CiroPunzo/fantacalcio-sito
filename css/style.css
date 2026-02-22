@@ -4888,6 +4888,70 @@ body{
   filter: none;
 }
 
+/* ===== JOIN MODAL (NEON) ===== */
+#join-modal.neo-modal {
+  z-index: 2500; /* sopra la UI home */
+  background: rgba(0,0,0,.62);
+  backdrop-filter: blur(10px);
+}
+
+#join-modal .neo-modal-content {
+  background: linear-gradient(180deg, rgba(10,12,40,.92), rgba(6,7,22,.82));
+  border: 1px solid rgba(120,245,255,.20);
+  border-radius: 18px;
+  box-shadow: 0 22px 70px rgba(0,0,0,.70), 0 0 0 3px rgba(176,108,255,.08);
+  max-width: 520px;
+  width: min(520px, 92vw);
+  padding: 22px 18px;
+}
+
+#join-modal .neo-modal-close {
+  color: rgba(234,242,255,.85);
+  font-size: 24px;
+  top: 14px;
+  right: 14px;
+}
+#join-modal .neo-modal-close:hover {
+  color: #66f7ff;
+}
+
+#join-modal .neo-modal-body h2 {
+  font-family: Anton, sans-serif;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: rgba(234,242,255,.95);
+  text-shadow: 0 0 18px rgba(102,247,255,.18);
+  margin-bottom: 8px;
+}
+
+#join-modal .neo-modal-body p {
+  color: rgba(234,242,255,.72);
+}
+
+/* input stile neon (senza toccare i form vecchi del sito) */
+#join-modal input[type="email"],
+#join-modal input[type="text"] {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(120,245,255,.18);
+  background: rgba(10,12,40,.35);
+  color: rgba(234,242,255,.95);
+  outline: none;
+}
+
+#join-modal input:focus {
+  border-color: rgba(102,247,255,.45);
+  box-shadow: 0 0 0 3px rgba(102,247,255,.10);
+}
+
+/* bottone dentro la modal: usa lo stile .neo-btn già presente */
+#join-modal .neo-btn {
+  width: 100%;
+  margin-top: 12px;
+}
+
+
 
 
 
