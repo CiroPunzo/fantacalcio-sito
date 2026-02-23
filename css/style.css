@@ -5769,6 +5769,84 @@ body{
 }
 
 
+@media (max-width: 860px){
+  .neo-navbar.v-a .neo-navbar-inner{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+  .neo-navbar.v-a .neo-burger{
+    display: grid !important;
+    place-items: center !important;
+    margin-left: auto !important;  /* lo spinge a destra */
+  }
+  .neo-navbar.v-a .neo-nav{
+    display: none !important; /* su mobile nav inline nascosta, usiamo dropdown */
+  }
+}
+
+@media (max-width: 860px){
+  /* contenitore menu aperto */
+  #nav-links.neo-nav-links{
+    position: fixed;
+    top: calc(64px + 10px) !important;
+    left: 14px !important;
+    right: 14px !important;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 18px;
+
+    background: rgba(10, 12, 40, 0.96);
+    border: 1px solid rgba(176,108,255,0.22);
+    box-shadow: 0 18px 55px rgba(0,0,0,0.65), 0 0 0 3px rgba(102,247,255,0.08);
+    backdrop-filter: blur(12px);
+  }
+  #nav-links.neo-nav-links.nav-open{ display:flex; }
+
+  /* link “app list item” */
+  #nav-links.neo-nav-links a{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 14px;
+    border-radius: 14px;
+
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    box-shadow: none !important;
+
+    color: #EAF2FF !important;
+    letter-spacing: .10em;
+    text-shadow:
+      0 0 14px rgba(176,108,255,0.35),
+      0 0 10px rgba(102,247,255,0.18);
+  }
+
+  #nav-links.neo-nav-links a:hover{
+    border-color: rgba(102,247,255,0.35) !important;
+    box-shadow: 0 0 0 3px rgba(102,247,255,0.10) !important;
+    transform: none !important; /* niente saltelli che creano “sovrapposizioni” */
+  }
+
+  /* CTA un filo più “speciale” */
+  #nav-links.neo-nav-links a.neo-cta{
+    border-color: rgba(176,108,255,0.45) !important;
+    background: linear-gradient(90deg, rgba(176,108,255,0.14), rgba(102,247,255,0.10)) !important;
+  }
+}
+
+/* più strette nel carousel */
+.neo-match-card{
+  min-width: 240px !important;  /* prima 280 */
+}
+
+@media (max-width: 420px){
+  .neo-match-card{
+    min-width: 220px !important;
+  }
+}
 
 
 
