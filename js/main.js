@@ -1712,8 +1712,14 @@ let radarChart = null;
 
   (async () => {
     await loadConfigMatchday();
-    await loadResultsForMatchday(selectedMatchday);
-    await loadPlayersForCompare();
+await loadResultsForMatchday(selectedMatchday);
+
+// Su predictions NON abbiamo il comparatore, quindi caricalo solo se esiste
+const hasCompare = !!(els.aSel && els.bSel && els.radar);
+if (hasCompare) {
+  await loadPlayersForCompare();
+}
+
   })();
 }
 
@@ -1752,14 +1758,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
    // Previsioni (Matchday Hub Neon + 4 card)
   if (path.includes("predictions")) {
-    neonHomeInit();               // Matchday Hub (risultati + bottoni)  [file:133]
-    setupFullTablesModals();      // già lo chiami sopra: ok lasciarlo anche una sola volta
+  neonHomeInit();
 
-    await populateMarcatori();    // Goals card
-    await populateAssist();       // Assists card (se l'hai creata)
-    await populateAnalisiFantacalcio(); // Previsioni card
-    await populatePronostici();   // Pronostici card
-  }
+  await populateMarcatori();
+  await populateAssist();
+  await populateAnalisiFantacalcio();
+  await populatePronostici();
+}
 
 
 
