@@ -306,10 +306,13 @@ async function populateAssist(){
       const player = row["Giocatore"] || row["Nome Giocatore"] || "-";
       const club = row["Squadra"] || row["Club"] || "-";
       const assist = row["Assist"] ?? "-";
-      const logoUrl = CLUBLOGOS?.[club];
-      const clubHTML = logoUrl
-        ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
-        : club;
+      const logos = (typeof CLUBLOGOS !== "undefined" && CLUBLOGOS) ? CLUBLOGOS : {};
+const logoUrl = logos[club];
+
+const clubHTML = logoUrl
+  ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
+  : club;
+
 
       tr.innerHTML = `<td>${i+1}</td><td><strong>${player}</strong></td><td>${clubHTML}</td><td>${assist}</td>`;
       tbody.appendChild(tr);
