@@ -540,9 +540,11 @@ async function populatePronostici(selectedGiornata = null) {
     select.onchange = () => populatePronostici(select.value);
   }
 
-  const giornataCorrente = selectedGiornata || (giornate.length ? giornate[giornate.length - 1] : null);
-  if (!giornataCorrente) return;
-  if (select) select.value = String(giornataCorrente);
+const giornataCorrente =
+  selectedGiornata ??
+  (Number.isFinite(window.currentMatchday) ? window.currentMatchday : null) ??
+  (giornate.length ? giornate[giornate.length - 1] : null);
+
 
   const filtrati = data.filter((r) => String(r["Giornata"]) === String(giornataCorrente));
   tbody.innerHTML = "";
@@ -1024,6 +1026,7 @@ let radarChart = null;
       currentMatchday = null;
       selectedMatchday = null;
     }
+    window.currentMatchday = currentMatchday;
   }
 
   function renderResultsSkeleton(text) {
