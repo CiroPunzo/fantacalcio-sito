@@ -5940,6 +5940,29 @@ body{
   .neo-nav-links.nav-open{ display: flex; }
 }
 
+@media (max-width: 860px){
+  .neo-nav{ position: relative; }
+
+  .neo-nav-links{
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 14px;
+    right: 14px;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(5,8,20,.95);
+    border: 1px solid rgba(120,245,255,.18);
+    z-index: 99999;
+  }
+
+  .neo-nav-links.nav-open{ display: flex; }
+}
+
+
+
 
 
 
