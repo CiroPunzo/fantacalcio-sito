@@ -4,6 +4,10 @@
 let currentHeroSlide = 0;
 let autoRotateInterval = null;
 
+function getClubLogo(club) {
+  return window.CLUBLOGOS?.[club] || null;
+}
+
 function initHeroSlider() {
   const slides = document.querySelectorAll(".hero-slide");
   const dots = document.querySelectorAll(".hero-dot");
@@ -201,10 +205,6 @@ window.CLUBLOGOS = window.CLUBLOGOS || {
   Torino: "img/loghi/torino.png",
 };
 
-function getClubLogo(club) {
-  return window.CLUBLOGOS?.[club] || null;
-}
-
 // =====================
 // HOME: CLASSIFICA / MARCATORI / INFORTUNATI (preview)
 // =====================
@@ -279,7 +279,7 @@ async function populateMarcatori() {
       const club = row["Squadra"] || row["Club"] || "-";
       const gol = row["Gol"] || "-";
 
-     const logoUrl = getClubLogo(squadra);
+     const logoUrl = getClubLogo(club);
 
       const clubHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
@@ -756,7 +756,8 @@ async function populateClassificaFull() {
         zonaHTML = `<div class="zona-badge zona-relegation" title="Retrocessione"><span>↓</span></div>`;
       }
 
-      const logoUrl = getClubLogo(club);
+      const logoUrl = getClubLogo(squadra);
+
       const teamHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${squadra}" class="table-logo"><span><strong>${squadra}</strong></span></div>`
         : `<strong>${squadra}</strong>`;
