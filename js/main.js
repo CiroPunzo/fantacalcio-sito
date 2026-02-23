@@ -201,6 +201,10 @@ window.CLUBLOGOS = window.CLUBLOGOS || {
   Torino: "img/loghi/torino.png",
 };
 
+function getClubLogo(club) {
+  return window.CLUBLOGOS?.[club] || null;
+}
+
 // =====================
 // HOME: CLASSIFICA / MARCATORI / INFORTUNATI (preview)
 // =====================
@@ -237,7 +241,7 @@ async function populateClassifica() {
         zonaHTML = `<div class="zona-badge zona-relegation" title="Retrocessione"><span>↓</span></div>`;
       }
 
-      const logoUrl = window.CLUBLOGOS?.[squadra];
+      const logoUrl = getClubLogo(club);
       const teamHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${squadra}" class="table-logo"><span><strong>${squadra}</strong></span></div>`
         : `<strong>${squadra}</strong>`;
@@ -275,7 +279,7 @@ async function populateMarcatori() {
       const club = row["Squadra"] || row["Club"] || "-";
       const gol = row["Gol"] || "-";
 
-      const logoUrl = window.CLUBLOGOS?.[club];
+      const logoUrl = getClubLogo(club);
       const clubHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
         : club;
@@ -321,7 +325,7 @@ async function populateAssist() {
   rows.forEach((r, i) => {
     const tr = document.createElement("tr");
 
-    const logoUrl = logos[r.club];
+    const logoUrl = getClubLogo(club);
     const clubHTML = logoUrl
       ? `<div class="table-team"><img src="${logoUrl}" alt="${r.club}" class="table-logo"><span>${r.club}</span></div>`
       : r.club;
@@ -359,7 +363,7 @@ async function populateInfortunati() {
     const rientro = row["Rientro Previsto"] || "-";
     const tipo = row["Tipo Infortunio"] || "-";
 
-    const logoUrl = CLUB_LOGOS[club];
+    const logoUrl = getClubLogo(club);
     const clubHTML = logoUrl
       ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
       : club;
@@ -751,7 +755,7 @@ async function populateClassificaFull() {
         zonaHTML = `<div class="zona-badge zona-relegation" title="Retrocessione"><span>↓</span></div>`;
       }
 
-      const logoUrl = CLUB_LOGOS[squadra];
+      const logoUrl = getClubLogo(club);
       const teamHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${squadra}" class="table-logo"><span><strong>${squadra}</strong></span></div>`
         : `<strong>${squadra}</strong>`;
@@ -783,7 +787,7 @@ async function populateMarcatoriFull() {
       const club = row["Squadra"] || row["Club"] || "-";
       const gol = row["Gol"] || "-";
 
-      const logoUrl = CLUB_LOGOS[club];
+      const logoUrl = getClubLogo(club);
       const clubHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
         : club;
