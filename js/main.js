@@ -205,6 +205,10 @@ window.CLUBLOGOS = window.CLUBLOGOS || {
   Torino: "img/loghi/torino.png",
 };
 
+// Alias per compatibilità: alcune parti usano CLUB_LOGOS
+window.CLUB_LOGOS = window.CLUBLOGOS;
+
+
 // =====================
 // HOME: CLASSIFICA / MARCATORI / INFORTUNATI (preview)
 // =====================
