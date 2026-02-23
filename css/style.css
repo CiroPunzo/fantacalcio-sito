@@ -5214,6 +5214,13 @@ body.neo-page .footer-social-link {
   border-radius: 999px;
 }
 
+.telegram-feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 
 
 
