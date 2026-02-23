@@ -291,6 +291,31 @@ async function populateMarcatori() {
     });
 }
 
+async function populateAssist(){
+  const data = await fetchSheetDataJson(SHEETNAMES.classificaAssist);
+  const tbody = document.getElementById("assist-body");
+  if (!tbody || !Array.isArray(data) || !data.length) return;
+
+  tbody.innerHTML = "";
+  data
+    .filter(r => r["Posizione"] || r["Giocatore"] || r["Nome Giocatore"])
+    .sort((a,b) => Number(a["Posizione"] || 999) - Number(b["Posizione"] || 999))
+    .slice(0, 10)
+    .forEach((row, i) => {
+      const tr = document.createElement("tr");
+      const player = row["Giocatore"] || row["Nome Giocatore"] || "-";
+      const club = row["Squadra"] || row["Club"] || "-";
+      const assist = row["Assist"] ?? "-";
+      const logoUrl = CLUBLOGOS?.[club];
+      const clubHTML = logoUrl
+        ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
+        : club;
+
+      tr.innerHTML = `<td>${i+1}</td><td><strong>${player}</strong></td><td>${clubHTML}</td><td>${assist}</td>`;
+      tbody.appendChild(tr);
+    });
+}
+
 async function populateInfortunati() {
   const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
   const tbody = document.getElementById("infortunati-body");
@@ -867,9 +892,14 @@ function readConfigMap(rows) {
 // NEON HOME: Results + Compare + Assist + Trade tool
 // =====================
 function neonHomeInit() {
-  const isHome =
-    /(^|\/)index\.html$/.test(location.pathname) || location.pathname === "/" || location.pathname === "";
-  if (!isHome) return;
+const isNeonPage =
+  path === "/" ||
+  path.endsWith("/index.html") || path.endsWith("index.html") ||
+  path.endsWith("/predictions.html") || path.endsWith("predictions.html") ||
+  path.includes("predictions");
+
+if (!isNeonPage) return;
+
 
   const $ = (id) => document.getElementById(id);
 
@@ -888,7 +918,10 @@ function neonHomeInit() {
     radar: $("player-radar"),
   };
    // elementi minimi per home neon
-  if (!els.track || !els.aSel || !els.bSel || !els.radar) return;
+  if (!els.track) return;
+
+  const hasCompare = !!(els.aSel && els.bSel && els.radar);
+
 
   // ===== LOCK compare =====
 const LOCK_KEY = "pf_compare_unlocked";
@@ -1716,14 +1749,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     neonHomeInit();
   }
 
-  // Previsioni
+   // Previsioni (Matchday Hub Neon + 4 card)
   if (path.includes("predictions")) {
-    await populateClassifica();
-    await populateMarcatori();
-    await populateInfortunati();
-    await populateAnalisiFantacalcio();
-    await populatePronostici();
+    neonHomeInit();               // Matchday Hub (risultati + bottoni)  [file:133]
+    setupFullTablesModals();      // già lo chiami sopra: ok lasciarlo anche una sola volta
+
+    await populateMarcatori();    // Goals card
+    await populateAssist();       // Assists card (se l'hai creata)
+    await populateAnalisiFantacalcio(); // Previsioni card
+    await populatePronostici();   // Pronostici card
   }
+
 
 
 });
