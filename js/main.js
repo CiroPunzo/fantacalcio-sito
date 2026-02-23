@@ -540,9 +540,9 @@ async function populatePronostici(selectedGiornata = null) {
   const select = document.getElementById("select-giornata-prono");
   if (!tbody || !Array.isArray(data) || !data.length) return;
 
-  const giornate = Array.from(new Set(data.map((r) => r["Giornata"]).filter(Boolean))).sort(
-    (a, b) => Number(a) - Number(b)
-  );
+  const giornate = Array.from(
+    new Set(data.map((r) => r["Giornata"]).filter(Boolean))
+  ).sort((a, b) => Number(a) - Number(b));
 
   if (select && select.options.length === 0) {
     giornate.forEach((g) => {
@@ -554,27 +554,40 @@ async function populatePronostici(selectedGiornata = null) {
     select.onchange = () => populatePronostici(select.value);
   }
 
-const giornataCorrente =
-  selectedGiornata ??
-  (Number.isFinite(window.currentMatchday) ? window.currentMatchday : null) ??
-  (giornate.length ? giornate[giornate.length - 1] : null);
+  let giornataCorrente =
+    selectedGiornata ??
+    (Number.isFinite(window.currentMatchday) ? window.currentMatchday : null) ??
+    (giornate.length ? giornate[giornate.length - 1] : null);
 
+  if (!giornataCorrente) return;
 
-  const filtrati = data.filter((r) => String(r["Giornata"]) === String(giornataCorrente));
+  // Se la giornata corrente non esiste nel foglio Pronostici, fallback sull’ultima disponibile
+  if (!giornate.some((g) => String(g) === String(giornataCorrente))) {
+    giornataCorrente = giornate[giornate.length - 1];
+  }
+
+  if (select) select.value = String(giornataCorrente);
+
+  const filtrati = data.filter(
+    (r) => String(r["Giornata"]) === String(giornataCorrente)
+  );
+
   tbody.innerHTML = "";
 
   filtrati.forEach((row) => {
     const tr = document.createElement("tr");
     tr.classList.add("clickable");
 
-    const casa = row["SquadraCasa"] || "-";
-    const trasferta = row["SquadraTrasferta"] || "-";
+    const casa = row["SquadraCasa"] || row["Squadra Casa"] || "-";
+    const trasferta = row["SquadraTrasferta"] || row["Squadra Trasferta"] || "-";
     const orario = row["Orario"] || "-";
-    const esito = row["EsitoPrincipale"] || row["Esito Principale"] || "-";
-    const conf = row["Confidenza"] || "0";
+
+    const esito =
+      row["EsitoPrincipale"] || row["Esito Principale"] || row["Esito"] || "-";
+    const conf = row["Confidenza"] ?? row["Confidence"] ?? "-";
 
     const logoCasa = getClubLogo(casa);
-const logoTrasferta = getClubLogo(trasferta);
+    const logoTrasferta = getClubLogo(trasferta);
 
     tr.innerHTML = `
       <td>
@@ -593,10 +606,13 @@ const logoTrasferta = getClubLogo(trasferta);
       <td>${conf}</td>
     `;
 
+    // Se vuoi NO popup qui, togli le 2 righe sotto:
     tr.addEventListener("click", () => openPronoMatchModal(row));
+
     tbody.appendChild(tr);
   });
 }
+
 
 function openPronoMatchModal(row) {
   const modal = document.getElementById("pred-prono-modal");
