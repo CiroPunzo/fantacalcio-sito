@@ -301,8 +301,6 @@ async function populateAssist() {
   const tbody = document.getElementById("assist-body");
   if (!tbody || !Array.isArray(data) || !data.length) return;
 
-  const logos = (typeof CLUBLOGOS !== "undefined" && CLUBLOGOS) ? CLUBLOGOS : {};
-
   const pick = (row, keys) => {
     for (const k of keys) {
       const v = row?.[k];
@@ -322,24 +320,23 @@ async function populateAssist() {
     .sort((a, b) => a.pos - b.pos)
     .slice(0, 10);
 
-  tbody.innerHTML = "";
-  rows.forEach((r, i) => {
-    const tr = document.createElement("tr");
+ tbody.innerHTML = "";
+rows.forEach((r, i) => {
+  const tr = document.createElement("tr");
+  const logoUrl = getClubLogo(r.club);
 
-    const logoUrl = getClubLogo(squadra);
+  const clubHTML = logoUrl
+    ? `<div class="table-team"><img src="${logoUrl}" alt="${r.club}" class="table-logo"><span>${r.club}</span></div>`
+    : (r.club || "-");
 
-    const clubHTML = logoUrl
-      ? `<div class="table-team"><img src="${logoUrl}" alt="${r.club}" class="table-logo"><span>${r.club}</span></div>`
-      : r.club;
-
-    tr.innerHTML = `
-      <td>${r.pos !== 999 ? r.pos : (i + 1)}</td>
-      <td><strong>${r.player}</strong></td>
-      <td>${clubHTML}</td>
-      <td>${r.assist}</td>
-    `;
-    tbody.appendChild(tr);
-  });
+  tr.innerHTML = `
+    <td>${r.pos !== 999 ? r.pos : (i + 1)}</td>
+    <td><strong>${r.player}</strong></td>
+    <td>${clubHTML}</td>
+    <td>${r.assist}</td>
+  `;
+  tbody.appendChild(tr);
+});
 }
 
 
@@ -1142,7 +1139,8 @@ let radarChart = null;
         const tr = document.createElement("tr");
 
         const club = r.club || "-";
-        const logoUrl = CLUB_LOGOS?.[club];
+        const logoUrl = getClubLogo(club);
+
         const clubHTML = logoUrl
           ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
           : club;
