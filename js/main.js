@@ -633,8 +633,8 @@ function openPronoMatchModal(row) {
   const confNum = Math.max(0, Math.min(conf, maxStars));
   const stars = "★".repeat(confNum) + "☆".repeat(maxStars - confNum);
 
-  const logoCasa = CLUB_LOGOS[casa];
-  const logoTrasferta = CLUB_LOGOS[trasferta];
+ const logoCasa = getClubLogo(casa);
+const logoTrasferta = getClubLogo(trasferta);
 
   body.innerHTML = `
     <div class="pred-modal-header">
