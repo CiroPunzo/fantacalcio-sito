@@ -275,7 +275,7 @@ async function populateMarcatori() {
       const club = row["Squadra"] || row["Club"] || "-";
       const gol = row["Gol"] || "-";
 
-      const logoUrl = CLUBLOGOS[club] → const logoUrl = window.CLUBLOGOS?.[club];
+      const logoUrl = window.CLUBLOGOS?.[club];
       const clubHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
         : club;
