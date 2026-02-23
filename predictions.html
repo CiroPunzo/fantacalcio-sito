@@ -14,6 +14,22 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Ciro ProFantasy" />
   <meta property="og:title" content="Previsioni di giornata | Ciro ProFantasy" />
+  <meta property="og:description" content="Analisi fantacalcio e <!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Previsioni di giornata | Ciro ProFantasy</title>
+  <meta name="description" content="Analisi fantacalcio e pronostici partita per partita, aggiornati a ogni giornata di Serie A." />
+  <meta name="keywords" content="fantacalcio, previsioni, pronostici calcio, marcatori, ciro profantasy" />
+
+  <!-- SEO / Open Graph -->
+  <link rel="canonical" href="https://www.ciroprofantasy.it/predictions.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Ciro ProFantasy" />
+  <meta property="og:title" content="Previsioni di giornata | Ciro ProFantasy" />
   <meta property="og:description" content="Analisi fantacalcio e pronostici partita per partita, aggiornati a ogni giornata di Serie A." />
   <meta property="og:url" content="https://www.ciroprofantasy.it/predictions.html" />
   <meta property="og:image" content="https://www.ciroprofantasy.it/img/og-cover.jpg" />
@@ -39,8 +55,7 @@
   <!-- End Cookie Consent by CookieYes -->
 </head>
 
-
-<body>
+<body class="neo-page">
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="container navbar-inner">
@@ -67,224 +82,127 @@
     </div>
   </nav>
 
-  <!-- ========================================================= -->
-  <!-- NEW: TOP BAR + HERO CAROUSEL + MATCH CAROUSEL (MOBILE FIRST) -->
-  <!-- ========================================================= -->
-
-  <!-- TOP BAR: Selettore Giornata -->
-  <section class="pred-topbar">
-    <div class="container pred-topbar-inner">
-      <div class="pred-topbar-left">
-        <span class="pred-topbar-label">Giornata</span>
-        <span class="pred-topbar-value" id="pred-round-label">-</span>
+  <!-- MATCHDAY HUB (NEON) -->
+  <section class="neo-section">
+    <div class="container">
+      <div class="neo-section-head">
+        <h1 class="neo-section-title">Matchday Hub</h1>
+        <p class="neo-section-subtitle">Salvalo: ogni settimana trovi giornata corrente, risultati e previsioni in 20 secondi.</p>
       </div>
 
-      <div class="pred-topbar-right">
-        <!-- Popolato via JS prendendo le giornate dal foglio AnalisiFantacalcio -->
-        <select id="select-giornata-global" class="pred-round-select" aria-label="Seleziona giornata">
-          <option value="">Caricamento...</option>
-        </select>
+      <div class="neo-card" style="margin-bottom: 18px;">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;">
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <button class="neo-pill neo-pill-active" id="btn-matchday-current" type="button">Giornata corrente</button>
+            <button class="neo-pill" id="btn-matchday-prev" type="button">Giornata precedente</button>
+          </div>
+          <div id="matchday-status-text" style="opacity:.85;font-weight:600;">Carico...</div>
+        </div>
+      </div>
+
+      <div class="neo-results-carousel">
+        <button class="neo-arrow" id="results-prev" type="button" aria-label="Scorri a sinistra">‹</button>
+        <div class="neo-results-track" id="results-carousel-track">
+          <!-- popolato da JS (RisultatiGiornata) -->
+        </div>
+        <button class="neo-arrow" id="results-next" type="button" aria-label="Scorri a destra">›</button>
       </div>
     </div>
   </section>
 
-  <!-- HERO: 3 card (Certezza / Scommessa / Da Evitare) -->
-  <section class="pred-hero-carousel">
+  <!-- DASHBOARD 4 CARDS -->
+  <section class="neo-section">
     <div class="container">
-      <div class="pred-hero-header">
-        <h1 class="pred-hero-title">
-          Picks ProFantasy — <span id="pred-hero-giornata">-</span>
-        </h1>
-        <p class="pred-hero-subtitle">
-          Scorri le tre card e poi scegli un match dal carousel per aprire subito l’analisi.
-        </p>
+      <div class="neo-section-head">
+        <h2 class="neo-section-title">Dashboard giornata</h2>
+        <p class="neo-section-subtitle">Goals, Assists, Pronostici e Previsioni: tutto aggiornato dal Google Sheet.</p>
       </div>
 
-      <!-- Popolato via JS dal foglio PlayerPicks (consigliato: aggiungi anche colonna Giornata) -->
-      <div class="pred-hero-track" id="pred-hero-picks">
-        <!-- Placeholder statici (finché non colleghi PlayerPicks) -->
-        <article class="pred-hero-card certezza">
-          <div class="pred-hero-card-inner">
-            <div class="pred-hero-card-top">
-              <span class="pred-hero-chip">La Certezza</span>
-            </div>
-            <div class="pred-hero-card-body">
-              <h2 class="pred-hero-player">Nome Giocatore</h2>
-              <p class="pred-hero-reason">Motivazione breve (1 riga).</p>
+      <div class="pred-grid-4">
+        <!-- GOALS -->
+        <article class="neo-card pred-mini" id="card-goals">
+          <div class="pred-mini-head">
+            <h3>Goals</h3>
+            <a class="neo-link" href="#" id="open-full-marcatori">Vedi tutti</a>
+          </div>
+          <div class="pred-mini-body">
+            <div class="pred-mini-tablewrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr><th>#</th><th>Giocatore</th><th>Club</th><th>G</th></tr>
+                </thead>
+                <tbody id="marcatori-body"></tbody>
+              </table>
             </div>
           </div>
         </article>
 
-        <article class="pred-hero-card scommessa">
-          <div class="pred-hero-card-inner">
-            <div class="pred-hero-card-top">
-              <span class="pred-hero-chip">La Scommessa</span>
-            </div>
-            <div class="pred-hero-card-body">
-              <h2 class="pred-hero-player">Nome Giocatore</h2>
-              <p class="pred-hero-reason">Motivazione breve (1 riga).</p>
-            </div>
+        <!-- ASSISTS -->
+        <article class="neo-card pred-mini" id="card-assists">
+          <div class="pred-mini-head">
+            <h3>Assists</h3>
+            <span class="pred-mini-kicker">Top 10</span>
           </div>
-        </article>
-
-        <article class="pred-hero-card evitare">
-          <div class="pred-hero-card-inner">
-            <div class="pred-hero-card-top">
-              <span class="pred-hero-chip">Da evitare</span>
-            </div>
-            <div class="pred-hero-card-body">
-              <h2 class="pred-hero-player">Nome Giocatore</h2>
-              <p class="pred-hero-reason">Motivazione breve (1 riga).</p>
+          <div class="pred-mini-body">
+            <div class="pred-mini-tablewrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr><th>#</th><th>Giocatore</th><th>Club</th><th>A</th></tr>
+                </thead>
+                <tbody id="assist-body"></tbody>
+              </table>
             </div>
           </div>
         </article>
-      </div>
-    </div>
-  </section>
 
-  <!-- MATCH CAROUSEL: 10 match della giornata selezionata -->
-  <section class="pred-match-carousel">
-    <div class="container">
-      <div class="pred-match-header">
-        <h2 class="pred-match-title">Match della giornata</h2>
-        <p class="pred-match-subtitle">Tocca un match per aprire l’analisi dettagliata.</p>
-      </div>
-
-      <!-- Popolato via JS usando AnalisiFantacalcio (SquadraCasa / SquadraTrasferta) -->
-      <div class="pred-match-track" id="pred-match-track">
-        <!-- placeholder -->
-        <button class="pred-match-pill" type="button">
-          <span class="pred-match-pill-team">Milan</span>
-          <span class="pred-match-pill-vs">vs</span>
-          <span class="pred-match-pill-team">Inter</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================= -->
-  <!-- OLD HERO + OLD PLAYER HIGHLIGHT (commentati ma recuperabili) -->
-  <!-- ========================================================= -->
-
-  <!--
-  <header class="hero-predictions">
-    <div class="container hero-predictions-inner">
-      <div class="hero-predictions-content">
-        <span class="hero-tag">Previsioni ProFantasy</span>
-        <h1 class="hero-predictions-title">
-          Giornata <span id="pred-hero-giornata">18</span>
-        </h1>
-        <p class="hero-predictions-text">
-          Analisi fantacalcio e pronostici partita per partita, aggiornati a ogni giornata di Serie A.
-        </p>
-        <div class="hero-predictions-meta">
-          <span class="badge-pill" id="pred-giornata-badge">Giornata corrente</span>
-          <span class="badge-pill badge-soft" id="pred-data-badge">Data</span>
-        </div>
-        <a href="#telegram-cta" class="hero-predictions-cta">Ricevi le previsioni su Telegram</a>
-      </div>
-      <div class="hero-predictions-side">
-        <div class="pred-hero-badge">
-          <span class="pred-hero-badge-label">Stato</span>
-          <span class="pred-hero-badge-value">Aggiornato</span>
-        </div>
-      </div>
-    </div>
-  </header>
-  -->
-
-  <!--
-  <section class="pred-player-highlight">
-    <div class="container pred-player-inner">
-      <div class="pred-player-image-wrap">
-        <img src="img/players/highlight-player.png" alt="Giocatore in evidenza" class="pred-player-image" />
-      </div>
-      <div class="pred-player-text">
-        <p class="pred-player-kicker">Giocatore in evidenza</p>
-        <h2 class="pred-player-title">Focus ProFantasy sulla prossima giornata</h2>
-        <p class="pred-player-desc">
-          Le nostre previsioni analizzano forma, calendario e dati avanzati per aiutarti a scegliere i giocatori giusti al momento giusto.
-        </p>
-      </div>
-    </div>
-  </section>
-  -->
-
-  <!-- BLOCCO 1 ANALISI FANTACALCIO -->
-  <section class="pred-section pred-fanta">
-    <div class="container">
-      <div class="pred-card">
-        <div class="pred-card-header">
-          <h2 class="pred-card-title">Analisi Fantacalcio ProFantasy</h2>
-          <div class="pred-card-controls">
-            <label for="select-giornata-fanta" class="pred-label">Giornata</label>
-            <select id="select-giornata-fanta" class="pred-card-select">
-              <!-- Opzioni via JS -->
-            </select>
+        <!-- PRONOSTICI -->
+        <article class="neo-card pred-mini" id="card-prono">
+          <div class="pred-mini-head">
+            <h3>Pronostici</h3>
+            <select id="select-giornata-prono" class="neo-select" aria-label="Giornata pronostici"></select>
           </div>
-        </div>
 
-        <p class="pred-section-subtitle">
-          Tutte le partite della giornata, con lettura tattica e indicazioni su chi schierare.
-        </p>
-
-        <div class="dashboard-table-wrapper">
-          <table class="dashboard-table pred-fanta-table">
-            <thead>
-              <tr>
-                <th>Match</th>
-                <th>Orario</th>
-                <th>Consigliati</th>
-                <th>Da evitare</th>
-              </tr>
-            </thead>
-            <tbody id="pred-fanta-body">
-              <!-- Popolato da Google Sheets -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BLOCCO 2 PRONOSTICI DI GIORNATA -->
-  <section class="pred-section pred-prono">
-    <div class="container">
-      <div class="pred-card">
-        <div class="pred-card-header">
-          <h2 class="pred-card-title">Pronostici Partite ProFantasy</h2>
-          <div class="pred-card-controls">
-            <label for="select-giornata-prono" class="pred-label">Giornata</label>
-            <select id="select-giornata-prono" class="pred-card-select">
-              <!-- Opzioni via JS -->
-            </select>
+          <div class="pred-mini-body">
+            <div class="pred-mini-tablewrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr><th>Match</th><th>Ora</th><th>Esito</th><th>Conf</th></tr>
+                </thead>
+                <tbody id="pred-prono-body"></tbody>
+              </table>
+            </div>
+            <p class="pred-mini-note">Solo informativo.</p>
           </div>
-        </div>
+        </article>
 
-        <p class="pred-section-subtitle">
-          Esiti più probabili per ogni match, con livello di confidenza.
-        </p>
+        <!-- PREVISIONI -->
+        <article class="neo-card pred-mini" id="card-pred">
+          <div class="pred-mini-head">
+            <h3>Previsioni</h3>
+            <select id="select-giornata-fanta" class="neo-select" aria-label="Giornata previsioni"></select>
+          </div>
 
-        <div class="dashboard-table-wrapper">
-          <table class="dashboard-table pred-prono-table">
-            <thead>
-              <tr>
-                <th>Match</th>
-                <th>Orario</th>
-                <th>Esito principale</th>
-                <th>Conf.</th>
-              </tr>
-            </thead>
-            <tbody id="pred-prono-body">
-              <!-- Popolato da Google Sheets -->
-            </tbody>
-          </table>
-        </div>
+          <div class="pred-mini-body">
+            <div class="pred-mini-tablewrap">
+              <table class="dashboard-table pred-fanta-table">
+                <thead>
+                  <tr><th>Match</th><th>Ora</th><th>Consigliati</th><th>Da evitare</th></tr>
+                </thead>
+                <tbody id="pred-fanta-body"></tbody>
+              </table>
+            </div>
+            <a class="neo-link"
+               href="https://docs.google.com/spreadsheets/d/1ujW6MthrdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48"
+               target="_blank" rel="noopener">
+              Apri Google Sheet
+            </a>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- TELEGRAM CTA -->
+  <!-- TELEGRAM CTA (lasciata uguale per ora) -->
   <section id="telegram-cta" class="telegram-section-premium">
     <div class="telegram-container">
       <div class="telegram-content">
@@ -352,7 +270,7 @@
     </div>
   </section>
 
-  <!-- FOOTER PREMIUM -->
+  <!-- FOOTER PREMIUM (lasciato uguale) -->
   <footer class="footer-premium">
     <div class="footer-container">
       <div class="footer-cta-banner">
@@ -457,6 +375,5 @@
   <script src="js/main.js"></script>
 </body>
 </html>
-
 
 
