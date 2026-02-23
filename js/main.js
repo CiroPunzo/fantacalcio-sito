@@ -702,34 +702,47 @@ function setupDashboardTabs() {
   });
 }
 
-function setupMobileNavbar() {
-  const navToggle = document.getElementById("nav-toggle");
-  const navLinks = document.getElementById("nav-links");
+function setupMobileNavbar(){
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
   if (!navToggle || !navLinks) return;
 
-  navToggle.style.pointerEvents = "auto";
-
-  const toggleMenu = (e) => {
-    if (e) e.preventDefault();
-    const isOpen = navLinks.classList.toggle("nav-open");
-    navToggle.classList.toggle("nav-open", isOpen);
-    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  const setOpen = (open) => {
+    navLinks.classList.toggle('nav-open', open);
+    navToggle.classList.toggle('nav-open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   };
 
-  navToggle.addEventListener("click", toggleMenu);
-  navToggle.addEventListener("touchend", (e) => {
+  const toggle = (e) => {
+    if (e) e.preventDefault();
+    const isOpen = navLinks.classList.contains('nav-open');
+    setOpen(!isOpen);
+  };
+
+  // Click funziona ovunque
+  navToggle.addEventListener('click', toggle);
+
+  // Touch: evita “doppio evento” ma senza rompere Safari
+  navToggle.addEventListener('touchend', (e) => {
     e.preventDefault();
-    toggleMenu(e);
+    toggle(e);
+  }, { passive: false });
+
+  // Chiudi quando clicchi un link
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setOpen(false));
+    link.addEventListener('touchend', () => setOpen(false), { passive: true });
   });
 
-  navLinks.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navLinks.classList.remove("nav-open");
-      navToggle.classList.remove("nav-open");
-      navToggle.setAttribute("aria-expanded", "false");
-    });
+  // Chiudi cliccando fuori
+  document.addEventListener('click', (e) => {
+    if (!navLinks.classList.contains('nav-open')) return;
+    if (e.target.closest('#nav-toggle')) return;
+    if (e.target.closest('#nav-links')) return;
+    setOpen(false);
   });
 }
+
 
 // =====================
 // MODAL CLOSE HANDLER (globale)
