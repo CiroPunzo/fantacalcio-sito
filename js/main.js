@@ -892,6 +892,7 @@ function readConfigMap(rows) {
 // NEON HOME: Results + Compare + Assist + Trade tool
 // =====================
 function neonHomeInit() {
+   const path = (location.pathname || "").toLowerCase();
 const isNeonPage =
   path === "/" ||
   path.endsWith("/index.html") || path.endsWith("index.html") ||
