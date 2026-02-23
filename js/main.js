@@ -237,7 +237,7 @@ async function populateClassifica() {
         zonaHTML = `<div class="zona-badge zona-relegation" title="Retrocessione"><span>↓</span></div>`;
       }
 
-      const logoUrl = CLUB_LOGOS[squadra];
+      const logoUrl = window.CLUBLOGOS?.[squadra];
       const teamHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${squadra}" class="table-logo"><span><strong>${squadra}</strong></span></div>`
         : `<strong>${squadra}</strong>`;
@@ -275,7 +275,7 @@ async function populateMarcatori() {
       const club = row["Squadra"] || row["Club"] || "-";
       const gol = row["Gol"] || "-";
 
-      const logoUrl = CLUB_LOGOS[club];
+      const logoUrl = CLUBLOGOS[club] → const logoUrl = window.CLUBLOGOS?.[club];
       const clubHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
         : club;
@@ -1028,7 +1028,7 @@ let radarChart = null;
 
   function mkResultCard({ home, away, homeGoals, awayGoals, badgeText, badgeClass }) {
     const safe = (s) => String(s ?? "").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-    const LOGOS = CLUB_LOGOS || {};
+    const LOGOS = window.CLUBLOGOS || {};
 
     const homeLogo = LOGOS[home] || "";
     const awayLogo = LOGOS[away] || "";
