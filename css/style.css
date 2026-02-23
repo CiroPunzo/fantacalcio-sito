@@ -5188,6 +5188,31 @@ body.neo-page .footer-social-link {
   box-shadow: 0 0 0 3px rgba(176,108,255,.08);
 }
 
+/* Carousel risultati: card in orizzontale con scroll */
+.neo-results-carousel {
+  position: relative;
+}
+
+#results-carousel-track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 8px 6px 14px 6px;
+  -webkit-overflow-scrolling: touch;
+}
+
+#results-carousel-track .neo-match-card {
+  flex: 0 0 min(520px, 88vw);
+  scroll-snap-align: start;
+}
+
+/* opzionale: nascondi scrollbar (se vuoi) */
+#results-carousel-track::-webkit-scrollbar { height: 8px; }
+#results-carousel-track::-webkit-scrollbar-thumb {
+  background: rgba(120,245,255,.18);
+  border-radius: 999px;
+}
 
 
 
