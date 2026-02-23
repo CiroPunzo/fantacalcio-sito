@@ -124,7 +124,7 @@ const SHEET_ID = "1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48";
  * - Valori = NOMI FOGLI (non range stile "Classifica!A2:E")
  *   perché usiamo gviz sheet=...
  */
-const SHEET_NAMES = {
+window.SHEET_NAMES = window.SHEET_NAMES || {
   classifica: "Classifica",
   classificaMarcatori: "ClassificaMarcatori",
   classificaAssist: "ClassificaAssist",
@@ -292,7 +292,7 @@ async function populateMarcatori() {
 }
 
 async function populateAssist(){
-  const data = await fetchSheetDataJson(SHEETNAMES.classificaAssist);
+  const data = await fetchSheetDataJson(window.SHEET_NAMES.classificaAssist);
   const tbody = document.getElementById("assist-body");
   if (!tbody || !Array.isArray(data) || !data.length) return;
 
