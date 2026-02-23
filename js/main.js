@@ -607,7 +607,7 @@ async function populatePronostici(selectedGiornata = null) {
     `;
 
     // Se vuoi NO popup qui, togli le 2 righe sotto:
-    tr.addEventListener("click", () => openPronoMatchModal(row));
+   // tr.addEventListener("click", () => openPronoMatchModal(row));
 
     tbody.appendChild(tr);
   });
