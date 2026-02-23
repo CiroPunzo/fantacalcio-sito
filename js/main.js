@@ -326,7 +326,8 @@ async function populateAssist() {
   rows.forEach((r, i) => {
     const tr = document.createElement("tr");
 
-    const logoUrl = getClubLogo(club);
+    const logoUrl = getClubLogo(squadra);
+
     const clubHTML = logoUrl
       ? `<div class="table-team"><img src="${logoUrl}" alt="${r.club}" class="table-logo"><span>${r.club}</span></div>`
       : r.club;
