@@ -410,9 +410,9 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
   const select = document.getElementById("select-giornata-fanta");
   if (!tbody || !Array.isArray(data) || !data.length) return;
 
-  const giornate = Array.from(new Set(data.map((r) => r["Giornata"]).filter(Boolean))).sort(
-    (a, b) => Number(a) - Number(b)
-  );
+  const giornate = Array.from(
+    new Set(data.map((r) => r["Giornata"]).filter(Boolean))
+  ).sort((a, b) => Number(a) - Number(b));
 
   if (select && select.options.length === 0) {
     giornate.forEach((g) => {
@@ -424,15 +424,24 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
     select.onchange = () => populateAnalisiFantacalcio(select.value);
   }
 
-  const giornataCorrente =
-  selectedGiornata ??
-  (Number.isFinite(window.currentMatchday) ? window.currentMatchday : null) ??
-  (giornate.length ? giornate[giornate.length - 1] : null);
+  let giornataCorrente =
+    selectedGiornata ??
+    (Number.isFinite(window.currentMatchday) ? window.currentMatchday : null) ??
+    (giornate.length ? giornate[giornate.length - 1] : null);
 
   if (!giornataCorrente) return;
+
+  // Se la giornata "corrente" non esiste nel foglio, ripiega sull’ultima disponibile
+  if (!giornate.some((g) => String(g) === String(giornataCorrente))) {
+    giornataCorrente = giornate[giornate.length - 1];
+  }
+
   if (select) select.value = String(giornataCorrente);
 
-  const filtrati = data.filter((r) => String(r["Giornata"]) === String(giornataCorrente));
+  const filtrati = data.filter(
+    (r) => String(r["Giornata"]) === String(giornataCorrente)
+  );
+
   tbody.innerHTML = "";
 
   filtrati.forEach((row) => {
@@ -446,7 +455,7 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
     const daEvitare = row["Da Evitare"] || row["DaEvitare"] || "-";
 
     const logoCasa = getClubLogo(casa);
-const logoTrasferta = getClubLogo(trasferta);
+    const logoTrasferta = getClubLogo(trasferta);
 
     tr.innerHTML = `
       <td>
@@ -469,6 +478,7 @@ const logoTrasferta = getClubLogo(trasferta);
     tbody.appendChild(tr);
   });
 }
+
 
 function openFantaMatchModal(row) {
   const modal = document.getElementById("pred-fanta-modal");
@@ -1020,6 +1030,8 @@ let radarChart = null;
 
       currentMatchday = cm;
       selectedMatchday = cm;
+      window.currentMatchday = cm;
+
 
       const status = String(map.matchday_status || "").trim();
       els.status.textContent = status ? `Giornata ${cm} • ${status}` : `Giornata ${cm}`;
@@ -1032,10 +1044,6 @@ let radarChart = null;
     }
     window.currentMatchday = currentMatchday;
   }
-
-  currentMatchday = cm;
-selectedMatchday = cm;
-window.currentMatchday = cm;
 
 
   function renderResultsSkeleton(text) {
