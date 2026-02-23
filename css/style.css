@@ -5935,6 +5935,10 @@ body{
   .neo-nav-links.nav-open{ display: flex; }
 }
 
+@media (max-width: 860px){
+  .neo-nav-links{ display: none; }
+  .neo-nav-links.nav-open{ display: flex; }
+}
 
 
 
