@@ -4961,6 +4961,91 @@ body{
   color: rgba(234, 242, 255, .45);
 }
 
+/* =========================
+   NEON BRIDGE (PAGINE TESTO)
+   Incollare in fondo a css/style.css
+   ========================= */
+
+/* Wrapper per pagine neon (attivalo aggiungendo class="neo-page" al body) */
+body.neo-page {
+  background: radial-gradient(1200px 800px at 15% 10%, rgba(102,247,255,.12), transparent 55%),
+              radial-gradient(900px 700px at 80% 15%, rgba(176,108,255,.12), transparent 55%),
+              linear-gradient(180deg, var(--neo-bg), var(--neo-bg-2));
+  color: var(--neo-text);
+}
+
+/* Titoli/sezioni: quando sei in neo-page, togliamo “oro” e usiamo neon */
+body.neo-page .pred-section-title,
+body.neo-page .footer-logo h4,
+body.neo-page .footer-col-title {
+  color: var(--neo-cyan);
+  text-shadow: 0 0 18px rgba(102,247,255,.14);
+}
+
+/* Card legali: pred-card -> look neo-card */
+body.neo-page .pred-card {
+  background: linear-gradient(180deg, rgba(10,12,40,.72), rgba(6,7,22,.55));
+  border: 1px solid rgba(120,245,255,.18);
+  border-radius: 16px;
+  box-shadow: var(--neo-shadow);
+  backdrop-filter: blur(10px);
+}
+
+/* Link */
+body.neo-page a {
+  color: var(--neo-cyan);
+}
+body.neo-page a:hover {
+  color: #ffffff;
+}
+
+/* Badge pill: da oro a neon */
+body.neo-page .badge-pill {
+  border: 1px solid rgba(102,247,255,.25);
+  color: var(--neo-cyan);
+  background: rgba(102,247,255,.06);
+}
+
+/* Hero “predictions” in stile neo (senza riscrivere HTML) */
+body.neo-page .hero-predictions {
+  background: transparent;
+  border-bottom: 1px solid rgba(120,245,255,.12);
+}
+body.neo-page .hero-predictions-title {
+  color: var(--neo-text);
+  text-shadow: 0 0 22px rgba(102,247,255,.18);
+}
+body.neo-page .hero-predictions-text {
+  color: var(--neo-muted);
+}
+
+/* Navbar: riduci oro e porta sul neon */
+body.neo-page .nav-links a:hover,
+body.neo-page .nav-links a.active {
+  color: var(--neo-cyan);
+  border-bottom-color: rgba(102,247,255,.55);
+}
+
+/* Footer premium: variante neon (soft) */
+body.neo-page .footer-premium {
+  background: linear-gradient(135deg, rgba(4,5,26,1) 0%, rgba(7,10,42,1) 100%);
+  border-top: 1px solid rgba(120,245,255,.14);
+}
+body.neo-page .footer-cta-banner {
+  border: 1px solid rgba(102,247,255,.18);
+  background: linear-gradient(135deg, rgba(102,247,255,.08) 0%, rgba(176,108,255,.06) 100%);
+}
+body.neo-page .footer-cta-btn {
+  border: 1px solid rgba(176,108,255,.38);
+  background: linear-gradient(90deg, rgba(176,108,255,.28), rgba(102,247,255,.20));
+  box-shadow: 0 0 0 3px rgba(176,108,255,.10), 0 0 28px rgba(102,247,255,.10);
+}
+body.neo-page .footer-social-link {
+  background: rgba(102,247,255,.06);
+  border: 1px solid rgba(102,247,255,.18);
+  color: var(--neo-cyan);
+}
+
 
 
 
