@@ -1760,10 +1760,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (path.includes("predictions")) {
   neonHomeInit();
 
-  await populateMarcatori();
-  await populateAssist();
-  await populateAnalisiFantacalcio();
-  await populatePronostici();
+  try { await populateMarcatori(); } catch(e){ console.error(e); }
+  try { await populateAssist(); } catch(e){ console.error(e); }
+  try { await populateAnalisiFantacalcio(); } catch(e){ console.error(e); }
+  try { await populatePronostici(); } catch(e){ console.error(e); }
 }
 
 
