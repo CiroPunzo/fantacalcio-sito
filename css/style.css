@@ -5747,6 +5747,26 @@ body.neo-page .footer-social-link {
   }
 }
 
+/* ===== PATCH NAVBAR NEON (Variante A) ===== */
+
+/* 1) Attaccata al top e sempre visibile */
+.neo-navbar.v-a{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 5000 !important;
+  margin: 0 !important;
+}
+
+/* 2) Rimuove qualunque offset ereditato/strano */
+html, body{
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 3) IMPORTANTISSIMO: disattiva il vecchio compensate della vecchia navbar fissa */
+body{
+  padding-top: 0 !important; /* nel tuo CSS c'è "Compensa navbar fissa body padding-top 56px" */
+}
 
 
 
