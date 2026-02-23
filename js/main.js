@@ -424,7 +424,11 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
     select.onchange = () => populateAnalisiFantacalcio(select.value);
   }
 
-  const giornataCorrente = selectedGiornata || (giornate.length ? giornate[giornate.length - 1] : null);
+  const giornataCorrente =
+  selectedGiornata ??
+  (Number.isFinite(window.currentMatchday) ? window.currentMatchday : null) ??
+  (giornate.length ? giornate[giornate.length - 1] : null);
+
   if (!giornataCorrente) return;
   if (select) select.value = String(giornataCorrente);
 
@@ -1028,6 +1032,11 @@ let radarChart = null;
     }
     window.currentMatchday = currentMatchday;
   }
+
+  currentMatchday = cm;
+selectedMatchday = cm;
+window.currentMatchday = cm;
+
 
   function renderResultsSkeleton(text) {
     els.track.innerHTML = `<div class="neo-card neo-card-skeleton">${text}</div>`;
