@@ -22,31 +22,6 @@ html, body {
     padding: 0 20px;
 }
 
-/* ===== NAVBAR ===== */
-.navbar {
-    background-color: rgba(2, 0, 65, 0.96);
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(6px);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.navbar .container {
-    -width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.navbar-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 26px 0;
-    position: relative;
-    width: 100%;
-}
-
 .logo {
     display: flex;
     align-items: center;
@@ -5962,6 +5937,30 @@ body{
 }
 
 
+/* === NEON NAVBAR: mobile dropdown unico === */
+@media (max-width: 860px){
+  .neo-burger{ display: flex; }
+
+  /* menu chiuso */
+  .neo-nav-links{
+    display: none;
+    position: fixed;
+    top: 64px;         /* altezza navbar */
+    left: 14px;
+    right: 14px;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 18px;
+    background: rgba(10, 12, 40, 0.96);
+    border: 1px solid rgba(176,108,255,0.22);
+    box-shadow: 0 18px 55px rgba(0,0,0,0.65);
+    z-index: 7000;
+  }
+
+  /* menu aperto */
+  .neo-nav-links.nav-open{ display: flex; }
+}
 
 
 
