@@ -292,7 +292,7 @@ async function populateMarcatori() {
 }
 
 async function populateAssist() {
-  const data = await fetchSheetDataJson(SHEETNAMES.classificaAssist);
+  const data = await fetchSheetDataJson(SHEET_NAMES.classificaAssist);
   const tbody = document.getElementById("assist-body");
   if (!tbody || !Array.isArray(data) || !data.length) return;
 
