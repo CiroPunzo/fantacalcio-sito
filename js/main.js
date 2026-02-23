@@ -740,11 +740,11 @@ function setupMobileNavbar(){
 
   // Chiudi cliccando fuori
   document.addEventListener('click', (e) => {
-    if (!navLinks.classList.contains('nav-open')) return;
-    if (e.target.closest('#nav-toggle')) return;
-    if (e.target.closest('#nav-links')) return;
-    setOpen(false);
-  });
+  if (!navLinks.classList.contains('nav-open')) return;
+  if (e.target.closest('#nav-toggle')) return;
+  if (e.target.closest('#nav-links')) return;
+  setOpen(false);
+});
 }
 
 
