@@ -5848,5 +5848,50 @@ body{
   }
 }
 
+/* hamburger sempre cliccabile */
+.neo-navbar.v-a{
+  z-index: 5000 !important;
+}
+.neo-navbar.v-a .neo-burger{
+  position: relative;
+  z-index: 6000 !important;
+  pointer-events: auto !important;
+}
+
+/* dropdown sopra al contenuto */
+#nav-links.neo-nav-links{
+  z-index: 7000 !important;
+}
+
+/* Track: più stabile su mobile */
+#results-carousel-track{
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  gap: 10px !important;
+  padding-bottom: 4px;
+}
+
+/* Card base: già più piccola */
+.neo-match-card{
+  min-width: 240px !important;
+  max-width: 240px !important;
+  scroll-snap-align: start;
+}
+
+/* Mobile stretto: ancora più compatta */
+@media (max-width: 420px){
+  .neo-match-card{
+    min-width: 220px !important;
+    max-width: 220px !important;
+  }
+
+  /* comprime un filo tipografia e spazi interni senza “rompere” */
+  .neo-match-card .neo-match-head{ margin-bottom: 8px !important; }
+  .neo-match-card .neo-score{ font-size: 1.35rem !important; }
+  .neo-match-card .neo-team-name{ font-size: .92rem !important; }
+  .neo-match-card .neo-team-logo{ width: 22px !important; height: 22px !important; }
+}
+
+
 
 
