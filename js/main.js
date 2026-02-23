@@ -241,7 +241,7 @@ async function populateClassifica() {
         zonaHTML = `<div class="zona-badge zona-relegation" title="Retrocessione"><span>↓</span></div>`;
       }
 
-      const logoUrl = getClubLogo(club);
+      const logoUrl = getClubLogo(squadra);
       const teamHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${squadra}" class="table-logo"><span><strong>${squadra}</strong></span></div>`
         : `<strong>${squadra}</strong>`;
@@ -279,7 +279,8 @@ async function populateMarcatori() {
       const club = row["Squadra"] || row["Club"] || "-";
       const gol = row["Gol"] || "-";
 
-      const logoUrl = getClubLogo(club);
+     const logoUrl = getClubLogo(squadra);
+
       const clubHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
         : club;
@@ -442,8 +443,8 @@ async function populateAnalisiFantacalcio(selectedGiornata = null) {
     const consigliati = row["Consigliati"] || "-";
     const daEvitare = row["Da Evitare"] || row["DaEvitare"] || "-";
 
-    const logoCasa = CLUB_LOGOS[casa];
-    const logoTrasferta = CLUB_LOGOS[trasferta];
+    const logoCasa = getClubLogo(casa);
+const logoTrasferta = getClubLogo(trasferta);
 
     tr.innerHTML = `
       <td>
@@ -558,8 +559,8 @@ async function populatePronostici(selectedGiornata = null) {
     const esito = row["EsitoPrincipale"] || row["Esito Principale"] || "-";
     const conf = row["Confidenza"] || "0";
 
-    const logoCasa = CLUB_LOGOS[casa];
-    const logoTrasferta = CLUB_LOGOS[trasferta];
+    const logoCasa = getClubLogo(casa);
+const logoTrasferta = getClubLogo(trasferta);
 
     tr.innerHTML = `
       <td>
