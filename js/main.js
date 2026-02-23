@@ -178,7 +178,7 @@ async function fetchSheetDataJson(sheetName) {
 // =====================
 // LOGHI CLUB (tuoi)
 // =====================
-const CLUB_LOGOS = {
+window.CLUBLOGOS = window.CLUBLOGOS || {
   Milan: "img/loghi/milan.png",
   Napoli: "img/loghi/napoli.png",
   Inter: "img/loghi/inter.png",
