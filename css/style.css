@@ -5909,6 +5909,33 @@ body{
   #nav-links.neo-nav-links.nav-open{ display: flex; }
 }
 
+/* NEON NAVBAR - mobile toggle */
+.neo-burger { display: none; } /* desktop */
+
+@media (max-width: 860px){
+  .neo-burger { display: flex; }
+
+  /* il menu chiuso */
+  .neo-nav-links{
+    display: none;
+    position: fixed;
+    top: 64px;          /* regola se la navbar è più alta */
+    left: 14px;
+    right: 14px;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(5, 8, 20, 0.95);
+    border: 1px solid rgba(120, 245, 255, 0.18);
+    z-index: 7000;
+  }
+
+  /* il menu aperto (JS aggiunge nav-open) */
+  .neo-nav-links.nav-open{ display: flex; }
+}
+
+
 
 
 
