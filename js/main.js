@@ -291,33 +291,51 @@ async function populateMarcatori() {
     });
 }
 
-async function populateAssist(){
-  const data = await fetchSheetDataJson(window.SHEET_NAMES.classificaAssist);
+async function populateAssist() {
+  const data = await fetchSheetDataJson(SHEETNAMES.classificaAssist);
   const tbody = document.getElementById("assist-body");
   if (!tbody || !Array.isArray(data) || !data.length) return;
 
+  const logos = (typeof CLUBLOGOS !== "undefined" && CLUBLOGOS) ? CLUBLOGOS : {};
+
+  const pick = (row, keys) => {
+    for (const k of keys) {
+      const v = row?.[k];
+      if (v !== undefined && v !== null && String(v).trim() !== "") return v;
+    }
+    return null;
+  };
+
+  const rows = data
+    .map(r => ({
+      pos: Number(pick(r, ["Posizione", "#", "Rank", "Pos"])) || 999,
+      player: pick(r, ["Giocatore", "Nome Giocatore", "Nome", "Player", "Calciatore"]) || "-",
+      club: pick(r, ["Squadra", "Club", "Team"]) || "-",
+      assist: pick(r, ["Assist", "A", "Ass", "N. Assist", "Tot Assist"]) ?? "-",
+    }))
+    .filter(r => r.club !== "-" || r.player !== "-") // evita righe totalmente vuote
+    .sort((a, b) => a.pos - b.pos)
+    .slice(0, 10);
+
   tbody.innerHTML = "";
-  data
-    .filter(r => r["Posizione"] || r["Giocatore"] || r["Nome Giocatore"])
-    .sort((a,b) => Number(a["Posizione"] || 999) - Number(b["Posizione"] || 999))
-    .slice(0, 10)
-    .forEach((row, i) => {
-      const tr = document.createElement("tr");
-      const player = row["Giocatore"] || row["Nome Giocatore"] || "-";
-      const club = row["Squadra"] || row["Club"] || "-";
-      const assist = row["Assist"] ?? "-";
-      const logos = (typeof CLUBLOGOS !== "undefined" && CLUBLOGOS) ? CLUBLOGOS : {};
-const logoUrl = logos[club];
+  rows.forEach((r, i) => {
+    const tr = document.createElement("tr");
 
-const clubHTML = logoUrl
-  ? `<div class="table-team"><img src="${logoUrl}" alt="${club}" class="table-logo"><span>${club}</span></div>`
-  : club;
+    const logoUrl = logos[r.club];
+    const clubHTML = logoUrl
+      ? `<div class="table-team"><img src="${logoUrl}" alt="${r.club}" class="table-logo"><span>${r.club}</span></div>`
+      : r.club;
 
-
-      tr.innerHTML = `<td>${i+1}</td><td><strong>${player}</strong></td><td>${clubHTML}</td><td>${assist}</td>`;
-      tbody.appendChild(tr);
-    });
+    tr.innerHTML = `
+      <td>${r.pos !== 999 ? r.pos : (i + 1)}</td>
+      <td><strong>${r.player}</strong></td>
+      <td>${clubHTML}</td>
+      <td>${r.assist}</td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
+
 
 async function populateInfortunati() {
   const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
