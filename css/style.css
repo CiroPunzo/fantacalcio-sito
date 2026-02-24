@@ -5962,6 +5962,30 @@ body{
   .neo-nav-links.nav-open{ display: flex; }
 }
 
+/* MOBILE: dropdown NEON - deve vincere su tutto */
+@media (max-width: 860px) {
+  #nav-links.neo-nav-links { 
+    display: none;
+  }
+  #nav-links.neo-nav-links.nav-open {
+    display: flex;
+  }
+
+  /* sicurezza: dropdown sopra al resto */
+  #nav-links.neo-nav-links {
+    position: fixed;
+    top: 64px;
+    left: 14px;
+    right: 14px;
+    z-index: 7000;
+  }
+  #nav-toggle.neo-burger {
+    position: relative;
+    z-index: 8000;
+  }
+}
+
+
 
 
 
