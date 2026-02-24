@@ -5985,6 +5985,13 @@ body{
   }
 }
 
+/* FIX hamburger: forziamo apertura menu NEON quando JS aggiunge .nav-open */
+@media (max-width: 860px) {
+  #nav-links.neo-nav-links { display: none !important; }
+  #nav-links.neo-nav-links.nav-open { display: flex !important; }
+}
+
+
 
 
 
