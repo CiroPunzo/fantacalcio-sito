@@ -6130,5 +6130,31 @@ header.neo-navbar.v-a nav.neo-nav #nav-links.neo-nav-links > li > a {
 }
 
 
+/* ===== NAV RESET: mostra link su DESKTOP, dropdown su MOBILE ===== */
+
+/* DESKTOP: il menu deve essere visibile in riga */
+@media (min-width: 861px) {
+  header.neo-navbar .neo-nav { display: block !important; }
+  header.neo-navbar #nav-links.neo-nav-links {
+    display: flex !important;
+    position: static !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 14px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* MOBILE: menu chiuso di default, aperto con .nav-open */
+@media (max-width: 860px) {
+  header.neo-navbar .neo-nav { display: block !important; } /* nav esiste, ma UL è dropdown */
+  header.neo-navbar #nav-links.neo-nav-links { display: none !important; }
+  header.neo-navbar #nav-links.neo-nav-links.nav-open { display: flex !important; }
+}
 
 
