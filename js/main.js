@@ -1822,12 +1822,40 @@ function setupJoinModal() {
   const form = document.getElementById("join-form");
   if (!form) return;
 
-  form.addEventListener("submit", (e) => {
+  const ENDPOINT =
+    "https://script.google.com/macros/s/AKfycbwY0C_JtxI_gnIiikr0YpZVOZH6QvxI7We0HrNlR_sejP-hDLwRhcGDkNFPlu4rZZeI/exec";
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    const email = document.getElementById("join-email")?.value?.trim();
+    const consent = document.getElementById("join-consent")?.checked;
+
+    if (!email) return;
+    if (!consent) return;
+
+    try {
+      await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "compare_unlock",
+          email,
+          source: "compare_unlock",
+          page: location.pathname,
+        }),
+      });
+    } catch (err) {
+      console.error("Errore invio email:", err);
+      // Sblocchiamo comunque: se preferisci bloccare lo sblocco, dimmelo.
+    }
+
     window.unlockCompare?.();
     document.getElementById("join-modal")?.classList.remove("active");
+    form.reset();
   });
 }
+
 
 
 // =====================
