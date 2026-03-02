@@ -1834,20 +1834,20 @@ function setupJoinModal() {
     if (!email) return;
     if (!consent) return;
 
+    const params = new URLSearchParams();
+    params.set("action", "compare_unlock");
+    params.set("email", email);
+    params.set("source", "compare_unlock");
+    params.set("page", location.pathname);
+
     try {
       await fetch(ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "compare_unlock",
-          email,
-          source: "compare_unlock",
-          page: location.pathname,
-        }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: params.toString(),
       });
     } catch (err) {
       console.error("Errore invio email:", err);
-      // Sblocchiamo comunque: se preferisci bloccare lo sblocco, dimmelo.
     }
 
     window.unlockCompare?.();
@@ -1855,6 +1855,7 @@ function setupJoinModal() {
     form.reset();
   });
 }
+
 
 
 
