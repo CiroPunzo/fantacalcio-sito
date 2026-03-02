@@ -5928,6 +5928,53 @@ body{
   #nav-links.neo-nav-links.nav-open{ display:flex; }
 }
 
+/* ===== NAVBAR MOBILE FIX (incolla in fondo) ===== */
+@media (max-width: 860px) {
+  #nav-toggle.neo-burger {
+    display: grid !important;
+    place-items: center !important;
+    position: relative !important;
+    z-index: 8000 !important;
+    pointer-events: auto !important;
+  }
+
+  #nav-links.neo-nav-links {
+    display: none !important;
+    position: fixed !important;
+    top: 64px !important;
+    left: 14px !important;
+    right: 14px !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 14px !important;
+    border-radius: 18px !important;
+    background: rgba(10, 12, 40, 0.96) !important;
+    border: 1px solid rgba(176, 108, 255, 0.22) !important;
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.65) !important;
+    backdrop-filter: blur(12px) !important;
+    z-index: 7000 !important;
+  }
+
+  #nav-links.neo-nav-links.nav-open {
+    display: flex !important;
+    animation: neoDrop 0.18s ease-out;
+  }
+
+  #nav-links.neo-nav-links a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 14px 14px !important;
+    border-radius: 14px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: #EAF2FF !important;
+    text-decoration: none !important;
+    letter-spacing: 0.10em !important;
+    text-transform: uppercase !important;
+    font-weight: 900 !important;
+  }
+}
 
 
 
