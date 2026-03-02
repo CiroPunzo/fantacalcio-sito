@@ -6119,5 +6119,16 @@ header.neo-navbar .neo-nav-links a.neo-cta {
   }
 }
 
+/* Force readable nav labels (desktop + mobile) */
+header.neo-navbar.v-a nav.neo-nav #nav-links.neo-nav-links > li > a {
+  color: #EAF2FF !important;
+}
+
+header.neo-navbar.v-a nav.neo-nav #nav-links.neo-nav-links > li > a {
+  text-shadow: 0 0 14px rgba(176,108,255,0.35),
+               0 0 10px rgba(102,247,255,0.18) !important;
+}
+
+
 
 
