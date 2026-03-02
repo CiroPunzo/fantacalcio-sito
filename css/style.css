@@ -6161,3 +6161,60 @@ header.neo-navbar.v-a nav.neo-nav #nav-links.neo-nav-links > li > a {
 header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
   color: #EAF2FF !important;
 }
+
+/* ===== MOBILE DROPDOWN: PATCH UNICA (vince su tutte le altre) ===== */
+@media (max-width: 860px) {
+  /* NON nascondere il <nav> su mobile (altrimenti il menu non può “uscire”) */
+  header.neo-navbar.v-a nav.neo-nav {
+    display: block !important;
+  }
+
+  /* hamburger sopra a tutto */
+  header.neo-navbar.v-a #nav-toggle.neo-burger {
+    display: grid !important;
+    position: relative !important;
+    z-index: 9001 !important;
+  }
+
+  /* menu: chiuso di default */
+  header.neo-navbar.v-a nav.neo-nav #nav-links.neo-nav-links {
+    display: none !important;
+
+    position: fixed !important;
+    top: 72px !important;      /* se lo vuoi più giù: 80px */
+    left: 14px !important;
+    right: 14px !important;
+
+    flex-direction: column !important;
+    gap: 10px !important;
+
+    padding: 14px !important;
+    margin: 0 !important;
+    list-style: none !important;
+
+    background: rgba(10, 12, 40, 0.96) !important;
+    border: 1px solid rgba(176,108,255,0.22) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 18px 55px rgba(0,0,0,0.65) !important;
+    backdrop-filter: blur(12px) !important;
+
+    z-index: 9000 !important;
+  }
+
+  /* menu: aperto quando JS aggiunge .nav-open */
+  header.neo-navbar.v-a nav.neo-nav #nav-links.neo-nav-links.nav-open {
+    display: flex !important;
+  }
+
+  /* link dentro dropdown */
+  header.neo-navbar.v-a nav.neo-nav #nav-links.neo-nav-links > li > a {
+    display: flex !important;
+    padding: 14px 14px !important;
+    border-radius: 14px !important;
+    color: #EAF2FF !important;
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    text-decoration: none !important;
+  }
+}
+
