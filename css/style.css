@@ -6158,3 +6158,6 @@ header.neo-navbar.v-a nav.neo-nav #nav-links.neo-nav-links > li > a {
 }
 
 
+header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
+  color: #EAF2FF !important;
+}
