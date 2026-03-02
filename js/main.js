@@ -706,46 +706,62 @@ function setupDashboardTabs() {
   });
 }
 
-function setupMobileNavbar(){
-  const navToggle = document.getElementById('nav-toggle');
-  const navLinks = document.getElementById('nav-links');
+function setupMobileNavbar() {
+  const navToggle = document.getElementById("nav-toggle");
+  const navLinks = document.getElementById("nav-links");
+
   if (!navToggle || !navLinks) return;
 
   const setOpen = (open) => {
-    navLinks.classList.toggle('nav-open', open);
-    navToggle.classList.toggle('nav-open', open);
-    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navLinks.classList.toggle("nav-open", open);
+    navToggle.classList.toggle("nav-open", open);
+    navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
   };
 
   const toggle = (e) => {
     if (e) e.preventDefault();
-    const isOpen = navLinks.classList.contains('nav-open');
+    const isOpen = navLinks.classList.contains("nav-open");
     setOpen(!isOpen);
   };
 
-  // Click funziona ovunque
-  navToggle.addEventListener('click', toggle);
+  navToggle.addEventListener("click", toggle);
 
-  // Touch: evita “doppio evento” ma senza rompere Safari
-  navToggle.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    toggle(e);
-  }, { passive: false });
+  navToggle.addEventListener(
+    "touchend",
+    (e) => {
+      e.preventDefault();
+      toggle(e);
+    },
+    { passive: false }
+  );
 
-  // Chiudi quando clicchi un link
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => setOpen(false));
-    link.addEventListener('touchend', () => setOpen(false), { passive: true });
+  navLinks.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setOpen(false));
+    link.addEventListener("touchend", () => setOpen(false), { passive: true });
   });
 
-  // Chiudi cliccando fuori
-  document.addEventListener('click', (e) => {
-  if (!navLinks.classList.contains('nav-open')) return;
-  if (e.target.closest('#nav-toggle')) return;
-  if (e.target.closest('#nav-links')) return;
-  setOpen(false);
-});
+  document.addEventListener("click", (e) => {
+    if (!navLinks.classList.contains("nav-open")) return;
+    if (e.target.closest("#nav-toggle")) return;
+    if (e.target.closest("#nav-links")) return;
+    setOpen(false);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setOpen(false);
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 860) setOpen(false);
+  });
 }
+
 
 
 // =====================
