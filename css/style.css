@@ -6048,5 +6048,76 @@ body{
   }
 }
 
+/* ===== NAVBAR: FIX LEGGIBILITÀ + NEON ===== */
+header.neo-navbar {
+  background: radial-gradient(900px 140px at 15% 0%,
+      rgba(176,108,255,0.18), transparent 55%),
+    radial-gradient(700px 140px at 85% 0%,
+      rgba(102,247,255,0.14), transparent 55%),
+    linear-gradient(180deg,
+      rgba(9,10,26,0.92), rgba(5,6,18,0.82)) !important;
+  border-bottom: 1px solid rgba(102,247,255,0.18) !important;
+  backdrop-filter: blur(14px) !important;
+}
+
+header.neo-navbar .neo-navbar-inner {
+  min-height: 72px !important;
+}
+
+/* Brand */
+header.neo-navbar .neo-brand-text {
+  color: #EAF2FF !important;
+  text-shadow: 0 0 18px rgba(176,108,255,0.30),
+               0 0 10px rgba(102,247,255,0.18) !important;
+}
+
+/* Link desktop: super leggibili */
+header.neo-navbar .neo-nav-links a {
+  color: #EAF2FF !important;
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  text-shadow: 0 0 14px rgba(176,108,255,0.28) !important;
+}
+
+header.neo-navbar .neo-nav-links a:hover {
+  border-color: rgba(102,247,255,0.35) !important;
+  background: rgba(102,247,255,0.10) !important;
+  box-shadow: 0 0 0 3px rgba(102,247,255,0.10) !important;
+  transform: translateY(-1px);
+}
+
+header.neo-navbar .neo-nav-links a.active {
+  border-color: rgba(176,108,255,0.55) !important;
+  background: rgba(176,108,255,0.12) !important;
+  box-shadow: 0 0 0 3px rgba(176,108,255,0.10) !important;
+}
+
+/* CTA Community */
+header.neo-navbar .neo-nav-links a.neo-cta {
+  border-color: rgba(102,247,255,0.45) !important;
+  background: linear-gradient(90deg,
+      rgba(176,108,255,0.18), rgba(102,247,255,0.14)) !important;
+  box-shadow: 0 0 26px rgba(102,247,255,0.10) !important;
+}
+
+/* Hamburger: coerente (sembra “neon”, non bianco) */
+#nav-toggle.neo-burger {
+  background: rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(102,247,255,0.22) !important;
+  box-shadow: 0 0 0 3px rgba(176,108,255,0.08),
+              0 18px 40px rgba(0,0,0,0.35) !important;
+}
+
+#nav-toggle.neo-burger .neo-burger-bar {
+  background: #EAF2FF !important;
+}
+
+/* Mobile: rendi il menu (quando aprirà) chiarissimo */
+@media (max-width: 860px) {
+  #nav-links.neo-nav-links a {
+    color: #EAF2FF !important;
+  }
+}
+
 
 
