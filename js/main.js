@@ -1641,37 +1641,6 @@ function renderTradeCalendar() {
 
   if (!Sì: l’errore è **qui dentro**, ed è dovuto al fatto che hai lasciato nel file **due versioni di `renderTradeCalendar()` mischiate insieme**. Dopo la prima funzione chiusa correttamente, hai ancora codice “sciolto” con `const aList ...`, `const startMd ...`, `tradeEls.cal.innerHTML = ...` e poi un’altra `}`: quello fuori da una funzione rompe il parser. [file:91][file:92]
 
-## Il punto da rimuovere
-
-Nel blocco che hai incollato, devi eliminare **tutto questo pezzo**:
-
-```js
-  const aList = (tradeA.upcomingMatches || []).map(m => fmtMatch(tradeA.club, m));
-  const bList = (tradeB.upcomingMatches || []).map(m => fmtMatch(tradeB.club, m));
-
-  const startMd = Number(currentMatchday) + 1;
-  const endMd = Number(currentMatchday) + Math.max(aList.length, bList.length, 0);
-
-  tradeEls.cal.innerHTML = `
-    <div style="font-weight:800;margin-bottom:8px">
-      Calendario giornate ${startMd}-${endMd}
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div>
-        <div style="opacity:.9;margin-bottom:6px">
-          ${tradeA.player} · ${tradeA.club} · FIC <strong>${tradeA.fantaIndexCalendario ?? "-"}</strong>
-        </div>
-        <div style="opacity:.85">${aList.join("<br>") || "-"}</div>
-      </div>
-      <div>
-        <div style="opacity:.9;margin-bottom:6px">
-          ${tradeB.player} · ${tradeB.club} · FIC <strong>${tradeB.fantaIndexCalendario ?? "-"}</strong>
-        </div>
-        <div style="opacity:.85">${bList.join("<br>") || "-"}</div>
-      </div>
-    </div>
-  `;
-}
 
   function renderTradeDecision() {
   if (!tradeEls.dec) return;
