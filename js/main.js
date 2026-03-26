@@ -1638,10 +1638,7 @@ function getCalendarSummary(fic) {
 
 function renderTradeCalendar() {
   if (!tradeEls.cal) return;
-
-  if (!Sì: l’errore è **qui dentro**, ed è dovuto al fatto che hai lasciato nel file **due versioni di `renderTradeCalendar()` mischiate insieme**. Dopo la prima funzione chiusa correttamente, hai ancora codice “sciolto” con `const aList ...`, `const startMd ...`, `tradeEls.cal.innerHTML = ...` e poi un’altra `}`: quello fuori da una funzione rompe il parser. [file:91][file:92]
-
-
+  
   function renderTradeDecision() {
   if (!tradeEls.dec) return;
 
