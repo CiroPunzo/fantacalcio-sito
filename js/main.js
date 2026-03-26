@@ -1639,72 +1639,13 @@ function getCalendarSummary(fic) {
 function renderTradeCalendar() {
   if (!tradeEls.cal) return;
 
-  if (!tradeA || !tradeB) {
-    tradeEls.cal.innerHTML = `<div class="neo-mini-card">Seleziona due giocatori per vedere il calendario.</div>`;
-    return;
-  }
+  if (!Sì: l’errore è **qui dentro**, ed è dovuto al fatto che hai lasciato nel file **due versioni di `renderTradeCalendar()` mischiate insieme**. Dopo la prima funzione chiusa correttamente, hai ancora codice “sciolto” con `const aList ...`, `const startMd ...`, `tradeEls.cal.innerHTML = ...` e poi un’altra `}`: quello fuori da una funzione rompe il parser. [file:91][file:92]
 
-  const aList = tradeA.upcomingMatches || [];
-  const bList = tradeB.upcomingMatches || [];
+## Il punto da rimuovere
 
-  const startMd = Number(currentMatchday) + 1;
-  const endMd = Number(currentMatchday) + Math.max(aList.length, bList.length, 0);
+Nel blocco che hai incollato, devi eliminare **tutto questo pezzo**:
 
-  const aSummary = getCalendarSummary(tradeA.fantaIndexCalendario);
-  const bSummary = getCalendarSummary(tradeB.fantaIndexCalendario);
-
-  tradeEls.cal.innerHTML = `
-    <div style="font-weight:800;margin-bottom:10px">
-      Calendario giornate ${startMd}-${endMd}
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-      <div class="neo-mini-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">
-          <div>
-            <div style="font-weight:800;color:#fff;">${tradeA.player}</div>
-            <div style="opacity:.8;font-size:13px;">${tradeA.club}</div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-size:12px;opacity:.8;">FIC</div>
-            <div style="font-weight:800;color:${aSummary.color};">${tradeA.fantaIndexCalendario ?? "-"}</div>
-          </div>
-        </div>
-
-        <div style="font-size:12px;margin-bottom:10px;color:${aSummary.color};font-weight:700;">
-          ${aSummary.label}
-        </div>
-
-        <div>
-          ${aList.length ? aList.map(m => renderMatchPill(tradeA.club, m)).join("") : `<div style="opacity:.7;">Nessuna partita disponibile.</div>`}
-        </div>
-      </div>
-
-      <div class="neo-mini-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">
-          <div>
-            <div style="font-weight:800;color:#fff;">${tradeB.player}</div>
-            <div style="opacity:.8;font-size:13px;">${tradeB.club}</div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-size:12px;opacity:.8;">FIC</div>
-            <div style="font-weight:800;color:${bSummary.color};">${tradeB.fantaIndexCalendario ?? "-"}</div>
-          </div>
-        </div>
-
-        <div style="font-size:12px;margin-bottom:10px;color:${bSummary.color};font-weight:700;">
-          ${bSummary.label}
-        </div>
-
-        <div>
-          ${bList.length ? bList.map(m => renderMatchPill(tradeB.club, m)).join("") : `<div style="opacity:.7;">Nessuna partita disponibile.</div>`}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-
+```js
   const aList = (tradeA.upcomingMatches || []).map(m => fmtMatch(tradeA.club, m));
   const bList = (tradeB.upcomingMatches || []).map(m => fmtMatch(tradeB.club, m));
 
