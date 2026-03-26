@@ -1638,8 +1638,73 @@ function getCalendarSummary(fic) {
 
 function renderTradeCalendar() {
   if (!tradeEls.cal) return;
-  
-  function renderTradeDecision() {
+
+  if (!tradeA || !tradeB) {
+    tradeEls.cal.innerHTML = `<div class="neo-mini-card">Seleziona due giocatori per vedere il calendario.</div>`;
+    return;
+  }
+
+  const aList = tradeA.upcomingMatches || [];
+  const bList = tradeB.upcomingMatches || [];
+
+  const startMd = Number(currentMatchday) + 1;
+  const endMd = Number(currentMatchday) + Math.max(aList.length, bList.length, 0);
+
+  const aSummary = getCalendarSummary(tradeA.fantaIndexCalendario);
+  const bSummary = getCalendarSummary(tradeB.fantaIndexCalendario);
+
+  tradeEls.cal.innerHTML = `
+    <div style="font-weight:800;margin-bottom:10px">
+      Calendario giornate ${startMd}-${endMd}
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="neo-mini-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">
+          <div>
+            <div style="font-weight:800;color:#fff;">${tradeA.player}</div>
+            <div style="opacity:.8;font-size:13px;">${tradeA.club}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:12px;opacity:.8;">FIC</div>
+            <div style="font-weight:800;color:${aSummary.color};">${tradeA.fantaIndexCalendario ?? "-"}</div>
+          </div>
+        </div>
+
+        <div style="font-size:12px;margin-bottom:10px;color:${aSummary.color};font-weight:700;">
+          ${aSummary.label}
+        </div>
+
+        <div>
+          ${aList.length ? aList.map(m => renderMatchPill(tradeA.club, m)).join("") : `<div style="opacity:.7;">Nessuna partita disponibile.</div>`}
+        </div>
+      </div>
+
+      <div class="neo-mini-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">
+          <div>
+            <div style="font-weight:800;color:#fff;">${tradeB.player}</div>
+            <div style="opacity:.8;font-size:13px;">${tradeB.club}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:12px;opacity:.8;">FIC</div>
+            <div style="font-weight:800;color:${bSummary.color};">${tradeB.fantaIndexCalendario ?? "-"}</div>
+          </div>
+        </div>
+
+        <div style="font-size:12px;margin-bottom:10px;color:${bSummary.color};font-weight:700;">
+          ${bSummary.label}
+        </div>
+
+        <div>
+          ${bList.length ? bList.map(m => renderMatchPill(tradeB.club, m)).join("") : `<div style="opacity:.7;">Nessuna partita disponibile.</div>`}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderTradeDecision() {
   if (!tradeEls.dec) return;
 
   if (!tradeA || !tradeB || tradeA.fantaIndexCalendario == null || tradeB.fantaIndexCalendario == null) {
@@ -1662,6 +1727,12 @@ function renderTradeCalendar() {
     <div style="font-weight:800;margin-bottom:8px">Scelta consigliata</div>
     <div>${text}</div>
   `;
+}
+
+function rerenderTrade() {
+  renderTradeCards();
+  renderTradeCalendar();
+  renderTradeDecision();
 }
 
 
