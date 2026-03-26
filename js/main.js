@@ -1583,25 +1583,30 @@ let radarChart = null;
 }
 
   function renderTradeDecision() {
-    if (!tradeEls.dec) return;
+  if (!tradeEls.dec) return;
 
-    if (!tradeA || !tradeB || tradeA.fantaIndexCalendario == null || tradeB.fantaIndexCalendario == null) {
-      tradeEls.dec.innerHTML = `<div class="neo-mini-card">Decisione: dati calendario non disponibili per uno dei due.</div>`;
-      return;
-    }
-
-    const a = Number(tradeA.fantaIndexCalendario);
-    const b = Number(tradeB.fantaIndexCalendario);
-
-    let text = "Calendario equivalente: guarda anche forma, titolarità e ruolo.";
-    if (b < a) text = `In base al calendario sceglierei <strong>${tradeB.player}</strong> (FIC più basso).`;
-    if (a < b) text = `In base al calendario sceglierei <strong>${tradeA.player}</strong> (FIC più basso).`;
-
-    tradeEls.dec.innerHTML = `
-      <div style="font-weight:800;margin-bottom:8px">Scelta consigliata (solo calendario)</div>
-      <div>${text}</div>
-    `;
+  if (!tradeA || !tradeB || tradeA.fantaIndexCalendario == null || tradeB.fantaIndexCalendario == null) {
+    tradeEls.dec.innerHTML = `<div class="neo-mini-card">Decisione: dati calendario non disponibili per uno dei due.</div>`;
+    return;
   }
+
+  const a = Number(tradeA.fantaIndexCalendario);
+  const b = Number(tradeB.fantaIndexCalendario);
+
+  let text = `Calendario equivalente: valuta anche titolarità, gerarchie e ruolo.`;
+
+  if (b < a) {
+    text = `In base alle prossime 5 partite sceglierei <strong>${tradeB.player}</strong>: ha un calendario migliore.`;
+  } else if (a < b) {
+    text = `In base alle prossime 5 partite sceglierei <strong>${tradeA.player}</strong>: ha un calendario migliore.`;
+  }
+
+  tradeEls.dec.innerHTML = `
+    <div style="font-weight:800;margin-bottom:8px">Scelta consigliata</div>
+    <div>${text}</div>
+  `;
+}
+
 
   function rerenderTrade() {
     renderTradeCards();
