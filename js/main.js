@@ -1878,7 +1878,7 @@ function renderTradeCalendar() {
       const diffMap = buildTeamDifficultyMap(ratingRows);
       const matchesByTeam = buildMatchesByTeam(calRows);
 
-      function getUpcomingMatches(team, currentMd, horizonLocal, matchesByTeamLocal, diffMapLocal) {
+    function getUpcomingMatches(team, currentMd, horizonLocal, matchesByTeamLocal, diffMapLocal) {
   const t = normTeamName(team);
   const list = matchesByTeamLocal.get(t) || [];
 
@@ -1898,6 +1898,7 @@ function renderTradeCalendar() {
       };
     });
 }
+
 
 
       players.forEach((p) => {
