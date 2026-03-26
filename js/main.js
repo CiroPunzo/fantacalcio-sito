@@ -1547,13 +1547,163 @@ let radarChart = null;
     return `${ha} vs ${opp}`;
   }
 
-  function renderTradeCalendar() {
+  function getDifficultyMeta(d) {
+  const n = Number(d ?? 3);
+
+  if (n <= 2) {
+    return {
+      label: "Favorevole",
+      bg: "rgba(34,197,94,0.16)",
+      border: "rgba(34,197,94,0.45)",
+      text: "#86efac"
+    };
+  }
+
+  if (n >= 4) {
+    return {
+      label: "Difficile",
+      bg: "rgba(244,63,94,0.16)",
+      border: "rgba(244,63,94,0.42)",
+      text: "#fda4af"
+    };
+  }
+
+  return {
+    label: "Equilibrata",
+    bg: "rgba(250,204,21,0.14)",
+    border: "rgba(250,204,21,0.34)",
+    text: "#fde68a"
+  };
+}
+
+function renderMatchPill(team, m) {
+  const meta = getDifficultyMeta(m?.difficulty);
+  const ha = m?.isHome ? "H" : "A";
+  const opp = m?.opponent || "-";
+  const md = m?.matchday || "-";
+
+  return `
+    <div style="
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      margin-bottom:8px;
+      border-radius:14px;
+      background:${meta.bg};
+      border:1px solid ${meta.border};
+    ">
+      <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+        <span style="
+          min-width:34px;
+          height:34px;
+          display:inline-flex;
+          align-items:center;
+          justify-content:center;
+          border-radius:10px;
+          background:rgba(255,255,255,0.06);
+          color:#eaf2ff;
+          font-weight:800;
+          font-size:12px;
+        ">G${md}</span>
+
+        <div style="display:flex;flex-direction:column;min-width:0;">
+          <span style="font-weight:800;color:#fff;">${ha} vs ${opp}</span>
+          <span style="font-size:12px;color:${meta.text};">${meta.label}</span>
+        </div>
+      </div>
+
+      <span style="
+        min-width:28px;
+        text-align:center;
+        padding:4px 8px;
+        border-radius:999px;
+        background:rgba(255,255,255,0.06);
+        color:${meta.text};
+        font-size:12px;
+        font-weight:800;
+      ">${m?.difficulty ?? "-"}</span>
+    </div>
+  `;
+}
+
+function getCalendarSummary(fic) {
+  const n = Number(fic);
+  if (!Number.isFinite(n)) return { label: "N/D", color: "#cbd5e1" };
+  if (n <= 2.2) return { label: "Ottimo calendario", color: "#86efac" };
+  if (n <= 3.2) return { label: "Calendario discreto", color: "#fde68a" };
+  return { label: "Calendario complicato", color: "#fda4af" };
+}
+
+function renderTradeCalendar() {
   if (!tradeEls.cal) return;
 
   if (!tradeA || !tradeB) {
     tradeEls.cal.innerHTML = `<div class="neo-mini-card">Seleziona due giocatori per vedere il calendario.</div>`;
     return;
   }
+
+  const aList = tradeA.upcomingMatches || [];
+  const bList = tradeB.upcomingMatches || [];
+
+  const startMd = Number(currentMatchday) + 1;
+  const endMd = Number(currentMatchday) + Math.max(aList.length, bList.length, 0);
+
+  const aSummary = getCalendarSummary(tradeA.fantaIndexCalendario);
+  const bSummary = getCalendarSummary(tradeB.fantaIndexCalendario);
+
+  tradeEls.cal.innerHTML = `
+    <div style="font-weight:800;margin-bottom:10px">
+      Calendario giornate ${startMd}-${endMd}
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="neo-mini-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">
+          <div>
+            <div style="font-weight:800;color:#fff;">${tradeA.player}</div>
+            <div style="opacity:.8;font-size:13px;">${tradeA.club}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:12px;opacity:.8;">FIC</div>
+            <div style="font-weight:800;color:${aSummary.color};">${tradeA.fantaIndexCalendario ?? "-"}</div>
+          </div>
+        </div>
+
+        <div style="font-size:12px;margin-bottom:10px;color:${aSummary.color};font-weight:700;">
+          ${aSummary.label}
+        </div>
+
+        <div>
+          ${aList.length ? aList.map(m => renderMatchPill(tradeA.club, m)).join("") : `<div style="opacity:.7;">Nessuna partita disponibile.</div>`}
+        </div>
+      </div>
+
+      <div class="neo-mini-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">
+          <div>
+            <div style="font-weight:800;color:#fff;">${tradeB.player}</div>
+            <div style="opacity:.8;font-size:13px;">${tradeB.club}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:12px;opacity:.8;">FIC</div>
+            <div style="font-weight:800;color:${bSummary.color};">${tradeB.fantaIndexCalendario ?? "-"}</div>
+          </div>
+        </div>
+
+        <div style="font-size:12px;margin-bottom:10px;color:${bSummary.color};font-weight:700;">
+          ${bSummary.label}
+        </div>
+
+        <div>
+          ${bList.length ? bList.map(m => renderMatchPill(tradeB.club, m)).join("") : `<div style="opacity:.7;">Nessuna partita disponibile.</div>`}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 
   const aList = (tradeA.upcomingMatches || []).map(m => fmtMatch(tradeA.club, m));
   const bList = (tradeB.upcomingMatches || []).map(m => fmtMatch(tradeB.club, m));
@@ -1728,11 +1878,27 @@ let radarChart = null;
       const diffMap = buildTeamDifficultyMap(ratingRows);
       const matchesByTeam = buildMatchesByTeam(calRows);
 
-      function getUpcomingMatches(team, currentMd, horizonLocal, matchesByTeamLocal) {
-        const t = normTeamName(team);
-        const list = matchesByTeamLocal.get(t) || [];
-        return list.filter((m) => m.matchday > currentMd).slice(0, horizonLocal);
-      }
+      function getUpcomingMatches(team, currentMd, horizonLocal, matchesByTeamLocal, diffMapLocal) {
+  const t = normTeamName(team);
+  const list = matchesByTeamLocal.get(t) || [];
+
+  return list
+    .filter(m => m.matchday > currentMd)
+    .slice(0, horizonLocal)
+    .map(m => {
+      const opponent = m.home === t ? m.away : m.home;
+      const isHome = m.home === t;
+      const difficulty = Number(diffMapLocal.get(opponent) ?? 3);
+
+      return {
+        ...m,
+        opponent,
+        isHome,
+        difficulty
+      };
+    });
+}
+
 
       players.forEach((p) => {
         p.fantaIndexCalendario = calcFantaIndexCalendario(
@@ -1743,7 +1909,14 @@ let radarChart = null;
           matchesByTeam,
           diffMap
         );
-        p.upcomingMatches = getUpcomingMatches(p.club, currentMatchday, horizon, matchesByTeam);
+        p.upcomingMatches = getUpcomingMatches(
+  p.club,
+  currentMatchday,
+  horizon,
+  matchesByTeam,
+  diffMap
+);
+
       });
 
       if (!players.length) {
