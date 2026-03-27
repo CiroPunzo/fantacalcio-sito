@@ -6231,3 +6231,16 @@ header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
   }
 }
 
+@media (max-width: 768px) {
+  .neo-picker-panel {
+    width: calc(100vw - 24px);
+    max-width: 100%;
+  }
+
+  .neo-picker-search input {
+    min-height: 48px;
+    line-height: 1.2;
+  }
+}
+
+
