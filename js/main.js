@@ -218,21 +218,26 @@ function getBodies(ids){
 
 async function populateClassifica() {
   const data = await fetchSheetDataJson(SHEET_NAMES.classifica);
-  const tbody = document.getElementById("classifica-body");
-  const tbodies = getBodies(["classifica-body", "classifica-body-mobile"]);
-  if (!tbody) return;
+
+  const tbodyDesktop = document.getElementById("classifica-body");
+  const mobileBody = document.getElementById("classifica-body-mobile");
+
+  if (!tbodyDesktop || !mobileBody) return;
   if (!Array.isArray(data) || !data.length) return;
 
-  tbodies.forEach(t => t.innerHTML = "");
+  tbodyDesktop.innerHTML = "";
+  mobileBody.innerHTML = "";
 
   data
     .sort((a, b) => Number(a["Posizione"]) - Number(b["Posizione"]))
     .slice(0, 10)
     .forEach((row) => {
-      const tr = document.createElement("tr");
-
       const pos = Number(row["Posizione"]);
       const squadra = row["Squadra"] || "-";
+      const pg = row["PG"] || "-";
+      const xg = row["xG"] || "-";
+      const punti = row["Punti"] || "-";
+      const logoUrl = getClubLogo(squadra);
 
       let zonaHTML = "";
       if (pos >= 1 && pos <= 4) {
@@ -242,26 +247,58 @@ async function populateClassifica() {
       } else if (pos === 7) {
         zonaHTML = `<div class="zona-badge zona-conference" title="Conference League"><img src="img/icon-conf-conference.png" alt="Conference League"></div>`;
       } else if (pos >= 18) {
-        zonaHTML = `<div class="zona-badge zona-relegation" title="Retrocessione"><span>↓</span></div>`;
+        zonaHTML = `<div class="zona-badge zona-relegation" title="Retrocessione"><span></span></div>`;
       }
 
-      const logoUrl = getClubLogo(squadra);
       const teamHTML = logoUrl
         ? `<div class="table-team"><img src="${logoUrl}" alt="${squadra}" class="table-logo"><span><strong>${squadra}</strong></span></div>`
         : `<strong>${squadra}</strong>`;
 
+      const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>${row["Posizione"] || "-"}</td>
+        <td>${pos || "-"}</td>
         <td>${zonaHTML}</td>
         <td>${teamHTML}</td>
-        <td>${row["PG"] || "-"}</td>
-        <td>${row["xG"] || "-"}</td>
-        <td>${row["Punti"] || "-"}</td>
+        <td>${pg}</td>
+        <td>${xg}</td>
+        <td>${punti}</td>
+      `;
+      tbodyDesktop.appendChild(tr);
+
+      const mobileRow = document.createElement("div");
+      mobileRow.className = "neo-standings-mobile-row";
+
+      const mobileZona = pos >= 18
+        ? `<div class="neo-standings-mobile-zona"><span class="zona-relegation-dot"></span></div>`
+        : `<div class="neo-standings-mobile-zona">${zonaHTML}</div>`;
+
+      const mobileLogo = logoUrl
+        ? `<img src="${logoUrl}" alt="${squadra}">`
+        : "";
+
+      mobileRow.innerHTML = `
+        <div class="neo-standings-mobile-left-row">
+          <div class="neo-standings-mobile-pos">${pos || "-"}</div>
+          ${mobileZona}
+          <div class="neo-standings-mobile-team">
+            ${mobileLogo}
+            <span>${squadra}</span>
+          </div>
+        </div>
+
+        <div class="neo-standings-mobile-right">
+          <div class="neo-standings-mobile-right-row">
+            <span>${pg}</span>
+            <span>${xg}</span>
+            <span>${punti}</span>
+          </div>
+        </div>
       `;
 
-     tbodies.forEach(t => t.appendChild(tr.cloneNode(true)));
+      mobileBody.appendChild(mobileRow);
     });
 }
+
 
 async function populateMarcatori() {
   const data = await fetchSheetDataJson(SHEET_NAMES.classificaMarcatori);
@@ -2015,29 +2052,6 @@ function setupJoinModal() {
     window.unlockCompare?.();
     document.getElementById("join-modal")?.classList.remove("active");
     form.reset();
-  });
-}
-
-function setupMobileTableDragLock() {
-  document.querySelectorAll('.neo-mobile-standings .dashboard-table-wrapper').forEach((wrap) => {
-    let startX = 0;
-    let startY = 0;
-
-    wrap.addEventListener('touchstart', (e) => {
-      const t = e.touches[0];
-      startX = t.clientX;
-      startY = t.clientY;
-    }, { passive: true });
-
-    wrap.addEventListener('touchmove', (e) => {
-      const t = e.touches[0];
-      const dx = Math.abs(t.clientX - startX);
-      const dy = Math.abs(t.clientY - startY);
-
-      if (dx > dy) {
-        e.preventDefault();
-      }
-    }, { passive: false });
   });
 }
 
