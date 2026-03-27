@@ -6450,6 +6450,163 @@ header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
   }
 }
 
+/* ===== MOBILE CLASSIFICA NUOVA ===== */
+@media (max-width: 980px) {
+  .neo-standings-mobile-card {
+    border: 1px solid rgba(120,245,255,.12);
+    border-radius: 18px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(8,10,36,.98), rgba(5,7,24,.98));
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+  }
+
+  .neo-standings-mobile-head,
+  .neo-standings-mobile-row {
+    display: grid;
+    grid-template-columns: 178px 1fr;
+    align-items: stretch;
+  }
+
+  .neo-standings-mobile-head {
+    border-bottom: 1px solid rgba(184,149,107,.12);
+    background: rgba(10, 13, 48, 0.96);
+  }
+
+  .neo-standings-mobile-left,
+  .neo-standings-mobile-left-row {
+    display: grid;
+    grid-template-columns: 38px 30px 110px;
+    align-items: center;
+    gap: 0;
+    min-width: 178px;
+    max-width: 178px;
+    padding: 0 10px;
+    background: #0a0d30;
+  }
+
+  .neo-standings-mobile-head .neo-standings-mobile-left {
+    color: #cfae79;
+    font-size: .82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    min-height: 52px;
+  }
+
+  .neo-standings-mobile-right {
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+
+  .neo-standings-mobile-right::-webkit-scrollbar {
+    display: none;
+  }
+
+  .neo-standings-mobile-right-track,
+  .neo-standings-mobile-right-row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 72px;
+    align-items: center;
+    min-width: max-content;
+  }
+
+  .neo-standings-mobile-head .neo-standings-mobile-right-track {
+    min-height: 52px;
+    color: #cfae79;
+    font-size: .82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    text-align: center;
+  }
+
+  .neo-standings-mobile-body {
+    display: block;
+  }
+
+  .neo-standings-mobile-row {
+    min-height: 68px;
+    border-bottom: 1px solid rgba(184,149,107,.08);
+  }
+
+  .neo-standings-mobile-row:last-child {
+    border-bottom: 0;
+  }
+
+  .neo-standings-mobile-left-row {
+    position: relative;
+  }
+
+  .neo-standings-mobile-pos {
+    font-size: 1rem;
+    color: rgba(234,242,255,.92);
+    text-align: center;
+  }
+
+  .neo-standings-mobile-zona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .neo-standings-mobile-zona img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+
+  .neo-standings-mobile-zona .zona-relegation-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff4b4b 0%, #b00000 70%);
+    box-shadow: 0 0 8px rgba(255,0,0,.5);
+  }
+
+  .neo-standings-mobile-team {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .neo-standings-mobile-team img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    flex: 0 0 20px;
+  }
+
+  .neo-standings-mobile-team span {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(255,255,255,.96);
+    font-weight: 700;
+    font-size: .95rem;
+  }
+
+  .neo-standings-mobile-right-row {
+    color: rgba(234,242,255,.88);
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .neo-standings-mobile-right-row > span {
+    display: grid;
+    place-items: center;
+    min-height: 68px;
+  }
+}
+
+
 
 
 
