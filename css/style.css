@@ -6311,32 +6311,36 @@ header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
   }
 }
 
-/* ===== MOBILE CLASSIFICA STICKY ===== */
+/* ===== MOBILE CLASSIFICA REFINED ===== */
 @media (max-width: 980px) {
+  .neo-mobile-standings {
+    margin-top: 12px;
+  }
+
   .neo-mobile-standings .dashboard-table-wrapper {
-    width: 100%;
+    width: calc(100% + 2px);
+    margin: 0 -1px;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
     touch-action: pan-x;
-    border-radius: 16px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(184,149,107,.45) transparent;
+    border-radius: 18px;
+    border: 1px solid rgba(120,245,255,.10);
+    background: linear-gradient(180deg, rgba(8,10,36,.96), rgba(6,7,24,.98));
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+    scrollbar-width: none;
   }
 
   .neo-mobile-standings .dashboard-table-wrapper::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  .neo-mobile-standings .dashboard-table-wrapper::-webkit-scrollbar-thumb {
-    background: rgba(184,149,107,.45);
-    border-radius: 999px;
+    display: none;
   }
 
   .neo-mobile-standings .classifica-table {
     width: max-content;
-    min-width: 720px;
+    min-width: 620px;
+    margin: 0;
     border-collapse: separate;
     border-spacing: 0;
     table-layout: fixed;
@@ -6346,13 +6350,15 @@ header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
     position: sticky;
     top: 0;
     z-index: 20;
-    background: #070b2a;
+    background: #0a0d30;
   }
 
   .neo-mobile-standings .classifica-table th,
   .neo-mobile-standings .classifica-table td {
+    padding: 12px 10px;
     white-space: nowrap;
     vertical-align: middle;
+    background-clip: padding-box;
   }
 
   /* POS */
@@ -6361,34 +6367,35 @@ header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
     position: sticky;
     left: 0;
     z-index: 30;
-    min-width: 52px;
-    width: 52px;
-    background: #070b2a;
+    width: 42px;
+    min-width: 42px;
     text-align: center;
+    background: #0a0d30;
   }
 
   /* ZONA */
   .neo-mobile-standings .classifica-table th:nth-child(2),
   .neo-mobile-standings .classifica-table td:nth-child(2) {
     position: sticky;
-    left: 52px;
+    left: 42px;
     z-index: 31;
-    min-width: 46px;
-    width: 46px;
-    background: #070b2a;
+    width: 40px;
+    min-width: 40px;
     text-align: center;
+    background: #0a0d30;
   }
 
-  /* SQUADRA + LOGO */
+  /* SQUADRA */
   .neo-mobile-standings .classifica-table th:nth-child(3),
   .neo-mobile-standings .classifica-table td:nth-child(3) {
     position: sticky;
-    left: 98px;
+    left: 82px;
     z-index: 32;
-    min-width: 160px;
-    width: 160px;
-    background: #070b2a;
-    box-shadow: 12px 0 20px rgba(2, 0, 25, 0.55);
+    width: 132px;
+    min-width: 132px;
+    max-width: 132px;
+    background: #0a0d30;
+    box-shadow: 10px 0 16px rgba(2, 5, 22, 0.55);
   }
 
   .neo-mobile-standings .classifica-table thead th:nth-child(1),
@@ -6397,31 +6404,52 @@ header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
     z-index: 40;
   }
 
-  .neo-mobile-standings .classifica-table td:nth-child(n+4),
-  .neo-mobile-standings .classifica-table th:nth-child(n+4) {
-    min-width: 86px;
+  .neo-mobile-standings .classifica-table th:nth-child(n + 4),
+  .neo-mobile-standings .classifica-table td:nth-child(n + 4) {
+    min-width: 72px;
+    width: 72px;
     text-align: center;
   }
 
   .neo-mobile-standings .classifica-table .table-team {
+    display: flex;
+    align-items: center;
     gap: 8px;
     min-width: 0;
+    max-width: 132px;
   }
 
   .neo-mobile-standings .classifica-table .table-logo {
-    width: 22px;
-    height: 22px;
-    flex: 0 0 22px;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
   }
 
   .neo-mobile-standings .classifica-table .table-team span,
   .neo-mobile-standings .classifica-table .table-team strong {
+    display: block;
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    display: block;
+  }
+
+  .neo-mobile-standings .classifica-table .zona-badge img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .neo-mobile-standings .classifica-table .zona-relegation span {
+    width: 10px;
+    height: 10px;
+  }
+
+  .neo-mobile-standings .dashboard-link {
+    margin-top: 12px;
+    display: inline-block;
   }
 }
+
 
 
 
