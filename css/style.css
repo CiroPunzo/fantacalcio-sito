@@ -6311,4 +6311,117 @@ header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
   }
 }
 
+/* ===== MOBILE CLASSIFICA STICKY ===== */
+@media (max-width: 980px) {
+  .neo-mobile-standings .dashboard-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+    border-radius: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(184,149,107,.45) transparent;
+  }
+
+  .neo-mobile-standings .dashboard-table-wrapper::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .neo-mobile-standings .dashboard-table-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(184,149,107,.45);
+    border-radius: 999px;
+  }
+
+  .neo-mobile-standings .classifica-table {
+    width: max-content;
+    min-width: 720px;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+  }
+
+  .neo-mobile-standings .classifica-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #070b2a;
+  }
+
+  .neo-mobile-standings .classifica-table th,
+  .neo-mobile-standings .classifica-table td {
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  /* POS */
+  .neo-mobile-standings .classifica-table th:nth-child(1),
+  .neo-mobile-standings .classifica-table td:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 30;
+    min-width: 52px;
+    width: 52px;
+    background: #070b2a;
+    text-align: center;
+  }
+
+  /* ZONA */
+  .neo-mobile-standings .classifica-table th:nth-child(2),
+  .neo-mobile-standings .classifica-table td:nth-child(2) {
+    position: sticky;
+    left: 52px;
+    z-index: 31;
+    min-width: 46px;
+    width: 46px;
+    background: #070b2a;
+    text-align: center;
+  }
+
+  /* SQUADRA + LOGO */
+  .neo-mobile-standings .classifica-table th:nth-child(3),
+  .neo-mobile-standings .classifica-table td:nth-child(3) {
+    position: sticky;
+    left: 98px;
+    z-index: 32;
+    min-width: 160px;
+    width: 160px;
+    background: #070b2a;
+    box-shadow: 12px 0 20px rgba(2, 0, 25, 0.55);
+  }
+
+  .neo-mobile-standings .classifica-table thead th:nth-child(1),
+  .neo-mobile-standings .classifica-table thead th:nth-child(2),
+  .neo-mobile-standings .classifica-table thead th:nth-child(3) {
+    z-index: 40;
+  }
+
+  .neo-mobile-standings .classifica-table td:nth-child(n+4),
+  .neo-mobile-standings .classifica-table th:nth-child(n+4) {
+    min-width: 86px;
+    text-align: center;
+  }
+
+  .neo-mobile-standings .classifica-table .table-team {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .neo-mobile-standings .classifica-table .table-logo {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+  }
+
+  .neo-mobile-standings .classifica-table .table-team span,
+  .neo-mobile-standings .classifica-table .table-team strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+  }
+}
+
+
 
