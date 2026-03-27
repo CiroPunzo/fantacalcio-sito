@@ -6218,3 +6218,16 @@ header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
   }
 }
 
+@media (max-width: 768px) {
+  #neo-picker-search,
+  .neo-picker-search input,
+  .neo-select,
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
