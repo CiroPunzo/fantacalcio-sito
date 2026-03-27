@@ -276,23 +276,28 @@
 
           <div class="neo-tab-panels">
             <div class="neo-panel active" id="neo-panel-m-classifica">
-              <div class="neo-table-wrap">
-                <table class="table classifica-table">
-                  <thead>
-                    <tr>
-                      <th>Pos</th>
-                      <th></th>
-                      <th>Squadra</th>
-                      <th>PG</th>
-                      <th>xG</th>
-                      <th>Punti</th>
-                    </tr>
-                  </thead>
-                  <tbody id="classifica-body-mobile"></tbody>
-                </table>
-              </div>
-              <button type="button" class="dashboard-link" id="open-full-classifica-mobile">Vedi tutte le squadre →</button>
-            </div>
+  <div class="neo-standings-mobile-card">
+    <div class="neo-standings-mobile-head">
+      <div class="neo-standings-mobile-left">
+        <span>Pos</span>
+        <span></span>
+        <span>Squadra</span>
+      </div>
+
+      <div class="neo-standings-mobile-right">
+        <div class="neo-standings-mobile-right-track">
+          <span>PG</span>
+          <span>xG</span>
+          <span>Punti</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="classifica-body-mobile" class="neo-standings-mobile-body"></div>
+  </div>
+
+  <button type="button" class="dashboard-link" id="open-full-classifica-mobile">Vedi tutte le squadre</button>
+</div>
 
             <div class="neo-panel" id="neo-panel-m-marcatori">
               <div class="neo-table-wrap">
