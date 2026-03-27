@@ -1411,8 +1411,11 @@ let radarChart = null;
     pick.wrap.setAttribute("aria-hidden", "false");
 
     pick.search.value = "";
-    pick.search.focus();
-    renderPickerList("");
+if (window.innerWidth > 768) {
+  pick.search.focus();
+}
+renderPickerList("");
+
   }
 
   function closePicker() {
