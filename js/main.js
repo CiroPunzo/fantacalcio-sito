@@ -2018,6 +2018,30 @@ function setupJoinModal() {
   });
 }
 
+function setupMobileTableDragLock() {
+  document.querySelectorAll('.neo-mobile-standings .dashboard-table-wrapper').forEach((wrap) => {
+    let startX = 0;
+    let startY = 0;
+
+    wrap.addEventListener('touchstart', (e) => {
+      const t = e.touches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+    }, { passive: true });
+
+    wrap.addEventListener('touchmove', (e) => {
+      const t = e.touches[0];
+      const dx = Math.abs(t.clientX - startX);
+      const dy = Math.abs(t.clientY - startY);
+
+      if (dx > dy) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  });
+}
+
+
 
 
 
@@ -2025,12 +2049,13 @@ function setupJoinModal() {
 // INIT (UNA SOLA VOLTA)
 // =====================
 document.addEventListener("DOMContentLoaded", async () => {
-  initHeroSlider();
+ initHeroSlider();
   setupMobileNavbar();
   setupDashboardTabs();
   setupGlobalModalClose();
-  setupJoinModal();  
+  setupJoinModal();
   setupFullTablesModals();
+  setupMobileTableDragLock();
 
   const path = window.location.pathname.toLowerCase();
 
