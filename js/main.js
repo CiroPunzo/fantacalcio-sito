@@ -2063,39 +2063,32 @@ function setupJoinModal() {
 // INIT (UNA SOLA VOLTA)
 // =====================
 document.addEventListener("DOMContentLoaded", async () => {
- initHeroSlider();
+  initHeroSlider();
   setupMobileNavbar();
   setupDashboardTabs();
   setupGlobalModalClose();
   setupJoinModal();
   setupFullTablesModals();
-  setupMobileTableDragLock();
 
   const path = window.location.pathname.toLowerCase();
 
-  // Home
-  if (path === "/" || path.endsWith("/index.html") || path.endsWith("index.html")) {
+  if (!path || path.endsWith("/index.html") || path.endsWith("index.html")) {
     await populateClassifica();
     await populateMarcatori();
     await populateInfortunati();
     neonHomeInit();
   }
 
-   // Previsioni (Matchday Hub Neon + 4 card)
   if (path.includes("predictions")) {
-  neonHomeInit();
+    neonHomeInit();
+    try { await populateMarcatori(); } catch (e) { console.error(e); }
+    try { await populateAssist(); } catch (e) { console.error(e); }
+    try { await populateAnalisiFantacalcio(); } catch (e) { console.error(e); }
+    try { await populatePronostici(); } catch (e) { console.error(e); }
+  }
 
-  try { await populateMarcatori(); } catch(e){ console.error(e); }
-  try { await populateAssist(); } catch(e){ console.error(e); }
-  try { await populateAnalisiFantacalcio(); } catch(e){ console.error(e); }
-  try { await populatePronostici(); } catch(e){ console.error(e); }
-
-    setupFullTablesModals();
-setupGlobalModalClose();
-}
-
-
-
+  setupFullTablesModals();
+  setupGlobalModalClose();
 });
 
 
