@@ -6606,6 +6606,160 @@ header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
   }
 }
 
+.trade-grid{
+  display:grid;
+  grid-template-columns: minmax(240px, 0.95fr) minmax(420px, 1.35fr) minmax(240px, 0.95fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.trade-mid,
+#trade-calendar,
+#trade-calendar > div{
+  min-width: 0;
+}
+
+.trade-calendar-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.trade-calendar-player{
+  min-width: 0;
+  padding: 14px;
+  border-radius: 18px;
+}
+
+.trade-calendar-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.trade-calendar-namewrap{
+  min-width: 0;
+}
+
+.trade-calendar-playername{
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  word-break: break-word;
+}
+
+.trade-calendar-club{
+  font-size: 13px;
+  color: rgba(234,242,255,.72);
+  margin-top: 2px;
+}
+
+.trade-calendar-fic{
+  text-align: right;
+  flex: 0 0 auto;
+}
+
+.trade-calendar-fic-label{
+  font-size: 11px;
+  color: rgba(234,242,255,.6);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.trade-calendar-fic-value{
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.trade-calendar-summary{
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.trade-match-list{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.trade-match-pill{
+  min-width: 0;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.trade-match-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.trade-match-day{
+  flex: 0 0 auto;
+  min-width: 40px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 10px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(255,255,255,.06);
+  color: #eaf2ff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.trade-match-diff{
+  flex: 0 0 auto;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 9px;
+  border-radius: 999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(255,255,255,.06);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.trade-match-main{
+  min-width: 0;
+}
+
+.trade-match-fixture{
+  font-size: 17px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  word-break: break-word;
+}
+
+.trade-match-label{
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 1180px){
+  .trade-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .trade-calendar-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
 
 
 
