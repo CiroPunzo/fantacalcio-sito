@@ -2065,7 +2065,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await populateClassifica();
     await populateMarcatori();
     await populateInfortunati();
-    neonHomeInit();
+    // neonHomeInit();
   }
 
   if (path.includes("predictions")) {
