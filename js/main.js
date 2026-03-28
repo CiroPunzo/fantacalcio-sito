@@ -1978,40 +1978,110 @@ if (hasCompare) {
 }
 
 function setupJoinModal() {
+  const modal = document.getElementById("join-modal");
   const form = document.getElementById("join-form");
-  if (!form) return;
+  const emailInput = document.getElementById("join-email");
+  const consentInput = document.getElementById("join-consent");
+  const closeBtn = modal?.querySelector(".modal-close");
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbzA0nS6tITySrCFpQYGA54-oZnPW_-BWuxlbAkJu3brPuEE7Ih7S5ZmaNiVYRU_RsD1/exec";
 
-  const ENDPOINT =
-    "https://script.google.com/macros/s/AKfycbwY0C_JtxI_gnIiikr0YpZVOZH6QvxI7We0HrNlR_sejP-hDLwRhcGDkNFPlu4rZZeI/exec";
+  if (!modal || !form || !emailInput || !consentInput) return;
+
+  const openModal = () => {
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    setTimeout(() => emailInput.focus(), 50);
+  };
+
+  const closeModal = () => {
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+  };
+
+  window.openJoinModal = openModal;
+
+  closeBtn?.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      closeModal();
+    }
+  });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const email = document.getElementById("join-email")?.value?.trim();
-    const consent = document.getElementById("join-consent")?.checked;
+    const email = emailInput.value.trim().toLowerCase();
+    const consent = consentInput.checked;
+    const submitBtn = form.querySelector('button[type="submit"]');
 
-    if (!email) return;
-    if (!consent) return;
-
-    const params = new URLSearchParams();
-    params.set("action", "compare_unlock");
-    params.set("email", email);
-    params.set("source", "compare_unlock");
-    params.set("page", location.pathname);
-
-    try {
-      await fetch(ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-        body: params.toString(),
-      });
-    } catch (err) {
-      console.error("Errore invio email:", err);
+    if (!email) {
+      alert("Inserisci una email valida.");
+      return;
     }
 
-    window.unlockCompare?.();
-    document.getElementById("join-modal")?.classList.remove("active");
-    form.reset();
+    if (!consent) {
+      alert("Devi accettare il consenso per continuare.");
+      return;
+    }
+
+    const params = new URLSearchParams();
+    params.set("action", "compareunlock");
+    params.set("email", email);
+    params.set("source", "compareunlock");
+    params.set("page", window.location.pathname);
+    params.set("consent", "yes");
+
+    try {
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Invio...";
+      }
+
+      console.log("[PF] join submit start", Object.fromEntries(params.entries()));
+
+      const response = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+        body: params.toString()
+      });
+
+      const rawText = await response.text();
+      console.log("[PF] join raw response", rawText);
+
+      let data = {};
+      try {
+        data = JSON.parse(rawText);
+      } catch (err) {
+        throw new Error("Risposta non JSON dal backend");
+      }
+
+      console.log("[PF] join parsed response", data);
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || "Invio non riuscito");
+      }
+
+      window.unlockCompare?.();
+      form.reset();
+      closeModal();
+
+      alert("Email salvata con successo. Comparatore sbloccato.");
+    } catch (err) {
+      console.error("[PF] Errore invio email", err);
+      alert("Errore nel salvataggio della mail. Controlla Apps Script o riprova.");
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Invia";
+      }
+    }
   });
 }
 
