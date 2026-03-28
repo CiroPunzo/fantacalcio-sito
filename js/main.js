@@ -1614,51 +1614,19 @@ renderPickerList("");
 function renderMatchPill(team, m) {
   const meta = getDifficultyMeta(m?.difficulty);
   const ha = m?.isHome ? "H" : "A";
-  const opp = m?.opponent || "-";
-  const md = m?.matchday || "-";
+  const opp = m?.opponent ?? "-";
+  const md = m?.matchday ?? "-";
 
   return `
-    <div style="
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:10px 12px;
-      margin-bottom:8px;
-      border-radius:14px;
-      background:${meta.bg};
-      border:1px solid ${meta.border};
-    ">
-      <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-        <span style="
-          min-width:34px;
-          height:34px;
-          display:inline-flex;
-          align-items:center;
-          justify-content:center;
-          border-radius:10px;
-          background:rgba(255,255,255,0.06);
-          color:#eaf2ff;
-          font-weight:800;
-          font-size:12px;
-        ">G${md}</span>
-
-        <div style="display:flex;flex-direction:column;min-width:0;">
-          <span style="font-weight:800;color:#fff;">${ha} vs ${opp}</span>
-          <span style="font-size:12px;color:${meta.text};">${meta.label}</span>
-        </div>
+    <div class="trade-match-pill" style="background:${meta.bg}; border-color:${meta.border};">
+      <div class="trade-match-top">
+        <span class="trade-match-day">G${md}</span>
+        <span class="trade-match-diff" style="color:${meta.text};">${m?.difficulty ?? "-"}</span>
       </div>
-
-      <span style="
-        min-width:28px;
-        text-align:center;
-        padding:4px 8px;
-        border-radius:999px;
-        background:rgba(255,255,255,0.06);
-        color:${meta.text};
-        font-size:12px;
-        font-weight:800;
-      ">${m?.difficulty ?? "-"}</span>
+      <div class="trade-match-main">
+        <div class="trade-match-fixture">${ha} vs ${opp}</div>
+        <div class="trade-match-label" style="color:${meta.text};">${meta.label}</div>
+      </div>
     </div>
   `;
 }
@@ -1688,55 +1656,59 @@ function renderTradeCalendar() {
   const aSummary = getCalendarSummary(tradeA.fantaIndexCalendario);
   const bSummary = getCalendarSummary(tradeB.fantaIndexCalendario);
 
-  tradeEls.cal.innerHTML = `
-    <div style="font-weight:800;margin-bottom:10px">
-      Calendario giornate ${startMd}-${endMd}
-    </div>
+tradeEls.cal.innerHTML = `
+  <div style="font-weight:800; margin-bottom:10px;">
+    Calendario giornate ${startMd}-${endMd}
+  </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-      <div class="neo-mini-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">
-          <div>
-            <div style="font-weight:800;color:#fff;">${tradeA.player}</div>
-            <div style="opacity:.8;font-size:13px;">${tradeA.club}</div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-size:12px;opacity:.8;">FIC</div>
-            <div style="font-weight:800;color:${aSummary.color};">${tradeA.fantaIndexCalendario ?? "-"}</div>
-          </div>
+  <div class="trade-calendar-grid">
+    <div class="neo-mini-card trade-calendar-player">
+      <div class="trade-calendar-head">
+        <div class="trade-calendar-namewrap">
+          <div class="trade-calendar-playername">${tradeA.player}</div>
+          <div class="trade-calendar-club">${tradeA.club}</div>
         </div>
-
-        <div style="font-size:12px;margin-bottom:10px;color:${aSummary.color};font-weight:700;">
-          ${aSummary.label}
-        </div>
-
-        <div>
-          ${aList.length ? aList.map(m => renderMatchPill(tradeA.club, m)).join("") : `<div style="opacity:.7;">Nessuna partita disponibile.</div>`}
+        <div class="trade-calendar-fic">
+          <div class="trade-calendar-fic-label">FIC</div>
+          <div class="trade-calendar-fic-value" style="color:${aSummary.color}">
+            ${tradeA.fantaIndexCalendario ?? "-"}
+          </div>
         </div>
       </div>
 
-      <div class="neo-mini-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">
-          <div>
-            <div style="font-weight:800;color:#fff;">${tradeB.player}</div>
-            <div style="opacity:.8;font-size:13px;">${tradeB.club}</div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-size:12px;opacity:.8;">FIC</div>
-            <div style="font-weight:800;color:${bSummary.color};">${tradeB.fantaIndexCalendario ?? "-"}</div>
-          </div>
-        </div>
+      <div class="trade-calendar-summary" style="color:${aSummary.color}">
+        ${aSummary.label}
+      </div>
 
-        <div style="font-size:12px;margin-bottom:10px;color:${bSummary.color};font-weight:700;">
-          ${bSummary.label}
-        </div>
-
-        <div>
-          ${bList.length ? bList.map(m => renderMatchPill(tradeB.club, m)).join("") : `<div style="opacity:.7;">Nessuna partita disponibile.</div>`}
-        </div>
+      <div class="trade-match-list">
+        ${aList.length ? aList.map(m => renderMatchPill(tradeA.club, m)).join("") : `<div style="opacity:.7">Nessuna partita disponibile.</div>`}
       </div>
     </div>
-  `;
+
+    <div class="neo-mini-card trade-calendar-player">
+      <div class="trade-calendar-head">
+        <div class="trade-calendar-namewrap">
+          <div class="trade-calendar-playername">${tradeB.player}</div>
+          <div class="trade-calendar-club">${tradeB.club}</div>
+        </div>
+        <div class="trade-calendar-fic">
+          <div class="trade-calendar-fic-label">FIC</div>
+          <div class="trade-calendar-fic-value" style="color:${bSummary.color}">
+            ${tradeB.fantaIndexCalendario ?? "-"}
+          </div>
+        </div>
+      </div>
+
+      <div class="trade-calendar-summary" style="color:${bSummary.color}">
+        ${bSummary.label}
+      </div>
+
+      <div class="trade-match-list">
+        ${bList.length ? bList.map(m => renderMatchPill(tradeB.club, m)).join("") : `<div style="opacity:.7">Nessuna partita disponibile.</div>`}
+      </div>
+    </div>
+  </div>
+`;
 }
 
 function renderTradeDecision() {
