@@ -2051,34 +2051,84 @@ function setupJoinModal() {
 // INIT (UNA SOLA VOLTA)
 // =====================
 document.addEventListener("DOMContentLoaded", async () => {
-  initHeroSlider();
-  setupMobileNavbar();
-  setupDashboardTabs();
-  setupGlobalModalClose();
-  setupJoinModal();
-  setupFullTablesModals();
+  console.log("[PF] DOM caricato");
 
-  const path = window.location.pathname.toLowerCase();
+  try {
+    initHeroSlider();
+    console.log("[PF] initHeroSlider OK");
 
-  if (!path || path.endsWith("/index.html") || path.endsWith("index.html")) {
-    await populateClassifica();
-    await populateMarcatori();
-    await populateInfortunati();
-    // neonHomeInit();
+    setupMobileNavbar();
+    console.log("[PF] setupMobileNavbar OK");
+
+    setupDashboardTabs();
+    console.log("[PF] setupDashboardTabs OK");
+
+    setupGlobalModalClose();
+    console.log("[PF] setupGlobalModalClose OK");
+
+    setupJoinModal();
+    console.log("[PF] setupJoinModal OK");
+
+    setupFullTablesModals();
+    console.log("[PF] setupFullTablesModals OK");
+
+    const path = window.location.pathname.toLowerCase();
+    console.log("[PF] path =", path);
+
+    if (!path || path.endsWith("/index.html") || path.endsWith("index.html") || path === "/") {
+      console.log("[PF] HOME init start");
+
+      await populateClassifica();
+      console.log("[PF] populateClassifica OK");
+
+      await populateMarcatori();
+      console.log("[PF] populateMarcatori OK");
+
+      await populateInfortunati();
+      console.log("[PF] populateInfortunati OK");
+
+      await neonHomeInit();
+      console.log("[PF] neonHomeInit OK");
+    }
+
+    if (path.includes("predictions")) {
+      console.log("[PF] PREDICTIONS init start");
+
+      await neonHomeInit();
+      console.log("[PF] neonHomeInit predictions OK");
+
+      try {
+        await populateMarcatori();
+        console.log("[PF] populateMarcatori predictions OK");
+      } catch (e) {
+        console.error("[PF] populateMarcatori predictions ERROR", e);
+      }
+
+      try {
+        await populateAssist();
+        console.log("[PF] populateAssist OK");
+      } catch (e) {
+        console.error("[PF] populateAssist ERROR", e);
+      }
+
+      try {
+        await populateAnalisiFantacalcio();
+        console.log("[PF] populateAnalisiFantacalcio OK");
+      } catch (e) {
+        console.error("[PF] populateAnalisiFantacalcio ERROR", e);
+      }
+
+      try {
+        await populatePronostici();
+        console.log("[PF] populatePronostici OK");
+      } catch (e) {
+        console.error("[PF] populatePronostici ERROR", e);
+      }
+    }
+  } catch (e) {
+    console.error("[PF] ERRORE BLOCCANTE INIT", e);
   }
-
-  if (path.includes("predictions")) {
-    neonHomeInit();
-    try { await populateMarcatori(); } catch (e) { console.error(e); }
-    try { await populateAssist(); } catch (e) { console.error(e); }
-    try { await populateAnalisiFantacalcio(); } catch (e) { console.error(e); }
-    try { await populatePronostici(); } catch (e) { console.error(e); }
-  }
-
-  setupFullTablesModals();
-  setupGlobalModalClose();
 });
-
 
 
 
