@@ -1,4 +1,3 @@
-// =====================
 // HERO SLIDER
 // =====================
 let currentHeroSlide = 0;
@@ -272,9 +271,7 @@ async function populateClassifica() {
         ? `<div class="neo-standings-mobile-zona"><span class="zona-relegation-dot"></span></div>`
         : `<div class="neo-standings-mobile-zona">${zonaHTML}</div>`;
 
-      const mobileLogo = logoUrl
-        ? `<img src="${logoUrl}" alt="${squadra}">`
-        : "";
+      const mobileLogo = logoUrl ? `<img src="${logoUrl}" alt="${squadra}">` : "";
 
       mobileRow.innerHTML = `
         <div class="neo-standings-mobile-left-row">
@@ -298,7 +295,6 @@ async function populateClassifica() {
       mobileBody.appendChild(mobileRow);
     });
 }
-
 
 async function populateMarcatori() {
   const data = await fetchSheetDataJson(SHEET_NAMES.classificaMarcatori);
