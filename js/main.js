@@ -295,7 +295,6 @@ async function populateClassifica() {
       mobileBody.appendChild(mobileRow);
     });
 }
-
 async function populateMarcatori() {
   const data = await fetchSheetDataJson(SHEET_NAMES.classificaMarcatori);
   const tbody = document.getElementById("marcatori-body");
