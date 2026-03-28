@@ -1771,13 +1771,6 @@ function rerenderTrade() {
   renderTradeDecision();
 }
 
-
-  function rerenderTrade() {
-    renderTradeCards();
-    renderTradeCalendar();
-    renderTradeDecision();
-  }
-
   // Tabs neon
   function hookNeoTabs() {
     document.querySelectorAll(".neo-tabs .neo-tab").forEach((btn) => {
