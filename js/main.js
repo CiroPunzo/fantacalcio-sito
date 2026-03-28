@@ -1984,8 +1984,18 @@ function setupJoinModal() {
   const consentInput = document.getElementById("join-consent");
   const closeBtn = modal?.querySelector(".modal-close");
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbzA0nS6tITySrCFpQYGA54-oZnPW_-BWuxlbAkJu3brPuEE7Ih7S5ZmaNiVYRU_RsD1/exec";
+  const TARGET_NAME = "pf_join_target";
 
   if (!modal || !form || !emailInput || !consentInput) return;
+
+  let iframe = document.getElementById(TARGET_NAME);
+  if (!iframe) {
+    iframe = document.createElement("iframe");
+    iframe.name = TARGET_NAME;
+    iframe.id = TARGET_NAME;
+    iframe.style.display = "none";
+    document.body.appendChild(iframe);
+  }
 
   const openModal = () => {
     modal.classList.add("active");
@@ -2012,7 +2022,7 @@ function setupJoinModal() {
     }
   });
 
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const email = emailInput.value.trim().toLowerCase();
@@ -2029,59 +2039,52 @@ function setupJoinModal() {
       return;
     }
 
-    const params = new URLSearchParams();
-    params.set("action", "compareunlock");
-    params.set("email", email);
-    params.set("source", "compareunlock");
-    params.set("page", window.location.pathname);
-    params.set("consent", "yes");
+    const ghostForm = document.createElement("form");
+    ghostForm.method = "POST";
+    ghostForm.action = ENDPOINT;
+    ghostForm.target = TARGET_NAME;
+    ghostForm.style.display = "none";
 
-    try {
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Invio...";
-      }
+    const fields = {
+      action: "compareunlock",
+      email,
+      source: "compareunlock",
+      page: window.location.pathname,
+      consent: "yes"
+    };
 
-      console.log("[PF] join submit start", Object.fromEntries(params.entries()));
+    Object.entries(fields).forEach(([key, value]) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = value;
+      ghostForm.appendChild(input);
+    });
 
-      const response = await fetch(ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-        },
-        body: params.toString()
-      });
+    document.body.appendChild(ghostForm);
 
-      const rawText = await response.text();
-      console.log("[PF] join raw response", rawText);
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Invio...";
+    }
 
-      let data = {};
-      try {
-        data = JSON.parse(rawText);
-      } catch (err) {
-        throw new Error("Risposta non JSON dal backend");
-      }
+    console.log("[PF] join form submit", fields);
 
-      console.log("[PF] join parsed response", data);
+    ghostForm.submit();
 
-      if (!response.ok || !data.ok) {
-        throw new Error(data.error || "Invio non riuscito");
-      }
-
+    setTimeout(() => {
       window.unlockCompare?.();
       form.reset();
       closeModal();
+      ghostForm.remove();
 
-      alert("Email salvata con successo. Comparatore sbloccato.");
-    } catch (err) {
-      console.error("[PF] Errore invio email", err);
-      alert("Errore nel salvataggio della mail. Controlla Apps Script o riprova.");
-    } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.textContent = "Invia";
       }
-    }
+
+      alert("Email inviata. Comparatore sbloccato.");
+    }, 900);
   });
 }
 
