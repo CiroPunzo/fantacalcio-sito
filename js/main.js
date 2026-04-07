@@ -529,9 +529,15 @@ async function populateClassificaCompleta(limit = 10) {
     });
 }
 async function populateClassificaCompletaFull() {
-    const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
     const tbody = document.getElementById("classifica-completa-full-body");
-    if (!tbody || !Array.isArray(data) || !data.length) return;
+    if (!tbody) return;
+
+    const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
+
+    if (!Array.isArray(data) || !data.length) {
+        tbody.innerHTML = `<tr><td colspan="11">Nessun dato trovato in ClassificaCompleta.</td></tr>`;
+        return;
+    }
 
     const pick = (row, keys, fallback = "-") => {
         for (const key of keys) {
@@ -545,104 +551,109 @@ async function populateClassificaCompletaFull() {
 
     const rows = data
         .map((row, index) => ({
-    posizione: Number(
-        pick(row, ["Posizione", "Posizioni", "#", "Rank", "Pos"], index + 1)
-    ) || (index + 1),
+            posizione: Number(
+                pick(row, ["Posizione", "Posizioni", "#", "Rank", "Pos"], index + 1)
+            ) || (index + 1),
 
-    player: pick(row, [
-        "Player",
-        "player",
-        "Giocatore",
-        "giocatore",
-        "Nome Giocatore",
-        "Nome",
-        "Calciatore"
-    ]),
+            player: pick(row, [
+                "Player",
+                "player",
+                "Giocatore",
+                "giocatore",
+                "Nome Giocatore",
+                "Nome",
+                "Calciatore"
+            ]),
 
-    team: pick(row, [
-        "Team",
-        "team",
-        "Squadra",
-        "squadra",
-        "Club",
-        "club"
-    ]),
+            team: pick(row, [
+                "Team",
+                "team",
+                "Squadra",
+                "squadra",
+                "Club",
+                "club"
+            ]),
 
-    apps: pick(row, [
-        "Apps",
-        "apps",
-        "App",
-        "app",
-        "Presenze",
-        "Partite"
-    ]),
+            apps: pick(row, [
+                "Apps",
+                "apps",
+                "App",
+                "app",
+                "Presenze",
+                "Partite"
+            ]),
 
-    min: pick(row, [
-        "Min",
-        "min",
-        "Minuti",
-        "Minutes",
-        "MIN"
-    ]),
+            min: pick(row, [
+                "Min",
+                "min",
+                "Minuti",
+                "Minutes",
+                "MIN"
+            ]),
 
-    goals: pick(row, [
-        "Goals",
-        "goals",
-        "Gol",
-        "gol",
-        "G"
-    ]),
+            goals: pick(row, [
+                "Goals",
+                "goals",
+                "Gol",
+                "gol",
+                "G"
+            ]),
 
-    assists: pick(row, [
-        "A",
-        "Assist",
-        "assist",
-        "Assists",
-        "Ass"
-    ]),
+            assists: pick(row, [
+                "A",
+                "Assist",
+                "assist",
+                "Assists",
+                "Ass"
+            ]),
 
-    xg: pick(row, [
-        "xG",
-        "XG",
-        "xg"
-    ]),
+            xg: pick(row, [
+                "xG",
+                "XG",
+                "xg"
+            ]),
 
-    xa: pick(row, [
-        "xA",
-        "XA",
-        "xa"
-    ]),
+            xa: pick(row, [
+                "xA",
+                "XA",
+                "xa"
+            ]),
 
-    xg90: pick(row, [
-        "xG90",
-        "xG/90",
-        "XG90",
-        "xg90",
-        "xg/90"
-    ]),
+            xg90: pick(row, [
+                "xG90",
+                "xG/90",
+                "XG90",
+                "xg90",
+                "xg/90"
+            ]),
 
-    xa90: pick(row, [
-        "xA90",
-        "xA/90",
-        "XA90",
-        "xa90",
-        "xa/90"
-    ]),
-}))
+            xa90: pick(row, [
+                "xA90",
+                "xA/90",
+                "XA90",
+                "xa90",
+                "xa/90"
+            ]),
+        }))
         .filter((row) => {
-    const hasPlayer = row.player && String(row.player).trim() !== "-" && String(row.player).trim() !== "";
-    const hasTeam = row.team && String(row.team).trim() !== "-" && String(row.team).trim() !== "";
-    return hasPlayer || hasTeam;
-})
+            const hasPlayer = row.player && String(row.player).trim() !== "-" && String(row.player).trim() !== "";
+            const hasTeam = row.team && String(row.team).trim() !== "-" && String(row.team).trim() !== "";
+            return hasPlayer || hasTeam;
+        })
         .sort((a, b) => a.posizione - b.posizione);
 
     tbody.innerHTML = "";
+
+    if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="11">Dati presenti, ma colonne non riconosciute.</td></tr>`;
+        return;
+    }
 
     rows.forEach((row) => {
         const tr = document.createElement("tr");
         const logoUrl = getClubLogo(row.team);
         const teamHTML = logoUrl
-            ? `<div class="table-team"><img src="${logoUrl}" alt="${row.team}" class="table-logo"><span>${row.team}</span></div>`
+            ? `<div class="table-team"><img src="${logoUrl}" alt="${row.team}" class="table-logo" loading="lazy" decoding="async"><span>${row.team}</span></div>`
             : row.team;
 
         tr.innerHTML = `
