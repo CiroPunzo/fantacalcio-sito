@@ -120,42 +120,39 @@
       </div>
 
       <div class="pred-grid-4">
-        <!-- GOALS -->
-        <article class="neo-card pred-mini" id="card-goals">
-          <div class="pred-mini-head">
-            <h3>Goals</h3>
-            <a class="neo-link" href="#" id="open-full-marcatori">Vedi tutti</a>
-          </div>
-          <div class="pred-mini-body">
-            <div class="pred-mini-tablewrap">
-              <table class="dashboard-table">
-                <thead>
-                  <tr><th>#</th><th>Giocatore</th><th>Club</th><th>G</th></tr>
-                </thead>
-                <tbody id="marcatori-body"></tbody>
-              </table>
-            </div>
-          </div>
-        </article>
+      <!-- CLASSIFICA COMPLETA -->
+<article class="neo-card pred-mini pred-card-wide" id="card-classifica-completa">
+  <div class="pred-mini-head">
+    <div>
+      <h3>Classifica Completa</h3>
+      <span class="pred-mini-kicker">Top player con metriche avanzate</span>
+    </div>
+    <a class="neo-link" href="#" id="open-full-classifica-completa">Vedi tutta</a>
+  </div>
 
-        <!-- ASSISTS -->
-        <article class="neo-card pred-mini" id="card-assists">
-          <div class="pred-mini-head">
-            <h3>Assists</h3>
-            <span class="pred-mini-kicker">Top 10</span>
-          </div>
-          <div class="pred-mini-body">
-            <div class="pred-mini-tablewrap">
-              <table class="dashboard-table">
-                <thead>
-                  <tr><th>#</th><th>Giocatore</th><th>Club</th><th>A</th></tr>
-                </thead>
-                <tbody id="assist-body"></tbody>
-              </table>
-            </div>
-          </div>
-        </article>
-
+  <div class="pred-mini-body">
+    <div class="pred-mini-tablewrap pred-complete-tablewrap">
+      <table class="dashboard-table dashboard-table-advanced">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Team</th>
+            <th>Apps</th>
+            <th>Min</th>
+            <th>Goals</th>
+            <th>A</th>
+            <th>xG</th>
+            <th>xA</th>
+            <th>xG90</th>
+            <th>xA90</th>
+          </tr>
+        </thead>
+        <tbody id="classifica-completa-body"></tbody>
+      </table>
+    </div>
+  </div>
+</article>
         <!-- PRONOSTICI -->
         <article class="neo-card pred-mini" id="card-prono">
           <div class="pred-mini-head">
