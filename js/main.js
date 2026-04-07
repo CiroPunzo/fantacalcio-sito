@@ -377,22 +377,18 @@ rows.forEach((r, i) => {
 }
 
 async function populateClassificaCompleta(limit = 10) {
-    console.log("[PF DEBUG] keys first row =", data?.[0] ? Object.keys(data[0]) : []);
     const tbody = document.getElementById("classifica-completa-body");
+    if (!tbody) return;
+
+    const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
 
     console.log("[PF DEBUG] SHEET_NAMES.classificaCompleta =", SHEET_NAMES.classificaCompleta);
     console.log("[PF DEBUG] classifica-completa-body exists =", !!tbody);
-    console.log("[PF DEBUG] raw data ClassificaCompleta =", data);
     console.log("[PF DEBUG] raw data length =", Array.isArray(data) ? data.length : "not array");
-
-    if (!tbody) {
-        console.error("[PF DEBUG] tbody classifica-completa-body NON TROVATO");
-        return;
-    }
+    console.log("[PF DEBUG] keys first row =", data?.[0] ? Object.keys(data[0]) : []);
 
     if (!Array.isArray(data) || !data.length) {
         tbody.innerHTML = `<tr><td colspan="11">Nessun dato trovato in ClassificaCompleta.</td></tr>`;
-        console.error("[PF DEBUG] Nessun dato ricevuto dal foglio ClassificaCompleta");
         return;
     }
 
@@ -408,19 +404,95 @@ async function populateClassificaCompleta(limit = 10) {
 
     const rows = data
         .map((row, index) => ({
-            posizione: Number(pick(row, ["Posizione", "Posizioni"], index + 1)) || (index + 1),
-            player: pick(row, ["Player", "Giocatore", "Nome Giocatore"]),
-            team: pick(row, ["Team", "Squadra", "Club"]),
-            apps: pick(row, ["Apps", "Presenze"]),
-            min: pick(row, ["Min", "Minuti"]),
-            goals: pick(row, ["Goals", "Gol"]),
-            assists: pick(row, ["A", "Assist"]),
-            xg: pick(row, ["xG"]),
-            xa: pick(row, ["xA"]),
-            xg90: pick(row, ["xG90", "xG/90"]),
-            xa90: pick(row, ["xA90", "xA/90"]),
+            posizione: Number(
+                pick(row, ["Posizione", "Posizioni", "#", "Rank", "Pos"], index + 1)
+            ) || (index + 1),
+
+            player: pick(row, [
+                "Player",
+                "player",
+                "Giocatore",
+                "giocatore",
+                "Nome Giocatore",
+                "Nome",
+                "Calciatore"
+            ]),
+
+            team: pick(row, [
+                "Team",
+                "team",
+                "Squadra",
+                "squadra",
+                "Club",
+                "club"
+            ]),
+
+            apps: pick(row, [
+                "Apps",
+                "apps",
+                "App",
+                "app",
+                "Presenze",
+                "Partite"
+            ]),
+
+            min: pick(row, [
+                "Min",
+                "min",
+                "Minuti",
+                "Minutes",
+                "MIN"
+            ]),
+
+            goals: pick(row, [
+                "Goals",
+                "goals",
+                "Gol",
+                "gol",
+                "G"
+            ]),
+
+            assists: pick(row, [
+                "A",
+                "Assist",
+                "assist",
+                "Assists",
+                "Ass"
+            ]),
+
+            xg: pick(row, [
+                "xG",
+                "XG",
+                "xg"
+            ]),
+
+            xa: pick(row, [
+                "xA",
+                "XA",
+                "xa"
+            ]),
+
+            xg90: pick(row, [
+                "xG90",
+                "xG/90",
+                "XG90",
+                "xg90",
+                "xg/90"
+            ]),
+
+            xa90: pick(row, [
+                "xA90",
+                "xA/90",
+                "XA90",
+                "xa90",
+                "xa/90"
+            ]),
         }))
-        .filter((row) => row.player !== "-" && row.team !== "-")
+        .filter((row) => {
+            const hasPlayer = row.player && String(row.player).trim() !== "-" && String(row.player).trim() !== "";
+            const hasTeam = row.team && String(row.team).trim() !== "-" && String(row.team).trim() !== "";
+            return hasPlayer || hasTeam;
+        })
         .sort((a, b) => a.posizione - b.posizione)
         .slice(0, limit);
 
@@ -430,7 +502,6 @@ async function populateClassificaCompleta(limit = 10) {
 
     if (!rows.length) {
         tbody.innerHTML = `<tr><td colspan="11">Dati presenti, ma colonne non riconosciute.</td></tr>`;
-        console.error("[PF DEBUG] rows vuoto dopo normalizzazione");
         return;
     }
 
@@ -438,7 +509,7 @@ async function populateClassificaCompleta(limit = 10) {
         const tr = document.createElement("tr");
         const logoUrl = getClubLogo(row.team);
         const teamHTML = logoUrl
-            ? `<div class="table-team"><img src="${logoUrl}" alt="${row.team}" class="table-logo"><span>${row.team}</span></div>`
+            ? `<div class="table-team"><img src="${logoUrl}" alt="${row.team}" class="table-logo" loading="lazy" decoding="async"><span>${row.team}</span></div>`
             : row.team;
 
         tr.innerHTML = `
@@ -457,7 +528,6 @@ async function populateClassificaCompleta(limit = 10) {
         tbody.appendChild(tr);
     });
 }
-
 async function populateClassificaCompletaFull() {
     const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
     const tbody = document.getElementById("classifica-completa-full-body");
