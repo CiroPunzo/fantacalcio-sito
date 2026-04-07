@@ -377,7 +377,7 @@ rows.forEach((r, i) => {
 }
 
 async function populateClassificaCompleta(limit = 10) {
-    const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
+    console.log("[PF DEBUG] keys first row =", data?.[0] ? Object.keys(data[0]) : []);
     const tbody = document.getElementById("classifica-completa-body");
 
     console.log("[PF DEBUG] SHEET_NAMES.classificaCompleta =", SHEET_NAMES.classificaCompleta);
@@ -559,7 +559,11 @@ async function populateClassificaCompletaFull() {
         "xa/90"
     ]),
 }))
-        .filter((row) => row.player !== "-" && row.team !== "-")
+        .filter((row) => {
+    const hasPlayer = row.player && String(row.player).trim() !== "-" && String(row.player).trim() !== "";
+    const hasTeam = row.team && String(row.team).trim() !== "-" && String(row.team).trim() !== "";
+    return hasPlayer || hasTeam;
+})
         .sort((a, b) => a.posizione - b.posizione);
 
     tbody.innerHTML = "";
