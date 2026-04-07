@@ -1052,6 +1052,16 @@ function setupFullTablesModals() {
       btnMarcatori.click();
     });
   }
+
+  const btnClassificaCompleta = document.getElementById("open-full-classifica-completa");
+
+if (btnClassificaCompleta) {
+    btnClassificaCompleta.addEventListener("click", async (e) => {
+        e.preventDefault();
+        document.getElementById("classifica-completa-modal")?.classList.add("active");
+        await populateClassificaCompletaFull();
+    });
+}
 }
 
 // =====================
