@@ -376,6 +376,123 @@ rows.forEach((r, i) => {
 });
 }
 
+async function populateClassificaCompleta(limit = 10) {
+    const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
+    const tbody = document.getElementById("classifica-completa-body");
+    if (!tbody || !Array.isArray(data) || !data.length) return;
+
+    const pick = (row, keys, fallback = "-") => {
+        for (const key of keys) {
+            const value = row?.[key];
+            if (value !== undefined && value !== null && String(value).trim() !== "") {
+                return value;
+            }
+        }
+        return fallback;
+    };
+
+    const rows = data
+        .map((row, index) => ({
+            posizione: Number(pick(row, ["Posizione", "Posizioni"], index + 1)) || (index + 1),
+            player: pick(row, ["Player", "Giocatore", "Nome Giocatore"]),
+            team: pick(row, ["Team", "Squadra", "Club"]),
+            apps: pick(row, ["Apps", "Presenze"]),
+            min: pick(row, ["Min", "Minuti"]),
+            goals: pick(row, ["Goals", "Gol"]),
+            assists: pick(row, ["A", "Assist"]),
+            xg: pick(row, ["xG"]),
+            xa: pick(row, ["xA"]),
+            xg90: pick(row, ["xG90", "xG/90"]),
+            xa90: pick(row, ["xA90", "xA/90"]),
+        }))
+        .filter((row) => row.player !== "-" && row.team !== "-")
+        .sort((a, b) => a.posizione - b.posizione)
+        .slice(0, limit);
+
+    tbody.innerHTML = "";
+
+    rows.forEach((row) => {
+        const tr = document.createElement("tr");
+        const logoUrl = getClubLogo(row.team);
+        const teamHTML = logoUrl
+            ? `<div class="table-team"><img src="${logoUrl}" alt="${row.team}" class="table-logo"><span>${row.team}</span></div>`
+            : row.team;
+
+        tr.innerHTML = `
+            <td>${row.posizione}</td>
+            <td><strong>${row.player}</strong></td>
+            <td>${teamHTML}</td>
+            <td>${row.apps}</td>
+            <td>${row.min}</td>
+            <td>${row.goals}</td>
+            <td>${row.assists}</td>
+            <td>${row.xg}</td>
+            <td>${row.xa}</td>
+            <td>${row.xg90}</td>
+            <td>${row.xa90}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+async function populateClassificaCompletaFull() {
+    const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
+    const tbody = document.getElementById("classifica-completa-full-body");
+    if (!tbody || !Array.isArray(data) || !data.length) return;
+
+    const pick = (row, keys, fallback = "-") => {
+        for (const key of keys) {
+            const value = row?.[key];
+            if (value !== undefined && value !== null && String(value).trim() !== "") {
+                return value;
+            }
+        }
+        return fallback;
+    };
+
+    const rows = data
+        .map((row, index) => ({
+            posizione: Number(pick(row, ["Posizione", "Posizioni"], index + 1)) || (index + 1),
+            player: pick(row, ["Player", "Giocatore", "Nome Giocatore"]),
+            team: pick(row, ["Team", "Squadra", "Club"]),
+            apps: pick(row, ["Apps", "Presenze"]),
+            min: pick(row, ["Min", "Minuti"]),
+            goals: pick(row, ["Goals", "Gol"]),
+            assists: pick(row, ["A", "Assist"]),
+            xg: pick(row, ["xG"]),
+            xa: pick(row, ["xA"]),
+            xg90: pick(row, ["xG90", "xG/90"]),
+            xa90: pick(row, ["xA90", "xA/90"]),
+        }))
+        .filter((row) => row.player !== "-" && row.team !== "-")
+        .sort((a, b) => a.posizione - b.posizione);
+
+    tbody.innerHTML = "";
+
+    rows.forEach((row) => {
+        const tr = document.createElement("tr");
+        const logoUrl = getClubLogo(row.team);
+        const teamHTML = logoUrl
+            ? `<div class="table-team"><img src="${logoUrl}" alt="${row.team}" class="table-logo"><span>${row.team}</span></div>`
+            : row.team;
+
+        tr.innerHTML = `
+            <td>${row.posizione}</td>
+            <td><strong>${row.player}</strong></td>
+            <td>${teamHTML}</td>
+            <td>${row.apps}</td>
+            <td>${row.min}</td>
+            <td>${row.goals}</td>
+            <td>${row.assists}</td>
+            <td>${row.xg}</td>
+            <td>${row.xa}</td>
+            <td>${row.xg90}</td>
+            <td>${row.xa90}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
 
 async function populateInfortunati() {
   const data = await fetchSheetDataJson(SHEET_NAMES.infortunati);
