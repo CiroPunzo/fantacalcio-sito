@@ -924,6 +924,7 @@ function setupGlobalModalClose() {
       "infortunio-modal",
       "classifica-modal",
       "marcatori-modal",
+      "classifica-completa-modal",
       "infortunati-modal",
       "pred-fanta-modal",
       "pred-prono-modal",
@@ -2245,40 +2246,62 @@ document.addEventListener("DOMContentLoaded", async () => {
     const path = window.location.pathname.toLowerCase();
     console.log("[PF] path =", path);
 
-    if (!path || path.endsWith("/index.html") || path.endsWith("index.html") || path === "/") {
+    const isHome =
+      !path ||
+      path === "/" ||
+      path.endsWith("/index.html") ||
+      path.endsWith("index.html");
+
+    const isPredictions =
+      path.includes("predictions");
+
+    if (isHome) {
       console.log("[PF] HOME init start");
 
-      await populateClassifica();
-      console.log("[PF] populateClassifica OK");
-
-      await populateMarcatori();
-      console.log("[PF] populateMarcatori OK");
-
-      await populateInfortunati();
-      console.log("[PF] populateInfortunati OK");
-
-      await neonHomeInit();
-      console.log("[PF] neonHomeInit OK");
-    }
-
-    if (path.includes("predictions")) {
-      console.log("[PF] PREDICTIONS init start");
-
-      await neonHomeInit();
-      console.log("[PF] neonHomeInit predictions OK");
-
       try {
-        await populateMarcatori();
-        console.log("[PF] populateMarcatori predictions OK");
+        await populateClassifica();
+        console.log("[PF] populateClassifica OK");
       } catch (e) {
-        console.error("[PF] populateMarcatori predictions ERROR", e);
+        console.error("[PF] populateClassifica ERROR", e);
       }
 
       try {
-        await populateAssist();
-        console.log("[PF] populateAssist OK");
+        await populateMarcatori();
+        console.log("[PF] populateMarcatori OK");
       } catch (e) {
-        console.error("[PF] populateAssist ERROR", e);
+        console.error("[PF] populateMarcatori ERROR", e);
+      }
+
+      try {
+        await populateInfortunati();
+        console.log("[PF] populateInfortunati OK");
+      } catch (e) {
+        console.error("[PF] populateInfortunati ERROR", e);
+      }
+
+      try {
+        await neonHomeInit();
+        console.log("[PF] neonHomeInit HOME OK");
+      } catch (e) {
+        console.error("[PF] neonHomeInit HOME ERROR", e);
+      }
+    }
+
+    if (isPredictions) {
+      console.log("[PF] PREDICTIONS init start");
+
+      try {
+        await neonHomeInit();
+        console.log("[PF] neonHomeInit PREDICTIONS OK");
+      } catch (e) {
+        console.error("[PF] neonHomeInit PREDICTIONS ERROR", e);
+      }
+
+      try {
+        await populateClassificaCompleta();
+        console.log("[PF] populateClassificaCompleta OK");
+      } catch (e) {
+        console.error("[PF] populateClassificaCompleta ERROR", e);
       }
 
       try {
