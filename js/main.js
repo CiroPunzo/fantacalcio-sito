@@ -131,6 +131,7 @@ window.SHEET_NAMES = window.SHEET_NAMES || {
   classifica: "Classifica",
   classificaMarcatori: "ClassificaMarcatori",
   classificaAssist: "ClassificaAssist",
+  classificaCompleta: "ClassificaCompleta",
   infortunati: "Infortunati",
   analisiFantacalcio: "AnalisiFantacalcio",
   pronostici: "Pronostici",
