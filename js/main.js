@@ -379,7 +379,22 @@ rows.forEach((r, i) => {
 async function populateClassificaCompleta(limit = 10) {
     const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
     const tbody = document.getElementById("classifica-completa-body");
-    if (!tbody || !Array.isArray(data) || !data.length) return;
+
+    console.log("[PF DEBUG] SHEET_NAMES.classificaCompleta =", SHEET_NAMES.classificaCompleta);
+    console.log("[PF DEBUG] classifica-completa-body exists =", !!tbody);
+    console.log("[PF DEBUG] raw data ClassificaCompleta =", data);
+    console.log("[PF DEBUG] raw data length =", Array.isArray(data) ? data.length : "not array");
+
+    if (!tbody) {
+        console.error("[PF DEBUG] tbody classifica-completa-body NON TROVATO");
+        return;
+    }
+
+    if (!Array.isArray(data) || !data.length) {
+        tbody.innerHTML = `<tr><td colspan="11">Nessun dato trovato in ClassificaCompleta.</td></tr>`;
+        console.error("[PF DEBUG] Nessun dato ricevuto dal foglio ClassificaCompleta");
+        return;
+    }
 
     const pick = (row, keys, fallback = "-") => {
         for (const key of keys) {
@@ -409,7 +424,15 @@ async function populateClassificaCompleta(limit = 10) {
         .sort((a, b) => a.posizione - b.posizione)
         .slice(0, limit);
 
+    console.log("[PF DEBUG] normalized rows =", rows);
+
     tbody.innerHTML = "";
+
+    if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="11">Dati presenti, ma colonne non riconosciute.</td></tr>`;
+        console.error("[PF DEBUG] rows vuoto dopo normalizzazione");
+        return;
+    }
 
     rows.forEach((row) => {
         const tr = document.createElement("tr");
