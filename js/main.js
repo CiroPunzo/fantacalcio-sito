@@ -475,18 +475,90 @@ async function populateClassificaCompletaFull() {
 
     const rows = data
         .map((row, index) => ({
-            posizione: Number(pick(row, ["Posizione", "Posizioni"], index + 1)) || (index + 1),
-            player: pick(row, ["Player", "Giocatore", "Nome Giocatore"]),
-            team: pick(row, ["Team", "Squadra", "Club"]),
-            apps: pick(row, ["Apps", "Presenze"]),
-            min: pick(row, ["Min", "Minuti"]),
-            goals: pick(row, ["Goals", "Gol"]),
-            assists: pick(row, ["A", "Assist"]),
-            xg: pick(row, ["xG"]),
-            xa: pick(row, ["xA"]),
-            xg90: pick(row, ["xG90", "xG/90"]),
-            xa90: pick(row, ["xA90", "xA/90"]),
-        }))
+    posizione: Number(
+        pick(row, ["Posizione", "Posizioni", "#", "Rank", "Pos"], index + 1)
+    ) || (index + 1),
+
+    player: pick(row, [
+        "Player",
+        "player",
+        "Giocatore",
+        "giocatore",
+        "Nome Giocatore",
+        "Nome",
+        "Calciatore"
+    ]),
+
+    team: pick(row, [
+        "Team",
+        "team",
+        "Squadra",
+        "squadra",
+        "Club",
+        "club"
+    ]),
+
+    apps: pick(row, [
+        "Apps",
+        "apps",
+        "App",
+        "app",
+        "Presenze",
+        "Partite"
+    ]),
+
+    min: pick(row, [
+        "Min",
+        "min",
+        "Minuti",
+        "Minutes",
+        "MIN"
+    ]),
+
+    goals: pick(row, [
+        "Goals",
+        "goals",
+        "Gol",
+        "gol",
+        "G"
+    ]),
+
+    assists: pick(row, [
+        "A",
+        "Assist",
+        "assist",
+        "Assists",
+        "Ass"
+    ]),
+
+    xg: pick(row, [
+        "xG",
+        "XG",
+        "xg"
+    ]),
+
+    xa: pick(row, [
+        "xA",
+        "XA",
+        "xa"
+    ]),
+
+    xg90: pick(row, [
+        "xG90",
+        "xG/90",
+        "XG90",
+        "xg90",
+        "xg/90"
+    ]),
+
+    xa90: pick(row, [
+        "xA90",
+        "xA/90",
+        "XA90",
+        "xa90",
+        "xa/90"
+    ]),
+}))
         .filter((row) => row.player !== "-" && row.team !== "-")
         .sort((a, b) => a.posizione - b.posizione);
 
