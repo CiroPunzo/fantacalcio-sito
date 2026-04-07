@@ -111,89 +111,101 @@
     </div>
   </section>
 
-  <!-- DASHBOARD 4 CARDS -->
-  <section class="neo-section">
-    <div class="container">
-      <div class="neo-section-head">
-        <h2 class="neo-section-title">Dashboard giornata</h2>
-        <p class="neo-section-subtitle">Goals, Assists, Pronostici e Previsioni: Tutto Aggiornato in Tempo Reale!</p>
-      </div>
+ <section class="neo-section">
+  <div class="container">
+    <div class="neo-section-head">
+      <h2 class="neo-section-title">Dashboard giornata</h2>
+      <p class="neo-section-subtitle">Pronostici, previsioni e classifica completa aggiornati in tempo reale.</p>
+    </div>
 
-      <div class="pred-grid-4">
+    <div class="pred-grid-main">
+      <!-- PRONOSTICI -->
+      <article class="neo-card pred-mini" id="card-prono">
+        <div class="pred-mini-head">
+          <h3>Pronostici</h3>
+          <select id="select-giornata-prono" class="neo-select" aria-label="Giornata pronostici"></select>
+        </div>
+
+        <div class="pred-mini-body">
+          <div class="pred-mini-tablewrap">
+            <table class="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Match</th>
+                  <th>Ora</th>
+                  <th>Esito</th>
+                  <th>Conf</th>
+                </tr>
+              </thead>
+              <tbody id="pred-prono-body"></tbody>
+            </table>
+          </div>
+          <p class="pred-mini-note">Solo informativo.</p>
+        </div>
+      </article>
+
+      <!-- PREVISIONI -->
+      <article class="neo-card pred-mini" id="card-pred">
+        <div class="pred-mini-head">
+          <h3>Previsioni</h3>
+          <select id="select-giornata-fanta" class="neo-select" aria-label="Giornata previsioni"></select>
+        </div>
+
+        <div class="pred-mini-body">
+          <div class="pred-mini-tablewrap">
+            <table class="dashboard-table pred-fanta-table">
+              <thead>
+                <tr>
+                  <th>Match</th>
+                  <th>Ora</th>
+                  <th>Consigliati</th>
+                  <th>Da evitare</th>
+                </tr>
+              </thead>
+              <tbody id="pred-fanta-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="pred-grid-bottom">
       <!-- CLASSIFICA COMPLETA -->
-<article class="neo-card pred-mini pred-card-wide" id="card-classifica-completa">
-  <div class="pred-mini-head">
-    <div>
-      <h3>Classifica Completa</h3>
-      <span class="pred-mini-kicker">Top player con metriche avanzate</span>
+      <article class="neo-card pred-mini pred-complete-card" id="card-classifica-completa">
+        <div class="pred-mini-head">
+          <div>
+            <h3>Classifica Completa</h3>
+            <span class="pred-mini-kicker">Top player con metriche avanzate</span>
+          </div>
+          <a class="neo-link" href="#" id="open-full-classifica-completa">Vedi tutta</a>
+        </div>
+
+        <div class="pred-mini-body">
+          <div class="pred-mini-tablewrap pred-complete-tablewrap">
+            <table class="dashboard-table dashboard-table-advanced">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Player</th>
+                  <th>Team</th>
+                  <th>Apps</th>
+                  <th>Min</th>
+                  <th>Goals</th>
+                  <th>A</th>
+                  <th>xG</th>
+                  <th>xA</th>
+                  <th>xG90</th>
+                  <th>xA90</th>
+                </tr>
+              </thead>
+              <tbody id="classifica-completa-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </article>
     </div>
-    <a class="neo-link" href="#" id="open-full-classifica-completa">Vedi tutta</a>
   </div>
-
-  <div class="pred-mini-body">
-    <div class="pred-mini-tablewrap pred-complete-tablewrap">
-      <table class="dashboard-table dashboard-table-advanced">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Player</th>
-            <th>Team</th>
-            <th>Apps</th>
-            <th>Min</th>
-            <th>Goals</th>
-            <th>A</th>
-            <th>xG</th>
-            <th>xA</th>
-            <th>xG90</th>
-            <th>xA90</th>
-          </tr>
-        </thead>
-        <tbody id="classifica-completa-body"></tbody>
-      </table>
-    </div>
-  </div>
-</article>
-        <!-- PRONOSTICI -->
-        <article class="neo-card pred-mini" id="card-prono">
-          <div class="pred-mini-head">
-            <h3>Pronostici</h3>
-            <select id="select-giornata-prono" class="neo-select" aria-label="Giornata pronostici"></select>
-          </div>
-
-          <div class="pred-mini-body">
-            <div class="pred-mini-tablewrap">
-              <table class="dashboard-table">
-                <thead>
-                  <tr><th>Match</th><th>Ora</th><th>Esito</th><th>Conf</th></tr>
-                </thead>
-                <tbody id="pred-prono-body"></tbody>
-              </table>
-            </div>
-            <p class="pred-mini-note">Solo informativo.</p>
-          </div>
-        </article>
-
-        <!-- PREVISIONI -->
-        <article class="neo-card pred-mini" id="card-pred">
-          <div class="pred-mini-head">
-            <h3>Previsioni</h3>
-            <select id="select-giornata-fanta" class="neo-select" aria-label="Giornata previsioni"></select>
-          </div>
-
-          <div class="pred-mini-body">
-            <div class="pred-mini-tablewrap">
-              <table class="dashboard-table pred-fanta-table">
-                <thead>
-                  <tr><th>Match</th><th>Ora</th><th>Consigliati</th><th>Da evitare</th></tr>
-                </thead>
-                <tbody id="pred-fanta-body"></tbody>
-              </table>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
+</section>
 
   <!-- TELEGRAM CTA (lasciata uguale per ora) -->
   <section id="telegram-cta" class="telegram-section-premium">
