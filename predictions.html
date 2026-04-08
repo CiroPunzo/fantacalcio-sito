@@ -141,55 +141,56 @@
         </article>
       </div>
 
-      <div class="pred-grid-bottom">
-        <article class="neo-card pred-mini" id="card-classifica-completa">
-          <div class="pred-mini-head pred-mini-head-search">
-            <div>
-              <h3>Classifica Completa</h3>
-              <span class="pred-mini-kicker">Top player con metriche avanzate</span>
-            </div>
-
-            <div class="pred-search-actions">
-              <div class="classifica-search-wrap">
-  <input
-    type="text"
-    id="classifica-completa-search"
-    placeholder="Cerca giocatore o squadra"
-  >
-  <button type="button" id="classifica-completa-clear" aria-label="Pulisci ricerca">×</button>
-              </div>
-              
-
-              <a class="neo-link" href="#" id="open-full-classifica-completa">Vedi tutta</a>
-            </div>
-          </div>
-
-          <div class="pred-mini-body">
-            <div class="pred-mini-tablewrap pred-complete-tablewrap">
-              <table class="dashboard-table dashboard-table-advanced">
-                <thead>
-                  <tr>
-                    <th class="sortable" data-sort="posizione">#</th>
-                    <th class="sortable" data-sort="player">Player</th>
-                    <th class="sortable" data-sort="team">Team</th>
-                    <th class="sortable" data-sort="apps">Apps</th>
-                    <th class="sortable" data-sort="min">Min</th>
-                    <th class="sortable" data-sort="goals">Goals</th>
-                    <th class="sortable" data-sort="assists">A</th>
-                    <th class="sortable" data-sort="xg">xG</th>
-                    <th class="sortable" data-sort="xa">xA</th>
-                    <th class="sortable" data-sort="xg90">xG90</th>
-                    <th class="sortable" data-sort="xa90">xA90</th>
-                  </tr>
-                </thead>
-                <tbody id="classifica-completa-body"></tbody>
-              </table>
-            </div>
-          </div>
-        </article>
-      </div>
+     <article class="neo-card pred-mini classifica-completa-card" id="card-classifica-completa">
+  <div class="pred-mini-head pred-mini-head-search">
+    <div>
+      <h3>Classifica Completa</h3>
+      <span class="pred-mini-kicker">Top player con metriche avanzate</span>
     </div>
-  </section>
+
+    <div class="pred-search-actions">
+      <div class="classifica-search-wrap">
+        <input
+          type="text"
+          id="classifica-completa-search"
+          placeholder="Cerca giocatore o squadra"
+        >
+        <button
+          type="button"
+          id="classifica-completa-clear"
+          aria-label="Pulisci ricerca"
+        >
+          ×
+        </button>
+      </div>
+
+      <a class="neo-link" href="#" id="open-full-classifica-completa">Vedi tutta</a>
+    </div>
+  </div>
+
+  <div class="pred-mini-body">
+    <div class="pred-mini-tablewrap pred-complete-tablewrap">
+      <table class="dashboard-table dashboard-table-advanced classifica-completa-table">
+        <thead>
+          <tr>
+            <th class="sortable" data-sort="posizione">#</th>
+            <th class="sortable" data-sort="player">Player</th>
+            <th class="sortable" data-sort="team">Team</th>
+            <th class="sortable" data-sort="apps">Apps</th>
+            <th class="sortable" data-sort="min">Min</th>
+            <th class="sortable" data-sort="goals">Goals</th>
+            <th class="sortable" data-sort="assists">A</th>
+            <th class="sortable" data-sort="xg">xG</th>
+            <th class="sortable" data-sort="xa">xA</th>
+            <th class="sortable" data-sort="xg90">xG90</th>
+            <th class="sortable" data-sort="xa90">xA90</th>
+          </tr>
+        </thead>
+        <tbody id="classifica-completa-body"></tbody>
+      </table>
+    </div>
+  </div>
+</article>
 
   <section id="telegram-cta" class="telegram-section-premium">
     <div class="telegram-container">
