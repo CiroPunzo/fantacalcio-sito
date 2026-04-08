@@ -610,146 +610,20 @@ async function populateClassificaCompleta(limit = 10) {
         return;
     }
 
-   window.__classificaCompletaRows = rows;
+  window.__classificaCompletaRows = rows;
 renderClassificaCompletaRows(rows, "classifica-completa-body", limit);
 renderClassificaCompletaRows(rows, "classifica-completa-full-body");
-    });
 }
 async function populateClassificaCompletaFull() {
     const tbody = document.getElementById("classifica-completa-full-body");
     if (!tbody) return;
 
-    const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
-
- if (!window.__classificaCompletaRows || !window.__classificaCompletaRows.length) {
+    if (!window.__classificaCompletaRows || !window.__classificaCompletaRows.length) {
         await populateClassificaCompleta();
         return;
     }
 
     renderClassificaCompletaRows(window.__classificaCompletaRows, "classifica-completa-full-body");
-
-    const rows = data
-        .map((row, index) => ({
-            posizione: Number(
-                pick(row, ["Posizione", "Posizioni", "#", "Rank", "Pos"], index + 1)
-            ) || (index + 1),
-
-            player: pick(row, [
-                "Player",
-                "player",
-                "Giocatore",
-                "giocatore",
-                "Nome Giocatore",
-                "Nome",
-                "Calciatore"
-            ]),
-
-            team: pick(row, [
-                "Team",
-                "team",
-                "Squadra",
-                "squadra",
-                "Club",
-                "club"
-            ]),
-
-            apps: pick(row, [
-                "Apps",
-                "apps",
-                "App",
-                "app",
-                "Presenze",
-                "Partite"
-            ]),
-
-            min: pick(row, [
-                "Min",
-                "min",
-                "Minuti",
-                "Minutes",
-                "MIN"
-            ]),
-
-            goals: pick(row, [
-                "Goals",
-                "goals",
-                "Gol",
-                "gol",
-                "G"
-            ]),
-
-            assists: pick(row, [
-                "A",
-                "Assist",
-                "assist",
-                "Assists",
-                "Ass"
-            ]),
-
-            xg: pick(row, [
-                "xG",
-                "XG",
-                "xg"
-            ]),
-
-            xa: pick(row, [
-                "xA",
-                "XA",
-                "xa"
-            ]),
-
-            xg90: pick(row, [
-                "xG90",
-                "xG/90",
-                "XG90",
-                "xg90",
-                "xg/90"
-            ]),
-
-            xa90: pick(row, [
-                "xA90",
-                "xA/90",
-                "XA90",
-                "xa90",
-                "xa/90"
-            ]),
-        }))
-        .filter((row) => {
-            const hasPlayer = row.player && String(row.player).trim() !== "-" && String(row.player).trim() !== "";
-            const hasTeam = row.team && String(row.team).trim() !== "-" && String(row.team).trim() !== "";
-            return hasPlayer || hasTeam;
-        })
-        .sort((a, b) => a.posizione - b.posizione);
-
-    tbody.innerHTML = "";
-
-    if (!rows.length) {
-        tbody.innerHTML = `<tr><td colspan="11">Dati presenti, ma colonne non riconosciute.</td></tr>`;
-        return;
-    }
-
-    rows.forEach((row) => {
-        const tr = document.createElement("tr");
-        const logoUrl = getClubLogo(row.team);
-        const teamHTML = logoUrl
-            ? `<div class="table-team"><img src="${logoUrl}" alt="${row.team}" class="table-logo" loading="lazy" decoding="async"><span>${row.team}</span></div>`
-            : row.team;
-
-        tr.innerHTML = `
-            <td>${row.posizione}</td>
-            <td><strong>${row.player}</strong></td>
-            <td>${teamHTML}</td>
-            <td>${row.apps}</td>
-            <td>${row.min}</td>
-            <td>${row.goals}</td>
-            <td>${row.assists}</td>
-            <td>${row.xg}</td>
-            <td>${row.xa}</td>
-            <td>${row.xg90}</td>
-            <td>${row.xa90}</td>
-        `;
-        tbody.appendChild(tr);
-    });
 }
 
 
