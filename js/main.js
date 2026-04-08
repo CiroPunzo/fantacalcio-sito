@@ -535,6 +535,129 @@ function setupClassificaCompletaSearch() {
     }
 }
 
+async function populateClassificaCompleta(limit = 10) {
+    const tbody = document.getElementById("classifica-completa-body");
+    if (!tbody) return;
+
+    const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
+
+    if (!Array.isArray(data) || !data.length) {
+        tbody.innerHTML = `<tr><td colspan="11">Nessun dato trovato in ClassificaCompleta.</td></tr>`;
+        return;
+    }
+
+    const pick = (row, keys, fallback = "-") => {
+        for (const key of keys) {
+            const value = row?.[key];
+            if (value !== undefined && value !== null && String(value).trim() !== "") {
+                return value;
+            }
+        }
+        return fallback;
+    };
+
+    const rows = data
+        .map((row, index) => ({
+            posizione: Number(
+                pick(row, ["Posizione", "Posizioni", "#", "Rank", "Pos"], index + 1)
+            ) || (index + 1),
+
+            player: pick(row, [
+                "Player",
+                "player",
+                "Giocatore",
+                "giocatore",
+                "Nome Giocatore",
+                "Nome",
+                "Calciatore"
+            ]),
+
+            team: pick(row, [
+                "Team",
+                "team",
+                "Squadra",
+                "squadra",
+                "Club",
+                "club"
+            ]),
+
+            apps: pick(row, [
+                "Apps",
+                "apps",
+                "App",
+                "app",
+                "Presenze",
+                "Partite"
+            ]),
+
+            min: pick(row, [
+                "Min",
+                "min",
+                "Minuti",
+                "Minutes",
+                "MIN"
+            ]),
+
+            goals: pick(row, [
+                "Goals",
+                "goals",
+                "Gol",
+                "gol",
+                "G"
+            ]),
+
+            assists: pick(row, [
+                "A",
+                "a",
+                "Assist",
+                "assist",
+                "Assists",
+                "Ass",
+                "AST",
+                "Assist Totali",
+                "Assistenze"
+            ]),
+
+            xg: pick(row, [
+                "xG",
+                "XG",
+                "xg"
+            ]),
+
+            xa: pick(row, [
+                "xA",
+                "XA",
+                "xa"
+            ]),
+
+            xg90: pick(row, [
+                "xG90",
+                "xG/90",
+                "XG90",
+                "xg90",
+                "xg/90"
+            ]),
+
+            xa90: pick(row, [
+                "xA90",
+                "xA/90",
+                "XA90",
+                "xa90",
+                "xa/90"
+            ]),
+        }))
+        .filter((row) => {
+            const hasPlayer = row.player && String(row.player).trim() !== "-" && String(row.player).trim() !== "";
+            const hasTeam = row.team && String(row.team).trim() !== "-" && String(row.team).trim() !== "";
+            return hasPlayer || hasTeam;
+        })
+        .sort((a, b) => a.posizione - b.posizione);
+
+    window.__classificaCompletaRows = rows;
+    window.__classificaCompletaFilteredRows = [];
+    applyClassificaCompletaState();
+}
+
 async function populateClassificaCompletaFull() {
     const tbody = document.getElementById("classifica-completa-full-body");
     if (!tbody) return;
