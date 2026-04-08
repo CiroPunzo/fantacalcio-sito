@@ -7224,6 +7224,120 @@ Incolla in fondo a style.css
   }
 }
 
+/* =========================================================
+CTA "VEDI TUTTA" — CLASSIFICA COMPLETA
+========================================================= */
+
+.pred-search-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.classifica-open-btn {
+  appearance: none;
+  border: 1px solid rgba(184, 149, 107, 0.28);
+  background:
+    linear-gradient(180deg, rgba(184,149,107,0.10), rgba(184,149,107,0.05));
+  color: #f3e7d6;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 8px 20px rgba(0,0,0,0.18);
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    color 0.22s ease;
+}
+
+.classifica-open-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(184, 149, 107, 0.55);
+  background:
+    linear-gradient(180deg, rgba(184,149,107,0.18), rgba(184,149,107,0.08));
+  color: #fff3e2;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 10px 24px rgba(0,0,0,0.22),
+    0 0 0 4px rgba(184,149,107,0.08);
+}
+
+.classifica-open-btn:active {
+  transform: translateY(0);
+}
+
+.classifica-open-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(184,149,107,0.12),
+    0 10px 24px rgba(0,0,0,0.22);
+  border-color: rgba(184,149,107,0.62);
+}
+
+.classifica-open-btn-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.06);
+  color: #B8956B;
+  font-size: 0.92rem;
+  transition: transform 0.22s ease, background 0.22s ease, color 0.22s ease;
+}
+
+.classifica-open-btn:hover .classifica-open-btn-icon {
+  transform: translate(1px, -1px);
+  background: rgba(184,149,107,0.14);
+  color: #f7d7aa;
+}
+
+/* Allineamento migliore nell'header */
+.pred-mini-head-search {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.pred-mini-head-search .pred-search-actions {
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .pred-mini-head-search {
+    align-items: stretch;
+  }
+
+  .pred-mini-head-search .pred-search-actions {
+    width: 100%;
+    margin-left: 0;
+    justify-content: space-between;
+  }
+
+  .classifica-open-btn {
+    height: 40px;
+    padding: 0 12px;
+    font-size: 0.84rem;
+  }
+}
+
 
 
 
