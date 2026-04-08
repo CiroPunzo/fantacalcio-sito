@@ -170,63 +170,61 @@
     </div>
 
     <div class="pred-grid-bottom">
-      <!-- CLASSIFICA COMPLETA -->
-     <div class="pred-mini-head pred-mini-head-search">
-  <div>
-    <h3>Classifica Completa</h3>
-    <span class="pred-mini-kicker">Top player con metriche avanzate</span>
-  </div>
+     <div class="pred-grid-bottom">
+  <article class="neo-card pred-mini" id="card-classifica-completa">
+    <div class="pred-mini-head pred-mini-head-search">
+      <div>
+        <h3>Classifica Completa</h3>
+        <span class="pred-mini-kicker">Top player con metriche avanzate</span>
+      </div>
 
-  <div class="pred-search-actions">
-    <div class="pred-search-box">
-      <input
-        type="search"
-        id="classifica-completa-search"
-        class="pred-search-input"
-        placeholder="Cerca giocatore..."
-        aria-label="Cerca giocatore nella classifica completa"
-      />
-      <button
-        type="button"
-        id="classifica-completa-clear"
-        class="pred-search-clear"
-        aria-label="Pulisci ricerca"
-      >
-        ×
-      </button>
-    </div>
-
-    <a class="neo-link" href="#" id="open-full-classifica-completa">Vedi tutta</a>
-  </div>
-</div>
-        
-
-        <div class="pred-mini-body">
-          <div class="pred-mini-tablewrap pred-complete-tablewrap">
-            <table class="dashboard-table dashboard-table-advanced">
-              <thead>
-  <tr>
-    <th class="sortable" data-sort="posizione">#</th>
-    <th class="sortable" data-sort="player">Player</th>
-    <th class="sortable" data-sort="team">Team</th>
-    <th class="sortable" data-sort="apps">Apps</th>
-    <th class="sortable" data-sort="min">Min</th>
-    <th class="sortable" data-sort="goals">Goals</th>
-    <th class="sortable" data-sort="assists">A</th>
-    <th class="sortable" data-sort="xg">xG</th>
-    <th class="sortable" data-sort="xa">xA</th>
-    <th class="sortable" data-sort="xg90">xG90</th>
-    <th class="sortable" data-sort="xa90">xA90</th>
-  </tr>
-</thead>
-              <tbody id="classifica-completa-body"></tbody>
-            </table>
-          </div>
+      <div class="pred-search-actions">
+        <div class="pred-search-box">
+          <input
+            type="search"
+            id="classifica-completa-search"
+            class="pred-search-input"
+            placeholder="Cerca giocatore..."
+            aria-label="Cerca giocatore nella classifica completa"
+          />
+          <button
+            type="button"
+            id="classifica-completa-clear"
+            class="pred-search-clear"
+            aria-label="Pulisci ricerca"
+          >
+            ×
+          </button>
         </div>
-      </article>
+
+        <a class="neo-link" href="#" id="open-full-classifica-completa">Vedi tutta</a>
+      </div>
     </div>
-  </div>
-</section>
+
+    <div class="pred-mini-body">
+      <div class="pred-mini-tablewrap pred-complete-tablewrap">
+        <table class="dashboard-table dashboard-table-advanced">
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="posizione">#</th>
+              <th class="sortable" data-sort="player">Player</th>
+              <th class="sortable" data-sort="team">Team</th>
+              <th class="sortable" data-sort="apps">Apps</th>
+              <th class="sortable" data-sort="min">Min</th>
+              <th class="sortable" data-sort="goals">Goals</th>
+              <th class="sortable" data-sort="assists">A</th>
+              <th class="sortable" data-sort="xg">xG</th>
+              <th class="sortable" data-sort="xa">xA</th>
+              <th class="sortable" data-sort="xg90">xG90</th>
+              <th class="sortable" data-sort="xa90">xA90</th>
+            </tr>
+          </thead>
+          <tbody id="classifica-completa-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </article>
+</div>
 
   <!-- TELEGRAM CTA (lasciata uguale per ora) -->
   <section id="telegram-cta" class="telegram-section-premium">
@@ -414,53 +412,52 @@
     </div>
   </div>
 </div>
-
-  <!-- MODAL CLASSIFICA COMPLETA -->
 <div id="classifica-completa-modal" class="modal">
   <div class="modal-content modal-content-wide">
     <button class="modal-close" type="button">&times;</button>
     <div class="modal-body">
       <h2 style="margin: 0 0 12px;">Classifica Completa</h2>
+
+      <div class="pred-search-box pred-search-box-modal" style="margin: 0 0 14px;">
+        <input
+          type="search"
+          id="classifica-completa-search-modal"
+          class="pred-search-input"
+          placeholder="Cerca giocatore..."
+          aria-label="Cerca giocatore nella classifica completa"
+        />
+        <button
+          type="button"
+          id="classifica-completa-clear-modal"
+          class="pred-search-clear"
+          aria-label="Pulisci ricerca"
+        >
+          ×
+        </button>
+      </div>
+
       <div class="pred-mini-tablewrap pred-complete-tablewrap">
         <table class="dashboard-table dashboard-table-advanced">
           <thead>
-  <tr>
-    <th class="sortable active" data-sort="posizione">#</th>
-    <th class="sortable" data-sort="player">Player</th>
-    <th class="sortable" data-sort="team">Team</th>
-    <th class="sortable" data-sort="apps">Apps</th>
-    <th class="sortable" data-sort="min">Min</th>
-    <th class="sortable" data-sort="goals">Goals</th>
-    <th class="sortable" data-sort="assists">A</th>
-    <th class="sortable" data-sort="xg">xG</th>
-    <th class="sortable" data-sort="xa">xA</th>
-    <th class="sortable" data-sort="xg90">xG90</th>
-    <th class="sortable" data-sort="xa90">xA90</th>
-  </tr>
-</thead>
+            <tr>
+              <th class="sortable" data-sort="posizione">#</th>
+              <th class="sortable" data-sort="player">Player</th>
+              <th class="sortable" data-sort="team">Team</th>
+              <th class="sortable" data-sort="apps">Apps</th>
+              <th class="sortable" data-sort="min">Min</th>
+              <th class="sortable" data-sort="goals">Goals</th>
+              <th class="sortable" data-sort="assists">A</th>
+              <th class="sortable" data-sort="xg">xG</th>
+              <th class="sortable" data-sort="xa">xA</th>
+              <th class="sortable" data-sort="xg90">xG90</th>
+              <th class="sortable" data-sort="xa90">xA90</th>
+            </tr>
+          </thead>
           <tbody id="classifica-completa-full-body"></tbody>
         </table>
       </div>
     </div>
   </div>
-</div>
-
-  <div class="pred-search-box pred-search-box-modal" style="margin: 0 0 14px;">
-  <input
-    type="search"
-    id="classifica-completa-search-modal"
-    class="pred-search-input"
-    placeholder="Cerca giocatore..."
-    aria-label="Cerca giocatore nella classifica completa"
-  />
-  <button
-    type="button"
-    id="classifica-completa-clear-modal"
-    class="pred-search-clear"
-    aria-label="Pulisci ricerca"
-  >
-    ×
-  </button>
 </div>
 
 
