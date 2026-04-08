@@ -376,6 +376,26 @@ rows.forEach((r, i) => {
 });
 }
 
+function formatStatValue(value, decimals = 2) {
+    if (value === undefined || value === null || value === "") return "-";
+
+    if (typeof value === "number") {
+        return Number.isInteger(value) ? String(value) : value.toFixed(decimals);
+    }
+
+    const str = String(value).trim();
+    if (!str) return "-";
+
+    const normalized = str.replace(",", ".");
+    const num = Number(normalized);
+
+    if (!Number.isNaN(num)) {
+        return Number.isInteger(num) ? String(num) : num.toFixed(decimals);
+    }
+
+    return str;
+}
+
 window.__classificaCompletaRows = window.__classificaCompletaRows || [];
 
 function debounce(fn, delay = 180) {
