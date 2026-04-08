@@ -8,23 +8,6 @@
   <meta name="description" content="Analisi fantacalcio e pronostici partita per partita, aggiornati a ogni giornata di Serie A." />
   <meta name="keywords" content="fantacalcio, previsioni, pronostici calcio, marcatori, ciro profantasy" />
 
-  <!-- SEO / Open Graph -->
-  <link rel="canonical" href="https://www.ciroprofantasy.it/predictions.html" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Ciro ProFantasy" />
-  <meta property="og:title" content="Previsioni di giornata | Ciro ProFantasy" />
-  <meta property="og:description" content="Analisi fantacalcio e <!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Previsioni di giornata | Ciro ProFantasy</title>
-  <meta name="description" content="Analisi fantacalcio e pronostici partita per partita, aggiornati a ogni giornata di Serie A." />
-  <meta name="keywords" content="fantacalcio, previsioni, pronostici calcio, marcatori, ciro profantasy" />
-
-  <!-- SEO / Open Graph -->
   <link rel="canonical" href="https://www.ciroprofantasy.it/predictions.html" />
 
   <meta property="og:type" content="website" />
@@ -40,9 +23,7 @@
   <meta name="twitter:title" content="Previsioni di giornata | Ciro ProFantasy" />
   <meta name="twitter:description" content="Analisi fantacalcio e pronostici partita per partita, aggiornati a ogni giornata di Serie A." />
   <meta name="twitter:image" content="https://www.ciroprofantasy.it/img/og-cover.jpg" />
-  <!-- /SEO / Open Graph -->
 
-  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -50,40 +31,35 @@
   <link rel="icon" href="img/favicon.ico" />
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Cookie Consent by CookieYes -->
   <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/632f288ce1ebe1b7d38335aa7a3ff5ff/script.js"></script>
-  <!-- End Cookie Consent by CookieYes -->
 </head>
 
 <body class="neo-page">
-<header class="neo-navbar v-a" role="banner">
-  <div class="neo-navbar-inner container">
-    <a class="neo-brand" href="index.html">
-      <img src="img/logo.png" alt="ProFantasy League" class="neo-brand-logo" />
-      <span class="neo-brand-text">ProFantasy</span>
-    </a>
+  <header class="neo-navbar v-a" role="banner">
+    <div class="neo-navbar-inner container">
+      <a class="neo-brand" href="index.html">
+        <img src="img/logo.png" alt="ProFantasy League" class="neo-brand-logo" />
+        <span class="neo-brand-text">ProFantasy</span>
+      </a>
 
-    <button id="nav-toggle" class="neo-burger" aria-label="Apri menu" aria-expanded="false">
-      <span class="neo-burger-bar"></span>
-      <span class="neo-burger-bar"></span>
-      <span class="neo-burger-bar"></span>
-    </button>
+      <button id="nav-toggle" class="neo-burger" aria-label="Apri menu" aria-expanded="false">
+        <span class="neo-burger-bar"></span>
+        <span class="neo-burger-bar"></span>
+        <span class="neo-burger-bar"></span>
+      </button>
 
-    <nav class="neo-nav" aria-label="Navigazione principale">
-      <ul id="nav-links" class="neo-nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="predictions.html">Previsioni</a></li>
-        <li><a href="track-record.html">Risultati</a></li>
-        <li><a href="chi-sono.html">Chi sono</a></li>
-        <li><a href="contatti.html" class="neo-cta">Community</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+      <nav class="neo-nav" aria-label="Navigazione principale">
+        <ul id="nav-links" class="neo-nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="predictions.html">Previsioni</a></li>
+          <li><a href="track-record.html">Risultati</a></li>
+          <li><a href="chi-sono.html">Chi sono</a></li>
+          <li><a href="contatti.html" class="neo-cta">Community</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-
-
-  <!-- MATCHDAY HUB (NEON) -->
   <section class="neo-section">
     <div class="container">
       <div class="neo-section-head">
@@ -103,130 +79,126 @@
 
       <div class="neo-results-carousel">
         <button class="neo-arrow" id="results-prev" type="button" aria-label="Scorri a sinistra">‹</button>
-        <div class="neo-results-track" id="results-carousel-track">
-          <!-- popolato da JS (RisultatiGiornata) -->
-        </div>
+        <div class="neo-results-track" id="results-carousel-track"></div>
         <button class="neo-arrow" id="results-next" type="button" aria-label="Scorri a destra">›</button>
       </div>
     </div>
   </section>
 
- <section class="neo-section">
-  <div class="container">
-    <div class="neo-section-head">
-      <h2 class="neo-section-title">Dashboard giornata</h2>
-      <p class="neo-section-subtitle">Pronostici, previsioni e classifica completa aggiornati in tempo reale.</p>
-    </div>
+  <section class="neo-section">
+    <div class="container">
+      <div class="neo-section-head">
+        <h2 class="neo-section-title">Dashboard giornata</h2>
+        <p class="neo-section-subtitle">Pronostici, previsioni e classifica completa aggiornati in tempo reale.</p>
+      </div>
 
-    <div class="pred-grid-main">
-      <!-- PRONOSTICI -->
-      <article class="neo-card pred-mini" id="card-prono">
-        <div class="pred-mini-head">
-          <h3>Pronostici</h3>
-          <select id="select-giornata-prono" class="neo-select" aria-label="Giornata pronostici"></select>
-        </div>
-
-        <div class="pred-mini-body">
-          <div class="pred-mini-tablewrap">
-            <table class="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Match</th>
-                  <th>Ora</th>
-                  <th>Esito</th>
-                  <th>Conf</th>
-                </tr>
-              </thead>
-              <tbody id="pred-prono-body"></tbody>
-            </table>
+      <div class="pred-grid-main">
+        <article class="neo-card pred-mini" id="card-prono">
+          <div class="pred-mini-head">
+            <h3>Pronostici</h3>
+            <select id="select-giornata-prono" class="neo-select" aria-label="Giornata pronostici"></select>
           </div>
-          <p class="pred-mini-note">Solo informativo.</p>
-        </div>
-      </article>
 
-      <!-- PREVISIONI -->
-      <article class="neo-card pred-mini" id="card-pred">
-        <div class="pred-mini-head">
-          <h3>Previsioni</h3>
-          <select id="select-giornata-fanta" class="neo-select" aria-label="Giornata previsioni"></select>
-        </div>
-
-        <div class="pred-mini-body">
-          <div class="pred-mini-tablewrap">
-            <table class="dashboard-table pred-fanta-table">
-              <thead>
-                <tr>
-                  <th>Match</th>
-                  <th>Ora</th>
-                  <th>Consigliati</th>
-                  <th>Da evitare</th>
-                </tr>
-              </thead>
-              <tbody id="pred-fanta-body"></tbody>
-            </table>
+          <div class="pred-mini-body">
+            <div class="pred-mini-tablewrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Match</th>
+                    <th>Ora</th>
+                    <th>Esito</th>
+                    <th>Conf</th>
+                  </tr>
+                </thead>
+                <tbody id="pred-prono-body"></tbody>
+              </table>
+            </div>
+            <p class="pred-mini-note">Solo informativo.</p>
           </div>
-        </div>
-      </article>
-    </div>
+        </article>
 
-    <div class="pred-grid-bottom">
-     <div class="pred-grid-bottom">
-  <article class="neo-card pred-mini" id="card-classifica-completa">
-    <div class="pred-mini-head pred-mini-head-search">
-      <div>
-        <h3>Classifica Completa</h3>
-        <span class="pred-mini-kicker">Top player con metriche avanzate</span>
+        <article class="neo-card pred-mini" id="card-pred">
+          <div class="pred-mini-head">
+            <h3>Previsioni</h3>
+            <select id="select-giornata-fanta" class="neo-select" aria-label="Giornata previsioni"></select>
+          </div>
+
+          <div class="pred-mini-body">
+            <div class="pred-mini-tablewrap">
+              <table class="dashboard-table pred-fanta-table">
+                <thead>
+                  <tr>
+                    <th>Match</th>
+                    <th>Ora</th>
+                    <th>Consigliati</th>
+                    <th>Da evitare</th>
+                  </tr>
+                </thead>
+                <tbody id="pred-fanta-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </article>
       </div>
 
-      <div class="pred-search-actions">
-        <div class="pred-search-box">
-          <input
-            type="search"
-            id="classifica-completa-search"
-            class="pred-search-input"
-            placeholder="Cerca giocatore..."
-            aria-label="Cerca giocatore nella classifica completa"
-          />
-          <button
-            type="button"
-            id="classifica-completa-clear"
-            class="pred-search-clear"
-            aria-label="Pulisci ricerca"
-          >
-            ×
-          </button>
-        </div>
+      <div class="pred-grid-bottom">
+        <article class="neo-card pred-mini" id="card-classifica-completa">
+          <div class="pred-mini-head pred-mini-head-search">
+            <div>
+              <h3>Classifica Completa</h3>
+              <span class="pred-mini-kicker">Top player con metriche avanzate</span>
+            </div>
 
-        <a class="neo-link" href="#" id="open-full-classifica-completa">Vedi tutta</a>
+            <div class="pred-search-actions">
+              <div class="pred-search-box">
+                <input
+                  type="search"
+                  id="classifica-completa-search"
+                  class="pred-search-input"
+                  placeholder="Cerca giocatore..."
+                  aria-label="Cerca giocatore nella classifica completa"
+                />
+                <button
+                  type="button"
+                  id="classifica-completa-clear"
+                  class="pred-search-clear"
+                  aria-label="Pulisci ricerca"
+                >
+                  ×
+                </button>
+              </div>
+
+              <a class="neo-link" href="#" id="open-full-classifica-completa">Vedi tutta</a>
+            </div>
+          </div>
+
+          <div class="pred-mini-body">
+            <div class="pred-mini-tablewrap pred-complete-tablewrap">
+              <table class="dashboard-table dashboard-table-advanced">
+                <thead>
+                  <tr>
+                    <th class="sortable" data-sort="posizione">#</th>
+                    <th class="sortable" data-sort="player">Player</th>
+                    <th class="sortable" data-sort="team">Team</th>
+                    <th class="sortable" data-sort="apps">Apps</th>
+                    <th class="sortable" data-sort="min">Min</th>
+                    <th class="sortable" data-sort="goals">Goals</th>
+                    <th class="sortable" data-sort="assists">A</th>
+                    <th class="sortable" data-sort="xg">xG</th>
+                    <th class="sortable" data-sort="xa">xA</th>
+                    <th class="sortable" data-sort="xg90">xG90</th>
+                    <th class="sortable" data-sort="xa90">xA90</th>
+                  </tr>
+                </thead>
+                <tbody id="classifica-completa-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
+  </section>
 
-    <div class="pred-mini-body">
-      <div class="pred-mini-tablewrap pred-complete-tablewrap">
-        <table class="dashboard-table dashboard-table-advanced">
-          <thead>
-            <tr>
-              <th class="sortable" data-sort="posizione">#</th>
-              <th class="sortable" data-sort="player">Player</th>
-              <th class="sortable" data-sort="team">Team</th>
-              <th class="sortable" data-sort="apps">Apps</th>
-              <th class="sortable" data-sort="min">Min</th>
-              <th class="sortable" data-sort="goals">Goals</th>
-              <th class="sortable" data-sort="assists">A</th>
-              <th class="sortable" data-sort="xg">xG</th>
-              <th class="sortable" data-sort="xa">xA</th>
-              <th class="sortable" data-sort="xg90">xG90</th>
-              <th class="sortable" data-sort="xa90">xA90</th>
-            </tr>
-          </thead>
-          <tbody id="classifica-completa-body"></tbody>
-        </table>
-      </div>
-    </div>
-  </article>
-</div>
-
-  <!-- TELEGRAM CTA (lasciata uguale per ora) -->
   <section id="telegram-cta" class="telegram-section-premium">
     <div class="telegram-container">
       <div class="telegram-content">
@@ -236,37 +208,36 @@
         </p>
 
         <div class="telegram-feature">
-  <span class="telegram-feature-icon">📝</span>
-  <div>
-    <strong>Analisi Giornaliera</strong>
-    <p>Consigli dettagliati ogni mattina prima delle giornate</p>
-  </div>
-</div>
+          <span class="telegram-feature-icon">📝</span>
+          <div>
+            <strong>Analisi Giornaliera</strong>
+            <p>Consigli dettagliati ogni mattina prima delle giornate</p>
+          </div>
+        </div>
 
-<div class="telegram-feature">
-  <span class="telegram-feature-icon">⚡</span>
-  <div>
-    <strong>Aggiornamenti Real-time</strong>
-    <p>Notifiche istantanee su infortunati e ultimi cambi</p>
-  </div>
-</div>
+        <div class="telegram-feature">
+          <span class="telegram-feature-icon">⚡</span>
+          <div>
+            <strong>Aggiornamenti Real-time</strong>
+            <p>Notifiche istantanee su infortunati e ultimi cambi</p>
+          </div>
+        </div>
 
-<div class="telegram-feature">
-  <span class="telegram-feature-icon">👥</span>
-  <div>
-    <strong>Community Attiva</strong>
-    <p>Connettiti con altri appassionati di fantacalcio</p>
-  </div>
-</div>
+        <div class="telegram-feature">
+          <span class="telegram-feature-icon">👥</span>
+          <div>
+            <strong>Community Attiva</strong>
+            <p>Connettiti con altri appassionati di fantacalcio</p>
+          </div>
+        </div>
 
-<div class="telegram-feature">
-  <span class="telegram-feature-icon">🎯</span>
-  <div>
-    <strong>Supporto Diretto</strong>
-    <p>Rispondi alle tue domande sulla formazione</p>
-  </div>
-</div>
-
+        <div class="telegram-feature">
+          <span class="telegram-feature-icon">🎯</span>
+          <div>
+            <strong>Supporto Diretto</strong>
+            <p>Rispondi alle tue domande sulla formazione</p>
+          </div>
+        </div>
 
         <div class="telegram-cta-buttons">
           <a href="https://t.me/hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="btn-telegram-primary">
@@ -293,7 +264,6 @@
     </div>
   </section>
 
-  <!-- FOOTER PREMIUM (lasciato uguale) -->
   <footer class="footer-premium">
     <div class="footer-container">
       <div class="footer-cta-banner">
@@ -379,7 +349,6 @@
     </div>
   </footer>
 
-  <!-- MODAL ANALISI FANTACALCIO -->
   <div id="pred-fanta-modal" class="modal">
     <div class="modal-content modal-content-wide">
       <button class="modal-close" type="button">&times;</button>
@@ -387,7 +356,6 @@
     </div>
   </div>
 
-  <!-- MODAL PRONOSTICI -->
   <div id="pred-prono-modal" class="modal">
     <div class="modal-content modal-content-wide">
       <button class="modal-close" type="button">&times;</button>
@@ -395,74 +363,88 @@
     </div>
   </div>
 
-  <!-- MODAL MARCATORI (FULL) -->
-<div id="marcatori-modal" class="modal">
-  <div class="modal-content modal-content-wide">
-    <button class="modal-close" type="button">&times;</button>
-    <div class="modal-body">
-      <h2 style="margin:0 0 12px;">Classifica Marcatori</h2>
-      <div class="pred-mini-tablewrap">
-        <table class="dashboard-table">
-          <thead>
-            <tr><th>#</th><th>Giocatore</th><th>Club</th><th>G</th></tr>
-          </thead>
-          <tbody id="marcatori-full-body"></tbody>
-        </table>
+  <div id="marcatori-modal" class="modal modal-premium">
+    <div class="modal-content modal-content-wide modal-content-premium">
+      <button class="modal-close" type="button">&times;</button>
+      <div class="modal-body modal-body-premium">
+        <div class="modal-premium-head">
+          <div>
+            <span class="modal-premium-kicker">Statistiche avanzate</span>
+            <h2>Classifica Marcatori</h2>
+          </div>
+        </div>
+
+        <div class="pred-mini-tablewrap">
+          <table class="dashboard-table dashboard-table-advanced">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Giocatore</th>
+                <th>Club</th>
+                <th>G</th>
+              </tr>
+            </thead>
+            <tbody id="marcatori-full-body"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div id="classifica-completa-modal" class="modal">
-  <div class="modal-content modal-content-wide">
-    <button class="modal-close" type="button">&times;</button>
-    <div class="modal-body">
-      <h2 style="margin: 0 0 12px;">Classifica Completa</h2>
 
-      <div class="pred-search-box pred-search-box-modal" style="margin: 0 0 14px;">
-        <input
-          type="search"
-          id="classifica-completa-search-modal"
-          class="pred-search-input"
-          placeholder="Cerca giocatore..."
-          aria-label="Cerca giocatore nella classifica completa"
-        />
-        <button
-          type="button"
-          id="classifica-completa-clear-modal"
-          class="pred-search-clear"
-          aria-label="Pulisci ricerca"
-        >
-          ×
-        </button>
-      </div>
+  <div id="classifica-completa-modal" class="modal modal-premium">
+    <div class="modal-content modal-content-wide modal-content-premium">
+      <button class="modal-close" type="button">&times;</button>
+      <div class="modal-body modal-body-premium">
+        <div class="modal-premium-head modal-premium-head-search">
+          <div>
+            <span class="modal-premium-kicker">Metriche complete</span>
+            <h2>Classifica Completa</h2>
+          </div>
 
-      <div class="pred-mini-tablewrap pred-complete-tablewrap">
-        <table class="dashboard-table dashboard-table-advanced">
-          <thead>
-            <tr>
-              <th class="sortable" data-sort="posizione">#</th>
-              <th class="sortable" data-sort="player">Player</th>
-              <th class="sortable" data-sort="team">Team</th>
-              <th class="sortable" data-sort="apps">Apps</th>
-              <th class="sortable" data-sort="min">Min</th>
-              <th class="sortable" data-sort="goals">Goals</th>
-              <th class="sortable" data-sort="assists">A</th>
-              <th class="sortable" data-sort="xg">xG</th>
-              <th class="sortable" data-sort="xa">xA</th>
-              <th class="sortable" data-sort="xg90">xG90</th>
-              <th class="sortable" data-sort="xa90">xA90</th>
-            </tr>
-          </thead>
-          <tbody id="classifica-completa-full-body"></tbody>
-        </table>
+          <div class="pred-search-box pred-search-box-modal">
+            <input
+              type="search"
+              id="classifica-completa-search-modal"
+              class="pred-search-input"
+              placeholder="Cerca giocatore..."
+              aria-label="Cerca giocatore nella classifica completa"
+            />
+            <button
+              type="button"
+              id="classifica-completa-clear-modal"
+              class="pred-search-clear"
+              aria-label="Pulisci ricerca"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+
+        <div class="pred-mini-tablewrap pred-complete-tablewrap">
+          <table class="dashboard-table dashboard-table-advanced">
+            <thead>
+              <tr>
+                <th class="sortable" data-sort="posizione">#</th>
+                <th class="sortable" data-sort="player">Player</th>
+                <th class="sortable" data-sort="team">Team</th>
+                <th class="sortable" data-sort="apps">Apps</th>
+                <th class="sortable" data-sort="min">Min</th>
+                <th class="sortable" data-sort="goals">Goals</th>
+                <th class="sortable" data-sort="assists">A</th>
+                <th class="sortable" data-sort="xg">xG</th>
+                <th class="sortable" data-sort="xa">xA</th>
+                <th class="sortable" data-sort="xg90">xG90</th>
+                <th class="sortable" data-sort="xa90">xA90</th>
+              </tr>
+            </thead>
+            <tbody id="classifica-completa-full-body"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
 
   <script src="js/main.js"></script>
 </body>
 </html>
-
 
