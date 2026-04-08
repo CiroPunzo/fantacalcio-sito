@@ -508,6 +508,8 @@ function updateClassificaSortUI() {
 }
 
 function setClassificaCompletaSort(key) {
+  console.log("[PF SORT] clicked key =", key);
+console.log("[PF SORT] before =", window.__classificaCompletaSort);
     const prevKey = window.__classificaCompletaSort?.key || "posizione";
     const prevDirection = window.__classificaCompletaSort?.direction || "asc";
 
