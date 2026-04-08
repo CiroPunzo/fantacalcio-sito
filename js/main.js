@@ -376,6 +376,111 @@ rows.forEach((r, i) => {
 });
 }
 
+window.__classificaCompletaRows = window.__classificaCompletaRows || [];
+
+function debounce(fn, delay = 180) {
+    let t;
+    return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...args), delay);
+    };
+}
+
+function renderClassificaCompletaRows(rows, targetId, limit = null) {
+    const tbody = document.getElementById(targetId);
+    if (!tbody) return;
+
+    const list = Array.isArray(limit) ? rows : (limit ? rows.slice(0, limit) : rows);
+
+    tbody.innerHTML = "";
+
+    if (!list.length) {
+        tbody.innerHTML = `<tr><td colspan="11">Nessun giocatore trovato.</td></tr>`;
+        return;
+    }
+
+    list.forEach((row) => {
+        const tr = document.createElement("tr");
+        const logoUrl = getClubLogo(row.team);
+        const teamHTML = logoUrl
+            ? `<div class="table-team"><img src="${logoUrl}" alt="${row.team}" class="table-logo" loading="lazy" decoding="async"><span>${row.team}</span></div>`
+            : row.team;
+
+        tr.innerHTML = `
+            <td>${row.posizione}</td>
+            <td><strong>${row.player}</strong></td>
+            <td>${teamHTML}</td>
+            <td>${formatStatValue(row.apps, 0)}</td>
+            <td>${formatStatValue(row.min, 0)}</td>
+            <td>${formatStatValue(row.goals, 0)}</td>
+            <td>${formatStatValue(row.assists, 0)}</td>
+            <td>${formatStatValue(row.xg, 2)}</td>
+            <td>${formatStatValue(row.xa, 2)}</td>
+            <td>${formatStatValue(row.xg90, 2)}</td>
+            <td>${formatStatValue(row.xa90, 2)}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function filterClassificaCompleta(query = "") {
+    const q = String(query).trim().toLowerCase();
+    const rows = window.__classificaCompletaRows || [];
+
+    if (!q) {
+        renderClassificaCompletaRows(rows, "classifica-completa-body", 10);
+        renderClassificaCompletaRows(rows, "classifica-completa-full-body");
+        return;
+    }
+
+    const filtered = rows.filter((row) =>
+        String(row.player || "").toLowerCase().includes(q)
+    );
+
+    renderClassificaCompletaRows(filtered, "classifica-completa-body", 10);
+    renderClassificaCompletaRows(filtered, "classifica-completa-full-body");
+}
+
+function setupClassificaCompletaSearch() {
+    const input = document.getElementById("classifica-completa-search");
+    const clear = document.getElementById("classifica-completa-clear");
+    const inputModal = document.getElementById("classifica-completa-search-modal");
+    const clearModal = document.getElementById("classifica-completa-clear-modal");
+
+    const runFilter = debounce((value) => {
+        filterClassificaCompleta(value);
+
+        if (input && input !== document.activeElement) input.value = value;
+        if (inputModal && inputModal !== document.activeElement) inputModal.value = value;
+    }, 180);
+
+    if (input) {
+        input.addEventListener("input", (e) => runFilter(e.target.value));
+    }
+
+    if (inputModal) {
+        inputModal.addEventListener("input", (e) => runFilter(e.target.value));
+    }
+
+    if (clear) {
+        clear.addEventListener("click", () => {
+            if (input) input.value = "";
+            if (inputModal) inputModal.value = "";
+            filterClassificaCompleta("");
+            input?.focus();
+        });
+    }
+
+    if (clearModal) {
+        clearModal.addEventListener("click", () => {
+            if (input) input.value = "";
+            if (inputModal) inputModal.value = "";
+            filterClassificaCompleta("");
+            inputModal?.focus();
+        });
+    }
+}
+
 async function populateClassificaCompleta(limit = 10) {
     const tbody = document.getElementById("classifica-completa-body");
     if (!tbody) return;
@@ -505,27 +610,9 @@ async function populateClassificaCompleta(limit = 10) {
         return;
     }
 
-    rows.forEach((row) => {
-        const tr = document.createElement("tr");
-        const logoUrl = getClubLogo(row.team);
-        const teamHTML = logoUrl
-            ? `<div class="table-team"><img src="${logoUrl}" alt="${row.team}" class="table-logo" loading="lazy" decoding="async"><span>${row.team}</span></div>`
-            : row.team;
-
-        tr.innerHTML = `
-            <td>${row.posizione}</td>
-            <td><strong>${row.player}</strong></td>
-            <td>${teamHTML}</td>
-            <td>${row.apps}</td>
-            <td>${row.min}</td>
-            <td>${row.goals}</td>
-            <td>${row.assists}</td>
-            <td>${row.xg}</td>
-            <td>${row.xa}</td>
-            <td>${row.xg90}</td>
-            <td>${row.xa90}</td>
-        `;
-        tbody.appendChild(tr);
+   window.__classificaCompletaRows = rows;
+renderClassificaCompletaRows(rows, "classifica-completa-body", limit);
+renderClassificaCompletaRows(rows, "classifica-completa-full-body");
     });
 }
 async function populateClassificaCompletaFull() {
@@ -534,20 +621,12 @@ async function populateClassificaCompletaFull() {
 
     const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
 
-    if (!Array.isArray(data) || !data.length) {
-        tbody.innerHTML = `<tr><td colspan="11">Nessun dato trovato in ClassificaCompleta.</td></tr>`;
+ if (!window.__classificaCompletaRows || !window.__classificaCompletaRows.length) {
+        await populateClassificaCompleta();
         return;
     }
 
-    const pick = (row, keys, fallback = "-") => {
-        for (const key of keys) {
-            const value = row?.[key];
-            if (value !== undefined && value !== null && String(value).trim() !== "") {
-                return value;
-            }
-        }
-        return fallback;
-    };
+    renderClassificaCompletaRows(window.__classificaCompletaRows, "classifica-completa-full-body");
 
     const rows = data
         .map((row, index) => ({
@@ -2483,6 +2562,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       } catch (e) {
         console.error("[PF] populateClassificaCompleta ERROR", e);
       }
+
+      setupClassificaCompletaSearch();
 
       try {
         await populateAnalisiFantacalcio();
