@@ -6837,6 +6837,41 @@ header.neo-navbar.v-a #nav-links.neo-nav-links > li > a {
   }
 }
 
+th.sortable {
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  transition: color 0.18s ease, opacity 0.18s ease;
+}
+
+th.sortable:hover {
+  color: #7cf7ff;
+}
+
+th.sortable::after {
+  content: "↕";
+  font-size: 0.78em;
+  margin-left: 8px;
+  opacity: 0.32;
+  transition: opacity 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+th.sortable.active {
+  color: #7cf7ff;
+}
+
+th.sortable.active::after {
+  opacity: 1;
+}
+
+th.sortable.asc::after {
+  content: "↑";
+}
+
+th.sortable.desc::after {
+  content: "↓";
+}
+
 
 
 
