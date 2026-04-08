@@ -6872,6 +6872,358 @@ th.sortable.desc::after {
   content: "↓";
 }
 
+/* =========================================================
+CLASSIFICA COMPLETA — PREMIUM RESTYLE
+Incolla in fondo a style.css
+========================================================= */
+
+/* Card generale */
+.classifica-completa-card,
+.pred-card.classifica-completa-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(184,149,107,0.10), transparent 34%),
+    linear-gradient(180deg, rgba(10, 0, 40, 0.92), rgba(5, 4, 26, 0.96));
+  border: 1px solid rgba(184, 149, 107, 0.26);
+  border-radius: 20px;
+  box-shadow:
+    0 18px 50px rgba(0,0,0,0.48),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.classifica-completa-card::before,
+.pred-card.classifica-completa-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(184,149,107,0.55),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Header */
+.classifica-completa-card .pred-card-header {
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(184, 149, 107, 0.14);
+}
+
+.classifica-completa-card .pred-card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: #f7efe4;
+  font-family: 'Anton', sans-serif;
+  font-size: 1.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.classifica-completa-card .pred-card-title::before {
+  content: "●";
+  display: inline-block;
+  color: #B8956B;
+  font-size: 0.9rem;
+  text-shadow: 0 0 14px rgba(184,149,107,0.45);
+}
+
+.classifica-completa-card .pred-card-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Search premium */
+.classifica-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 280px;
+  max-width: 360px;
+  width: 100%;
+}
+
+.classifica-search-wrap input {
+  width: 100%;
+  height: 44px;
+  padding: 0 46px 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(184, 149, 107, 0.32);
+  background: rgba(255,255,255,0.04);
+  color: #f5f5f5;
+  outline: none;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+.classifica-search-wrap input::placeholder {
+  color: rgba(255,255,255,0.48);
+}
+
+.classifica-search-wrap input:focus {
+  border-color: rgba(184, 149, 107, 0.72);
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 0 4px rgba(184,149,107,0.10);
+}
+
+.classifica-search-wrap button {
+  position: absolute;
+  right: 6px;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid rgba(184,149,107,0.22);
+  background: rgba(184,149,107,0.10);
+  color: #B8956B;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.classifica-search-wrap button:hover {
+  background: rgba(184,149,107,0.18);
+  border-color: rgba(184,149,107,0.50);
+  transform: scale(1.04);
+}
+
+/* Table wrapper */
+.classifica-completa-card .dashboard-table-wrapper {
+  border-radius: 16px;
+  border: 1px solid rgba(184,149,107,0.14);
+  background: rgba(255,255,255,0.02);
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(184,149,107,0.45) transparent;
+}
+
+.classifica-completa-card .dashboard-table-wrapper::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.classifica-completa-card .dashboard-table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(184,149,107,0.38);
+  border-radius: 999px;
+}
+
+/* Tabella */
+.classifica-completa-table,
+.classifica-completa-table.dashboard-table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 0;
+}
+
+.classifica-completa-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: linear-gradient(180deg, rgba(16, 10, 42, 0.98), rgba(10, 8, 28, 0.96));
+  color: #d8c3a5;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 14px 12px;
+  border-bottom: 1px solid rgba(184,149,107,0.18);
+  white-space: nowrap;
+}
+
+/* Colonne sortable */
+.classifica-completa-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.25s ease, background 0.25s ease;
+}
+
+.classifica-completa-table th.sortable:hover {
+  color: #f3dfc2;
+  background: rgba(184,149,107,0.06);
+}
+
+.classifica-completa-table th.sortable::after {
+  content: "↕";
+  margin-left: 8px;
+  font-size: 0.78rem;
+  color: rgba(184,149,107,0.45);
+  transition: all 0.25s ease;
+}
+
+.classifica-completa-table th.sortable.active {
+  color: #fff4e6;
+}
+
+.classifica-completa-table th.sortable.active::after {
+  color: #B8956B;
+  text-shadow: 0 0 10px rgba(184,149,107,0.35);
+}
+
+.classifica-completa-table th.sortable.asc::after {
+  content: "↑";
+}
+
+.classifica-completa-table th.sortable.desc::after {
+  content: "↓";
+}
+
+/* Righe */
+.classifica-completa-table tbody tr {
+  transition: background 0.22s ease, transform 0.22s ease;
+}
+
+.classifica-completa-table tbody tr:nth-child(even) {
+  background: rgba(255,255,255,0.018);
+}
+
+.classifica-completa-table tbody tr:hover {
+  background: linear-gradient(90deg, rgba(184,149,107,0.08), rgba(255,255,255,0.03));
+}
+
+.classifica-completa-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid rgba(184,149,107,0.10);
+  color: #ececec;
+  font-size: 0.93rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Prime colonne più forti */
+.classifica-completa-table td:first-child {
+  color: #B8956B;
+  font-weight: 700;
+}
+
+.classifica-completa-table td:nth-child(2) strong {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.classifica-completa-table td:nth-child(n+4) {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Team pill */
+.classifica-completa-table .table-team {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.classifica-completa-table .table-logo {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+/* CTA "vedi tutti" o link interni */
+.classifica-completa-card .dashboard-link,
+.classifica-completa-card .open-classifica-completa-modal {
+  color: #B8956B;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.classifica-completa-card .dashboard-link:hover,
+.classifica-completa-card .open-classifica-completa-modal:hover {
+  color: #e2cba9;
+  text-shadow: 0 0 16px rgba(184,149,107,0.20);
+}
+
+/* Modal premium classifica completa */
+#classifica-completa-modal .modal-content,
+#classifica-completa-modal .neo-modal-content {
+  background:
+    radial-gradient(circle at top left, rgba(184,149,107,0.09), transparent 30%),
+    linear-gradient(180deg, rgba(10, 0, 40, 0.96), rgba(4, 3, 20, 0.98));
+  border: 1px solid rgba(184,149,107,0.26);
+  border-radius: 22px;
+  box-shadow: 0 28px 90px rgba(0,0,0,0.72);
+  color: #f5f5f5;
+  backdrop-filter: blur(14px);
+}
+
+#classifica-completa-modal h2,
+#classifica-completa-modal h3 {
+  color: #f7efe4;
+}
+
+#classifica-completa-modal .modal-close,
+#classifica-completa-modal .neo-modal-close {
+  color: #d7d7d7;
+  transition: all 0.25s ease;
+}
+
+#classifica-completa-modal .modal-close:hover,
+#classifica-completa-modal .neo-modal-close:hover {
+  color: #B8956B;
+  transform: rotate(90deg);
+}
+
+/* Search nella modal */
+#classifica-completa-modal .classifica-search-wrap {
+  max-width: 420px;
+  margin-bottom: 18px;
+}
+
+/* Tabella modal */
+#classifica-completa-modal .dashboard-table-wrapper {
+  border-radius: 16px;
+  border: 1px solid rgba(184,149,107,0.14);
+  background: rgba(255,255,255,0.02);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .classifica-completa-card,
+  .pred-card.classifica-completa-card {
+    border-radius: 16px;
+    padding: 18px 14px;
+  }
+
+  .classifica-completa-card .pred-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .classifica-completa-card .pred-card-title {
+    font-size: 1.28rem;
+  }
+
+  .classifica-search-wrap {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .classifica-completa-table td,
+  .classifica-completa-table th {
+    padding: 12px 10px;
+    font-size: 0.86rem;
+  }
+
+  #classifica-completa-modal .modal-content,
+  #classifica-completa-modal .neo-modal-content {
+    border-radius: 18px;
+  }
+}
+
 
 
 
