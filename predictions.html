@@ -150,14 +150,14 @@
             </div>
 
             <div class="pred-search-actions">
-              <div class="pred-search-box">
-                <input
-                  type="search"
-                  id="classifica-completa-search"
-                  class="pred-search-input"
-                  placeholder="Cerca giocatore..."
-                  aria-label="Cerca giocatore nella classifica completa"
-                />
+              <div class="classifica-search-wrap">
+  <input
+    type="text"
+    id="classifica-completa-search"
+    placeholder="Cerca giocatore o squadra"
+  >
+  <button type="button" id="classifica-completa-clear" aria-label="Pulisci ricerca">×</button>
+</div>
                 <button
                   type="button"
                   id="classifica-completa-clear"
@@ -401,24 +401,14 @@
             <h2>Classifica Completa</h2>
           </div>
 
-          <div class="pred-search-box pred-search-box-modal">
-            <input
-              type="search"
-              id="classifica-completa-search-modal"
-              class="pred-search-input"
-              placeholder="Cerca giocatore..."
-              aria-label="Cerca giocatore nella classifica completa"
-            />
-            <button
-              type="button"
-              id="classifica-completa-clear-modal"
-              class="pred-search-clear"
-              aria-label="Pulisci ricerca"
-            >
-              ×
-            </button>
-          </div>
-        </div>
+          <div class="classifica-search-wrap">
+  <input
+    type="text"
+    id="classifica-completa-search-modal"
+    placeholder="Cerca giocatore o squadra"
+  >
+  <button type="button" id="classifica-completa-clear-modal" aria-label="Pulisci ricerca">×</button>
+</div>
 
         <div class="pred-mini-tablewrap pred-complete-tablewrap">
           <table class="dashboard-table dashboard-table-advanced">
