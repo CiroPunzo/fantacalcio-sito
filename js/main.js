@@ -425,19 +425,29 @@ function getClassificaSearchText(row) {
     ].join(" "));
 }
 
-function parseSortableValue(value) {
-    if (value === undefined || value === null || value === "") return null;
+function parseSortableValue(value, key = "") {
+    if (value === undefined || value === null || value === "" || value === "-") {
+        return null;
+    }
+
     if (typeof value === "number") return value;
 
     const str = String(value).trim();
-    if (!str || str === "-") return null;
+
+    if (!str) return null;
+
+    if (["player", "team"].includes(key)) {
+        return str.toLowerCase();
+    }
 
     const normalized = str.replace(",", ".");
     const num = Number(normalized);
 
     if (!Number.isNaN(num)) return num;
+
     return str.toLowerCase();
 }
+
 
 function getDefaultSortDirection(key) {
     const descKeys = ["goals", "assists", "xg", "xa", "xg90", "xa90", "apps", "min"];
@@ -452,9 +462,9 @@ function sortClassificaCompletaRows(rows) {
 
     const { key, direction } = sortState;
 
-    return [...rows].sort((a, b) => {
-        const aVal = parseSortableValue(a[key]);
-        const bVal = parseSortableValue(b[key]);
+    const sorted = [...rows].sort((a, b) => {
+        const aVal = parseSortableValue(a[key], key);
+        const bVal = parseSortableValue(b[key], key);
 
         if (aVal === null && bVal === null) return 0;
         if (aVal === null) return 1;
@@ -466,10 +476,21 @@ function sortClassificaCompletaRows(rows) {
                 : bVal.localeCompare(aVal, "it", { sensitivity: "base" });
         }
 
-        if (direction === "asc") return aVal - bVal;
-        return bVal - aVal;
+        return direction === "asc" ? aVal - bVal : bVal - aVal;
     });
+
+    console.log("[PF SORT] state =", sortState);
+    console.log("[PF SORT] first 5 sorted =", sorted.slice(0, 5).map(r => ({
+        player: r.player,
+        team: r.team,
+        goals: r.goals,
+        assists: r.assists,
+        xg: r.xg
+    })));
+
+    return sorted;
 }
+
 
 function updateClassificaSortUI() {
     document.querySelectorAll('th.sortable[data-sort]').forEach((th) => {
@@ -557,18 +578,19 @@ function renderClassificaCompletaRows(rows, targetId, limit = null) {
 }
 
 function applyClassificaCompletaState() {
-    const hasQuery =
-        !!document.getElementById("classifica-completa-search")?.value ||
-        !!document.getElementById("classifica-completa-search-modal")?.value;
+    const searchInput = document.getElementById("classifica-completa-search")?.value || "";
+    const searchModalInput = document.getElementById("classifica-completa-search-modal")?.value || "";
+    const hasQuery = !!searchInput || !!searchModalInput;
 
-    const baseRows = window.__classificaCompletaFilteredRows?.length || hasQuery
-        ? window.__classificaCompletaFilteredRows
-        : window.__classificaCompletaRows;
+    const sourceRows = hasQuery
+        ? (window.__classificaCompletaFilteredRows || [])
+        : (window.__classificaCompletaRows || []);
 
-    const rows = sortClassificaCompletaRows(baseRows || []);
+    const sortedRows = sortClassificaCompletaRows(sourceRows);
 
-    renderClassificaCompletaRows(rows, "classifica-completa-body", 10);
-    renderClassificaCompletaRows(rows, "classifica-completa-full-body", null);
+    renderClassificaCompletaRows(sortedRows, "classifica-completa-body", 10);
+    renderClassificaCompletaRows(sortedRows, "classifica-completa-full-body", null);
+
     updateClassificaSortUI();
 }
 
