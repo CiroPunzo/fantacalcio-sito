@@ -493,34 +493,38 @@ function sortClassificaCompletaRows(rows) {
 
 
 function updateClassificaSortUI() {
+    const currentKey = window.__classificaCompletaSort?.key || "posizione";
+    const currentDirection = window.__classificaCompletaSort?.direction || "asc";
+
     document.querySelectorAll('th.sortable[data-sort]').forEach((th) => {
         th.classList.remove("active", "asc", "desc");
 
-        const key = th.dataset.sort;
-        if (key === window.__classificaCompletaSort.key) {
-            th.classList.add("active", window.__classificaCompletaSort.direction);
+        const key = th.getAttribute("data-sort");
+        if (key === currentKey) {
+            th.classList.add("active");
+            th.classList.add(currentDirection);
         }
     });
 }
 
 function setClassificaCompletaSort(key) {
-    const current = window.__classificaCompletaSort || {
-        key: "posizione",
-        direction: "asc"
-    };
+    const prevKey = window.__classificaCompletaSort?.key || "posizione";
+    const prevDirection = window.__classificaCompletaSort?.direction || "asc";
 
     let nextDirection;
 
-    if (current.key === key) {
-        nextDirection = current.direction === "asc" ? "desc" : "asc";
+    if (prevKey === key) {
+        nextDirection = prevDirection === "asc" ? "desc" : "asc";
     } else {
         nextDirection = getDefaultSortDirection(key);
     }
 
     window.__classificaCompletaSort = {
-        key,
+        key: key,
         direction: nextDirection
     };
+
+    console.log("[PF SORT] new state =", window.__classificaCompletaSort);
 
     applyClassificaCompletaState();
 }
