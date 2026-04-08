@@ -375,7 +375,6 @@ rows.forEach((r, i) => {
   tbody.appendChild(tr);
 });
 }
-
 function formatStatValue(value, decimals = 2) {
     if (value === undefined || value === null || value === "") return "-";
 
@@ -439,6 +438,114 @@ function renderClassificaCompletaRows(rows, targetId, limit = null) {
         return;
     }
 
+    list.forEach((row) => {
+        const tr = document.createElement("tr");
+        const logoUrl = getClubLogo(row.team);
+        const teamHTML = logoUrl
+            ? `<div class="table-team"><img src="${logoUrl}" alt="${row.team}" class="table-logo" loading="lazy" decoding="async"><span>${row.team}</span></div>`
+            : row.team;
+
+        tr.innerHTML = `
+            <td>${row.posizione}</td>
+            <td><strong>${row.player}</strong></td>
+            <td>${teamHTML}</td>
+            <td>${formatStatValue(row.apps, 0)}</td>
+            <td>${formatStatValue(row.min, 0)}</td>
+            <td>${formatStatValue(row.goals, 0)}</td>
+            <td>${formatStatValue(row.assists, 0)}</td>
+            <td>${formatStatValue(row.xg, 2)}</td>
+            <td>${formatStatValue(row.xa, 2)}</td>
+            <td>${formatStatValue(row.xg90, 2)}</td>
+            <td>${formatStatValue(row.xa90, 2)}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function applyClassificaCompletaState() {
+    const hasQuery =
+        !!document.getElementById("classifica-completa-search")?.value ||
+        !!document.getElementById("classifica-completa-search-modal")?.value;
+
+    const rows = window.__classificaCompletaFilteredRows?.length || hasQuery
+        ? window.__classificaCompletaFilteredRows
+        : window.__classificaCompletaRows;
+
+    renderClassificaCompletaRows(rows || [], "classifica-completa-body", 10);
+    renderClassificaCompletaRows(rows || [], "classifica-completa-full-body", null);
+}
+
+function filterClassificaCompleta(query = "") {
+    const q = normalizeSearchText(query);
+    const rows = window.__classificaCompletaRows || [];
+
+    if (!q) {
+        window.__classificaCompletaFilteredRows = [];
+        applyClassificaCompletaState();
+        return;
+    }
+
+    window.__classificaCompletaFilteredRows = rows.filter((row) => {
+        const haystack = getClassificaSearchText(row);
+        return haystack.includes(q);
+    });
+
+    applyClassificaCompletaState();
+}
+
+function setupClassificaCompletaSearch() {
+    const input = document.getElementById("classifica-completa-search");
+    const clear = document.getElementById("classifica-completa-clear");
+    const inputModal = document.getElementById("classifica-completa-search-modal");
+    const clearModal = document.getElementById("classifica-completa-clear-modal");
+
+    const runFilter = debounce((value) => {
+        filterClassificaCompleta(value);
+
+        if (input && input.value !== value) input.value = value;
+        if (inputModal && inputModal.value !== value) inputModal.value = value;
+    }, 180);
+
+    if (input) {
+        input.addEventListener("input", (e) => runFilter(e.target.value));
+    }
+
+    if (inputModal) {
+        inputModal.addEventListener("input", (e) => runFilter(e.target.value));
+    }
+
+    if (clear) {
+        clear.addEventListener("click", () => {
+            if (input) input.value = "";
+            if (inputModal) inputModal.value = "";
+            window.__classificaCompletaFilteredRows = [];
+            applyClassificaCompletaState();
+            input?.focus();
+        });
+    }
+
+    if (clearModal) {
+        clearModal.addEventListener("click", () => {
+            if (input) input.value = "";
+            if (inputModal) inputModal.value = "";
+            window.__classificaCompletaFilteredRows = [];
+            applyClassificaCompletaState();
+            inputModal?.focus();
+        });
+    }
+}
+
+async function populateClassificaCompletaFull() {
+    const tbody = document.getElementById("classifica-completa-full-body");
+    if (!tbody) return;
+
+    if (!window.__classificaCompletaRows || !window.__classificaCompletaRows.length) {
+        await populateClassificaCompleta();
+        return;
+    }
+
+    applyClassificaCompletaState();
+}
     list.forEach((row) => {
         const tr = document.createElement("tr");
         const logoUrl = getClubLogo(row.team);
