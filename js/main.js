@@ -541,7 +541,7 @@ async function populateClassificaCompletaFull() {
         return;
     }
 
-    renderClassificaCompletaRows(window.__classificaCompletaRows, "classifica-completa-full-body");
+    applyClassificaCompletaState();
 }
 
 
