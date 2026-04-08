@@ -12,10 +12,9 @@
   <meta
     name="keywords"
     content="fantacalcio, previsioni, analisi calcio, marcatori, ciro profantasy"
- y"
   >
 
-  //www.ciroprofantasy.it/">
+  <link rel="canonical" href="https://www.ciroprofantasy.it/">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Ciro ProFantasy">
@@ -40,22 +39,22 @@
   <meta name="theme-color" content="#0b0b2d">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Ciro ProFantasysy">
+  <meta name="apple-mobile-web-app-title" content="Ciro ProFantasy">
 
-  /img/favicon.ico?v=10" sizes="any">
-  /png" sizes="16x16" href="/img/favicon-16x16.png?v=10">
-  /png" sizes="32x32" href="/img/favicon-32x32.png?v=10">
-  /img/apple-touch-icon.png?v=10">
-  /img/site.webmanifest?v=10">
+  <link rel="icon" href="/img/favicon.ico?v=10" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png?v=10">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png?v=10">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png?v=10">
+  <link rel="manifest" href="/img/site.webmanifest?v=10">
 
-  //fonts.googleapis.com">
-  //fonts.gstatic.com" crossorigin>
-  //fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap"
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
- t"
   >
 
-  /css/style.css?v=10">
+  <link rel="stylesheet" href="css/style.css?v=10">
 
   <!-- Cookie Consent by CookieYes -->
   <script
@@ -71,40 +70,37 @@
 
 <body>
 
- <header class="neo-navbar v-a" role="banner">
-  <div class="neo-navbar-inner container">
-    <a class="neo-brand" href="index.html">
-      <img src="img/logo.png" alt="ProFantasy League" class="neo-brand-logo" />
-      <span class="neo-brand-text">ProFantasy</span>
-    </a>
+  <header class="neo-navbar v-a" role="banner">
+    <div class="neo-navbar-inner container">
+      <a class="neo-brand" href="index.html">
+        <img src="img/logo.png" alt="ProFantasy League" class="neo-brand-logo">
+        <span class="neo-brand-text">ProFantasy</span>
+      </a>
 
-    <button id="nav-toggle" class="neo-burger" aria-label="Apri menu" aria-expanded="false">
-      <span class="neo-burger-bar"></span>
-      <span class="neo-burger-bar"></span>
-      <span class="neo-burger-bar"></span>
-    </button>
+      <button id="nav-toggle" class="neo-burger" aria-label="Apri menu" aria-expanded="false">
+        <span class="neo-burger-bar"></span>
+        <span class="neo-burger-bar"></span>
+        <span class="neo-burger-bar"></span>
+      </button>
 
-    <nav class="neo-nav" aria-label="Navigazione principale">
-      <ul id="nav-links" class="neo-nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="predictions.html">Previsioni</a></li>
-        <li><a href="track-record.html">Risultati</a></li>
-        <li><a href="chi-sono.html">Chi sono</a></li>
-        <li><a href="contatti.html" class="neo-cta">Community</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+      <nav class="neo-nav" aria-label="Navigazione principale">
+        <ul id="nav-links" class="neo-nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="predictions.html">Previsioni</a></li>
+          <li><a href="track-record.html">Risultati</a></li>
+          <li><a href="chi-sono.html">Chi sono</a></li>
+          <li><a href="contatti.html" class="neo-cta">Community</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-
-
-  <!-- HERO / TOP (NEON) -->
   <header class="neo-hero">
     <div class="container neo-hero-inner">
       <div class="neo-hero-left">
         <span class="neo-kicker">Ciro | ProFantasy</span>
-        <h1 class="neo-title">Live Data & Tools</h1>
-        <p class="neo-subtitle">Risultati • Comparatore giocatori • Comparatore Scambi • Classifiche</p>
+        <h1 class="neo-title">Live Data &amp; Tools</h1>
+        <p class="neo-subtitle">Risultati • Comparatore giocatori • Comparatore scambi • Classifiche</p>
       </div>
 
       <div class="neo-hero-right">
@@ -123,7 +119,6 @@
     <div class="neo-hero-glow"></div>
   </header>
 
-  <!-- SEZIONE 1: RISULTATI (CAROUSEL) -->
   <section class="neo-section" id="home-risultati">
     <div class="container">
       <div class="neo-section-head">
@@ -137,7 +132,6 @@
         <button class="neo-carousel-arrow neo-carousel-prev" type="button" aria-label="Precedente" id="results-prev">‹</button>
 
         <div class="neo-carousel-track" id="results-carousel-track">
-          <!-- JS: cards risultati -->
           <div class="neo-card neo-card-skeleton">Carico i risultati…</div>
         </div>
 
@@ -146,7 +140,6 @@
     </div>
   </section>
 
-  <!-- SEZIONE 2: COMPARATORE -->
   <section class="neo-section" id="home-comparatore">
     <div class="container">
       <div class="neo-section-head">
@@ -157,14 +150,10 @@
       <div class="neo-compare-grid">
         <div class="neo-card neo-card-compare">
 
-          <!-- CONTROLLI MODIFICATI: da select "menu" a card cliccabili -->
           <div class="neo-compare-controls neo-compare-controls-game">
-
-            <!-- Select reali (servono al JS), nascosti -->
             <select id="player-a-select" class="neo-select neo-select-hidden" aria-hidden="true" tabindex="-1"></select>
             <select id="player-b-select" class="neo-select neo-select-hidden" aria-hidden="true" tabindex="-1"></select>
 
-            <!-- Card cliccabili -->
             <button type="button" id="pick-a" class="neo-pick-card" aria-label="Seleziona giocatore A">
               <div class="neo-pick-logo" id="pick-a-logo"></div>
               <div class="neo-pick-meta">
@@ -188,7 +177,6 @@
             </button>
           </div>
 
-          <!-- Output comparatore (uguale) -->
           <div class="neo-compare-output">
             <div class="neo-compare-kpis" id="compare-kpis">
               <div class="neo-mini-card">Seleziona due giocatori.</div>
@@ -198,35 +186,35 @@
               <canvas id="player-radar" height="240"></canvas>
             </div>
           </div>
+
           <div id="compare-lock" class="neo-lock active" aria-hidden="false">
-  <div class="neo-lock-blur"></div>
-  <div class="neo-lock-panel">
-    <div class="neo-lock-icon">🔒</div>
-    <div class="neo-lock-title">Sblocca il Comparatore</div>
-    <div class="neo-lock-sub">
-      Inserisci la tua email o entra su Telegram per usare il comparatore completo.
-    </div>
+            <div class="neo-lock-blur"></div>
+            <div class="neo-lock-panel">
+              <div class="neo-lock-icon">🔒</div>
+              <div class="neo-lock-title">Sblocca il Comparatore</div>
+              <div class="neo-lock-sub">
+                Inserisci la tua email o entra su Telegram per usare il comparatore completo.
+              </div>
 
-    <div class="neo-lock-actions">
-      <button type="button" class="neo-btn" id="unlock-with-email">
-        Sblocca con email
-      </button>
-      <a class="neo-btn neo-btn-ghost" href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener">
-        Entra su Telegram
-      </a>
-    </div>
+              <div class="neo-lock-actions">
+                <button type="button" class="neo-btn" id="unlock-with-email">
+                  Sblocca con email
+                </button>
+                <a class="neo-btn neo-btn-ghost" href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener">
+                  Entra su Telegram
+                </a>
+              </div>
 
-    <div class="neo-lock-note">Niente spam. Puoi cancellarti quando vuoi.</div>
-  </div>
+              <div class="neo-lock-note">Niente spam. Puoi cancellarti quando vuoi.</div>
+            </div>
+
             <button type="button" class="neo-btn neo-btn-ghost" id="unlock-after-telegram">
-  Ho joinato ✅
-</button>
-
-</div>
+              Ho joinato ✅
+            </button>
+          </div>
 
         </div>
 
-        <!-- DESKTOP SIDEBAR: CLASSIFICHE -->
         <aside class="neo-card neo-card-sidebar" id="desktop-standings">
           <div class="neo-tabs">
             <button class="neo-tab active" data-neo-tab="classifica">Classifica</button>
@@ -291,7 +279,6 @@
         </aside>
       </div>
 
-      <!-- MOBILE: CLASSIFICHE SOTTO -->
       <div class="neo-mobile-standings" id="mobile-standings">
         <div class="neo-card">
           <h3 class="neo-subhead">Classifiche</h3>
@@ -303,28 +290,28 @@
 
           <div class="neo-tab-panels">
             <div class="neo-panel active" id="neo-panel-m-classifica">
-  <div class="neo-standings-mobile-card">
-    <div class="neo-standings-mobile-head">
-      <div class="neo-standings-mobile-left">
-        <span>Pos</span>
-        <span></span>
-        <span>Squadra</span>
-      </div>
+              <div class="neo-standings-mobile-card">
+                <div class="neo-standings-mobile-head">
+                  <div class="neo-standings-mobile-left">
+                    <span>Pos</span>
+                    <span></span>
+                    <span>Squadra</span>
+                  </div>
 
-      <div class="neo-standings-mobile-right">
-        <div class="neo-standings-mobile-right-track">
-          <span>PG</span>
-          <span>xG</span>
-          <span>Punti</span>
-        </div>
-      </div>
-    </div>
+                  <div class="neo-standings-mobile-right">
+                    <div class="neo-standings-mobile-right-track">
+                      <span>PG</span>
+                      <span>xG</span>
+                      <span>Punti</span>
+                    </div>
+                  </div>
+                </div>
 
-    <div id="classifica-body-mobile" class="neo-standings-mobile-body"></div>
-  </div>
+                <div id="classifica-body-mobile" class="neo-standings-mobile-body"></div>
+              </div>
 
-  <button type="button" class="dashboard-link" id="open-full-classifica-mobile">Vedi tutte le squadre</button>
-</div>
+              <button type="button" class="dashboard-link" id="open-full-classifica-mobile">Vedi tutte le squadre</button>
+            </div>
 
             <div class="neo-panel" id="neo-panel-m-marcatori">
               <div class="neo-table-wrap">
@@ -366,7 +353,6 @@
     </div>
   </section>
 
-  <!-- Picker overlay (NUOVO) -->
   <div id="neo-player-picker" class="neo-picker" aria-hidden="true">
     <div class="neo-picker-backdrop" data-close="1"></div>
     <div class="neo-picker-panel neo-card">
@@ -376,65 +362,59 @@
       </div>
 
       <div class="neo-picker-search">
-        <input id="neo-picker-search" class="neo-select" placeholder="Cerca giocatore..." />
+        <input id="neo-picker-search" class="neo-select" placeholder="Cerca giocatore...">
       </div>
 
       <div id="neo-picker-list" class="neo-picker-list"></div>
     </div>
   </div>
 
-<!-- TOOL: CONFRONTO SCAMBI (nuovo) -->
-<section class="neo-section" id="trade-tool">
-  <div class="container">
-    <div class="neo-section-head">
-      <h2 class="neo-section-title">Confronto scambi</h2>
-      <p class="neo-section-subtitle">Due giocatori + calendario futuro + consiglio basato sul FantaIndexCalendario.</p>
-    </div>
+  <section class="neo-section" id="trade-tool">
+    <div class="container">
+      <div class="neo-section-head">
+        <h2 class="neo-section-title">Confronto scambi</h2>
+        <p class="neo-section-subtitle">Due giocatori + calendario futuro + consiglio basato sul FantaIndexCalendario.</p>
+      </div>
 
-    <div class="neo-card" style="padding:16px">
-      <div class="trade-grid">
-        <!-- SINISTRA: giocatore che dai -->
-        <button type="button" id="trade-pick-a" class="neo-pick-card" aria-label="Seleziona giocatore da cedere">
-          <div class="neo-pick-logo" id="trade-a-logo"></div>
-          <div class="neo-pick-meta">
-            <div class="neo-pick-kicker">Cedi</div>
-            <div class="neo-pick-name" id="trade-a-name">Seleziona</div>
-            <div class="neo-pick-sub" id="trade-a-sub">Clicca per scegliere</div>
-            <div class="neo-pick-stats" id="trade-a-stats"></div>
-          </div>
-          <div class="neo-pick-cta">Cambia</div>
-        </button>
+      <div class="neo-card" style="padding:16px">
+        <div class="trade-grid">
+          <button type="button" id="trade-pick-a" class="neo-pick-card" aria-label="Seleziona giocatore da cedere">
+            <div class="neo-pick-logo" id="trade-a-logo"></div>
+            <div class="neo-pick-meta">
+              <div class="neo-pick-kicker">Cedi</div>
+              <div class="neo-pick-name" id="trade-a-name">Seleziona</div>
+              <div class="neo-pick-sub" id="trade-a-sub">Clicca per scegliere</div>
+              <div class="neo-pick-stats" id="trade-a-stats"></div>
+            </div>
+            <div class="neo-pick-cta">Cambia</div>
+          </button>
 
-        <!-- CENTRO: calendario + decisione -->
-        <div class="trade-mid">
-          <div class="neo-card" id="trade-calendar" style="padding:14px;margin-bottom:12px">
-            <div class="neo-mini-card">Seleziona due giocatori per vedere calendario e FIC.</div>
+          <div class="trade-mid">
+            <div class="neo-card" id="trade-calendar" style="padding:14px;margin-bottom:12px">
+              <div class="neo-mini-card">Seleziona due giocatori per vedere calendario e FIC.</div>
+            </div>
+
+            <div class="neo-card" id="trade-decision" style="padding:14px">
+              <div class="neo-mini-card">Decisione: in attesa di selezione.</div>
+            </div>
           </div>
 
-          <div class="neo-card" id="trade-decision" style="padding:14px">
-            <div class="neo-mini-card">Decisione: in attesa di selezione.</div>
-          </div>
+          <button type="button" id="trade-pick-b" class="neo-pick-card" aria-label="Seleziona giocatore da prendere">
+            <div class="neo-pick-logo" id="trade-b-logo"></div>
+            <div class="neo-pick-meta">
+              <div class="neo-pick-kicker">Prendi</div>
+              <div class="neo-pick-name" id="trade-b-name">Seleziona</div>
+              <div class="neo-pick-sub" id="trade-b-sub">Clicca per scegliere</div>
+              <div class="neo-pick-stats" id="trade-b-stats"></div>
+            </div>
+            <div class="neo-pick-cta">Cambia</div>
+          </button>
         </div>
-
-        <!-- DESTRA: giocatore che prendi -->
-        <button type="button" id="trade-pick-b" class="neo-pick-card" aria-label="Seleziona giocatore da prendere">
-          <div class="neo-pick-logo" id="trade-b-logo"></div>
-          <div class="neo-pick-meta">
-            <div class="neo-pick-kicker">Prendi</div>
-            <div class="neo-pick-name" id="trade-b-name">Seleziona</div>
-            <div class="neo-pick-sub" id="trade-b-sub">Clicca per scegliere</div>
-            <div class="neo-pick-stats" id="trade-b-stats"></div>
-          </div>
-          <div class="neo-pick-cta">Cambia</div>
-        </button>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-  <!-- TELEGRAM CTA - PREMIUM -->
   <section id="telegram-cta" class="telegram-section-premium">
-    <!-- identica alla tua -->
     <div class="telegram-container">
       <div class="telegram-content">
         <h2 class="telegram-title">Entra nella Community</h2>
@@ -502,7 +482,6 @@
     <div class="telegram-decoration telegram-deco-2"></div>
   </section>
 
-  <!-- FOOTER (identico al tuo) -->
   <footer class="footer-premium">
     <div class="footer-container">
       <div class="footer-cta-banner">
@@ -571,7 +550,6 @@
     <div class="footer-decoration"></div>
   </footer>
 
-  <!-- MODALI: identiche alle tue (le lascio uguali per non rompere nulla) -->
   <div id="news-modal" class="modal">
     <div class="modal-content">
       <button class="modal-close" type="button">&times;</button>
@@ -609,7 +587,12 @@
           <table class="table classifica-table">
             <thead>
               <tr>
-                <th>Pos</th><th></th><th>Squadra</th><th>PG</th><th>xG</th><th>Punti</th>
+                <th>Pos</th>
+                <th></th>
+                <th>Squadra</th>
+                <th>PG</th>
+                <th>xG</th>
+                <th>Punti</th>
               </tr>
             </thead>
             <tbody id="classifica-full-body"></tbody>
@@ -628,7 +611,12 @@
         <div class="modal-table-wrapper">
           <table class="dashboard-table">
             <thead>
-              <tr><th>Pos</th><th>Giocatore</th><th>Club</th><th>Gol</th></tr>
+              <tr>
+                <th>Pos</th>
+                <th>Giocatore</th>
+                <th>Club</th>
+                <th>Gol</th>
+              </tr>
             </thead>
             <tbody id="marcatori-full-body"></tbody>
           </table>
@@ -646,7 +634,12 @@
         <div class="modal-table-wrapper">
           <table class="dashboard-table">
             <thead>
-              <tr><th>Giocatore</th><th>Club</th><th>Rientro Previsto</th><th>Tipo Infortunio</th></tr>
+              <tr>
+                <th>Giocatore</th>
+                <th>Club</th>
+                <th>Rientro Previsto</th>
+                <th>Tipo Infortunio</th>
+              </tr>
             </thead>
             <tbody id="infortunati-full-body"></tbody>
           </table>
@@ -656,37 +649,34 @@
   </div>
 
   <div class="modal neo-modal" id="join-modal" aria-hidden="true">
-  <div class="modal-content neo-modal-content">
-    <button class="modal-close neo-modal-close" type="button" aria-label="Chiudi">×</button>
+    <div class="modal-content neo-modal-content">
+      <button class="modal-close neo-modal-close" type="button" aria-label="Chiudi">×</button>
 
-    <div class="modal-body neo-modal-body">
-      <h2>Lascia la tua email</h2>
-      <p>Ti avviso quando sblocchiamo nuove funzioni.</p>
+      <div class="modal-body neo-modal-body">
+        <h2>Lascia la tua email</h2>
+        <p>Ti avviso quando sblocchiamo nuove funzioni.</p>
 
-      <form id="join-form">
-        <div class="form-group">
-          <label for="join-email">Email</label>
-          <input id="join-email" name="email" type="email" required />
-        </div>
-        
-        <label class="neo-consent">
-    <input id="join-consent" type="checkbox" required />
-    Acconsento a ricevere email su nuove funzioni e iniziative (es. fantacalcio estivo).
-    Ho letto la <a href="/privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.
-  </label>
+        <form id="join-form">
+          <div class="form-group">
+            <label for="join-email">Email</label>
+            <input id="join-email" name="email" type="email" required>
+          </div>
 
+          <label class="neo-consent">
+            <input id="join-consent" type="checkbox" required>
+            Acconsento a ricevere email su nuove funzioni e iniziative (es. fantacalcio estivo).
+            Ho letto la <a href="/privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>.
+          </label>
 
-        <button class="neo-btn" type="submit">Invia</button>
-      </form>
+          <button class="neo-btn" type="submit">Invia</button>
+        </form>
+      </div>
     </div>
   </div>
-</div>
-
 
   <script src="js/main.js" defer></script>
 </body>
 </html>
-
 
 
 
