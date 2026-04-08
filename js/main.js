@@ -419,10 +419,7 @@ function normalizeSearchText(value) {
 }
 
 function getClassificaSearchText(row) {
-    return normalizeSearchText([
-        row.player,
-        row.team
-    ].join(" "));
+    return normalizeSearchText([row.player, row.team].join(" "));
 }
 
 function parseSortableValue(value, key = "") {
@@ -433,10 +430,9 @@ function parseSortableValue(value, key = "") {
     if (typeof value === "number") return value;
 
     const str = String(value).trim();
-
     if (!str) return null;
 
-    if (["player", "team"].includes(key)) {
+    if (key === "player" || key === "team") {
         return str.toLowerCase();
     }
 
@@ -444,10 +440,8 @@ function parseSortableValue(value, key = "") {
     const num = Number(normalized);
 
     if (!Number.isNaN(num)) return num;
-
     return str.toLowerCase();
 }
-
 
 function getDefaultSortDirection(key) {
     const descKeys = ["goals", "assists", "xg", "xa", "xg90", "xa90", "apps", "min"];
@@ -455,14 +449,12 @@ function getDefaultSortDirection(key) {
 }
 
 function sortClassificaCompletaRows(rows) {
-    const sortState = window.__classificaCompletaSort || {
+    const { key, direction } = window.__classificaCompletaSort || {
         key: "posizione",
         direction: "asc"
     };
 
-    const { key, direction } = sortState;
-
-    const sorted = [...rows].sort((a, b) => {
+    return [...rows].sort((a, b) => {
         const aVal = parseSortableValue(a[key], key);
         const bVal = parseSortableValue(b[key], key);
 
@@ -478,19 +470,7 @@ function sortClassificaCompletaRows(rows) {
 
         return direction === "asc" ? aVal - bVal : bVal - aVal;
     });
-
-    console.log("[PF SORT] state =", sortState);
-    console.log("[PF SORT] first 5 sorted =", sorted.slice(0, 5).map(r => ({
-        player: r.player,
-        team: r.team,
-        goals: r.goals,
-        assists: r.assists,
-        xg: r.xg
-    })));
-
-    return sorted;
 }
-
 
 function updateClassificaSortUI() {
     const currentKey = window.__classificaCompletaSort?.key || "posizione";
@@ -499,34 +479,26 @@ function updateClassificaSortUI() {
     document.querySelectorAll('th.sortable[data-sort]').forEach((th) => {
         th.classList.remove("active", "asc", "desc");
 
-        const key = th.getAttribute("data-sort");
+        const key = th.dataset.sort;
         if (key === currentKey) {
-            th.classList.add("active");
-            th.classList.add(currentDirection);
+            th.classList.add("active", currentDirection);
         }
     });
 }
 
 function setClassificaCompletaSort(key) {
-  console.log("[PF SORT] clicked key =", key);
-console.log("[PF SORT] before =", window.__classificaCompletaSort);
     const prevKey = window.__classificaCompletaSort?.key || "posizione";
     const prevDirection = window.__classificaCompletaSort?.direction || "asc";
 
-    let nextDirection;
-
-    if (prevKey === key) {
-        nextDirection = prevDirection === "asc" ? "desc" : "asc";
-    } else {
-        nextDirection = getDefaultSortDirection(key);
-    }
+    const nextDirection =
+        prevKey === key
+            ? (prevDirection === "asc" ? "desc" : "asc")
+            : getDefaultSortDirection(key);
 
     window.__classificaCompletaSort = {
-        key: key,
+        key,
         direction: nextDirection
     };
-
-    console.log("[PF SORT] new state =", window.__classificaCompletaSort);
 
     applyClassificaCompletaState();
 }
@@ -536,8 +508,6 @@ function setupClassificaCompletaSorting() {
         th.addEventListener("click", () => {
             const key = th.dataset.sort;
             if (!key) return;
-
-            console.log("[PF SORT] click:", key);
             setClassificaCompletaSort(key);
         });
     });
@@ -550,7 +520,6 @@ function renderClassificaCompletaRows(rows, targetId, limit = null) {
     if (!tbody) return;
 
     const list = limit ? rows.slice(0, limit) : rows;
-
     tbody.innerHTML = "";
 
     if (!list.length) {
@@ -558,7 +527,7 @@ function renderClassificaCompletaRows(rows, targetId, limit = null) {
         return;
     }
 
-        list.forEach((row) => {
+    list.forEach((row) => {
         const tr = document.createElement("tr");
         const logoUrl = getClubLogo(row.team);
         const teamHTML = logoUrl
@@ -596,7 +565,6 @@ function applyClassificaCompletaState() {
 
     renderClassificaCompletaRows(sortedRows, "classifica-completa-body", 10);
     renderClassificaCompletaRows(sortedRows, "classifica-completa-full-body", null);
-
     updateClassificaSortUI();
 }
 
@@ -660,7 +628,7 @@ function setupClassificaCompletaSearch() {
     }
 }
 
-async function populateClassificaCompleta(limit = 10) {
+async function populateClassificaCompleta() {
     const tbody = document.getElementById("classifica-completa-body");
     if (!tbody) return;
 
@@ -687,89 +655,16 @@ async function populateClassificaCompleta(limit = 10) {
                 pick(row, ["Posizione", "Posizioni", "#", "Rank", "Pos"], index + 1)
             ) || (index + 1),
 
-            player: pick(row, [
-                "Player",
-                "player",
-                "Giocatore",
-                "giocatore",
-                "Nome Giocatore",
-                "Nome",
-                "Calciatore"
-            ]),
-
-            team: pick(row, [
-                "Team",
-                "team",
-                "Squadra",
-                "squadra",
-                "Club",
-                "club"
-            ]),
-
-            apps: pick(row, [
-                "Apps",
-                "apps",
-                "App",
-                "app",
-                "Presenze",
-                "Partite"
-            ]),
-
-            min: pick(row, [
-                "Min",
-                "min",
-                "Minuti",
-                "Minutes",
-                "MIN"
-            ]),
-
-            goals: pick(row, [
-                "Goals",
-                "goals",
-                "Gol",
-                "gol",
-                "G"
-            ]),
-
-            assists: pick(row, [
-                "A",
-                "a",
-                "Assist",
-                "assist",
-                "Assists",
-                "Ass",
-                "AST",
-                "Assist Totali",
-                "Assistenze"
-            ]),
-
-            xg: pick(row, [
-                "xG",
-                "XG",
-                "xg"
-            ]),
-
-            xa: pick(row, [
-                "xA",
-                "XA",
-                "xa"
-            ]),
-
-            xg90: pick(row, [
-                "xG90",
-                "xG/90",
-                "XG90",
-                "xg90",
-                "xg/90"
-            ]),
-
-            xa90: pick(row, [
-                "xA90",
-                "xA/90",
-                "XA90",
-                "xa90",
-                "xa/90"
-            ]),
+            player: pick(row, ["Player", "player", "Giocatore", "giocatore", "Nome Giocatore", "Nome", "Calciatore"]),
+            team: pick(row, ["Team", "team", "Squadra", "squadra", "Club", "club"]),
+            apps: pick(row, ["Apps", "apps", "App", "app", "Presenze", "Partite"]),
+            min: pick(row, ["Min", "min", "Minuti", "Minutes", "MIN"]),
+            goals: pick(row, ["Goals", "goals", "Gol", "gol", "G"]),
+            assists: pick(row, ["A", "a", "Assist", "assist", "Assists", "Ass", "AST", "Assist Totali", "Assistenze"]),
+            xg: pick(row, ["xG", "XG", "xg"]),
+            xa: pick(row, ["xA", "XA", "xa"]),
+            xg90: pick(row, ["xG90", "xG/90", "XG90", "xg90", "xg/90"]),
+            xa90: pick(row, ["xA90", "xA/90", "XA90", "xa90", "xa/90"]),
         }))
         .filter((row) => {
             const hasPlayer = row.player && String(row.player).trim() !== "-" && String(row.player).trim() !== "";
@@ -781,75 +676,6 @@ async function populateClassificaCompleta(limit = 10) {
     window.__classificaCompletaRows = rows;
     window.__classificaCompletaFilteredRows = [];
     applyClassificaCompletaState();
-}
-
-function applyClassificaCompletaState() {
-    const rows = window.__classificaCompletaFilteredRows?.length || document.getElementById("classifica-completa-search")?.value || document.getElementById("classifica-completa-search-modal")?.value
-        ? window.__classificaCompletaFilteredRows
-        : window.__classificaCompletaRows;
-
-    renderClassificaCompletaRows(rows || [], "classifica-completa-body", 10);
-    renderClassificaCompletaRows(rows || [], "classifica-completa-full-body", null);
-}
-
-function filterClassificaCompleta(query = "") {
-    const q = normalizeSearchText(query);
-    const rows = window.__classificaCompletaRows || [];
-
-    if (!q) {
-        window.__classificaCompletaFilteredRows = [];
-        applyClassificaCompletaState();
-        return;
-    }
-
-    window.__classificaCompletaFilteredRows = rows.filter((row) => {
-        const haystack = getClassificaSearchText(row);
-        return haystack.includes(q);
-    });
-
-    applyClassificaCompletaState();
-}
-
-function setupClassificaCompletaSearch() {
-    const input = document.getElementById("classifica-completa-search");
-    const clear = document.getElementById("classifica-completa-clear");
-    const inputModal = document.getElementById("classifica-completa-search-modal");
-    const clearModal = document.getElementById("classifica-completa-clear-modal");
-
-    const runFilter = debounce((value) => {
-        filterClassificaCompleta(value);
-
-        if (input && input.value !== value) input.value = value;
-        if (inputModal && inputModal.value !== value) inputModal.value = value;
-    }, 180);
-
-    if (input) {
-        input.addEventListener("input", (e) => runFilter(e.target.value));
-    }
-
-    if (inputModal) {
-        inputModal.addEventListener("input", (e) => runFilter(e.target.value));
-    }
-
-    if (clear) {
-        clear.addEventListener("click", () => {
-            if (input) input.value = "";
-            if (inputModal) inputModal.value = "";
-            window.__classificaCompletaFilteredRows = [];
-            applyClassificaCompletaState();
-            input?.focus();
-        });
-    }
-
-    if (clearModal) {
-        clearModal.addEventListener("click", () => {
-            if (input) input.value = "";
-            if (inputModal) inputModal.value = "";
-            window.__classificaCompletaFilteredRows = [];
-            applyClassificaCompletaState();
-            inputModal?.focus();
-        });
-    }
 }
 
 async function populateClassificaCompletaFull() {
