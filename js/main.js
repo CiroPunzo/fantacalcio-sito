@@ -406,11 +406,41 @@ function debounce(fn, delay = 180) {
     };
 }
 
+window.__classificaCompletaRows = window.__classificaCompletaRows || [];
+window.__classificaCompletaFilteredRows = window.__classificaCompletaFilteredRows || [];
+window.__classificaCompletaSort = window.__classificaCompletaSort || {
+    key: "posizione",
+    direction: "asc"
+};
+
+function debounce(fn, delay = 180) {
+    let t;
+    return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...args), delay);
+    };
+}
+
+function normalizeSearchText(value) {
+    return String(value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+}
+
+function getClassificaSearchText(row) {
+    return normalizeSearchText([
+        row.player,
+        row.team
+    ].join(" "));
+}
+
 function renderClassificaCompletaRows(rows, targetId, limit = null) {
     const tbody = document.getElementById(targetId);
     if (!tbody) return;
 
-    const list = Array.isArray(limit) ? rows : (limit ? rows.slice(0, limit) : rows);
+    const list = limit ? rows.slice(0, limit) : rows;
 
     tbody.innerHTML = "";
 
@@ -443,22 +473,31 @@ function renderClassificaCompletaRows(rows, targetId, limit = null) {
     });
 }
 
+function applyClassificaCompletaState() {
+    const rows = window.__classificaCompletaFilteredRows?.length || document.getElementById("classifica-completa-search")?.value || document.getElementById("classifica-completa-search-modal")?.value
+        ? window.__classificaCompletaFilteredRows
+        : window.__classificaCompletaRows;
+
+    renderClassificaCompletaRows(rows || [], "classifica-completa-body", 10);
+    renderClassificaCompletaRows(rows || [], "classifica-completa-full-body", null);
+}
+
 function filterClassificaCompleta(query = "") {
-    const q = String(query).trim().toLowerCase();
+    const q = normalizeSearchText(query);
     const rows = window.__classificaCompletaRows || [];
 
     if (!q) {
-        renderClassificaCompletaRows(rows, "classifica-completa-body", 10);
-        renderClassificaCompletaRows(rows, "classifica-completa-full-body");
+        window.__classificaCompletaFilteredRows = [];
+        applyClassificaCompletaState();
         return;
     }
 
-    const filtered = rows.filter((row) =>
-        String(row.player || "").toLowerCase().includes(q)
-    );
+    window.__classificaCompletaFilteredRows = rows.filter((row) => {
+        const haystack = getClassificaSearchText(row);
+        return haystack.includes(q);
+    });
 
-    renderClassificaCompletaRows(filtered, "classifica-completa-body", 10);
-    renderClassificaCompletaRows(filtered, "classifica-completa-full-body");
+    applyClassificaCompletaState();
 }
 
 function setupClassificaCompletaSearch() {
@@ -470,8 +509,8 @@ function setupClassificaCompletaSearch() {
     const runFilter = debounce((value) => {
         filterClassificaCompleta(value);
 
-        if (input && input !== document.activeElement) input.value = value;
-        if (inputModal && inputModal !== document.activeElement) inputModal.value = value;
+        if (input && input.value !== value) input.value = value;
+        if (inputModal && inputModal.value !== value) inputModal.value = value;
     }, 180);
 
     if (input) {
@@ -486,7 +525,8 @@ function setupClassificaCompletaSearch() {
         clear.addEventListener("click", () => {
             if (input) input.value = "";
             if (inputModal) inputModal.value = "";
-            filterClassificaCompleta("");
+            window.__classificaCompletaFilteredRows = [];
+            applyClassificaCompletaState();
             input?.focus();
         });
     }
@@ -495,144 +535,23 @@ function setupClassificaCompletaSearch() {
         clearModal.addEventListener("click", () => {
             if (input) input.value = "";
             if (inputModal) inputModal.value = "";
-            filterClassificaCompleta("");
+            window.__classificaCompletaFilteredRows = [];
+            applyClassificaCompletaState();
             inputModal?.focus();
         });
     }
 }
 
-async function populateClassificaCompleta(limit = 10) {
-    const tbody = document.getElementById("classifica-completa-body");
+async function populateClassificaCompletaFull() {
+    const tbody = document.getElementById("classifica-completa-full-body");
     if (!tbody) return;
 
-    const data = await fetchSheetDataJson(SHEET_NAMES.classificaCompleta);
-
-    console.log("[PF DEBUG] SHEET_NAMES.classificaCompleta =", SHEET_NAMES.classificaCompleta);
-    console.log("[PF DEBUG] classifica-completa-body exists =", !!tbody);
-    console.log("[PF DEBUG] raw data length =", Array.isArray(data) ? data.length : "not array");
-    console.log("[PF DEBUG] keys first row =", data?.[0] ? Object.keys(data[0]) : []);
-
-    if (!Array.isArray(data) || !data.length) {
-        tbody.innerHTML = `<tr><td colspan="11">Nessun dato trovato in ClassificaCompleta.</td></tr>`;
+    if (!window.__classificaCompletaRows || !window.__classificaCompletaRows.length) {
+        await populateClassificaCompleta();
         return;
     }
 
-    const pick = (row, keys, fallback = "-") => {
-        for (const key of keys) {
-            const value = row?.[key];
-            if (value !== undefined && value !== null && String(value).trim() !== "") {
-                return value;
-            }
-        }
-        return fallback;
-    };
-
-    const rows = data
-        .map((row, index) => ({
-            posizione: Number(
-                pick(row, ["Posizione", "Posizioni", "#", "Rank", "Pos"], index + 1)
-            ) || (index + 1),
-
-            player: pick(row, [
-                "Player",
-                "player",
-                "Giocatore",
-                "giocatore",
-                "Nome Giocatore",
-                "Nome",
-                "Calciatore"
-            ]),
-
-            team: pick(row, [
-                "Team",
-                "team",
-                "Squadra",
-                "squadra",
-                "Club",
-                "club"
-            ]),
-
-            apps: pick(row, [
-                "Apps",
-                "apps",
-                "App",
-                "app",
-                "Presenze",
-                "Partite"
-            ]),
-
-            min: pick(row, [
-                "Min",
-                "min",
-                "Minuti",
-                "Minutes",
-                "MIN"
-            ]),
-
-            goals: pick(row, [
-                "Goals",
-                "goals",
-                "Gol",
-                "gol",
-                "G"
-            ]),
-
-            assists: pick(row, [
-                "A",
-                "Assist",
-                "assist",
-                "Assists",
-                "Ass"
-            ]),
-
-            xg: pick(row, [
-                "xG",
-                "XG",
-                "xg"
-            ]),
-
-            xa: pick(row, [
-                "xA",
-                "XA",
-                "xa"
-            ]),
-
-            xg90: pick(row, [
-                "xG90",
-                "xG/90",
-                "XG90",
-                "xg90",
-                "xg/90"
-            ]),
-
-            xa90: pick(row, [
-                "xA90",
-                "xA/90",
-                "XA90",
-                "xa90",
-                "xa/90"
-            ]),
-        }))
-        .filter((row) => {
-            const hasPlayer = row.player && String(row.player).trim() !== "-" && String(row.player).trim() !== "";
-            const hasTeam = row.team && String(row.team).trim() !== "-" && String(row.team).trim() !== "";
-            return hasPlayer || hasTeam;
-        })
-        .sort((a, b) => a.posizione - b.posizione)
-        .slice(0, limit);
-
-    console.log("[PF DEBUG] normalized rows =", rows);
-
-    tbody.innerHTML = "";
-
-    if (!rows.length) {
-        tbody.innerHTML = `<tr><td colspan="11">Dati presenti, ma colonne non riconosciute.</td></tr>`;
-        return;
-    }
-
-  window.__classificaCompletaRows = rows;
-renderClassificaCompletaRows(rows, "classifica-completa-body", limit);
-renderClassificaCompletaRows(rows, "classifica-completa-full-body");
+    applyClassificaCompletaState();
 }
 async function populateClassificaCompletaFull() {
     const tbody = document.getElementById("classifica-completa-full-body");
