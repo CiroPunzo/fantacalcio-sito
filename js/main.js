@@ -425,6 +425,91 @@ function getClassificaSearchText(row) {
     ].join(" "));
 }
 
+function parseSortableValue(value) {
+    if (value === undefined || value === null || value === "") return null;
+    if (typeof value === "number") return value;
+
+    const str = String(value).trim();
+    if (!str || str === "-") return null;
+
+    const normalized = str.replace(",", ".");
+    const num = Number(normalized);
+
+    if (!Number.isNaN(num)) return num;
+    return str.toLowerCase();
+}
+
+function getDefaultSortDirection(key) {
+    const descKeys = ["goals", "assists", "xg", "xa", "xg90", "xa90", "apps", "min"];
+    return descKeys.includes(key) ? "desc" : "asc";
+}
+
+function sortClassificaCompletaRows(rows) {
+    const { key, direction } = window.__classificaCompletaSort || {
+        key: "posizione",
+        direction: "asc"
+    };
+
+    const sorted = [...rows].sort((a, b) => {
+        const aVal = parseSortableValue(a[key]);
+        const bVal = parseSortableValue(b[key]);
+
+        if (aVal === null && bVal === null) return 0;
+        if (aVal === null) return 1;
+        if (bVal === null) return -1;
+
+        if (typeof aVal === "string" && typeof bVal === "string") {
+            return direction === "asc"
+                ? aVal.localeCompare(bVal, "it")
+                : bVal.localeCompare(aVal, "it");
+        }
+
+        return direction === "asc"
+            ? aVal - bVal
+            : bVal - aVal;
+    });
+
+    return sorted;
+}
+
+function updateClassificaSortUI() {
+    document.querySelectorAll('th.sortable[data-sort]').forEach((th) => {
+        th.classList.remove("active", "asc", "desc");
+
+        const key = th.dataset.sort;
+        if (key === window.__classificaCompletaSort.key) {
+            th.classList.add("active", window.__classificaCompletaSort.direction);
+        }
+    });
+}
+
+function setClassificaCompletaSort(key) {
+    const current = window.__classificaCompletaSort || { key: "posizione", direction: "asc" };
+
+    if (current.key === key) {
+        current.direction = current.direction === "asc" ? "desc" : "asc";
+    } else {
+        current.key = key;
+        current.direction = getDefaultSortDirection(key);
+    }
+
+    window.__classificaCompletaSort = current;
+    applyClassificaCompletaState();
+    updateClassificaSortUI();
+}
+
+function setupClassificaCompletaSorting() {
+    document.querySelectorAll('th.sortable[data-sort]').forEach((th) => {
+        th.addEventListener("click", () => {
+            const key = th.dataset.sort;
+            if (!key) return;
+            setClassificaCompletaSort(key);
+        });
+    });
+
+    updateClassificaSortUI();
+}
+
 function renderClassificaCompletaRows(rows, targetId, limit = null) {
     const tbody = document.getElementById(targetId);
     if (!tbody) return;
@@ -468,12 +553,15 @@ function applyClassificaCompletaState() {
         !!document.getElementById("classifica-completa-search")?.value ||
         !!document.getElementById("classifica-completa-search-modal")?.value;
 
-    const rows = window.__classificaCompletaFilteredRows?.length || hasQuery
+    const baseRows = window.__classificaCompletaFilteredRows?.length || hasQuery
         ? window.__classificaCompletaFilteredRows
         : window.__classificaCompletaRows;
 
-    renderClassificaCompletaRows(rows || [], "classifica-completa-body", 10);
-    renderClassificaCompletaRows(rows || [], "classifica-completa-full-body", null);
+    const rows = sortClassificaCompletaRows(baseRows || []);
+
+    renderClassificaCompletaRows(rows, "classifica-completa-body", 10);
+    renderClassificaCompletaRows(rows, "classifica-completa-full-body", null);
+    updateClassificaSortUI();
 }
 
 function filterClassificaCompleta(query = "") {
@@ -2552,6 +2640,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       setupClassificaCompletaSearch();
+      setupClassificaCompletaSorting();
 
       try {
         await populateAnalisiFantacalcio();
