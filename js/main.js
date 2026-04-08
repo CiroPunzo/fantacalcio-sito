@@ -445,12 +445,14 @@ function getDefaultSortDirection(key) {
 }
 
 function sortClassificaCompletaRows(rows) {
-    const { key, direction } = window.__classificaCompletaSort || {
+    const sortState = window.__classificaCompletaSort || {
         key: "posizione",
         direction: "asc"
     };
 
-    const sorted = [...rows].sort((a, b) => {
+    const { key, direction } = sortState;
+
+    return [...rows].sort((a, b) => {
         const aVal = parseSortableValue(a[key]);
         const bVal = parseSortableValue(b[key]);
 
@@ -460,16 +462,13 @@ function sortClassificaCompletaRows(rows) {
 
         if (typeof aVal === "string" && typeof bVal === "string") {
             return direction === "asc"
-                ? aVal.localeCompare(bVal, "it")
-                : bVal.localeCompare(aVal, "it");
+                ? aVal.localeCompare(bVal, "it", { sensitivity: "base" })
+                : bVal.localeCompare(aVal, "it", { sensitivity: "base" });
         }
 
-        return direction === "asc"
-            ? aVal - bVal
-            : bVal - aVal;
+        if (direction === "asc") return aVal - bVal;
+        return bVal - aVal;
     });
-
-    return sorted;
 }
 
 function updateClassificaSortUI() {
@@ -484,18 +483,25 @@ function updateClassificaSortUI() {
 }
 
 function setClassificaCompletaSort(key) {
-    const current = window.__classificaCompletaSort || { key: "posizione", direction: "asc" };
+    const current = window.__classificaCompletaSort || {
+        key: "posizione",
+        direction: "asc"
+    };
+
+    let nextDirection;
 
     if (current.key === key) {
-        current.direction = current.direction === "asc" ? "desc" : "asc";
+        nextDirection = current.direction === "asc" ? "desc" : "asc";
     } else {
-        current.key = key;
-        current.direction = getDefaultSortDirection(key);
+        nextDirection = getDefaultSortDirection(key);
     }
 
-    window.__classificaCompletaSort = current;
+    window.__classificaCompletaSort = {
+        key,
+        direction: nextDirection
+    };
+
     applyClassificaCompletaState();
-    updateClassificaSortUI();
 }
 
 function setupClassificaCompletaSorting() {
@@ -503,6 +509,8 @@ function setupClassificaCompletaSorting() {
         th.addEventListener("click", () => {
             const key = th.dataset.sort;
             if (!key) return;
+
+            console.log("[PF SORT] click:", key);
             setClassificaCompletaSort(key);
         });
     });
