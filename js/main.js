@@ -692,7 +692,6 @@ async function populateClassificaCompletaFull() {
         `;
         tbody.appendChild(tr);
     });
-}
 
 function applyClassificaCompletaState() {
     const rows = window.__classificaCompletaFilteredRows?.length || document.getElementById("classifica-completa-search")?.value || document.getElementById("classifica-completa-search-modal")?.value
