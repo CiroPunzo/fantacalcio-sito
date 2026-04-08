@@ -171,14 +171,35 @@
 
     <div class="pred-grid-bottom">
       <!-- CLASSIFICA COMPLETA -->
-      <article class="neo-card pred-mini pred-complete-card" id="card-classifica-completa">
-        <div class="pred-mini-head">
-          <div>
-            <h3>Classifica Completa</h3>
-            <span class="pred-mini-kicker">Top player con metriche avanzate</span>
-          </div>
-          <a class="neo-link" href="#" id="open-full-classifica-completa">Vedi tutta</a>
-        </div>
+     <div class="pred-mini-head pred-mini-head-search">
+  <div>
+    <h3>Classifica Completa</h3>
+    <span class="pred-mini-kicker">Top player con metriche avanzate</span>
+  </div>
+
+  <div class="pred-search-actions">
+    <div class="pred-search-box">
+      <input
+        type="search"
+        id="classifica-completa-search"
+        class="pred-search-input"
+        placeholder="Cerca giocatore..."
+        aria-label="Cerca giocatore nella classifica completa"
+      />
+      <button
+        type="button"
+        id="classifica-completa-clear"
+        class="pred-search-clear"
+        aria-label="Pulisci ricerca"
+      >
+        ×
+      </button>
+    </div>
+
+    <a class="neo-link" href="#" id="open-full-classifica-completa">Vedi tutta</a>
+  </div>
+</div>
+        
 
         <div class="pred-mini-body">
           <div class="pred-mini-tablewrap pred-complete-tablewrap">
@@ -422,6 +443,24 @@
       </div>
     </div>
   </div>
+</div>
+
+  <div class="pred-search-box pred-search-box-modal" style="margin: 0 0 14px;">
+  <input
+    type="search"
+    id="classifica-completa-search-modal"
+    class="pred-search-input"
+    placeholder="Cerca giocatore..."
+    aria-label="Cerca giocatore nella classifica completa"
+  />
+  <button
+    type="button"
+    id="classifica-completa-clear-modal"
+    class="pred-search-clear"
+    aria-label="Pulisci ricerca"
+  >
+    ×
+  </button>
 </div>
 
 
