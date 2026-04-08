@@ -397,16 +397,6 @@ function formatStatValue(value, decimals = 2) {
 }
 
 window.__classificaCompletaRows = window.__classificaCompletaRows || [];
-
-function debounce(fn, delay = 180) {
-    let t;
-    return (...args) => {
-        clearTimeout(t);
-        t = setTimeout(() => fn(...args), delay);
-    };
-}
-
-window.__classificaCompletaRows = window.__classificaCompletaRows || [];
 window.__classificaCompletaFilteredRows = window.__classificaCompletaFilteredRows || [];
 window.__classificaCompletaSort = window.__classificaCompletaSort || {
     key: "posizione",
@@ -542,17 +532,6 @@ function setupClassificaCompletaSearch() {
     }
 }
 
-async function populateClassificaCompletaFull() {
-    const tbody = document.getElementById("classifica-completa-full-body");
-    if (!tbody) return;
-
-    if (!window.__classificaCompletaRows || !window.__classificaCompletaRows.length) {
-        await populateClassificaCompleta();
-        return;
-    }
-
-    applyClassificaCompletaState();
-}
 async function populateClassificaCompletaFull() {
     const tbody = document.getElementById("classifica-completa-full-body");
     if (!tbody) return;
