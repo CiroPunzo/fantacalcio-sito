@@ -438,7 +438,7 @@ function renderClassificaCompletaRows(rows, targetId, limit = null) {
         return;
     }
 
-    list.forEach((row) => {
+        list.forEach((row) => {
         const tr = document.createElement("tr");
         const logoUrl = getClubLogo(row.team);
         const teamHTML = logoUrl
@@ -458,6 +458,7 @@ function renderClassificaCompletaRows(rows, targetId, limit = null) {
             <td>${formatStatValue(row.xg90, 2)}</td>
             <td>${formatStatValue(row.xa90, 2)}</td>
         `;
+
         tbody.appendChild(tr);
     });
 }
