@@ -991,27 +991,43 @@
       };
 
       const showPage = (index, pushHash = true) => {
-        if (index < 0 || index >= panels.length) return;
+  if (index < 0 || index >= panels.length) return;
 
-        currentIndex = index;
+  currentIndex = index;
 
-        panels.forEach((panel, i) => {
-          panel.classList.toggle('is-active', i === currentIndex);
-        });
+  panels.forEach((panel, i) => {
+    panel.classList.toggle('is-active', i === currentIndex);
+  });
 
-        updateNav();
-        updateButtons();
-        updateProgress();
+  updateNav();
+  updateButtons();
+  updateProgress();
 
-        if (pushHash) {
-          history.replaceState(null, '', `#${panels[currentIndex].id}`);
-        }
+  if (pushHash) {
+    history.replaceState(null, '', `#${panels[currentIndex].id}`);
+  }
 
-        if (gridTop) {
-          const top = gridTop.getBoundingClientRect().top + window.scrollY - 20;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
-      };
+  requestAnimationFrame(() => {
+    const activePanel = panels[currentIndex];
+    const legalCard = document.querySelector('.legal-card');
+
+    if (legalCard) {
+      legalCard.scrollTop = 0;
+    }
+
+    if (activePanel) {
+      activePanel.scrollTop = 0;
+    }
+
+    if (gridTop) {
+      const top = gridTop.getBoundingClientRect().top + window.scrollY - 12;
+      window.scrollTo({
+        top,
+        behavior: 'smooth'
+      });
+    }
+  });
+};
 
       allBookAnchors.forEach((link) => {
         link.addEventListener('click', function (e) {
