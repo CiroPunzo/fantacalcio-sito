@@ -8802,6 +8802,303 @@ body.legal-page .legal-reader-dot.active {
   }
 }
 
+/* =========================================================
+   LEGAL READER PATCH v2
+   spacing + responsive + click fix
+========================================================= */
+
+body.legal-page .legal-hero {
+  padding: 132px 0 72px;
+}
+
+body.legal-page .legal-reader-layout {
+  padding-top: 14px;
+  padding-bottom: 110px;
+}
+
+body.legal-page .legal-reader-shell {
+  position: relative;
+  z-index: 3;
+}
+
+body.legal-page .legal-reader-topbar {
+  margin-bottom: 28px;
+  padding-inline: 4px;
+}
+
+body.legal-page .legal-reader-grid {
+  grid-template-columns: minmax(0, 1.35fr) 340px;
+  gap: 28px;
+  align-items: start;
+}
+
+body.legal-page .legal-reader-stage,
+body.legal-page .legal-reader-frame,
+body.legal-page .legal-reader-index,
+body.legal-page .legal-reader-arrow,
+body.legal-page .legal-reader-index-item,
+body.legal-page .legal-reader-dot {
+  position: relative;
+  z-index: 4;
+}
+
+body.legal-page .legal-reader-frame {
+  min-height: 760px;
+}
+
+body.legal-page .legal-reader-panel {
+  min-height: 760px;
+}
+
+body.legal-page .legal-reader-panel-inner {
+  height: 760px;
+  padding: 34px 34px 36px;
+}
+
+body.legal-page .legal-reader-index {
+  top: 34px;
+  padding: 22px;
+}
+
+body.legal-page .legal-reader-index-list {
+  gap: 12px;
+}
+
+body.legal-page .legal-reader-index-item {
+  min-height: 92px;
+}
+
+body.legal-page .legal-reader-actions {
+  flex-shrink: 0;
+}
+
+body.legal-page .legal-reader-arrow {
+  pointer-events: auto;
+}
+
+body.legal-page .legal-reader-index-item,
+body.legal-page .legal-reader-dot {
+  pointer-events: auto;
+}
+
+body.legal-page .legal-card h2,
+body.legal-page .legal-reader-panel h2 {
+  margin-bottom: 18px;
+}
+
+body.legal-page .legal-card p,
+body.legal-page .legal-reader-panel p {
+  margin-bottom: 16px;
+}
+
+body.legal-page .legal-card ul,
+body.legal-page .legal-reader-panel ul {
+  margin-top: 12px;
+}
+
+body.legal-page .legal-highlight {
+  margin: 18px 0;
+}
+
+/* ---------- desktop large ---------- */
+@media (min-width: 1440px) {
+  body.legal-page .legal-container {
+    width: min(1280px, calc(100% - 48px));
+  }
+
+  body.legal-page .legal-reader-grid {
+    grid-template-columns: minmax(0, 1.42fr) 360px;
+    gap: 32px;
+  }
+
+  body.legal-page .legal-reader-panel-inner {
+    padding: 38px 40px 40px;
+  }
+}
+
+/* ---------- ipad / schermi medi ---------- */
+@media (max-width: 1180px) {
+  body.legal-page .legal-hero {
+    padding: 118px 0 60px;
+  }
+
+  body.legal-page .legal-reader-layout {
+    padding-top: 8px;
+    padding-bottom: 96px;
+  }
+
+  body.legal-page .legal-reader-grid {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 20px;
+  }
+
+  body.legal-page .legal-reader-frame,
+  body.legal-page .legal-reader-panel {
+    min-height: 700px;
+  }
+
+  body.legal-page .legal-reader-panel-inner {
+    height: 700px;
+    padding: 28px 26px 30px;
+  }
+
+  body.legal-page .legal-reader-index {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  body.legal-page .legal-reader-index-item {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 10px;
+    padding: 12px;
+    min-height: 84px;
+  }
+
+  body.legal-page .legal-reader-index-num {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ---------- tablet verticale / ipad stretto ---------- */
+@media (max-width: 980px) {
+  body.legal-page .legal-hero {
+    padding: 110px 0 52px;
+  }
+
+  body.legal-page .legal-reader-layout {
+    padding-top: 2px;
+    padding-bottom: 88px;
+  }
+
+  body.legal-page .legal-reader-topbar {
+    margin-bottom: 20px;
+  }
+
+  body.legal-page .legal-reader-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  body.legal-page .legal-reader-stage {
+    order: 2;
+  }
+
+  body.legal-page .legal-reader-index {
+    order: 1;
+    position: relative;
+    top: auto;
+  }
+
+  body.legal-page .legal-reader-index-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  body.legal-page .legal-reader-frame,
+  body.legal-page .legal-reader-panel {
+    min-height: 680px;
+  }
+
+  body.legal-page .legal-reader-panel-inner {
+    height: 680px;
+  }
+}
+
+/* ---------- mobile ---------- */
+@media (max-width: 760px) {
+  body.legal-page .legal-hero {
+    padding: 100px 0 42px;
+  }
+
+  body.legal-page .legal-reader-layout {
+    padding-bottom: 76px;
+  }
+
+  body.legal-page .legal-reader-topbar {
+    gap: 16px;
+    margin-bottom: 16px;
+    padding-inline: 0;
+  }
+
+  body.legal-page .legal-reader-toptext {
+    font-size: 0.94rem;
+    max-width: none;
+  }
+
+  body.legal-page .legal-reader-actions {
+    justify-content: flex-start;
+  }
+
+  body.legal-page .legal-reader-grid {
+    gap: 14px;
+  }
+
+  body.legal-page .legal-reader-index {
+    padding: 14px;
+  }
+
+  body.legal-page .legal-reader-index-list {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  body.legal-page .legal-reader-frame,
+  body.legal-page .legal-reader-panel {
+    min-height: 74vh;
+  }
+
+  body.legal-page .legal-reader-panel-inner {
+    height: 74vh;
+    min-height: 560px;
+    padding: 22px 18px 24px;
+  }
+
+  body.legal-page .legal-reader-mobile-dots {
+    display: flex;
+    margin-top: 12px;
+  }
+}
+
+/* ---------- mobile piccolo ---------- */
+@media (max-width: 560px) {
+  body.legal-page .legal-hero {
+    padding: 94px 0 36px;
+  }
+
+  body.legal-page .legal-container {
+    width: min(100% - 20px, 1220px);
+  }
+
+  body.legal-page .legal-reader-frame {
+    border-radius: 20px;
+    min-height: auto;
+  }
+
+  body.legal-page .legal-reader-panel {
+    min-height: auto;
+  }
+
+  body.legal-page .legal-reader-panel-inner {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    overflow-y: visible;
+    padding: 20px 16px 22px;
+  }
+
+  body.legal-page .legal-reader-arrow {
+    width: 44px;
+    height: 44px;
+  }
+
+  body.legal-page .legal-card h2,
+  body.legal-page .legal-reader-panel h2 {
+    font-size: 28px;
+  }
+}
+
 
 
 
