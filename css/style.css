@@ -9564,3 +9564,143 @@ TELEGRAM SECTION — PIÙ RESPIRO E PIÙ PULIZIA
     justify-content: center;
   }
 }
+
+/* =========================================================
+FIX DEFINITIVO STICKY CLASSIFICA MOBILE
+========================================================= */
+
+.pred-complete-tablewrap,
+.classifica-sticky-table-wrap {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  isolation: isolate;
+  border-radius: 18px;
+  background: #070b25;
+  -webkit-overflow-scrolling: touch;
+}
+
+.classifica-completa-table.classifica-sticky-table,
+.classifica-sticky-table {
+  min-width: 920px;
+  border-collapse: separate;
+  border-spacing: 0;
+  position: relative;
+  background: #070b25;
+}
+
+.classifica-completa-table.classifica-sticky-table th,
+.classifica-completa-table.classifica-sticky-table td,
+.classifica-sticky-table th,
+.classifica-sticky-table td {
+  position: relative;
+  white-space: nowrap;
+  background: #070b25;
+}
+
+/* header */
+.classifica-completa-table.classifica-sticky-table thead th,
+.classifica-sticky-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(180deg, #131844 0%, #0b1030 100%);
+}
+
+/* colonna # */
+.classifica-completa-table.classifica-sticky-table th:first-child,
+.classifica-completa-table.classifica-sticky-table td:first-child,
+.classifica-sticky-table th:first-child,
+.classifica-sticky-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 40;
+  min-width: 52px;
+  max-width: 52px;
+  background: #0b1030 !important;
+  box-shadow:
+    12px 0 22px rgba(0, 0, 0, 0.42),
+    1px 0 0 rgba(255,255,255,0.04);
+}
+
+/* colonna Player */
+.classifica-completa-table.classifica-sticky-table th:nth-child(2),
+.classifica-completa-table.classifica-sticky-table td:nth-child(2),
+.classifica-sticky-table th:nth-child(2),
+.classifica-sticky-table td:nth-child(2) {
+  position: sticky;
+  left: 52px;
+  z-index: 41;
+  min-width: 210px;
+  background: #0a0f2d !important;
+  box-shadow:
+    14px 0 26px rgba(0, 0, 0, 0.38),
+    1px 0 0 rgba(184,149,107,0.10);
+}
+
+/* header delle due sticky ancora sopra */
+.classifica-completa-table.classifica-sticky-table thead th:first-child,
+.classifica-completa-table.classifica-sticky-table thead th:nth-child(2),
+.classifica-sticky-table thead th:first-child,
+.classifica-sticky-table thead th:nth-child(2) {
+  z-index: 60;
+}
+
+/* copertura piena anti-trasparenza */
+.classifica-completa-table.classifica-sticky-table th:first-child::before,
+.classifica-completa-table.classifica-sticky-table td:first-child::before,
+.classifica-completa-table.classifica-sticky-table th:nth-child(2)::before,
+.classifica-completa-table.classifica-sticky-table td:nth-child(2)::before,
+.classifica-sticky-table th:first-child::before,
+.classifica-sticky-table td:first-child::before,
+.classifica-sticky-table th:nth-child(2)::before,
+.classifica-sticky-table td:nth-child(2)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  z-index: -1;
+}
+
+/* linea di separazione netta */
+.classifica-completa-table.classifica-sticky-table th:nth-child(2),
+.classifica-completa-table.classifica-sticky-table td:nth-child(2),
+.classifica-sticky-table th:nth-child(2),
+.classifica-sticky-table td:nth-child(2) {
+  border-right: 1px solid rgba(184,149,107,0.18);
+}
+
+/* niente hover trasparente sulle sticky */
+.classifica-completa-table.classifica-sticky-table tbody tr:hover td:first-child,
+.classifica-sticky-table tbody tr:hover td:first-child {
+  background: #0b1030 !important;
+}
+
+.classifica-completa-table.classifica-sticky-table tbody tr:hover td:nth-child(2),
+.classifica-sticky-table tbody tr:hover td:nth-child(2) {
+  background: #0a0f2d !important;
+}
+
+@media (max-width: 768px) {
+  .classifica-completa-table.classifica-sticky-table,
+  .classifica-sticky-table {
+    min-width: 860px;
+  }
+
+  .classifica-completa-table.classifica-sticky-table th:first-child,
+  .classifica-completa-table.classifica-sticky-table td:first-child,
+  .classifica-sticky-table th:first-child,
+  .classifica-sticky-table td:first-child {
+    min-width: 46px;
+    max-width: 46px;
+    left: 0;
+  }
+
+  .classifica-completa-table.classifica-sticky-table th:nth-child(2),
+  .classifica-completa-table.classifica-sticky-table td:nth-child(2),
+  .classifica-sticky-table th:nth-child(2),
+  .classifica-sticky-table td:nth-child(2) {
+    left: 46px;
+    min-width: 180px;
+  }
+}
