@@ -9908,3 +9908,126 @@ prime 3 colonne: logo | # | player
     width: calc(100% - 16px) !important;
   }
 }
+
+/* =========================================================
+PREDICTIONS FINAL HOTFIX
+========================================================= */
+
+/* pagina più ampia, meno effetto "incassato" */
+body.neo-page .container {
+  width: min(1380px, calc(100% - 16px)) !important;
+  max-width: 1380px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@media (max-width: 768px) {
+  body.neo-page .container {
+    width: calc(100% - 10px) !important;
+    max-width: none !important;
+  }
+
+  body.neo-page .neo-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* più aria tra classifica e telegram */
+#telegram-cta.telegram-section-premium {
+  margin-top: 32px !important;
+  padding-top: 48px !important;
+}
+
+.footer-premium {
+  margin-top: 10px !important;
+}
+
+/* =========================================================
+CLASSIFICA MOBILE — via la colonna logo, sticky solo # + player
+========================================================= */
+@media (max-width: 768px) {
+  .pred-complete-tablewrap,
+  .classifica-sticky-table-wrap {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    position: relative !important;
+    isolation: isolate !important;
+    background: #070b25 !important;
+    border-radius: 18px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .classifica-completa-table,
+  .classifica-completa-table.classifica-sticky-table {
+    min-width: 760px !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    background: #070b25 !important;
+  }
+
+  /* nasconde la colonna logo */
+  .classifica-completa-table th:first-child,
+  .classifica-completa-table td:first-child {
+    display: none !important;
+  }
+
+  /* reset di tutte le sticky precedenti */
+  .classifica-completa-table th,
+  .classifica-completa-table td {
+    position: relative !important;
+    left: auto !important;
+    z-index: auto !important;
+    white-space: nowrap !important;
+    background: #070b25 !important;
+  }
+
+  .classifica-completa-table thead th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+    background: linear-gradient(180deg, #131844 0%, #0b1030 100%) !important;
+  }
+
+  /* ora la colonna # diventa la prima visibile */
+  .classifica-completa-table th:nth-child(2),
+  .classifica-completa-table td:nth-child(2) {
+    position: sticky !important;
+    left: 0 !important;
+    min-width: 44px !important;
+    width: 44px !important;
+    max-width: 44px !important;
+    z-index: 40 !important;
+    background: #0b1030 !important;
+    box-shadow: 8px 0 18px rgba(0,0,0,0.35) !important;
+  }
+
+  /* player */
+  .classifica-completa-table th:nth-child(3),
+  .classifica-completa-table td:nth-child(3) {
+    position: sticky !important;
+    left: 44px !important;
+    min-width: 210px !important;
+    width: 210px !important;
+    z-index: 41 !important;
+    background: #0a0f2d !important;
+    box-shadow: 10px 0 22px rgba(0,0,0,0.30) !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* header sopra tutto */
+  .classifica-completa-table thead th:nth-child(2),
+  .classifica-completa-table thead th:nth-child(3) {
+    z-index: 60 !important;
+  }
+
+  /* hover coerente */
+  .classifica-completa-table tbody tr:hover td:nth-child(2) {
+    background: #0b1030 !important;
+  }
+
+  .classifica-completa-table tbody tr:hover td:nth-child(3) {
+    background: #0a0f2d !important;
+  }
+}
