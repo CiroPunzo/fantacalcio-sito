@@ -1251,10 +1251,10 @@
         nextBtn.disabled = currentIndex === panels.length - 1;
       };
 
-      const updateProgress = () => {
-        const title = panels[currentIndex].dataset.title || panels[currentIndex].id;
-        progress.textContent = `Pagina ${currentIndex + 1} di ${panels.length} · ${title}`;
-      };
+     const updateProgress = () => {
+  const title = panels[currentIndex].dataset.title || panels[currentIndex].id;
+  progress.textContent = `${currentIndex + 1} / ${panels.length} · ${title}`;
+};
 
       const showPage = (index, pushHash = true) => {
   if (index < 0 || index >= panels.length) return;
