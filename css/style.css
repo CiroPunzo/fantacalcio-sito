@@ -9143,4 +9143,28 @@ body.legal-page .legal-highlight {
   }
 }
 
+.footer-premium .footer-social-link,
+.footer-premium .footer-links a,
+.footer-premium .contact-legal-note a,
+.footer-premium .footer-copyright,
+.footer-premium .footer-disclaimer,
+.footer-premium .contact-legal-note,
+.footer-premium .footer-logo h4,
+.footer-premium .footer-logo p,
+.footer-premium .footer-bio,
+.footer-premium .footer-col-title,
+.footer-premium .footer-stat-label,
+.footer-premium .footer-stat-value {
+  color: #ffffff;
+}
 
+.footer-premium .footer-links a {
+  opacity: 0.92;
+}
+
+.footer-premium .footer-links a:hover,
+.footer-premium .contact-legal-note a:hover,
+.footer-premium .footer-social-link:hover {
+  color: #ffffff;
+  opacity: 1;
+}
