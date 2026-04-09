@@ -9168,3 +9168,149 @@ body.legal-page .legal-highlight {
   color: #ffffff;
   opacity: 1;
 }
+
+.predictions-layout-section {
+  padding: 48px 0 72px;
+  background: linear-gradient(180deg, #020041 0%, #010020 100%);
+}
+
+.predictions-grid {
+  display: grid;
+  gap: 28px;
+}
+
+.predictions-grid-top {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  align-items: start;
+}
+
+.pred-card-half {
+  min-width: 0;
+  height: 100%;
+}
+
+.pred-card.pred-card-half,
+.classifica-sticky-card {
+  background: linear-gradient(180deg, rgba(7, 10, 38, 0.92), rgba(4, 4, 24, 0.96));
+  border: 1px solid rgba(184, 149, 107, 0.18);
+  border-radius: 22px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.classifica-sticky-card {
+  padding: 24px 22px 22px;
+}
+
+.classifica-sticky-shell {
+  margin-top: 10px;
+}
+
+.classifica-sticky-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  border-radius: 18px;
+  border: 1px solid rgba(184, 149, 107, 0.14);
+  background: rgba(255, 255, 255, 0.02);
+  -webkit-overflow-scrolling: touch;
+}
+
+.classifica-sticky-table {
+  min-width: 980px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.classifica-sticky-table th,
+.classifica-sticky-table td {
+  white-space: nowrap;
+  background-clip: padding-box;
+}
+
+.classifica-sticky-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: linear-gradient(180deg, #10143e 0%, #0a0d30 100%);
+}
+
+.classifica-sticky-table th:first-child,
+.classifica-sticky-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background: linear-gradient(180deg, #0e1237 0%, #090c2e 100%);
+  box-shadow: 8px 0 18px rgba(0, 0, 0, 0.24);
+}
+
+.classifica-sticky-table th:nth-child(2),
+.classifica-sticky-table td:nth-child(2) {
+  position: sticky;
+  left: 58px;
+  z-index: 5;
+  background: linear-gradient(180deg, #0d1134 0%, #080b2a 100%);
+  box-shadow: 8px 0 18px rgba(0, 0, 0, 0.18);
+}
+
+.classifica-sticky-table th:first-child {
+  z-index: 7;
+}
+
+.classifica-sticky-table th:nth-child(2) {
+  z-index: 7;
+}
+
+.classifica-sticky-table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.classifica-sticky-table td:first-child,
+.classifica-sticky-table td:nth-child(2) {
+  background-color: #0a0d2d;
+}
+
+.classifica-sticky-table td:nth-child(2) strong {
+  color: #ffffff;
+}
+
+.classifica-sticky-table td:nth-child(n+4) {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 1024px) {
+  .predictions-grid-top {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .predictions-layout-section {
+    padding: 36px 0 56px;
+  }
+
+  .predictions-grid,
+  .predictions-grid-top {
+    gap: 20px;
+  }
+
+  .classifica-sticky-card {
+    padding: 18px 14px 16px;
+    border-radius: 18px;
+  }
+
+  .classifica-sticky-table {
+    min-width: 860px;
+  }
+
+  .classifica-sticky-table th:first-child,
+  .classifica-sticky-table td:first-child {
+    left: 0;
+  }
+
+  .classifica-sticky-table th:nth-child(2),
+  .classifica-sticky-table td:nth-child(2) {
+    left: 48px;
+  }
+}
