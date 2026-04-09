@@ -9099,4 +9099,21 @@ body.legal-page .legal-highlight {
   }
 }
 
+.contact-legal-note {
+  margin: 8px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.72);
+}
+
+.contact-legal-note a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-legal-note a:hover {
+  opacity: 0.85;
+}
+
 
