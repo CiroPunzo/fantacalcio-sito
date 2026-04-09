@@ -9897,3 +9897,14 @@ prime 3 colonne: logo | # | player
     min-width: 210px;
   }
 }
+
+.neo-page .container {
+  max-width: 1360px !important;
+  width: calc(100% - 24px) !important;
+}
+
+@media (max-width: 768px) {
+  .neo-page .container {
+    width: calc(100% - 16px) !important;
+  }
+}
