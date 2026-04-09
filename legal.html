@@ -19,40 +19,31 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="legal-page">
-  <header class="navbar">
-    <div class="container nav-container">
-      <a href="index.html" class="logo-link" aria-label="Vai alla home di ProFantasy">
-        <div class="logo">
-          <img src="img/logo.png" alt="Logo ProFantasy" class="logo-image" />
-          <span class="logo-text">ProFantasy</span>
-        </div>
-      </a>
+ <header class="neo-navbar v-a" role="banner">
+  <div class="neo-navbar-inner container">
+    <a class="neo-brand" href="index.html" aria-label="Vai alla home di ProFantasy">
+      <img src="img/logo.png" alt="Logo ProFantasy" class="neo-brand-logo" />
+      <span class="neo-brand-text">ProFantasy</span>
+    </a>
 
-      <nav class="nav-menu" aria-label="Navigazione principale">
-        <a href="index.html">Home</a>
-        <a href="index.html#servizi">Servizi</a>
-        <a href="index.html#analisi">Analisi</a>
-        <a href="index.html#community">Community</a>
-        <a href="index.html#contatti">Contatti</a>
-        <a href="legal.html" class="active">Legal</a>
-      </nav>
+    <button id="nav-toggle" class="neo-burger" aria-label="Apri menu" aria-expanded="false">
+      <span class="neo-burger-bar"></span>
+      <span class="neo-burger-bar"></span>
+      <span class="neo-burger-bar"></span>
+    </button>
 
-      <button class="mobile-menu-btn legal-mobile-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="mobile-menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-
-    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
-      <a href="index.html">Home</a>
-      <a href="index.html#servizi">Servizi</a>
-      <a href="index.html#analisi">Analisi</a>
-      <a href="index.html#community">Community</a>
-      <a href="index.html#contatti">Contatti</a>
-      <a href="legal.html" class="active">Legal</a>
-    </div>
-  </header>
+    <nav class="neo-nav" aria-label="Navigazione principale">
+      <ul id="nav-links" class="neo-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#servizi">Servizi</a></li>
+        <li><a href="index.html#analisi">Analisi</a></li>
+        <li><a href="index.html#community">Community</a></li>
+        <li><a href="index.html#contatti">Contatti</a></li>
+        <li><a href="legal.html" class="active">Legal</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
   <main>
     <section class="legal-hero">
