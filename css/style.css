@@ -9704,3 +9704,53 @@ FIX DEFINITIVO STICKY CLASSIFICA MOBILE
     min-width: 180px;
   }
 }
+
+/* =========================================================
+PREDICTIONS — LOOK PIÙ FULL WIDTH COME HOME
+========================================================= */
+
+body.neo-page {
+  overflow-x: hidden;
+}
+
+.neo-page .neo-section {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.neo-page .neo-section > .container,
+#telegram-cta .telegram-container,
+.footer-premium .footer-container {
+  max-width: 1360px;
+  width: calc(100% - 32px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .neo-page .neo-section > .container,
+  #telegram-cta .telegram-container,
+  .footer-premium .footer-container {
+    width: calc(100% - 20px);
+  }
+}
+
+/* più aria tra dashboard, telegram e footer */
+#telegram-cta.telegram-section-premium {
+  margin-top: 42px;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.footer-premium {
+  margin-top: 10px;
+  padding-top: 8px;
+}
+
+@media (max-width: 768px) {
+  #telegram-cta.telegram-section-premium {
+    margin-top: 28px;
+    padding-top: 44px;
+    padding-bottom: 44px;
+  }
+}
