@@ -2411,6 +2411,172 @@ function setupJoinModal() {
   });
 }
 
+function initLegalReader() {
+  const body = document.body;
+  if (!body || !body.classList.contains("legal-page")) return;
+
+  const track = document.getElementById("legal-reader-track");
+  const prevBtn = document.getElementById("legal-prev");
+  const nextBtn = document.getElementById("legal-next");
+  const panels = Array.from(document.querySelectorAll(".legal-reader-panel"));
+  const indexButtons = Array.from(document.querySelectorAll(".legal-reader-index-item"));
+  const dotButtons = Array.from(document.querySelectorAll(".legal-reader-dot"));
+
+  if (!track || !prevBtn || !nextBtn || !panels.length) return;
+
+  const panelKeys = panels.map((panel) => panel.dataset.legalPanel || "");
+  let currentIndex = 0;
+  let touchStartX = 0;
+  let touchEndX = 0;
+  let isAnimating = false;
+
+  function getIndexByHash() {
+    const hash = window.location.hash.replace("#", "").trim();
+    if (!hash) return -1;
+    return panelKeys.indexOf(hash);
+  }
+
+  function updateButtons() {
+    prevBtn.disabled = currentIndex <= 0;
+    nextBtn.disabled = currentIndex >= panels.length - 1;
+  }
+
+  function updateTrack() {
+    track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+  }
+
+  function updateActiveState() {
+    panels.forEach((panel, index) => {
+      const active = index === currentIndex;
+      panel.classList.toggle("active", active);
+      panel.setAttribute("aria-hidden", active ? "false" : "true");
+    });
+
+    indexButtons.forEach((button, index) => {
+      button.classList.toggle("active", index === currentIndex);
+      button.setAttribute("aria-current", index === currentIndex ? "true" : "false");
+    });
+
+    dotButtons.forEach((button, index) => {
+      button.classList.toggle("active", index === currentIndex);
+      button.setAttribute("aria-current", index === currentIndex ? "true" : "false");
+    });
+
+    updateButtons();
+    updateTrack();
+  }
+
+  function scrollPanelTop(index) {
+    const inner = panels[index]?.querySelector(".legal-reader-panel-inner");
+    if (inner) inner.scrollTo({ top: 0, behavior: "auto" });
+  }
+
+  function goToPanel(index, options = {}) {
+    if (isAnimating) return;
+    if (index < 0 || index >= panels.length) return;
+
+    currentIndex = index;
+    isAnimating = true;
+
+    updateActiveState();
+
+    if (options.resetScroll !== false) {
+      scrollPanelTop(currentIndex);
+    }
+
+    const key = panelKeys[currentIndex];
+    if (options.updateHash !== false && key) {
+      history.replaceState(null, "", `#${key}`);
+    }
+
+    window.setTimeout(() => {
+      isAnimating = false;
+    }, 420);
+  }
+
+  function handlePrev() {
+    goToPanel(currentIndex - 1, { updateHash: true, resetScroll: true });
+  }
+
+  function handleNext() {
+    goToPanel(currentIndex + 1, { updateHash: true, resetScroll: true });
+  }
+
+  prevBtn.onclick = handlePrev;
+  nextBtn.onclick = handleNext;
+
+  indexButtons.forEach((button, index) => {
+    button.onclick = () => goToPanel(index, { updateHash: true, resetScroll: true });
+  });
+
+  dotButtons.forEach((button) => {
+    button.onclick = () => {
+      const index = Number(button.dataset.legalGo);
+      if (Number.isFinite(index)) {
+        goToPanel(index, { updateHash: true, resetScroll: true });
+      }
+    };
+  });
+
+  track.addEventListener(
+    "touchstart",
+    (e) => {
+      touchStartX = e.changedTouches[0].clientX;
+    },
+    { passive: true }
+  );
+
+  track.addEventListener(
+    "touchend",
+    (e) => {
+      touchEndX = e.changedTouches[0].clientX;
+      const diff = touchEndX - touchStartX;
+      const threshold = 50;
+
+      if (Math.abs(diff) < threshold) return;
+
+      if (diff < 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    },
+    { passive: true }
+  );
+
+  document.addEventListener("keydown", (e) => {
+    const tag = document.activeElement?.tagName?.toLowerCase();
+    const isTyping =
+      tag === "input" ||
+      tag === "textarea" ||
+      document.activeElement?.isContentEditable;
+
+    if (isTyping) return;
+    if (!body.classList.contains("legal-page")) return;
+
+    if (e.key === "ArrowRight") {
+      handleNext();
+    } else if (e.key === "ArrowLeft") {
+      handlePrev();
+    }
+  });
+
+  window.addEventListener("hashchange", () => {
+    const hashIndex = getIndexByHash();
+    if (hashIndex >= 0 && hashIndex !== currentIndex) {
+      currentIndex = hashIndex;
+      updateActiveState();
+    }
+  });
+
+  const initialIndex = getIndexByHash();
+  if (initialIndex >= 0) {
+    currentIndex = initialIndex;
+  }
+
+  updateActiveState();
+}
+
 
 
 
