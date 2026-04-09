@@ -2440,6 +2440,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupFullTablesModals();
     console.log("[PF] setupFullTablesModals OK");
 
+    initLegalReader();
+    console.log("PF initLegalReader OK");
+
     const path = window.location.pathname.toLowerCase();
     console.log("[PF] path =", path);
 
@@ -2503,6 +2506,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       setupClassificaCompletaSearch();
       setupClassificaCompletaSorting();
+     
 
       try {
         await populateAnalisiFantacalcio();
