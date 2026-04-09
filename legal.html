@@ -45,346 +45,254 @@
   </div>
 </header>
 
-  <main>
-    <section class="legal-hero">
-      <div class="legal-hero-inner">
-        <div class="legal-hero-copy">
-          <div class="legal-badge">Aggiornamento 2026 · Privacy · Cookie · Termini</div>
-          <h1 class="legal-title">Area <span>Legal</span></h1>
-          <p class="legal-subtitle">
-            In questa pagina trovi l’informativa privacy, la cookie policy, i termini d’uso, il disclaimer
-            sui contenuti e le principali informazioni sul trattamento dei dati personali effettuato tramite
-            il sito ProFantasy, i moduli di contatto e gli strumenti di analisi del traffico.
-          </p>
+  <main class="legal-container legal-reader-layout">
+  <section class="legal-reader-shell" aria-label="Lettore delle note legali">
+    <div class="legal-reader-topbar">
+      <div class="legal-reader-topbar-left">
+        <span class="legal-reader-chip">Legal Reader</span>
+        <p class="legal-reader-toptext">Consulta una policy alla volta, con navigazione rapida e lettura più comoda.</p>
+      </div>
+
+      <div class="legal-reader-actions" aria-label="Navigazione capitoli">
+        <button type="button" class="legal-reader-arrow" id="legal-prev" aria-label="Capitolo precedente">
+          <span>&larr;</span>
+        </button>
+        <button type="button" class="legal-reader-arrow" id="legal-next" aria-label="Capitolo successivo">
+          <span>&rarr;</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="legal-reader-grid">
+      <div class="legal-reader-stage">
+        <div class="legal-reader-frame">
+          <div class="legal-reader-track" id="legal-reader-track">
+            <article class="legal-reader-panel legal-card active" id="panel-privacy" data-legal-panel="privacy" tabindex="0" aria-labelledby="panel-title-privacy">
+              <div class="legal-reader-panel-inner">
+                <div class="legal-reader-panel-meta">
+                  <span class="legal-reader-panel-kicker">Capitolo 1</span>
+                  <span class="legal-reader-panel-line"></span>
+                  <span class="legal-reader-panel-label">Privacy Policy</span>
+                </div>
+                <h2 id="panel-title-privacy">Privacy Policy</h2>
+                <p>Questa informativa descrive, in modo sintetico e trasparente, come vengono trattati i dati personali degli utenti che visitano il sito Ciro ProFantasy, compilano eventuali moduli di contatto, interagiscono con i canali social collegati o richiedono informazioni sui servizi e sui contenuti del progetto.</p>
+                <p>Il trattamento dei dati avviene secondo i principi di liceità, correttezza, trasparenza, minimizzazione e limitazione delle finalità. I dati vengono trattati solo nella misura necessaria a fornire il servizio richiesto, migliorare il sito, rispondere alle richieste degli utenti e gestire correttamente gli strumenti tecnici e statistici attivati.</p>
+
+                <h3>Dati che possono essere trattati</h3>
+                <ul>
+                  <li>Dati tecnici di navigazione, come indirizzo IP ridotto o mascherato, browser, dispositivo, pagine visitate, tempi di permanenza e interazioni tecniche con il sito.</li>
+                  <li>Dati forniti volontariamente dall’utente, come nome, email, username social o altre informazioni inviate tramite moduli, email, messaggi diretti, Telegram o altri canali di contatto.</li>
+                  <li>Dati necessari alla gestione del consenso cookie e delle preferenze privacy espresse dall’utente.</li>
+                </ul>
+
+                <h3>Finalità del trattamento</h3>
+                <ul>
+                  <li>Consentire la navigazione e il corretto funzionamento del sito.</li>
+                  <li>Rispondere a richieste di contatto, collaborazione, supporto o informazioni.</li>
+                  <li>Analizzare il traffico del sito e migliorare contenuti, pagine e prestazioni, nei limiti del consenso espresso.</li>
+                  <li>Gestire eventuali iscrizioni a community, aggiornamenti o comunicazioni richieste dall’utente.</li>
+                </ul>
+
+                <div class="legal-highlight">
+                  L’invio facoltativo di dati tramite moduli o messaggi comporta l’acquisizione dei dati necessari per dare riscontro alla richiesta. I campi eventualmente obbligatori vengono indicati come tali nel modulo.
+                </div>
+
+                <h3>Conservazione dei dati</h3>
+                <p>I dati vengono conservati per il tempo strettamente necessario a raggiungere le finalità per cui sono stati raccolti, salvo obblighi di legge, esigenze amministrative o richieste di tutela dei diritti del titolare. Le richieste di cancellazione o aggiornamento vengono valutate nel minor tempo ragionevolmente possibile.</p>
+              </div>
+            </article>
+
+            <article class="legal-reader-panel legal-card" id="panel-cookie" data-legal-panel="cookie" tabindex="0" aria-labelledby="panel-title-cookie">
+              <div class="legal-reader-panel-inner">
+                <div class="legal-reader-panel-meta">
+                  <span class="legal-reader-panel-kicker">Capitolo 2</span>
+                  <span class="legal-reader-panel-line"></span>
+                  <span class="legal-reader-panel-label">Cookie e Analytics</span>
+                </div>
+                <h2 id="panel-title-cookie">Cookie e Analytics</h2>
+                <p>Il sito può utilizzare cookie tecnici necessari al funzionamento della piattaforma e, solo previo consenso dell’utente quando richiesto, cookie o strumenti assimilabili per finalità statistiche, di misurazione e miglioramento del servizio.</p>
+                <p>Per la gestione delle preferenze privacy e del consenso viene utilizzata una piattaforma di gestione del consenso. Per la misurazione del traffico il sito può utilizzare Google Analytics con consenso gestito tramite banner cookie e segnali di consenso aggiornati in base alla scelta dell’utente.</p>
+
+                <h3>Come funziona il consenso</h3>
+                <ul>
+                  <li>I cookie non strettamente necessari non dovrebbero essere attivati prima della scelta dell’utente, salvo i casi consentiti dalla normativa applicabile.</li>
+                  <li>L’utente può accettare, rifiutare o modificare le proprie preferenze tramite il banner o i relativi controlli messi a disposizione.</li>
+                  <li>La revoca del consenso può essere effettuata in qualsiasi momento, ferma restando la liceità del trattamento basato sul consenso prestato prima della revoca.</li>
+                </ul>
+
+                <p class="legal-note">Per maggiori dettagli sui cookie di terze parti possono applicarsi anche le policy dei rispettivi fornitori, inclusi Google e gli eventuali servizi esterni collegati.</p>
+              </div>
+            </article>
+
+            <article class="legal-reader-panel legal-card" id="panel-terms" data-legal-panel="terms" tabindex="0" aria-labelledby="panel-title-terms">
+              <div class="legal-reader-panel-inner">
+                <div class="legal-reader-panel-meta">
+                  <span class="legal-reader-panel-kicker">Capitolo 3</span>
+                  <span class="legal-reader-panel-line"></span>
+                  <span class="legal-reader-panel-label">Termini d’uso</span>
+                </div>
+                <h2 id="panel-title-terms">Termini d’uso</h2>
+                <p>L’accesso e la navigazione sul sito implicano l’accettazione delle presenti condizioni d’uso. Se non condividi queste condizioni, ti invitiamo a non utilizzare il sito o i contenuti pubblicati.</p>
+
+                <h3>Natura del servizio</h3>
+                <p>Ciro ProFantasy pubblica contenuti editoriali, analisi, opinioni, letture tattiche, dati, approfondimenti e materiali informativi relativi al fantacalcio, al calcio e ad attività di community. Tali contenuti hanno finalità informativa, editoriale e di intrattenimento.</p>
+
+                <h3>Uso consentito</h3>
+                <ul>
+                  <li>Puoi consultare i contenuti per uso personale e informativo.</li>
+                  <li>Non è consentito usare il sito per attività illecite, abusive, fraudolente o contrarie alla buona fede.</li>
+                  <li>Non è consentito copiare, ripubblicare o distribuire in modo sistematico i contenuti senza autorizzazione preventiva scritta, salvo i limiti di legge.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="legal-reader-panel legal-card" id="panel-disclaimer" data-legal-panel="disclaimer" tabindex="0" aria-labelledby="panel-title-disclaimer">
+              <div class="legal-reader-panel-inner">
+                <div class="legal-reader-panel-meta">
+                  <span class="legal-reader-panel-kicker">Capitolo 4</span>
+                  <span class="legal-reader-panel-line"></span>
+                  <span class="legal-reader-panel-label">Disclaimer</span>
+                </div>
+                <h2 id="panel-title-disclaimer">Disclaimer</h2>
+                <p>I contenuti presenti sul sito non costituiscono garanzia di risultato, promessa di rendimento, consulenza professionale, consulenza finanziaria o invito al gioco. Le analisi e le previsioni pubblicate rappresentano valutazioni, opinioni o modelli interpretativi che possono rivelarsi inesatti, incompleti o non aggiornati.</p>
+                <p>Le performance passate, i risultati storici, le statistiche condivise o gli esempi mostrati non garantiscono risultati futuri equivalenti. Ogni decisione presa dall’utente sulla base dei contenuti presenti sul sito resta sotto la sua esclusiva responsabilità.</p>
+
+                <div class="legal-highlight">
+                  Se il sito tratta argomenti vicini a pronostici, quote, fantasy sport o risultati sportivi, il contenuto deve essere inteso come informativo e non come incoraggiamento al gioco. Dove rilevante, si raccomanda un approccio responsabile e conforme alla legge applicabile.
+                </div>
+              </div>
+            </article>
+
+            <article class="legal-reader-panel legal-card" id="panel-copyright" data-legal-panel="copyright" tabindex="0" aria-labelledby="panel-title-copyright">
+              <div class="legal-reader-panel-inner">
+                <div class="legal-reader-panel-meta">
+                  <span class="legal-reader-panel-kicker">Capitolo 5</span>
+                  <span class="legal-reader-panel-line"></span>
+                  <span class="legal-reader-panel-label">Proprietà intellettuale</span>
+                </div>
+                <h2 id="panel-title-copyright">Proprietà intellettuale</h2>
+                <p>Salvo diversa indicazione, testi originali, impaginazione, elementi grafici originali, naming, logo, selezione dei contenuti e materiali pubblicati su questo sito appartengono a Ciro ProFantasy o ai rispettivi aventi diritto.</p>
+                <p>Marchi, loghi, nomi di squadre, competizioni, piattaforme o terze parti eventualmente citati restano di proprietà dei rispettivi titolari e sono utilizzati, ove presenti, a soli fini identificativi, informativi o descrittivi.</p>
+
+                <ul>
+                  <li>È vietata la riproduzione integrale non autorizzata dei contenuti originali del sito.</li>
+                  <li>È vietato rimuovere crediti, watermark o riferimenti di attribuzione.</li>
+                  <li>Eventuali richieste di rimozione, rettifica o segnalazione possono essere inviate tramite la pagina contatti.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="legal-reader-panel legal-card" id="panel-rights" data-legal-panel="rights" tabindex="0" aria-labelledby="panel-title-rights">
+              <div class="legal-reader-panel-inner">
+                <div class="legal-reader-panel-meta">
+                  <span class="legal-reader-panel-kicker">Capitolo 6</span>
+                  <span class="legal-reader-panel-line"></span>
+                  <span class="legal-reader-panel-label">Diritti dell’utente</span>
+                </div>
+                <h2 id="panel-title-rights">Diritti dell’utente</h2>
+                <p>Nei limiti previsti dalla normativa applicabile, l’utente può chiedere informazioni sul trattamento dei propri dati, ottenere accesso ai dati personali, richiederne rettifica o aggiornamento, domandarne la cancellazione, limitare il trattamento, opporsi nei casi previsti e revocare il consenso precedentemente prestato.</p>
+                <p>Le richieste vengono gestite compatibilmente con la natura del servizio, con gli obblighi di legge e con la necessità di verificare l’identità del richiedente quando necessario.</p>
+              </div>
+            </article>
+
+            <article class="legal-reader-panel legal-card" id="panel-contact" data-legal-panel="contact" tabindex="0" aria-labelledby="panel-title-contact">
+              <div class="legal-reader-panel-inner">
+                <div class="legal-reader-panel-meta">
+                  <span class="legal-reader-panel-kicker">Capitolo 7</span>
+                  <span class="legal-reader-panel-line"></span>
+                  <span class="legal-reader-panel-label">Contatti legali</span>
+                </div>
+                <h2 id="panel-title-contact">Contatti</h2>
+                <p>Per richieste relative a privacy, cookie, contenuti, collaborazioni, rettifiche, rimozioni o segnalazioni, puoi utilizzare la pagina <a href="contatti.html">Contatti</a> oppure i canali ufficiali del progetto riportati nel sito.</p>
+                <p>Dove disponibile, puoi contattare Ciro ProFantasy anche tramite email professionale, profili social ufficiali, community Telegram o altri recapiti espressamente indicati nelle pagine pubbliche del progetto.</p>
+
+                <h3>Aggiornamenti della policy</h3>
+                <p>Questa pagina può essere aggiornata in qualsiasi momento per adeguamenti normativi, modifiche tecniche, cambiamenti organizzativi o aggiornamenti dei servizi utilizzati. La data di ultimo aggiornamento riportata in alto indica la versione più recente pubblicata.</p>
+
+                <p class="legal-note">Per esigenze particolarmente sensibili o per un’informativa perfettamente aderente alla tua attività effettiva, è consigliabile una revisione legale professionale.</p>
+              </div>
+            </article>
+          </div>
         </div>
 
-        <aside class="legal-summary-card" aria-label="Riepilogo rapido">
-          <span class="legal-summary-label">In breve</span>
-          <h2>Cosa trovi qui</h2>
-          <p>
-            Questa sezione spiega quali dati possono essere raccolti, perché vengono trattati, come vengono
-            usati cookie e analytics, quali diritti hai come utente e quali regole si applicano ai contenuti del sito.
-          </p>
-          <ul class="legal-summary-list">
-            <li>Dati raccolti tramite moduli, email e navigazione</li>
-            <li>Cookie tecnici e strumenti di misurazione</li>
-            <li>Utilizzo di Google Analytics previo consenso dove richiesto</li>
-            <li>Diritti privacy, contatti e aggiornamenti policy</li>
-          </ul>
-        </aside>
+        <div class="legal-reader-mobile-dots" id="legal-reader-dots" aria-label="Indicatori capitoli">
+          <button type="button" class="legal-reader-dot active" data-legal-go="0" aria-label="Vai al capitolo 1"></button>
+          <button type="button" class="legal-reader-dot" data-legal-go="1" aria-label="Vai al capitolo 2"></button>
+          <button type="button" class="legal-reader-dot" data-legal-go="2" aria-label="Vai al capitolo 3"></button>
+          <button type="button" class="legal-reader-dot" data-legal-go="3" aria-label="Vai al capitolo 4"></button>
+          <button type="button" class="legal-reader-dot" data-legal-go="4" aria-label="Vai al capitolo 5"></button>
+          <button type="button" class="legal-reader-dot" data-legal-go="5" aria-label="Vai al capitolo 6"></button>
+          <button type="button" class="legal-reader-dot" data-legal-go="6" aria-label="Vai al capitolo 7"></button>
+        </div>
       </div>
-    </section>
 
-    <section class="legal-layout">
-      <aside class="legal-sidebar" aria-label="Indice della pagina">
-        <h2 class="legal-sidebar-title">Indice</h2>
-        <nav class="legal-nav">
-          <a href="#privacy-policy">Privacy Policy</a>
-          <a href="#titolare">Titolare e contatti</a>
-          <a href="#dati-raccolti">Dati raccolti</a>
-          <a href="#finalita-base-giuridica">Finalità e base giuridica</a>
-          <a href="#cookie-policy">Cookie Policy</a>
-          <a href="#analytics">Analytics e tracciamento</a>
-          <a href="#conservazione">Conservazione dei dati</a>
-          <a href="#diritti">Diritti dell’interessato</a>
-          <a href="#termini-uso">Termini d’uso</a>
-          <a href="#disclaimer">Disclaimer</a>
-          <a href="#proprieta-intellettuale">Proprietà intellettuale</a>
-          <a href="#aggiornamenti">Aggiornamenti</a>
-        </nav>
+      <aside class="legal-reader-index legal-nav" aria-label="Indice delle note legali">
+        <div class="legal-reader-index-head">
+          <h2>Indice rapido</h2>
+          <p>Apri il capitolo che ti serve senza scorrere tutta la pagina.</p>
+        </div>
 
-        <p class="legal-sidebar-note">
-          Per una conformità perfettamente aderente ai fornitori realmente usati, alla configurazione cookie
-          e alla tua posizione fiscale/professionale, è consigliata una revisione finale con un consulente legale o privacy.
-        </p>
+        <div class="legal-reader-index-list">
+          <button type="button" class="legal-reader-index-item active" data-legal-target="privacy">
+            <span class="legal-reader-index-num">01</span>
+            <span class="legal-reader-index-copy">
+              <strong>Privacy Policy</strong>
+              <small>Dati, finalità e conservazione</small>
+            </span>
+          </button>
+
+          <button type="button" class="legal-reader-index-item" data-legal-target="cookie">
+            <span class="legal-reader-index-num">02</span>
+            <span class="legal-reader-index-copy">
+              <strong>Cookie e Analytics</strong>
+              <small>Consenso e strumenti tecnici</small>
+            </span>
+          </button>
+
+          <button type="button" class="legal-reader-index-item" data-legal-target="terms">
+            <span class="legal-reader-index-num">03</span>
+            <span class="legal-reader-index-copy">
+              <strong>Termini d’uso</strong>
+              <small>Condizioni di accesso e utilizzo</small>
+            </span>
+          </button>
+
+          <button type="button" class="legal-reader-index-item" data-legal-target="disclaimer">
+            <span class="legal-reader-index-num">04</span>
+            <span class="legal-reader-index-copy">
+              <strong>Disclaimer</strong>
+              <small>Limiti di responsabilità</small>
+            </span>
+          </button>
+
+          <button type="button" class="legal-reader-index-item" data-legal-target="copyright">
+            <span class="legal-reader-index-num">05</span>
+            <span class="legal-reader-index-copy">
+              <strong>Proprietà intellettuale</strong>
+              <small>Contenuti, naming e diritti</small>
+            </span>
+          </button>
+
+          <button type="button" class="legal-reader-index-item" data-legal-target="rights">
+            <span class="legal-reader-index-num">06</span>
+            <span class="legal-reader-index-copy">
+              <strong>Diritti dell’utente</strong>
+              <small>Accesso, rettifica e revoca</small>
+            </span>
+          </button>
+
+          <button type="button" class="legal-reader-index-item" data-legal-target="contact">
+            <span class="legal-reader-index-num">07</span>
+            <span class="legal-reader-index-copy">
+              <strong>Contatti legali</strong>
+              <small>Richieste e aggiornamenti</small>
+            </span>
+          </button>
+        </div>
       </aside>
-
-      <div class="legal-content">
-        <section class="legal-section" id="privacy-policy">
-          <h2>Privacy Policy</h2>
-          <p>
-            La presente informativa descrive le modalità con cui ProFantasy tratta i dati personali degli utenti
-            che visitano il sito, interagiscono con le pagine, compilano moduli di contatto, richiedono informazioni,
-            inviano comunicazioni oppure prestano il consenso all’uso di cookie e strumenti di analisi.
-          </p>
-          <p>
-            Il trattamento è improntato ai principi di liceità, correttezza, trasparenza, minimizzazione,
-            limitazione delle finalità, esattezza, integrità e riservatezza, nel rispetto della normativa
-            applicabile in materia di protezione dei dati personali.
-          </p>
-          <div class="legal-highlight">
-            Navigando sul sito o inviando una richiesta tramite i canali indicati, l’utente prende visione
-            della presente informativa. Dove necessario, il trattamento basato su cookie non tecnici o strumenti
-            statistici non esenti avviene solo dopo acquisizione del consenso.
-          </div>
-        </section>
-
-        <section class="legal-section" id="titolare">
-          <h2>Titolare e contatti</h2>
-          <p>
-            Il titolare del trattamento è il soggetto che determina finalità e mezzi del trattamento dei dati personali
-            relativi al sito ProFantasy.
-          </p>
-
-          <div class="legal-contact-box">
-            <div class="legal-contact-item">
-              <strong>Titolare</strong>
-              <span>[INSERISCI NOME E COGNOME / DENOMINAZIONE]</span>
-            </div>
-            <div class="legal-contact-item">
-              <strong>Email privacy</strong>
-              <span><a href="mailto:[INSERISCI-EMAIL]">[INSERISCI-EMAIL]</a></span>
-            </div>
-            <div class="legal-contact-item">
-              <strong>Recapito / sede</strong>
-              <span>[INSERISCI INDIRIZZO O ALMENO COMUNE/PAESE, SE NECESSARIO]</span>
-            </div>
-            <div class="legal-contact-item">
-              <strong>P. IVA / CF</strong>
-              <span>[INSERISCI SE APPLICABILE]</span>
-            </div>
-          </div>
-
-          <p>
-            Se in futuro verranno utilizzati ulteriori fornitori esterni, piattaforme CRM, software email marketing,
-            sistemi di profilazione o altri strumenti di trattamento, questa pagina dovrà essere aggiornata.
-          </p>
-        </section>
-
-        <section class="legal-section" id="dati-raccolti">
-          <h2>Dati raccolti</h2>
-          <p>
-            Il sito può trattare diverse categorie di dati personali, raccolti direttamente presso l’utente
-            oppure mediante strumenti tecnici connessi al funzionamento del sito.
-          </p>
-
-          <h3>Dati forniti volontariamente dall’utente</h3>
-          <ul>
-            <li>Nome e cognome.</li>
-            <li>Indirizzo email.</li>
-            <li>Numero di telefono.</li>
-            <li>Contenuto del messaggio o della richiesta inviata.</li>
-            <li>Eventuali ulteriori dati inseriti spontaneamente nei form, nelle email o nei messaggi inviati ai recapiti del progetto.</li>
-          </ul>
-
-          <h3>Dati raccolti durante la navigazione</h3>
-          <ul>
-            <li>Indirizzo IP o altri identificativi online, nei limiti consentiti dalla configurazione tecnica del sito e dei servizi utilizzati.</li>
-            <li>Dati relativi a browser, dispositivo, sistema operativo, lingua, data e ora di accesso.</li>
-            <li>Pagine visitate, provenienza del traffico, interazioni con pulsanti, sezioni e contenuti.</li>
-            <li>Dati relativi alle preferenze espresse nel banner cookie o nel centro preferenze, se presente.</li>
-          </ul>
-
-          <div class="legal-grid">
-            <div class="legal-card">
-              <strong>Moduli di contatto</strong>
-              <span>I campi compilati dall’utente vengono trattati per rispondere alla richiesta e per gestire eventuali follow-up connessi.</span>
-            </div>
-            <div class="legal-card">
-              <strong>Dati di navigazione</strong>
-              <span>Servono al funzionamento tecnico, alla sicurezza, alla diagnostica e, previo consenso quando necessario, alla misurazione del traffico.</span>
-            </div>
-          </div>
-        </section>
-
-        <section class="legal-section" id="finalita-base-giuridica">
-          <h2>Finalità e base giuridica</h2>
-          <p>
-            I dati personali possono essere trattati per una o più delle finalità indicate di seguito, in base
-            alla specifica interazione dell’utente con il sito.
-          </p>
-
-          <h3>Finalità principali</h3>
-          <ul>
-            <li>Consentire la navigazione, l’erogazione tecnica del sito e la gestione della sicurezza.</li>
-            <li>Rispondere a richieste di informazioni, contatto, supporto, collaborazioni o partnership.</li>
-            <li>Gestire comunicazioni successive strettamente connesse alla richiesta originaria dell’utente.</li>
-            <li>Analizzare il traffico e migliorare contenuti, performance, struttura e funzionalità del sito.</li>
-            <li>Adempiere ad obblighi di legge, richieste dell’autorità o esigenze di tutela dei diritti del titolare.</li>
-          </ul>
-
-          <h3>Basi giuridiche del trattamento</h3>
-          <ul>
-            <li>Esecuzione di misure precontrattuali o risposta a una richiesta dell’interessato, quando l’utente compila un form o contatta ProFantasy.</li>
-            <li>Legittimo interesse del titolare, per esigenze di sicurezza, prevenzione abusi, difesa dei propri diritti e corretta gestione tecnica del sito, nei limiti consentiti dalla legge.</li>
-            <li>Consenso dell’utente, quando richiesto per cookie non tecnici, strumenti analytics non esenti o ulteriori trattamenti facoltativi.</li>
-            <li>Adempimento di obblighi legali, quando il trattamento è necessario per obblighi normativi o richieste delle autorità competenti.</li>
-          </ul>
-
-          <div class="legal-highlight">
-            Se utilizzi Google Analytics con cookie o identificatori non strettamente tecnici, il relativo tracciamento
-            deve essere subordinato al consenso dell’utente tramite banner o CMP correttamente configurato.
-          </div>
-        </section>
-
-        <section class="legal-section" id="cookie-policy">
-          <h2>Cookie Policy</h2>
-          <p>
-            Il sito utilizza cookie e strumenti affini per garantire il corretto funzionamento delle pagine,
-            migliorare l’esperienza di navigazione e, ove attivati con consenso, raccogliere dati statistici
-            o analitici sull’utilizzo del sito.
-          </p>
-
-          <h3>Cosa sono i cookie</h3>
-          <p>
-            I cookie sono piccoli file di testo che i siti visitati possono salvare sul dispositivo dell’utente
-            per finalità tecniche, funzionali, statistiche o di profilazione, a seconda della tipologia e della configurazione.
-          </p>
-
-          <h3>Tipologie di cookie utilizzate o potenzialmente utilizzabili</h3>
-          <ul>
-            <li>Cookie tecnici o strettamente necessari, indispensabili al funzionamento del sito, della navigazione, della sicurezza e della gestione delle preferenze essenziali.</li>
-            <li>Cookie o strumenti analytics, utilizzati per comprendere come gli utenti interagiscono con il sito e migliorare contenuti, struttura e prestazioni.</li>
-            <li>Cookie di terze parti, qualora il sito integri servizi esterni, contenuti incorporati, mappe, video, piattaforme di misurazione o altri strumenti che rilasciano propri cookie.</li>
-          </ul>
-
-          <h3>Gestione del consenso</h3>
-          <p>
-            Al primo accesso, l’utente deve poter visualizzare un banner o uno strumento equivalente che consenta
-            di accettare, rifiutare o personalizzare i cookie non tecnici. I cookie tecnici possono essere utilizzati
-            senza consenso, mentre i cookie analytics non equiparabili a tecnici e gli altri strumenti di tracciamento
-            facoltativi richiedono un consenso preventivo, libero, specifico e informato.
-          </p>
-          <p>
-            L’utente può inoltre modificare in qualsiasi momento le proprie preferenze tramite il sistema di gestione
-            del consenso eventualmente presente sul sito o tramite le impostazioni del browser, fermo restando che
-            la disattivazione di alcuni cookie potrebbe influire su alcune funzionalità.
-          </p>
-        </section>
-
-        <section class="legal-section" id="analytics">
-          <h2>Analytics e tracciamento</h2>
-          <p>
-            ProFantasy utilizza o può utilizzare strumenti di analisi del traffico, inclusi servizi riconducibili
-            a Google Analytics, per comprendere l’andamento delle visite, misurare performance delle pagine, valutare
-            contenuti più consultati e ottimizzare la struttura del sito.
-          </p>
-
-          <h3>Informazioni rilevanti per l’utente</h3>
-          <ul>
-            <li>Gli strumenti analytics possono raccogliere dati relativi alle visite, alle interazioni e ai dispositivi utilizzati.</li>
-            <li>Se tali strumenti operano tramite cookie o identificatori non tecnici, devono essere attivati solo dopo il consenso dell’utente, salvo casi di effettiva esenzione applicabile.</li>
-            <li>Nel caso di servizi di terze parti, il trattamento può comportare la comunicazione di dati al relativo fornitore secondo le rispettive condizioni contrattuali e informative privacy.</li>
-          </ul>
-
-          <div class="legal-highlight">
-            Se sul sito è attivo Google Analytics, è opportuno verificare concretamente: modalità di consenso,
-            configurazione dei tag, durata dei cookie, trasferimenti verso paesi extra SEE, accordi con il fornitore
-            e impostazioni di condivisione dati con Google.
-          </div>
-        </section>
-
-        <section class="legal-section" id="conservazione">
-          <h2>Conservazione dei dati</h2>
-          <p>
-            I dati personali vengono conservati per il tempo strettamente necessario al raggiungimento delle finalità
-            per cui sono stati raccolti, nel rispetto dei principi di minimizzazione e limitazione della conservazione.
-          </p>
-
-          <ul>
-            <li>I dati inviati tramite moduli di contatto possono essere conservati per il tempo necessario a gestire la richiesta e gli eventuali sviluppi connessi.</li>
-            <li>I dati amministrativi, difensivi o documentali possono essere conservati più a lungo in presenza di obblighi di legge o necessità di tutela del titolare.</li>
-            <li>I dati raccolti tramite cookie e strumenti analytics seguono i tempi di conservazione previsti dalla configurazione tecnica adottata e dalle policy dei rispettivi fornitori.</li>
-          </ul>
-        </section>
-
-        <section class="legal-section" id="diritti">
-          <h2>Diritti dell’interessato</h2>
-          <p>
-            Nei casi previsti dalla normativa applicabile, l’utente può esercitare i diritti riconosciuti dagli articoli
-            15 e seguenti del GDPR.
-          </p>
-
-          <ul>
-            <li>Ottenere conferma dell’esistenza o meno di dati personali che lo riguardano.</li>
-            <li>Chiedere accesso, rettifica o aggiornamento dei dati.</li>
-            <li>Richiedere la cancellazione dei dati, ove ne ricorrano i presupposti.</li>
-            <li>Richiedere la limitazione del trattamento nei casi previsti.</li>
-            <li>Opporsi al trattamento quando fondato su legittimo interesse, nei limiti di legge.</li>
-            <li>Revocare in qualsiasi momento il consenso prestato, senza pregiudicare la liceità del trattamento precedente alla revoca.</li>
-            <li>Proporre reclamo all’autorità di controllo competente.</li>
-          </ul>
-        </section>
-
-        <section class="legal-section" id="termini-uso">
-          <h2>Termini d’uso</h2>
-          <p>
-            L’accesso, la navigazione e l’utilizzo del sito implicano la lettura e l’accettazione delle presenti
-            condizioni d’uso. Se non condividi tali condizioni, sei invitato a non utilizzare il sito e i relativi contenuti.
-          </p>
-
-          <h3>Natura del servizio</h3>
-          <p>
-            ProFantasy pubblica contenuti editoriali, informativi e di intrattenimento relativi al fantacalcio,
-            al calcio, all’analisi dei dati sportivi, a valutazioni previsionali e a contenuti community.
-          </p>
-
-          <h3>Uso consentito</h3>
-          <ul>
-            <li>I contenuti sono consultabili per uso personale, lecito e non commerciale, salvo diverso accordo scritto.</li>
-            <li>È vietato utilizzare il sito per finalità illecite, fraudolente, diffamatorie, abusive o lesive di diritti altrui.</li>
-            <li>È vietato tentare accessi non autorizzati, attività di scraping massivo, alterazione del sito o estrazione sistematica di contenuti.</li>
-            <li>Il titolare si riserva di aggiornare, sospendere, modificare o interrompere, in tutto o in parte, contenuti o funzionalità del sito in qualsiasi momento.</li>
-          </ul>
-        </section>
-
-        <section class="legal-section" id="disclaimer">
-          <h2>Disclaimer</h2>
-          <p>
-            Le analisi, i ranking, le previsioni, i consigli, i confronti statistici e i contenuti pubblicati su ProFantasy
-            hanno finalità esclusivamente informative, editoriali e di intrattenimento.
-          </p>
-          <p>
-            Nessun contenuto presente sul sito costituisce garanzia di risultato, promessa di performance, consulenza
-            professionale personalizzata, consulenza finanziaria o certezza sull’esito di eventi sportivi o risultati nel fantacalcio.
-          </p>
-          <p>
-            Ogni decisione presa dall’utente sulla base dei contenuti del sito resta di esclusiva responsabilità dell’utente stesso.
-          </p>
-        </section>
-
-        <section class="legal-section" id="proprieta-intellettuale">
-          <h2>Proprietà intellettuale</h2>
-          <p>
-            Salvo ove diversamente indicato, il sito, la struttura, il design, il naming, i testi originali,
-            gli elementi grafici originali, il , la selezione e l’organizzazione dei contenuti di ProFantasy
-            sono protetti dalla normativa applicabile in materia di proprietà intellettuale e appartengono al titolare
-            o ai rispettivi aventi diritto.
-          </p>
-
-          <ul>
-            <li>È vietata la riproduzione integrale o sostanziale dei contenuti originali senza autorizzazione scritta.</li>
-            <li>È vietata la redistribuzione sistematica di testi, schede, analisi, layout, elementi grafici e materiali proprietari del sito.</li>
-            <li>Restano di proprietà dei rispettivi titolari eventuali marchi, loghi o brand di terzi citati a soli fini identificativi o descrittivi.</li>
-          </ul>
-        </section>
-
-        <section class="legal-section" id="aggiornamenti">
-          <h2>Aggiornamenti</h2>
-          <p>
-            La presente pagina può essere modificata o aggiornata in qualsiasi momento per esigenze normative,
-            evoluzioni tecniche del sito, introduzione di nuovi servizi, modifica dei fornitori utilizzati oppure
-            cambiamenti organizzativi del progetto ProFantasy.
-          </p>
-
-          <div class="legal-contact-box">
-            <div class="legal-contact-item">
-              <strong>Ultimo aggiornamento</strong>
-              <span>09 aprile 2026</span>
-            </div>
-            <div class="legal-contact-item">
-              <strong>Contatto per richieste</strong>
-              <span><a href="mailto:[INSERISCI-EMAIL]">[INSERISCI-EMAIL]</a></span>
-            </div>
-          </div>
-        </section>
-
-        <p class="legal-last-update">Ultimo aggiornamento: 09 aprile 2026</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer-premium">
+    </div>
+  </section>
+</main>
     <div class="footer-decoration"></div>
 
     <div class="footer-container">
