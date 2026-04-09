@@ -1,35 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  Sì, ho capito subito il problema: hai incollato dei tag del <head> fuori posto o rotti, quindi il browser li sta stampando come testo in pagina invece di interpretarli come HTML. Dallo screenshot si vede proprio la stringa dei link rel="icon", dei font Google e del CSS comparire sopra al contenuto, segno classico di tag spezzati o messi nel punto sbagliato del documento.
-
-Cosa è successo
-Molto probabilmente è successa una di queste due cose:
-
-hai incollato il blocco che ti ho dato dentro il body o in mezzo al markup;
-
-oppure si sono persi dei pezzi tipo <link rel="...">, lasciando solo testo come "/x-icon" href="/favicon.ico">, che il browser non può interpretare come tag.
-
-In più, nel tuo screenshot si vede anche un typo nei file favicon tipo favicon-16x16.pngng, che va corretto.
-
-Fix rapido
-Fai così, senza pensarci troppo:
-
-Apri track-record.html.
-
-Cancella tutto il contenuto del <head> ... </head> attuale.
-
-Incolla dentro al <head> solo il blocco corretto.
-
-Lascia il tuo grande <style> ... </style> sempre dentro il <head>, ma sotto gli script.
-
-Controlla che dopo </head> inizi il <body> e non ci siano righe di testo sparse prima del body.
-
-Blocco corretto
-Questo è l’inizio giusto del file, da copiare con attenzione:
-
-xml
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
