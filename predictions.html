@@ -158,53 +158,117 @@
         <p class="neo-section-subtitle">Pronostici, previsioni e classifica completa aggiornati in tempo reale.</p>
       </div>
 
-      <div class="pred-grid-main">
-        <article class="neo-card pred-mini" id="card-prono">
-          <div class="pred-mini-head">
-            <h3>Pronostici</h3>
-            <select id="select-giornata-prono" class="neo-select" aria-label="Giornata pronostici"></select>
+      <div class="predictions-grid">
+  <div class="predictions-grid-top">
+    <article class="neo-card pred-mini pred-card-half" id="card-prono">
+      <div class="pred-mini-head">
+        <h3>Pronostici</h3>
+        <select id="select-giornata-prono" class="neo-select" aria-label="Giornata pronostici"></select>
+      </div>
+
+      <div class="pred-mini-body">
+        <div class="pred-mini-tablewrap">
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th>Match</th>
+                <th>Ora</th>
+                <th>Esito</th>
+                <th>Conf</th>
+              </tr>
+            </thead>
+            <tbody id="pred-prono-body"></tbody>
+          </table>
+        </div>
+        <p class="pred-mini-note">Solo informativo.</p>
+      </div>
+    </article>
+
+    <article class="neo-card pred-mini pred-card-half" id="card-pred">
+      <div class="pred-mini-head">
+        <h3>Previsioni</h3>
+        <select id="select-giornata-fanta" class="neo-select" aria-label="Giornata previsioni"></select>
+      </div>
+
+      <div class="pred-mini-body">
+        <div class="pred-mini-tablewrap">
+          <table class="dashboard-table pred-fanta-table">
+            <thead>
+              <tr>
+                <th>Match</th>
+                <th>Ora</th>
+                <th>Consigliati</th>
+                <th>Da evitare</th>
+              </tr>
+            </thead>
+            <tbody id="pred-fanta-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <article class="neo-card pred-mini classifica-completa-card classifica-sticky-card" id="card-classifica-completa">
+    <div class="pred-mini-head pred-mini-head-search">
+      <div>
+        <h3>Classifica Completa</h3>
+        <span class="pred-mini-kicker">Top player con metriche avanzate</span>
+      </div>
+
+      <div class="pred-search-actions pred-search-actions-unified">
+        <div class="classifica-toolbar">
+          <div class="classifica-search-wrap classifica-search-wrap-unified">
+            <input
+              type="text"
+              id="classifica-completa-search"
+              placeholder="Cerca giocatore o squadra"
+            >
+            <button
+              type="button"
+              id="classifica-completa-clear"
+              aria-label="Pulisci ricerca"
+            >
+              ×
+            </button>
           </div>
 
-          <div class="pred-mini-body">
-            <div class="pred-mini-tablewrap">
-              <table class="dashboard-table">
-                <thead>
-                  <tr>
-                    <th>Match</th>
-                    <th>Ora</th>
-                    <th>Esito</th>
-                    <th>Conf</th>
-                  </tr>
-                </thead>
-                <tbody id="pred-prono-body"></tbody>
-              </table>
-            </div>
-            <p class="pred-mini-note">Solo informativo.</p>
-          </div>
-        </article>
+          <button
+            type="button"
+            class="classifica-open-btn classifica-open-btn-compact"
+            id="open-full-classifica-completa"
+            aria-label="Apri classifica completa"
+          >
+            <span>Vedi tutta</span>
+            <span class="classifica-open-btn-icon">↗</span>
+          </button>
+        </div>
+      </div>
+    </div>
 
-        <article class="neo-card pred-mini" id="card-pred">
-          <div class="pred-mini-head">
-            <h3>Previsioni</h3>
-            <select id="select-giornata-fanta" class="neo-select" aria-label="Giornata previsioni"></select>
-          </div>
-
-          <div class="pred-mini-body">
-            <div class="pred-mini-tablewrap">
-              <table class="dashboard-table pred-fanta-table">
-                <thead>
-                  <tr>
-                    <th>Match</th>
-                    <th>Ora</th>
-                    <th>Consigliati</th>
-                    <th>Da evitare</th>
-                  </tr>
-                </thead>
-                <tbody id="pred-fanta-body"></tbody>
-              </table>
-            </div>
-          </div>
-        </article>
+    <div class="pred-mini-body">
+      <div class="pred-mini-tablewrap pred-complete-tablewrap classifica-sticky-table-wrap">
+        <table class="dashboard-table dashboard-table-advanced classifica-completa-table classifica-sticky-table">
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="posizione">#</th>
+              <th class="sortable" data-sort="player">Player</th>
+              <th class="sortable" data-sort="team">Team</th>
+              <th class="sortable" data-sort="apps">Apps</th>
+              <th class="sortable" data-sort="min">Min</th>
+              <th class="sortable" data-sort="goals">Goals</th>
+              <th class="sortable" data-sort="assists">A</th>
+              <th class="sortable" data-sort="xg">xG</th>
+              <th class="sortable" data-sort="xa">xA</th>
+              <th class="sortable" data-sort="xg90">xG90</th>
+              <th class="sortable" data-sort="xa90">xA90</th>
+            </tr>
+          </thead>
+          <tbody id="classifica-completa-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </article>
+</div>
       </div>
 
      <article class="neo-card pred-mini classifica-completa-card" id="card-classifica-completa">
