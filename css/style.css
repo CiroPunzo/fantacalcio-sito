@@ -9314,3 +9314,253 @@ body.legal-page .legal-highlight {
     left: 48px;
   }
 }
+
+/* =========================================================
+PREDICTIONS PAGE — LAYOUT FINALE DESKTOP + MOBILE
+========================================================= */
+
+.predictions-layout-section,
+.neo-section {
+  position: relative;
+}
+
+.neo-page .neo-section .container,
+.predictions-layout-section .container,
+#telegram-cta .telegram-container,
+.footer-premium .footer-container {
+  width: min(1280px, calc(100% - 48px));
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+@media (max-width: 768px) {
+  .neo-page .neo-section .container,
+  .predictions-layout-section .container,
+  #telegram-cta .telegram-container,
+  .footer-premium .footer-container {
+    width: min(100% - 28px, 1280px);
+  }
+}
+
+/* Più aria tra blocchi */
+.neo-section {
+  padding-top: 42px;
+  padding-bottom: 42px;
+}
+
+.neo-section + .neo-section {
+  margin-top: 12px;
+}
+
+.predictions-grid {
+  gap: 32px;
+}
+
+.predictions-grid-top {
+  gap: 28px;
+}
+
+.classifica-sticky-card {
+  margin-top: 4px;
+}
+
+#telegram-cta.telegram-section-premium {
+  margin-top: 34px;
+  padding-top: 72px;
+  padding-bottom: 72px;
+  border-top: 1px solid rgba(184, 149, 107, 0.16);
+}
+
+@media (max-width: 768px) {
+  .neo-section {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .predictions-grid,
+  .predictions-grid-top {
+    gap: 20px;
+  }
+
+  #telegram-cta.telegram-section-premium {
+    margin-top: 24px;
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+}
+
+/* Card più piene, meno effetto "incassato" */
+#card-prono,
+#card-pred,
+#card-classifica-completa {
+  width: 100%;
+  min-width: 0;
+}
+
+.pred-grid-main,
+.predictions-grid,
+.predictions-grid-top {
+  width: 100%;
+}
+
+/* =========================================================
+CLASSIFICA STICKY — FIX OVERLAY MOBILE
+========================================================= */
+
+.classifica-sticky-table-wrap,
+.pred-complete-tablewrap {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  isolation: isolate;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(8, 10, 30, 0.98), rgba(5, 6, 24, 0.98));
+}
+
+/* Fondo vero sotto la tabella */
+.classifica-sticky-table {
+  position: relative;
+  min-width: 980px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: transparent;
+}
+
+/* Celle base */
+.classifica-sticky-table th,
+.classifica-sticky-table td,
+.classifica-completa-table th,
+.classifica-completa-table td {
+  position: relative;
+  background: rgba(8, 10, 30, 0.96);
+}
+
+/* Header sticky */
+.classifica-sticky-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(180deg, #121741 0%, #0b1033 100%);
+}
+
+/* Prima colonna sticky */
+.classifica-sticky-table th:first-child,
+.classifica-sticky-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 30;
+  min-width: 58px;
+  background: linear-gradient(180deg, #10153c 0%, #0a0e2f 100%);
+  box-shadow:
+    10px 0 24px rgba(0, 0, 0, 0.38),
+    1px 0 0 rgba(184, 149, 107, 0.12);
+}
+
+/* Seconda colonna sticky */
+.classifica-sticky-table th:nth-child(2),
+.classifica-sticky-table td:nth-child(2) {
+  position: sticky;
+  left: 58px;
+  z-index: 31;
+  min-width: 170px;
+  background: linear-gradient(180deg, #0f1438 0%, #090d2c 100%);
+  box-shadow:
+    12px 0 26px rgba(0, 0, 0, 0.34),
+    1px 0 0 rgba(184, 149, 107, 0.10);
+}
+
+/* Layer superiore per header sticky delle prime colonne */
+.classifica-sticky-table thead th:first-child,
+.classifica-sticky-table thead th:nth-child(2) {
+  z-index: 40;
+}
+
+/* Pseudo-layer per coprire completamente ciò che scorre sotto */
+.classifica-sticky-table th:first-child::after,
+.classifica-sticky-table td:first-child::after,
+.classifica-sticky-table th:nth-child(2)::after,
+.classifica-sticky-table td:nth-child(2)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  z-index: -1;
+}
+
+/* Linea divisoria tra parte sticky e parte scrollabile */
+.classifica-sticky-table th:nth-child(2),
+.classifica-sticky-table td:nth-child(2) {
+  border-right: 1px solid rgba(184, 149, 107, 0.16);
+}
+
+/* Hover: non rompere lo sticky */
+.classifica-sticky-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.classifica-sticky-table tbody tr:hover td:first-child {
+  background: linear-gradient(180deg, #111741 0%, #0a0f31 100%);
+}
+
+.classifica-sticky-table tbody tr:hover td:nth-child(2) {
+  background: linear-gradient(180deg, #10153b 0%, #090d2c 100%);
+}
+
+@media (max-width: 768px) {
+  .classifica-sticky-table,
+  .classifica-completa-table.classifica-sticky-table {
+    min-width: 900px;
+  }
+
+  .classifica-sticky-table th:first-child,
+  .classifica-sticky-table td:first-child {
+    left: 0;
+    min-width: 48px;
+  }
+
+  .classifica-sticky-table th:nth-child(2),
+  .classifica-sticky-table td:nth-child(2) {
+    left: 48px;
+    min-width: 150px;
+  }
+}
+
+/* =========================================================
+TELEGRAM SECTION — PIÙ RESPIRO E PIÙ PULIZIA
+========================================================= */
+
+#telegram-cta .telegram-content {
+  gap: 20px;
+}
+
+#telegram-cta .telegram-feature {
+  border-left: none;
+  border: 1px solid rgba(49, 215, 255, 0.16);
+  border-radius: 16px;
+  padding: 16px 16px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+#telegram-cta .telegram-feature:hover {
+  padding-left: 16px;
+  border-color: rgba(49, 215, 255, 0.28);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+#telegram-cta .telegram-qr-box {
+  background: rgba(8, 10, 32, 0.64);
+  border: 1px solid rgba(49, 215, 255, 0.14);
+  border-radius: 22px;
+}
+
+@media (max-width: 1024px) {
+  #telegram-cta .telegram-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  #telegram-cta .telegram-visual {
+    display: flex;
+    justify-content: center;
+  }
+}
