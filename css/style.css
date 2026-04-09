@@ -9117,11 +9117,12 @@ body.legal-page .legal-highlight {
 }
 
 .contact-legal-note {
-  margin: 10px 0 0;
+  margin: 10px auto 0;
   max-width: 760px;
   font-size: 0.95rem;
   line-height: 1.6;
   color: rgba(255,255,255,0.72);
+  text-align: center;
 }
 
 .contact-legal-note a {
@@ -9138,6 +9139,7 @@ body.legal-page .legal-highlight {
   .contact-legal-note {
     font-size: 0.9rem;
     line-height: 1.55;
+    text-align: center;
   }
 }
 
