@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-   <meta charset="UTF-8">
+  Sì, ho capito subito il problema: hai incollato dei tag del <head> fuori posto o rotti, quindi il browser li sta stampando come testo in pagina invece di interpretarli come HTML. Dallo screenshot si vede proprio la stringa dei link rel="icon", dei font Google e del CSS comparire sopra al contenuto, segno classico di tag spezzati o messi nel punto sbagliato del documento.
+
+Cosa è successo
+Molto probabilmente è successa una di queste due cose:
+
+hai incollato il blocco che ti ho dato dentro il body o in mezzo al markup;
+
+oppure si sono persi dei pezzi tipo <link rel="...">, lasciando solo testo come "/x-icon" href="/favicon.ico">, che il browser non può interpretare come tag.
+
+In più, nel tuo screenshot si vede anche un typo nei file favicon tipo favicon-16x16.pngng, che va corretto.
+
+Fix rapido
+Fai così, senza pensarci troppo:
+
+Apri track-record.html.
+
+Cancella tutto il contenuto del <head> ... </head> attuale.
+
+Incolla dentro al <head> solo il blocco corretto.
+
+Lascia il tuo grande <style> ... </style> sempre dentro il <head>, ma sotto gli script.
+
+Controlla che dopo </head> inizi il <body> e non ci siano righe di testo sparse prima del body.
+
+Blocco corretto
+Questo è l’inizio giusto del file, da copiare con attenzione:
+
+xml
+<head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Partecipa | Ciro ProFantasy</title>
   <meta name="description" content="Partecipa ai ProFantasy Club: lascia i tuoi contatti, scegli il club e il team ti contatta. Logo PNG opzionale.">
-  <meta name="keywords" content="partecipa, profantasy club, fantacalcio, iscrizione, contatti, ciro profantasysy">
+  <meta name="keywords" content="partecipa, profantasy club, fantacalcio, iscrizione, contatti, ciro profantasy">
 
-  //www.ciroprofantasy.it/track-record.html">
+  <link rel="canonical" href="https://www.ciroprofantasy.it/track-record.html">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Ciro ProFantasy">
@@ -27,21 +56,21 @@
   <meta name="theme-color" content="#0b0b2d">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Ciro ProFantasysy">
+  <meta name="apple-mobile-web-app-title" content="Ciro ProFantasy">
 
-  /x-icon" href="/favicon.ico">
-  /favicon.ico">
-  /png" sizes="16x16" href="/img/favicon-16x16.pngng">
-  /png" sizes="32x32" href="/img/favicon-32x32.pngng">
-  /png" sizes="48x48" href="/img/favicon-48x48.pngng">
-  /img/apple-touch-icon.png">
-  /img/site.webmanifestst">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/img/favicon-48x48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/img/site.webmanifest">
 
-  //fonts.googleapis.com">
-  //fonts.gstatic.com" crossorigigin>
-  //fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheetet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  /style.css?v=11">
+  <link rel="stylesheet" href="css/style.css?v=11">
 
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -98,6 +127,7 @@
       gtag('consent', 'update', consent);
     });
   </script>
+
 
   <style>
     :root{
