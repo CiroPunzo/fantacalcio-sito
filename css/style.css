@@ -10564,3 +10564,106 @@ body.neo-page .container {
     min-width: 88px;
   }
 }
+
+/* ==========================================
+   FIX DEFINITIVO MOBILE CLASSIFICA COMPLETA
+   player visibile + colori ripuliti
+========================================== */
+
+.classifica-completa-card {
+  border: 1px solid rgba(95, 231, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(8, 14, 34, 0.98), rgba(6, 10, 24, 0.98));
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+.classifica-completa-card::before {
+  display: none;
+}
+
+.pred-mini-head-search {
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(95, 231, 255, 0.08);
+}
+
+.pred-mini-head h3 {
+  color: #f8fbff;
+}
+
+.pred-mini-kicker {
+  color: #6fe7ff;
+  letter-spacing: 0.08em;
+}
+
+.classifica-search-wrap,
+.classifica-search-wrap-unified {
+  background: rgba(7, 12, 28, 0.96);
+  border: 1px solid rgba(95, 231, 255, 0.10);
+  box-shadow: none;
+}
+
+.classifica-search-wrap input,
+.classifica-search-wrap-unified input {
+  color: #f1f5f9;
+}
+
+.classifica-search-wrap input::placeholder,
+.classifica-search-wrap-unified input::placeholder {
+  color: rgba(226, 232, 240, 0.48);
+}
+
+.classifica-open-btn,
+.classifica-open-btn-compact {
+  background: linear-gradient(135deg, rgba(16, 90, 140, 0.55), rgba(66, 55, 148, 0.55));
+  border: 1px solid rgba(111, 231, 255, 0.14);
+  box-shadow: none;
+}
+
+.classifica-open-btn:hover,
+.classifica-open-btn-compact:hover {
+  transform: none;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* Wrapper tabella */
+.classifica-sticky-table-wrap,
+.pred-complete-tablewrap {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 18px;
+  border: 1px solid rgba(95, 231, 255, 0.08);
+  background: rgba(4, 9, 22, 0.96);
+}
+
+/* Tabella base */
+.classifica-completa-table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.classifica-completa-table th,
+.classifica-completa-table td {
+  white-space: nowrap;
+}
+
+.classifica-completa-table thead th {
+  background: #121c38;
+  color: #dbeafe;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(111, 231, 255, 0.10);
+}
+
+.classifica-completa-table tbody td {
+  background: #081128;
+  color: #eef4ff;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+
