@@ -9316,398 +9316,11 @@ body.legal-page .legal-highlight {
 }
 
 /* =========================================================
-PREDICTIONS PAGE — LAYOUT FINALE DESKTOP + MOBILE
+   PREDICTIONS PAGE — BLOCCO UNICO PULITO
+   layout + card + classifica + modal + mobile
 ========================================================= */
 
-.predictions-layout-section,
-.neo-section {
-  position: relative;
-}
-
-.neo-page .neo-section .container,
-.predictions-layout-section .container,
-#telegram-cta .telegram-container,
-.footer-premium .footer-container {
-  width: min(1280px, calc(100% - 48px));
-  max-width: 1280px;
-  margin-inline: auto;
-}
-
-@media (max-width: 768px) {
-  .neo-page .neo-section .container,
-  .predictions-layout-section .container,
-  #telegram-cta .telegram-container,
-  .footer-premium .footer-container {
-    width: min(100% - 28px, 1280px);
-  }
-}
-
-/* Più aria tra blocchi */
-.neo-section {
-  padding-top: 42px;
-  padding-bottom: 42px;
-}
-
-.neo-section + .neo-section {
-  margin-top: 12px;
-}
-
-.predictions-grid {
-  gap: 32px;
-}
-
-.predictions-grid-top {
-  gap: 28px;
-}
-
-.classifica-sticky-card {
-  margin-top: 4px;
-}
-
-#telegram-cta.telegram-section-premium {
-  margin-top: 34px;
-  padding-top: 72px;
-  padding-bottom: 72px;
-  border-top: 1px solid rgba(184, 149, 107, 0.16);
-}
-
-@media (max-width: 768px) {
-  .neo-section {
-    padding-top: 28px;
-    padding-bottom: 28px;
-  }
-
-  .predictions-grid,
-  .predictions-grid-top {
-    gap: 20px;
-  }
-
-  #telegram-cta.telegram-section-premium {
-    margin-top: 24px;
-    padding-top: 48px;
-    padding-bottom: 48px;
-  }
-}
-
-/* Card più piene, meno effetto "incassato" */
-#card-prono,
-#card-pred,
-#card-classifica-completa {
-  width: 100%;
-  min-width: 0;
-}
-
-.pred-grid-main,
-.predictions-grid,
-.predictions-grid-top {
-  width: 100%;
-}
-
-/* =========================================================
-CLASSIFICA STICKY — FIX OVERLAY MOBILE
-========================================================= */
-
-.classifica-sticky-table-wrap,
-.pred-complete-tablewrap {
-  position: relative;
-  overflow-x: auto;
-  overflow-y: hidden;
-  isolation: isolate;
-  border-radius: 18px;
-  background: linear-gradient(180deg, rgba(8, 10, 30, 0.98), rgba(5, 6, 24, 0.98));
-}
-
-/* Fondo vero sotto la tabella */
-.classifica-sticky-table {
-  position: relative;
-  min-width: 980px;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: transparent;
-}
-
-/* Celle base */
-.classifica-sticky-table th,
-.classifica-sticky-table td,
-.classifica-completa-table th,
-.classifica-completa-table td {
-  position: relative;
-  background: rgba(8, 10, 30, 0.96);
-}
-
-/* Header sticky */
-.classifica-sticky-table thead th {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: linear-gradient(180deg, #121741 0%, #0b1033 100%);
-}
-
-/* Prima colonna sticky */
-.classifica-sticky-table th:first-child,
-.classifica-sticky-table td:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 30;
-  min-width: 58px;
-  background: linear-gradient(180deg, #10153c 0%, #0a0e2f 100%);
-  box-shadow:
-    10px 0 24px rgba(0, 0, 0, 0.38),
-    1px 0 0 rgba(184, 149, 107, 0.12);
-}
-
-/* Seconda colonna sticky */
-.classifica-sticky-table th:nth-child(2),
-.classifica-sticky-table td:nth-child(2) {
-  position: sticky;
-  left: 58px;
-  z-index: 31;
-  min-width: 170px;
-  background: linear-gradient(180deg, #0f1438 0%, #090d2c 100%);
-  box-shadow:
-    12px 0 26px rgba(0, 0, 0, 0.34),
-    1px 0 0 rgba(184, 149, 107, 0.10);
-}
-
-/* Layer superiore per header sticky delle prime colonne */
-.classifica-sticky-table thead th:first-child,
-.classifica-sticky-table thead th:nth-child(2) {
-  z-index: 40;
-}
-
-/* Pseudo-layer per coprire completamente ciò che scorre sotto */
-.classifica-sticky-table th:first-child::after,
-.classifica-sticky-table td:first-child::after,
-.classifica-sticky-table th:nth-child(2)::after,
-.classifica-sticky-table td:nth-child(2)::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: inherit;
-  z-index: -1;
-}
-
-/* Linea divisoria tra parte sticky e parte scrollabile */
-.classifica-sticky-table th:nth-child(2),
-.classifica-sticky-table td:nth-child(2) {
-  border-right: 1px solid rgba(184, 149, 107, 0.16);
-}
-
-/* Hover: non rompere lo sticky */
-.classifica-sticky-table tbody tr:hover td {
-  background: rgba(255, 255, 255, 0.025);
-}
-
-.classifica-sticky-table tbody tr:hover td:first-child {
-  background: linear-gradient(180deg, #111741 0%, #0a0f31 100%);
-}
-
-.classifica-sticky-table tbody tr:hover td:nth-child(2) {
-  background: linear-gradient(180deg, #10153b 0%, #090d2c 100%);
-}
-
-@media (max-width: 768px) {
-  .classifica-sticky-table,
-  .classifica-completa-table.classifica-sticky-table {
-    min-width: 900px;
-  }
-
-  .classifica-sticky-table th:first-child,
-  .classifica-sticky-table td:first-child {
-    left: 0;
-    min-width: 48px;
-  }
-
-  .classifica-sticky-table th:nth-child(2),
-  .classifica-sticky-table td:nth-child(2) {
-    left: 48px;
-    min-width: 150px;
-  }
-}
-
-/* =========================================================
-TELEGRAM SECTION — PIÙ RESPIRO E PIÙ PULIZIA
-========================================================= */
-
-#telegram-cta .telegram-content {
-  gap: 20px;
-}
-
-#telegram-cta .telegram-feature {
-  border-left: none;
-  border: 1px solid rgba(49, 215, 255, 0.16);
-  border-radius: 16px;
-  padding: 16px 16px;
-  background: rgba(255, 255, 255, 0.02);
-}
-
-#telegram-cta .telegram-feature:hover {
-  padding-left: 16px;
-  border-color: rgba(49, 215, 255, 0.28);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-#telegram-cta .telegram-qr-box {
-  background: rgba(8, 10, 32, 0.64);
-  border: 1px solid rgba(49, 215, 255, 0.14);
-  border-radius: 22px;
-}
-
-@media (max-width: 1024px) {
-  #telegram-cta .telegram-container {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  #telegram-cta .telegram-visual {
-    display: flex;
-    justify-content: center;
-  }
-}
-
-/* =========================================================
-FIX DEFINITIVO STICKY CLASSIFICA MOBILE
-========================================================= */
-
-.pred-complete-tablewrap,
-.classifica-sticky-table-wrap {
-  position: relative;
-  overflow-x: auto;
-  overflow-y: hidden;
-  isolation: isolate;
-  border-radius: 18px;
-  background: #070b25;
-  -webkit-overflow-scrolling: touch;
-}
-
-.classifica-completa-table.classifica-sticky-table,
-.classifica-sticky-table {
-  min-width: 920px;
-  border-collapse: separate;
-  border-spacing: 0;
-  position: relative;
-  background: #070b25;
-}
-
-.classifica-completa-table.classifica-sticky-table th,
-.classifica-completa-table.classifica-sticky-table td,
-.classifica-sticky-table th,
-.classifica-sticky-table td {
-  position: relative;
-  white-space: nowrap;
-  background: #070b25;
-}
-
-/* header */
-.classifica-completa-table.classifica-sticky-table thead th,
-.classifica-sticky-table thead th {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: linear-gradient(180deg, #131844 0%, #0b1030 100%);
-}
-
-/* colonna # */
-.classifica-completa-table.classifica-sticky-table th:first-child,
-.classifica-completa-table.classifica-sticky-table td:first-child,
-.classifica-sticky-table th:first-child,
-.classifica-sticky-table td:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 40;
-  min-width: 52px;
-  max-width: 52px;
-  background: #0b1030 !important;
-  box-shadow:
-    12px 0 22px rgba(0, 0, 0, 0.42),
-    1px 0 0 rgba(255,255,255,0.04);
-}
-
-/* colonna Player */
-.classifica-completa-table.classifica-sticky-table th:nth-child(2),
-.classifica-completa-table.classifica-sticky-table td:nth-child(2),
-.classifica-sticky-table th:nth-child(2),
-.classifica-sticky-table td:nth-child(2) {
-  position: sticky;
-  left: 52px;
-  z-index: 41;
-  min-width: 210px;
-  background: #0a0f2d !important;
-  box-shadow:
-    14px 0 26px rgba(0, 0, 0, 0.38),
-    1px 0 0 rgba(184,149,107,0.10);
-}
-
-/* header delle due sticky ancora sopra */
-.classifica-completa-table.classifica-sticky-table thead th:first-child,
-.classifica-completa-table.classifica-sticky-table thead th:nth-child(2),
-.classifica-sticky-table thead th:first-child,
-.classifica-sticky-table thead th:nth-child(2) {
-  z-index: 60;
-}
-
-/* copertura piena anti-trasparenza */
-.classifica-completa-table.classifica-sticky-table th:first-child::before,
-.classifica-completa-table.classifica-sticky-table td:first-child::before,
-.classifica-completa-table.classifica-sticky-table th:nth-child(2)::before,
-.classifica-completa-table.classifica-sticky-table td:nth-child(2)::before,
-.classifica-sticky-table th:first-child::before,
-.classifica-sticky-table td:first-child::before,
-.classifica-sticky-table th:nth-child(2)::before,
-.classifica-sticky-table td:nth-child(2)::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: inherit;
-  z-index: -1;
-}
-
-/* linea di separazione netta */
-.classifica-completa-table.classifica-sticky-table th:nth-child(2),
-.classifica-completa-table.classifica-sticky-table td:nth-child(2),
-.classifica-sticky-table th:nth-child(2),
-.classifica-sticky-table td:nth-child(2) {
-  border-right: 1px solid rgba(184,149,107,0.18);
-}
-
-/* niente hover trasparente sulle sticky */
-.classifica-completa-table.classifica-sticky-table tbody tr:hover td:first-child,
-.classifica-sticky-table tbody tr:hover td:first-child {
-  background: #0b1030 !important;
-}
-
-.classifica-completa-table.classifica-sticky-table tbody tr:hover td:nth-child(2),
-.classifica-sticky-table tbody tr:hover td:nth-child(2) {
-  background: #0a0f2d !important;
-}
-
-@media (max-width: 768px) {
-  .classifica-completa-table.classifica-sticky-table,
-  .classifica-sticky-table {
-    min-width: 860px;
-  }
-
-  .classifica-completa-table.classifica-sticky-table th:first-child,
-  .classifica-completa-table.classifica-sticky-table td:first-child,
-  .classifica-sticky-table th:first-child,
-  .classifica-sticky-table td:first-child {
-    min-width: 46px;
-    max-width: 46px;
-    left: 0;
-  }
-
-  .classifica-completa-table.classifica-sticky-table th:nth-child(2),
-  .classifica-completa-table.classifica-sticky-table td:nth-child(2),
-  .classifica-sticky-table th:nth-child(2),
-  .classifica-sticky-table td:nth-child(2) {
-    left: 46px;
-    min-width: 180px;
-  }
-}
-
-/* =========================================================
-PREDICTIONS — LOOK PIÙ FULL WIDTH COME HOME
-========================================================= */
+/* ---------- layout pagina ---------- */
 
 body.neo-page {
   overflow-x: hidden;
@@ -9721,307 +9334,31 @@ body.neo-page {
 .neo-page .neo-section > .container,
 #telegram-cta .telegram-container,
 .footer-premium .footer-container {
+  width: min(1360px, calc(100% - 24px));
   max-width: 1360px;
-  width: calc(100% - 32px);
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline: auto;
 }
 
 @media (max-width: 768px) {
   .neo-page .neo-section > .container,
   #telegram-cta .telegram-container,
   .footer-premium .footer-container {
-    width: calc(100% - 20px);
+    width: calc(100% - 14px);
+    max-width: none;
   }
 }
 
-/* più aria tra dashboard, telegram e footer */
 #telegram-cta.telegram-section-premium {
-  margin-top: 42px;
-  padding-top: 64px;
-  padding-bottom: 64px;
+  margin-top: 34px;
+  padding-top: 56px;
+  padding-bottom: 56px;
 }
 
 .footer-premium {
-  margin-top: 10px;
-  padding-top: 8px;
+  margin-top: 8px;
 }
 
-@media (max-width: 768px) {
-  #telegram-cta.telegram-section-premium {
-    margin-top: 28px;
-    padding-top: 44px;
-    padding-bottom: 44px;
-  }
-}
-
-/* =========================================================
-CLASSIFICA COMPLETA — FIX STICKY REALE MOBILE
-prime 3 colonne: logo | # | player
-========================================================= */
-
-.pred-complete-tablewrap,
-.classifica-sticky-table-wrap {
-  position: relative;
-  overflow-x: auto;
-  overflow-y: hidden;
-  isolation: isolate;
-  border-radius: 18px;
-  background: #070b25 !important;
-  -webkit-overflow-scrolling: touch;
-}
-
-.classifica-completa-table,
-.classifica-completa-table.classifica-sticky-table {
-  min-width: 980px;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: #070b25 !important;
-  position: relative;
-}
-
-.classifica-completa-table th,
-.classifica-completa-table td {
-  position: relative;
-  white-space: nowrap;
-  background: #070b25;
-}
-
-/* header */
-.classifica-completa-table thead th {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: linear-gradient(180deg, #131844 0%, #0b1030 100%) !important;
-}
-
-/* 1) colonna logo */
-.classifica-completa-table th:first-child,
-.classifica-completa-table td:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 50;
-  min-width: 38px;
-  width: 38px;
-  max-width: 38px;
-  background: #0a0f2d !important;
-  box-shadow:
-    10px 0 18px rgba(0, 0, 0, 0.45),
-    1px 0 0 rgba(255,255,255,0.04);
-}
-
-/* 2) colonna # */
-.classifica-completa-table th:nth-child(2),
-.classifica-completa-table td:nth-child(2) {
-  position: sticky;
-  left: 38px;
-  z-index: 51;
-  min-width: 58px;
-  width: 58px;
-  max-width: 58px;
-  background: #0b1030 !important;
-  box-shadow:
-    10px 0 18px rgba(0, 0, 0, 0.38),
-    1px 0 0 rgba(255,255,255,0.04);
-}
-
-/* 3) colonna Player */
-.classifica-completa-table th:nth-child(3),
-.classifica-completa-table td:nth-child(3) {
-  position: sticky;
-  left: 96px;
-  z-index: 52;
-  min-width: 250px;
-  background: #0b1030 !important;
-  box-shadow:
-    14px 0 24px rgba(0, 0, 0, 0.34),
-    1px 0 0 rgba(184,149,107,0.12);
-}
-
-/* header sticky davanti a tutto */
-.classifica-completa-table thead th:first-child,
-.classifica-completa-table thead th:nth-child(2),
-.classifica-completa-table thead th:nth-child(3) {
-  z-index: 70;
-}
-
-/* copertura reale */
-.classifica-completa-table th:first-child::before,
-.classifica-completa-table td:first-child::before,
-.classifica-completa-table th:nth-child(2)::before,
-.classifica-completa-table td:nth-child(2)::before,
-.classifica-completa-table th:nth-child(3)::before,
-.classifica-completa-table td:nth-child(3)::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: inherit;
-  z-index: -1;
-}
-
-/* hover senza trasparenze sulle sticky */
-.classifica-completa-table tbody tr:hover td:first-child {
-  background: #0a0f2d !important;
-}
-.classifica-completa-table tbody tr:hover td:nth-child(2),
-.classifica-completa-table tbody tr:hover td:nth-child(3) {
-  background: #0b1030 !important;
-}
-
-/* mobile */
-@media (max-width: 768px) {
-  .classifica-completa-table,
-  .classifica-completa-table.classifica-sticky-table {
-    min-width: 920px;
-  }
-
-  .classifica-completa-table th:first-child,
-  .classifica-completa-table td:first-child {
-    min-width: 32px;
-    width: 32px;
-    max-width: 32px;
-    left: 0;
-  }
-
-  .classifica-completa-table th:nth-child(2),
-  .classifica-completa-table td:nth-child(2) {
-    min-width: 46px;
-    width: 46px;
-    max-width: 46px;
-    left: 32px;
-  }
-
-  .classifica-completa-table th:nth-child(3),
-  .classifica-completa-table td:nth-child(3) {
-    left: 78px;
-    min-width: 210px;
-  }
-}
-
-.neo-page .container {
-  max-width: 1360px !important;
-  width: calc(100% - 24px) !important;
-}
-
-@media (max-width: 768px) {
-  .neo-page .container {
-    width: calc(100% - 16px) !important;
-  }
-}
-
-/* =========================================================
-PREDICTIONS MOBILE HOTFIX FINALE
-========================================================= */
-
-body.neo-page .container {
-  width: min(1380px, calc(100% - 16px)) !important;
-  max-width: 1380px !important;
-  margin-inline: auto !important;
-}
-
-@media (max-width: 768px) {
-  body.neo-page .container {
-    width: calc(100% - 10px) !important;
-    max-width: none !important;
-  }
-
-  body.neo-page .neo-section {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  #telegram-cta.telegram-section-premium {
-    margin-top: 28px !important;
-    padding-top: 42px !important;
-    padding-bottom: 42px !important;
-  }
-
-  /* reset totale wrapper classifica */
-  .pred-complete-tablewrap,
-  .classifica-sticky-table-wrap {
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    position: relative !important;
-    background: #070b25 !important;
-    border-radius: 18px !important;
-    isolation: auto !important;
-  }
-
-  /* reset sticky che rompe tutto */
-  .classifica-completa-table th,
-  .classifica-completa-table td {
-    position: static !important;
-    left: auto !important;
-    z-index: auto !important;
-    box-shadow: none !important;
-    background: #070b25 !important;
-    white-space: nowrap !important;
-  }
-
-  .classifica-completa-table thead th {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 10 !important;
-    background: linear-gradient(180deg, #131844 0%, #0b1030 100%) !important;
-  }
-
-  /* nascondi colonne secondarie su mobile */
-  .classifica-completa-table th:nth-child(3),
-  .classifica-completa-table td:nth-child(3),
-  .classifica-completa-table th:nth-child(5),
-  .classifica-completa-table td:nth-child(5),
-  .classifica-completa-table th:nth-child(9),
-  .classifica-completa-table td:nth-child(9),
-  .classifica-completa-table th:nth-child(10),
-  .classifica-completa-table td:nth-child(10),
-  .classifica-completa-table th:nth-child(11),
-  .classifica-completa-table td:nth-child(11) {
-    display: none !important;
-  }
-
-  /* compatta la tabella mobile */
-  .classifica-completa-table {
-    min-width: 100% !important;
-    width: 100% !important;
-    table-layout: fixed !important;
-  }
-
-  .classifica-completa-table th:nth-child(1),
-  .classifica-completa-table td:nth-child(1) {
-    width: 44px !important;
-    min-width: 44px !important;
-  }
-
-  .classifica-completa-table th:nth-child(2),
-  .classifica-completa-table td:nth-child(2) {
-    width: 42% !important;
-    min-width: 140px !important;
-  }
-
-  .classifica-completa-table th:nth-child(4),
-  .classifica-completa-table td:nth-child(4),
-  .classifica-completa-table th:nth-child(6),
-  .classifica-completa-table td:nth-child(6),
-  .classifica-completa-table th:nth-child(7),
-  .classifica-completa-table td:nth-child(7),
-  .classifica-completa-table th:nth-child(8),
-  .classifica-completa-table td:nth-child(8) {
-    width: 72px !important;
-    min-width: 72px !important;
-    text-align: center !important;
-  }
-
-  .classifica-completa-table td:nth-child(2),
-  .classifica-completa-table th:nth-child(2) {
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-}
-
-/* =========================
-   PREVISIONI / MATCHDAY HUB
-   Restyle neon + mobile fix
-========================= */
+/* ---------- griglia dashboard ---------- */
 
 .predictions-grid {
   display: grid;
@@ -10035,20 +9372,24 @@ body.neo-page .container {
   gap: 22px;
 }
 
+@media (max-width: 980px) {
+  .predictions-grid-top {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- card ---------- */
+
 .pred-card-half,
 .classifica-completa-card {
   position: relative;
   overflow: hidden;
-  border-radius: 24px;
-  border: 1px solid rgba(110, 231, 255, 0.14);
-  background:
-    radial-gradient(circle at top left, rgba(0, 224, 255, 0.10), transparent 32%),
-    radial-gradient(circle at top right, rgba(138, 92, 255, 0.12), transparent 30%),
-    linear-gradient(180deg, rgba(13, 18, 40, 0.96), rgba(8, 12, 28, 0.98));
+  border-radius: 22px;
+  border: 1px solid rgba(93, 216, 255, 0.10);
+  background: linear-gradient(180deg, #0b132d 0%, #081024 100%);
   box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0 0 1px rgba(255,255,255,0.02);
+    0 14px 34px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255,255,255,0.03);
 }
 
 .pred-card-half::before,
@@ -10058,9 +9399,8 @@ body.neo-page .container {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 12% 18%, rgba(0, 224, 255, 0.16), transparent 0 18%),
-    radial-gradient(circle at 88% 16%, rgba(168, 85, 247, 0.16), transparent 0 18%);
-  opacity: 0.8;
+    radial-gradient(circle at top left, rgba(0, 200, 255, 0.08), transparent 28%),
+    radial-gradient(circle at top right, rgba(66, 99, 255, 0.07), transparent 24%);
 }
 
 .pred-mini-head {
@@ -10070,13 +9410,13 @@ body.neo-page .container {
   justify-content: space-between;
   align-items: flex-start;
   gap: 18px;
-  padding: 22px 22px 14px;
-  border-bottom: 1px solid rgba(110, 231, 255, 0.10);
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid rgba(93, 216, 255, 0.08);
 }
 
 .pred-mini-head h3 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.08rem;
   line-height: 1.1;
   color: #f8fbff;
   letter-spacing: 0.01em;
@@ -10085,41 +9425,41 @@ body.neo-page .container {
 .pred-mini-kicker {
   display: inline-block;
   margin-top: 8px;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #79e8ff;
-  opacity: 0.95;
+  color: #73dcff;
 }
 
 .pred-mini-body {
   position: relative;
   z-index: 1;
-  padding: 16px 22px 22px;
+  padding: 14px 20px 20px;
 }
 
 .pred-mini-note {
-  margin: 12px 2px 0;
+  margin-top: 12px;
+  color: rgba(226, 232, 240, 0.72);
   font-size: 0.82rem;
-  color: rgba(230, 240, 255, 0.68);
 }
 
 .neo-select {
   min-width: 150px;
-  border: 1px solid rgba(121, 232, 255, 0.22);
-  background: rgba(8, 12, 28, 0.78);
+  border: 1px solid rgba(115, 220, 255, 0.16);
+  background: #0b142b;
   color: #eff6ff;
   border-radius: 14px;
   padding: 10px 14px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
 }
+
+/* ---------- tabella base ---------- */
 
 .pred-mini-tablewrap {
   border-radius: 18px;
   overflow: hidden;
-  border: 1px solid rgba(121, 232, 255, 0.10);
-  background: rgba(5, 10, 24, 0.72);
+  border: 1px solid rgba(93, 216, 255, 0.08);
+  background: #081022;
 }
 
 .dashboard-table {
@@ -10129,46 +9469,31 @@ body.neo-page .container {
 }
 
 .dashboard-table thead th {
-  background: rgba(15, 23, 42, 0.92);
-  color: #8be9ff;
-  font-size: 0.76rem;
+  background: #13203f;
+  color: #dbeafe;
+  font-size: 0.74rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 14px 14px;
-  border-bottom: 1px solid rgba(121, 232, 255, 0.14);
+  letter-spacing: 0.07em;
+  padding: 13px 12px;
+  border-bottom: 1px solid rgba(115, 220, 255, 0.10);
 }
 
 .dashboard-table tbody td {
-  padding: 14px 14px;
-  color: #ecf6ff;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  background: rgba(8, 12, 28, 0.72);
+  padding: 13px 12px;
+  color: #edf4ff;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: #081128;
 }
 
 .dashboard-table tbody tr:nth-child(even) td {
-  background: rgba(10, 15, 33, 0.88);
+  background: #0a1430;
 }
 
 .dashboard-table tbody tr:hover td {
-  background: rgba(18, 27, 52, 0.96);
+  background: #0e1b39;
 }
 
-.pred-mini-tablewrap::-webkit-scrollbar,
-.classifica-sticky-table-wrap::-webkit-scrollbar,
-.pred-complete-tablewrap::-webkit-scrollbar {
-  height: 8px;
-}
-
-.pred-mini-tablewrap::-webkit-scrollbar-thumb,
-.classifica-sticky-table-wrap::-webkit-scrollbar-thumb,
-.pred-complete-tablewrap::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, rgba(0,224,255,0.55), rgba(139,92,246,0.55));
-  border-radius: 999px;
-}
-
-/* =========================
-   TOOLBAR CLASSIFICA
-========================= */
+/* ---------- toolbar classifica ---------- */
 
 .pred-mini-head-search {
   align-items: center;
@@ -10190,9 +9515,8 @@ body.neo-page .container {
   height: 46px;
   padding: 0 8px 0 14px;
   border-radius: 14px;
-  border: 1px solid rgba(121, 232, 255, 0.16);
-  background: rgba(7, 11, 24, 0.84);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+  border: 1px solid rgba(93, 216, 255, 0.10);
+  background: #0a1228;
 }
 
 .classifica-search-wrap input,
@@ -10201,13 +9525,13 @@ body.neo-page .container {
   border: 0;
   outline: none;
   background: transparent;
-  color: #eff6ff;
+  color: #f1f5f9;
   font-size: 0.95rem;
 }
 
 .classifica-search-wrap input::placeholder,
 .classifica-search-wrap-unified input::placeholder {
-  color: rgba(226, 232, 240, 0.56);
+  color: rgba(226, 232, 240, 0.48);
 }
 
 #classifica-completa-clear,
@@ -10216,43 +9540,27 @@ body.neo-page .container {
   height: 34px;
   border: 0;
   border-radius: 10px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.05);
   color: #dbeafe;
   cursor: pointer;
-  transition: 0.2s ease;
-}
-
-#classifica-completa-clear:hover,
-#classifica-completa-clear-modal:hover {
-  background: rgba(121, 232, 255, 0.14);
-  color: #ffffff;
 }
 
 .classifica-open-btn,
 .classifica-open-btn-compact {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   height: 46px;
   padding: 0 16px;
-  border: 1px solid rgba(121, 232, 255, 0.18);
+  border: 1px solid rgba(93, 216, 255, 0.12);
   border-radius: 14px;
-  background: linear-gradient(135deg, rgba(0,224,255,0.12), rgba(168,85,247,0.12));
+  background: linear-gradient(135deg, rgba(15, 98, 145, 0.55), rgba(48, 67, 156, 0.55));
   color: #f8fbff;
   font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s ease;
 }
 
-.classifica-open-btn:hover,
-.classifica-open-btn-compact:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(0, 224, 255, 0.14);
-}
-
-/* =========================
-   CLASSIFICA COMPATTA
-========================= */
+/* ---------- classifica completa ---------- */
 
 .classifica-completa-card {
   padding: 0;
@@ -10269,13 +9577,15 @@ body.neo-page .container {
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   border-radius: 18px;
+  border: 1px solid rgba(93, 216, 255, 0.08);
+  background: #071022;
   position: relative;
 }
 
 .classifica-sticky-table,
 .classifica-completa-table {
   width: 100%;
-  min-width: 1100px;
+  min-width: 1040px;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
@@ -10287,20 +9597,21 @@ body.neo-page .container {
 }
 
 .classifica-completa-table .col-rank {
-  width: 72px;
-  min-width: 72px;
-  max-width: 72px;
+  width: 54px;
+  min-width: 54px;
+  max-width: 54px;
   text-align: center;
 }
 
 .classifica-completa-table .col-player {
-  width: 220px;
-  min-width: 220px;
+  width: 180px;
+  min-width: 180px;
+  max-width: 180px;
 }
 
 .classifica-completa-table .col-team {
-  width: 110px;
-  min-width: 110px;
+  width: 88px;
+  min-width: 88px;
 }
 
 .classifica-completa-table .col-apps,
@@ -10311,64 +9622,56 @@ body.neo-page .container {
 .classifica-completa-table .col-xa,
 .classifica-completa-table .col-xg90,
 .classifica-completa-table .col-xa90 {
-  width: 96px;
-  min-width: 96px;
+  width: 82px;
+  min-width: 82px;
   text-align: center;
 }
 
-/* Sticky desktop */
-.classifica-completa-table .sticky-rank,
-.classifica-completa-table tbody td:first-child {
+/* sticky desktop e base mobile */
+.classifica-completa-table thead .sticky-rank,
+.classifica-completa-table tbody td:nth-child(1) {
   position: sticky;
   left: 0;
-  z-index: 4;
+  z-index: 8;
+  background: #0d1732 !important;
 }
 
-.classifica-completa-table .sticky-player,
+.classifica-completa-table thead .sticky-player,
 .classifica-completa-table tbody td:nth-child(2) {
   position: sticky;
-  left: 72px;
-  z-index: 4;
+  left: 54px;
+  z-index: 9;
+  background: #0d1732 !important;
 }
 
 .classifica-completa-table thead .sticky-rank,
 .classifica-completa-table thead .sticky-player {
-  z-index: 6;
-  background: rgba(15, 23, 42, 0.98);
-}
-
-.classifica-completa-table tbody td:first-child,
-.classifica-completa-table tbody td:nth-child(2) {
-  background: #0b1227;
-}
-
-.classifica-completa-table tbody tr:nth-child(even) td:first-child,
-.classifica-completa-table tbody tr:nth-child(even) td:nth-child(2) {
-  background: #0d152d;
+  background: #162443 !important;
+  color: #f8fbff;
+  z-index: 11;
 }
 
 .classifica-completa-table tbody td:nth-child(2) {
-  box-shadow: 12px 0 18px rgba(2, 8, 23, 0.35);
+  box-shadow: 12px 0 18px rgba(2, 8, 23, 0.42);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  color: #ffffff;
 }
 
-/* =========================
-   MODAL PREMIUM
-========================= */
+/* ---------- modal ---------- */
 
 .modal-premium .modal-content-premium {
-  width: min(1320px, calc(100vw - 28px));
-  border-radius: 26px;
-  border: 1px solid rgba(121, 232, 255, 0.16);
-  background:
-    radial-gradient(circle at top left, rgba(0,224,255,0.08), transparent 28%),
-    radial-gradient(circle at top right, rgba(168,85,247,0.10), transparent 26%),
-    linear-gradient(180deg, rgba(10, 14, 32, 0.98), rgba(6, 10, 24, 0.99));
-  box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+  width: min(1320px, calc(100vw - 24px));
+  border-radius: 24px;
+  border: 1px solid rgba(93, 216, 255, 0.12);
+  background: linear-gradient(180deg, #0a132e 0%, #071022 100%);
+  box-shadow: 0 28px 60px rgba(0,0,0,0.42);
   overflow: hidden;
 }
 
 .modal-body-premium {
-  padding: 24px;
+  padding: 22px;
 }
 
 .modal-premium-head,
@@ -10383,7 +9686,7 @@ body.neo-page .container {
 .modal-premium-kicker {
   display: inline-block;
   margin-bottom: 8px;
-  color: #7ee7ff;
+  color: #73dcff;
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -10394,7 +9697,7 @@ body.neo-page .container {
 .modal-premium-head-search h2 {
   margin: 0;
   color: #f8fbff;
-  font-size: 1.5rem;
+  font-size: 1.45rem;
 }
 
 .modal-premium .modal-close {
@@ -10404,21 +9707,15 @@ body.neo-page .container {
   z-index: 20;
   width: 42px;
   height: 42px;
-  border: 1px solid rgba(121, 232, 255, 0.18);
+  border: 1px solid rgba(93, 216, 255, 0.12);
   border-radius: 12px;
-  background: rgba(7, 11, 24, 0.88);
+  background: #0c142b;
   color: #ffffff;
 }
 
-/* =========================
-   MOBILE FIX CRITICO
-========================= */
+/* ---------- responsive ---------- */
 
 @media (max-width: 980px) {
-  .predictions-grid-top {
-    grid-template-columns: 1fr;
-  }
-
   .pred-mini-head,
   .pred-mini-head-search,
   .modal-premium-head-search {
@@ -10427,25 +9724,26 @@ body.neo-page .container {
   }
 
   .classifica-toolbar {
-    justify-content: stretch;
     flex-direction: column;
     align-items: stretch;
   }
 
   .classifica-search-wrap,
-  .classifica-search-wrap-unified {
-    min-width: 100%;
-    width: 100%;
-  }
-
+  .classifica-search-wrap-unified,
   .classifica-open-btn,
   .classifica-open-btn-compact {
     width: 100%;
-    justify-content: center;
+    min-width: 100%;
   }
 }
 
 @media (max-width: 768px) {
+  #telegram-cta.telegram-section-premium {
+    margin-top: 26px;
+    padding-top: 42px;
+    padding-bottom: 42px;
+  }
+
   .pred-card-half,
   .classifica-completa-card {
     border-radius: 20px;
@@ -10456,65 +9754,55 @@ body.neo-page .container {
   }
 
   .pred-mini-body {
-    padding: 12px 16px 16px;
+    padding: 12px 14px 14px;
   }
 
   .dashboard-table thead th,
   .dashboard-table tbody td {
-    padding: 12px 12px;
+    padding: 12px 10px;
   }
 
-  .classifica-sticky-table,
-  .classifica-completa-table {
-    min-width: 930px;
+  .classifica-completa-table,
+  .classifica-sticky-table {
+    min-width: 700px;
   }
 
   .classifica-completa-table .col-rank {
-    width: 60px;
-    min-width: 60px;
-    max-width: 60px;
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
   }
 
   .classifica-completa-table .col-player {
-    width: 180px;
-    min-width: 180px;
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
   }
 
-  .classifica-completa-table .sticky-player,
+  .classifica-completa-table .col-team {
+    display: none;
+  }
+
+  .classifica-completa-table th:nth-child(3),
+  .classifica-completa-table td:nth-child(3) {
+    display: none;
+  }
+
+  .classifica-completa-table thead .sticky-player,
   .classifica-completa-table tbody td:nth-child(2) {
-    left: 60px;
+    left: 50px;
   }
 
-  .classifica-completa-table tbody td:first-child,
-  .classifica-completa-table tbody td:nth-child(2) {
-    background: #0a1124 !important;
-  }
-
-  .classifica-completa-table thead .sticky-rank,
-  .classifica-completa-table thead .sticky-player {
-    background: #10192f !important;
-  }
-
-  .classifica-completa-table tbody td:nth-child(2) {
-    box-shadow:
-      12px 0 18px rgba(2, 8, 23, 0.42),
-      inset 1px 0 0 rgba(255,255,255,0.04);
-  }
-
-  .classifica-completa-table tbody td:first-child {
-    z-index: 7;
-  }
-
-  .classifica-completa-table tbody td:nth-child(2) {
-    z-index: 8;
-  }
-
-  .classifica-completa-table thead .sticky-rank {
-    z-index: 10;
-  }
-
-  .classifica-completa-table thead .sticky-player {
-    z-index: 11;
+  .classifica-completa-table .col-apps,
+  .classifica-completa-table .col-min,
+  .classifica-completa-table .col-goals,
+  .classifica-completa-table .col-assists,
+  .classifica-completa-table .col-xg,
+  .classifica-completa-table .col-xa,
+  .classifica-completa-table .col-xg90,
+  .classifica-completa-table .col-xa90 {
+    width: 70px;
+    min-width: 70px;
   }
 
   .modal-body-premium {
@@ -10531,25 +9819,26 @@ body.neo-page .container {
     font-size: 1rem;
   }
 
+  .classifica-completa-table,
+  .classifica-sticky-table {
+    min-width: 660px;
+  }
+
   .classifica-completa-table .col-rank {
-    width: 54px;
-    min-width: 54px;
-    max-width: 54px;
+    width: 46px;
+    min-width: 46px;
+    max-width: 46px;
   }
 
   .classifica-completa-table .col-player {
-    width: 170px;
-    min-width: 170px;
+    width: 138px;
+    min-width: 138px;
+    max-width: 138px;
   }
 
-  .classifica-completa-table .sticky-player,
+  .classifica-completa-table thead .sticky-player,
   .classifica-completa-table tbody td:nth-child(2) {
-    left: 54px;
-  }
-
-  .classifica-completa-table .col-team {
-    width: 94px;
-    min-width: 94px;
+    left: 46px;
   }
 
   .classifica-completa-table .col-apps,
@@ -10560,110 +9849,7 @@ body.neo-page .container {
   .classifica-completa-table .col-xa,
   .classifica-completa-table .col-xg90,
   .classifica-completa-table .col-xa90 {
-    width: 88px;
-    min-width: 88px;
+    width: 66px;
+    min-width: 66px;
   }
 }
-
-/* ==========================================
-   FIX DEFINITIVO MOBILE CLASSIFICA COMPLETA
-   player visibile + colori ripuliti
-========================================== */
-
-.classifica-completa-card {
-  border: 1px solid rgba(95, 231, 255, 0.12);
-  background:
-    linear-gradient(180deg, rgba(8, 14, 34, 0.98), rgba(6, 10, 24, 0.98));
-  box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255,255,255,0.03);
-}
-
-.classifica-completa-card::before {
-  display: none;
-}
-
-.pred-mini-head-search {
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(95, 231, 255, 0.08);
-}
-
-.pred-mini-head h3 {
-  color: #f8fbff;
-}
-
-.pred-mini-kicker {
-  color: #6fe7ff;
-  letter-spacing: 0.08em;
-}
-
-.classifica-search-wrap,
-.classifica-search-wrap-unified {
-  background: rgba(7, 12, 28, 0.96);
-  border: 1px solid rgba(95, 231, 255, 0.10);
-  box-shadow: none;
-}
-
-.classifica-search-wrap input,
-.classifica-search-wrap-unified input {
-  color: #f1f5f9;
-}
-
-.classifica-search-wrap input::placeholder,
-.classifica-search-wrap-unified input::placeholder {
-  color: rgba(226, 232, 240, 0.48);
-}
-
-.classifica-open-btn,
-.classifica-open-btn-compact {
-  background: linear-gradient(135deg, rgba(16, 90, 140, 0.55), rgba(66, 55, 148, 0.55));
-  border: 1px solid rgba(111, 231, 255, 0.14);
-  box-shadow: none;
-}
-
-.classifica-open-btn:hover,
-.classifica-open-btn-compact:hover {
-  transform: none;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-}
-
-/* Wrapper tabella */
-.classifica-sticky-table-wrap,
-.pred-complete-tablewrap {
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  border-radius: 18px;
-  border: 1px solid rgba(95, 231, 255, 0.08);
-  background: rgba(4, 9, 22, 0.96);
-}
-
-/* Tabella base */
-.classifica-completa-table {
-  width: 100%;
-  min-width: 980px;
-  border-collapse: separate;
-  border-spacing: 0;
-  table-layout: fixed;
-}
-
-.classifica-completa-table th,
-.classifica-completa-table td {
-  white-space: nowrap;
-}
-
-.classifica-completa-table thead th {
-  background: #121c38;
-  color: #dbeafe;
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border-bottom: 1px solid rgba(111, 231, 255, 0.10);
-}
-
-.classifica-completa-table tbody td {
-  background: #081128;
-  color: #eef4ff;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-
