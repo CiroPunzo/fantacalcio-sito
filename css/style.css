@@ -9654,3 +9654,222 @@ body.legal-page .legal-highlight {
     font-size: 1rem;
   }
 }
+
+/* =========================
+   WORLD CUP HERO STRIP
+========================= */
+
+.pf-wc-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(8, 22, 85, 0.95) 0%, rgba(2, 0, 65, 1) 38%, rgba(1, 0, 32, 1) 100%);
+  border-bottom: 1px solid rgba(184, 149, 107, 0.16);
+  padding: 42px 20px 30px;
+}
+
+.pf-wc-hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 28px;
+  align-items: end;
+}
+
+.pf-wc-copy {
+  min-width: 0;
+}
+
+.pf-wc-kicker {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(102, 247, 255, 0.28);
+  background: rgba(102, 247, 255, 0.08);
+  color: #66f7ff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  box-shadow: 0 0 18px rgba(102, 247, 255, 0.12);
+  margin-bottom: 18px;
+}
+
+.pf-wc-title {
+  margin: 0 0 12px;
+  font-family: Anton, sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  line-height: 0.96;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  text-shadow:
+    0 0 18px rgba(102, 247, 255, 0.14),
+    0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.pf-wc-title span {
+  color: #66f7ff;
+  text-shadow:
+    0 0 16px rgba(102, 247, 255, 0.35),
+    0 0 26px rgba(176, 108, 255, 0.18);
+}
+
+.pf-wc-subtitle {
+  max-width: 700px;
+  margin: 0 0 22px;
+  color: #d8d8e6;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.pf-wc-countdown-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pf-wc-countdown-label {
+  color: #b0b0c8;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.pf-wc-countdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pf-wc-timebox {
+  min-width: 88px;
+  padding: 14px 14px 12px;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(10, 12, 40, 0.78), rgba(6, 7, 22, 0.72));
+  border: 1px solid rgba(102, 247, 255, 0.16);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.pf-wc-timebox span {
+  display: block;
+  font-family: Anton, sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  color: #ffffff;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  text-shadow: 0 0 14px rgba(102, 247, 255, 0.18);
+}
+
+.pf-wc-timebox small {
+  display: block;
+  color: #b9b9cf;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.pf-wc-side {
+  min-width: 0;
+}
+
+.pf-wc-badges {
+  display: grid;
+  gap: 12px;
+}
+
+.pf-wc-badge {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(176, 108, 255, 0.10), rgba(102, 247, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.30);
+  backdrop-filter: blur(8px);
+}
+
+.pf-wc-badge-label {
+  display: block;
+  margin-bottom: 4px;
+  color: #a7a7bc;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.pf-wc-badge-value {
+  display: block;
+  color: #f5f5f5;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.pf-wc-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(30px);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.pf-wc-glow-cyan {
+  width: 320px;
+  height: 320px;
+  top: -80px;
+  left: -70px;
+  background: radial-gradient(circle, rgba(102, 247, 255, 0.22) 0%, rgba(102, 247, 255, 0) 70%);
+}
+
+.pf-wc-glow-purple {
+  width: 340px;
+  height: 340px;
+  right: -80px;
+  top: -50px;
+  background: radial-gradient(circle, rgba(176, 108, 255, 0.18) 0%, rgba(176, 108, 255, 0) 72%);
+}
+
+@media (max-width: 900px) {
+  .pf-wc-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+
+  .pf-wc-title {
+    font-size: clamp(2rem, 10vw, 3.2rem);
+  }
+
+  .pf-wc-countdown {
+    gap: 10px;
+  }
+
+  .pf-wc-timebox {
+    min-width: 76px;
+    flex: 1 1 calc(50% - 10px);
+  }
+}
+
+@media (max-width: 560px) {
+  .pf-wc-hero {
+    padding: 34px 20px 24px;
+  }
+
+  .pf-wc-timebox span {
+    font-size: 1.7rem;
+  }
+
+  .pf-wc-subtitle {
+    font-size: 0.95rem;
+  }
+}
