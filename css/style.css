@@ -10337,3 +10337,400 @@ body.legal-page .legal-highlight {
     font-size: 0.88rem;
   }
 }
+
+/* =========================================================
+   WORLD CUP HERO DEFINITIVA
+   Desktop + Mobile
+   ========================================================= */
+
+.wc-hero-final {
+  position: relative;
+  min-height: clamp(620px, 86vh, 860px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #05081f;
+  border-bottom: 1px solid rgba(102, 247, 255, 0.10);
+}
+
+.wc-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.wc-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transform: scale(1.015);
+}
+
+.wc-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 6, 24, 0.68) 0%, rgba(3, 6, 24, 0.44) 24%, rgba(3, 6, 24, 0.12) 48%, rgba(3, 6, 24, 0.26) 100%);
+  z-index: 1;
+}
+
+.wc-hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(3, 6, 24, 0.18) 0%, rgba(3, 6, 24, 0.08) 26%, rgba(3, 6, 24, 0.38) 100%),
+    radial-gradient(circle at 78% 28%, rgba(255, 198, 54, 0.18), transparent 20%),
+    radial-gradient(circle at 18% 16%, rgba(176, 108, 255, 0.10), transparent 24%);
+}
+
+.wc-hero-shell {
+  position: relative;
+  z-index: 3;
+  min-height: clamp(620px, 86vh, 860px);
+  display: grid;
+  grid-template-columns: minmax(0, 560px) minmax(320px, 400px);
+  align-items: end;
+  justify-content: space-between;
+  gap: 28px;
+  padding-top: 110px;
+  padding-bottom: 52px;
+}
+
+.wc-hero-content {
+  align-self: end;
+  max-width: 560px;
+}
+
+.wc-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  margin-bottom: 18px;
+  border-radius: 999px;
+  background: rgba(7, 10, 42, 0.50);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+
+.wc-hero-title {
+  margin: 0 0 14px;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2.8rem, 5.4vw, 5.2rem);
+  line-height: 0.96;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 10px 34px rgba(0, 0, 0, 0.42),
+    0 0 18px rgba(255, 255, 255, 0.05);
+}
+
+.wc-hero-title span {
+  color: #ffcc1b;
+  text-shadow:
+    0 0 18px rgba(255, 204, 27, 0.20),
+    0 8px 26px rgba(0, 0, 0, 0.34);
+}
+
+.wc-hero-text {
+  max-width: 510px;
+  margin: 0;
+  font-size: clamp(1rem, 1.35vw, 1.08rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.86);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.32);
+}
+
+.wc-hero-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.wc-hero-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 240px;
+  min-height: 58px;
+  padding: 16px 28px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #06112d;
+  font-weight: 800;
+  font-size: 0.92rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #ffe27a 0%, #ffcc1b 45%, #ff9f1a 100%);
+  border: 1px solid rgba(255, 213, 77, 0.55);
+  box-shadow:
+    0 16px 44px rgba(255, 191, 27, 0.26),
+    0 0 0 4px rgba(255, 204, 27, 0.08);
+  overflow: hidden;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    filter 0.22s ease;
+}
+
+.wc-hero-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.00) 35%, rgba(255,255,255,0.42) 50%, rgba(255,255,255,0.00) 65%, transparent 100%);
+  transform: translateX(-140%);
+  transition: transform 0.72s ease;
+}
+
+.wc-hero-cta:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow:
+    0 20px 54px rgba(255, 191, 27, 0.34),
+    0 0 30px rgba(255, 191, 27, 0.18),
+    0 0 0 4px rgba(255, 204, 27, 0.12);
+}
+
+.wc-hero-cta:hover::before {
+  transform: translateX(140%);
+}
+
+.wc-hero-countdown-card {
+  align-self: end;
+  justify-self: end;
+  width: 100%;
+  max-width: 400px;
+  padding: 18px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(8, 10, 38, 0.76), rgba(8, 10, 38, 0.58));
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  backdrop-filter: blur(14px);
+}
+
+.wc-hero-countdown-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.wc-hero-countdown-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 204, 27, 0.10);
+  border: 1px solid rgba(255, 204, 27, 0.22);
+  color: #ffd34d;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.wc-hero-countdown-mini {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.wc-hero-countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.wc-hero-timebox {
+  min-height: 92px;
+  padding: 12px 8px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.wc-hero-timebox span {
+  display: block;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  line-height: 1;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+}
+
+.wc-hero-timebox small {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.70);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ===========================
+   TABLET
+   =========================== */
+@media (max-width: 1080px) {
+  .wc-hero-shell {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 20px;
+    padding-top: 96px;
+    padding-bottom: 38px;
+  }
+
+  .wc-hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.3rem);
+  }
+
+  .wc-hero-text {
+    max-width: 460px;
+  }
+}
+
+/* ===========================
+   MOBILE
+   =========================== */
+@media (max-width: 860px) {
+  .wc-hero-final {
+    min-height: auto;
+  }
+
+  .wc-hero-image {
+    object-position: 68% center;
+  }
+
+  .wc-hero-overlay {
+    background:
+      linear-gradient(180deg, rgba(3, 6, 24, 0.12) 0%, rgba(3, 6, 24, 0.24) 22%, rgba(3, 6, 24, 0.66) 62%, rgba(3, 6, 24, 0.92) 100%);
+  }
+
+  .wc-hero-shell {
+    min-height: 760px;
+    grid-template-columns: 1fr;
+    align-items: end;
+    gap: 18px;
+    padding-top: 86px;
+    padding-bottom: 24px;
+  }
+
+  .wc-hero-content {
+    max-width: 100%;
+  }
+
+  .wc-hero-eyebrow {
+    margin-bottom: 14px;
+    font-size: 0.68rem;
+    letter-spacing: 0.11em;
+  }
+
+  .wc-hero-title {
+    font-size: clamp(2.25rem, 10vw, 3.6rem);
+    line-height: 0.98;
+    max-width: 100%;
+  }
+
+  .wc-hero-text {
+    max-width: 100%;
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  .wc-hero-actions {
+    margin-top: 18px;
+  }
+
+  .wc-hero-cta {
+    width: 100%;
+    min-width: 0;
+    min-height: 54px;
+    padding: 15px 18px;
+    font-size: 0.86rem;
+  }
+
+  .wc-hero-countdown-card {
+    max-width: 100%;
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .wc-hero-countdown-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .wc-hero-countdown {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .wc-hero-timebox {
+    min-height: 78px;
+    padding: 10px 6px;
+    border-radius: 14px;
+  }
+
+  .wc-hero-timebox span {
+    font-size: 1.55rem;
+  }
+
+  .wc-hero-timebox small {
+    margin-top: 6px;
+    font-size: 0.64rem;
+  }
+}
+
+/* ===========================
+   SMALL MOBILE
+   =========================== */
+@media (max-width: 560px) {
+  .wc-hero-shell {
+    min-height: 700px;
+    padding-top: 82px;
+    padding-bottom: 18px;
+  }
+
+  .wc-hero-image {
+    object-position: 71% center;
+  }
+
+  .wc-hero-title {
+    font-size: clamp(2rem, 11vw, 3.1rem);
+  }
+
+  .wc-hero-text {
+    font-size: 0.92rem;
+  }
+
+  .wc-hero-countdown {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .wc-hero-timebox {
+    min-height: 72px;
+  }
+
+  .wc-hero-timebox span {
+    font-size: 1.5rem;
+  }
+}
