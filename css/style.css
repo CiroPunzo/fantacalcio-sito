@@ -11554,3 +11554,388 @@ body.legal-page .legal-highlight {
     font-size: 0.62rem;
   }
 }
+
+/* =========================================================
+   HERO WORLD CUP CLEAN — FIFA 18 inspired
+   ========================================================= */
+
+.pf-wc-hero-clean {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 0, 119, 0.12), transparent 22%),
+    radial-gradient(circle at 78% 22%, rgba(255, 196, 0, 0.10), transparent 20%),
+    linear-gradient(135deg, #040714 0%, #070b1f 42%, #090611 100%);
+}
+
+.pf-wc-hero-clean-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+}
+
+.pf-wc-hero-clean-lines,
+.pf-wc-hero-clean-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pf-wc-hero-clean-lines-a {
+  background:
+    linear-gradient(120deg, transparent 0 8%, rgba(255, 31, 128, 0.95) 8.2% 8.5%, transparent 8.7% 100%),
+    linear-gradient(120deg, transparent 0 19%, rgba(31, 132, 255, 0.9) 19.2% 19.45%, transparent 19.7% 100%),
+    linear-gradient(120deg, transparent 0 28%, rgba(255, 170, 0, 0.9) 28.2% 28.45%, transparent 28.7% 100%),
+    linear-gradient(120deg, transparent 0 34%, rgba(255, 31, 128, 0.7) 34.2% 34.38%, transparent 34.6% 100%);
+  opacity: 0.9;
+}
+
+.pf-wc-hero-clean-lines-b {
+  background:
+    linear-gradient(120deg, transparent 0 74%, rgba(255, 170, 0, 0.45) 74.15% 74.3%, transparent 74.45% 100%),
+    linear-gradient(120deg, transparent 0 82%, rgba(31, 132, 255, 0.38) 82.15% 82.28%, transparent 82.45% 100%);
+  opacity: 0.5;
+}
+
+.pf-wc-hero-clean-dots {
+  background-image: radial-gradient(rgba(255, 31, 128, 0.35) 1px, transparent 1px);
+  background-size: 16px 16px;
+  width: 180px;
+  height: 140px;
+  top: 78px;
+  left: 64%;
+  opacity: 0.28;
+  mask-image: linear-gradient(135deg, rgba(0,0,0,1), rgba(0,0,0,0.15));
+}
+
+.pf-wc-hero-clean-shell {
+  position: relative;
+  z-index: 2;
+  min-height: 680px;
+  display: grid;
+  grid-template-columns: minmax(320px, 470px) minmax(0, 520px);
+  justify-content: space-between;
+  align-items: center;
+  gap: 42px;
+  padding-top: 120px;
+  padding-bottom: 56px;
+}
+
+/* left card */
+
+.pf-wc-event-card {
+  position: relative;
+  padding: 30px 28px 26px;
+  border-radius: 32px;
+  background:
+    linear-gradient(180deg, rgba(10, 12, 34, 0.88) 0%, rgba(8, 10, 28, 0.82) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 0 30px rgba(255, 31, 128, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.pf-wc-event-card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 31px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+  opacity: 0.7;
+}
+
+.pf-wc-event-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+  background: rgba(255, 31, 128, 0.08);
+  border: 1px solid rgba(255, 31, 128, 0.24);
+  color: #ff5eb0;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.pf-wc-event-trophy {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  margin-bottom: 22px;
+  border-radius: 24px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 222, 88, 0.35), rgba(255, 171, 0, 0.08) 55%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255, 196, 0, 0.24);
+  box-shadow:
+    0 0 24px rgba(255, 191, 0, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.pf-wc-event-trophy-glow {
+  position: absolute;
+  inset: -14px;
+  border-radius: 30px;
+  background: radial-gradient(circle, rgba(255, 191, 0, 0.16), transparent 70%);
+  filter: blur(12px);
+  z-index: 0;
+}
+
+.pf-wc-event-trophy-icon {
+  position: relative;
+  z-index: 1;
+  font-size: 2.3rem;
+  line-height: 1;
+}
+
+.pf-wc-event-title {
+  margin: 0 0 12px;
+  font-family: Anton, sans-serif;
+  font-size: clamp(2.3rem, 4vw, 4.4rem);
+  line-height: 0.94;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.34),
+    0 0 16px rgba(255, 255, 255, 0.04);
+}
+
+.pf-wc-event-text {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.pf-wc-event-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 210px;
+  min-height: 54px;
+  margin-top: 26px;
+  padding: 14px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: linear-gradient(90deg, #ffd85a 0%, #ffbf1b 48%, #ff9100 100%);
+  color: #08112b;
+  border: 1px solid rgba(255, 212, 71, 0.58);
+  box-shadow:
+    0 14px 34px rgba(255, 179, 0, 0.24),
+    0 0 0 4px rgba(255, 204, 27, 0.08);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+.pf-wc-event-cta:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 42px rgba(255, 179, 0, 0.3),
+    0 0 28px rgba(255, 179, 0, 0.12),
+    0 0 0 4px rgba(255, 204, 27, 0.12);
+  filter: saturate(1.03);
+}
+
+.pf-wc-event-note {
+  margin-top: 18px;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.56);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+/* right stack */
+
+.pf-wc-highlight-stack {
+  display: grid;
+  gap: 20px;
+}
+
+.pf-wc-highlight-card {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  min-height: 128px;
+  padding: 22px 24px;
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(10, 13, 33, 0.82) 0%, rgba(7, 9, 24, 0.72) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(255,255,255,0.02) inset;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  backdrop-filter: blur(8px);
+}
+
+.pf-wc-highlight-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 94, 176, 0.28);
+  box-shadow:
+    0 22px 56px rgba(0, 0, 0, 0.42),
+    0 0 24px rgba(255, 31, 128, 0.08);
+}
+
+.pf-wc-highlight-kicker {
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(135deg, rgba(255, 31, 128, 0.16), rgba(255, 170, 0, 0.12));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-family: Anton, sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.04em;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.pf-wc-highlight-body h2 {
+  margin: 0 0 8px;
+  font-size: 1.12rem;
+  line-height: 1.2;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.pf-wc-highlight-body p {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 44ch;
+}
+
+/* responsive */
+
+@media (max-width: 1080px) {
+  .pf-wc-hero-clean-shell {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 22px;
+    padding-top: 100px;
+    padding-bottom: 36px;
+  }
+
+  .pf-wc-event-card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .pf-wc-hero-clean {
+    background:
+      radial-gradient(circle at 14% 16%, rgba(255, 0, 119, 0.13), transparent 24%),
+      linear-gradient(135deg, #040714 0%, #070b1f 42%, #090611 100%);
+  }
+
+  .pf-wc-hero-clean-shell {
+    padding-top: 84px;
+    padding-bottom: 24px;
+    gap: 16px;
+  }
+
+  .pf-wc-hero-clean-dots {
+    left: auto;
+    right: 10px;
+    top: 72px;
+    width: 110px;
+    height: 96px;
+    opacity: 0.18;
+  }
+
+  .pf-wc-event-card {
+    padding: 22px 18px 20px;
+    border-radius: 24px;
+  }
+
+  .pf-wc-event-card::before {
+    border-radius: 23px;
+  }
+
+  .pf-wc-event-eyebrow {
+    margin-bottom: 16px;
+    font-size: 0.68rem;
+  }
+
+  .pf-wc-event-trophy {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    margin-bottom: 18px;
+  }
+
+  .pf-wc-event-trophy-icon {
+    font-size: 2rem;
+  }
+
+  .pf-wc-event-title {
+    font-size: clamp(2rem, 11vw, 3rem);
+    line-height: 0.96;
+  }
+
+  .pf-wc-event-text {
+    max-width: 100%;
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .pf-wc-event-cta {
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+    margin-top: 20px;
+    padding: 14px 18px;
+    font-size: 0.82rem;
+  }
+
+  .pf-wc-highlight-stack {
+    gap: 14px;
+  }
+
+  .pf-wc-highlight-card {
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 14px;
+    min-height: 110px;
+    padding: 16px 16px;
+    border-radius: 20px;
+  }
+
+  .pf-wc-highlight-kicker {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    font-size: 1.1rem;
+  }
+
+  .pf-wc-highlight-body h2 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .pf-wc-highlight-body p {
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+}
