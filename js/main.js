@@ -2614,6 +2614,43 @@ function initWorldCupCountdown() {
   setInterval(updateCountdown, 1000);
 }
 
+function setupLanguageSwitcher() {
+  const buttons = Array.from(document.querySelectorAll('.pf-lang-btn'));
+  if (!buttons.length) return;
+
+  let currentLang = document.documentElement.lang?.toLowerCase() === 'en' ? 'en' : 'it';
+
+  const applyLangUI = (lang) => {
+    currentLang = lang;
+
+    buttons.forEach((btn) => {
+      const isActive = btn.dataset.lang === lang;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+
+    document.documentElement.setAttribute('lang', lang);
+
+    const navToggle = document.getElementById('nav-toggle');
+    if (navToggle) {
+      navToggle.setAttribute(
+        'aria-label',
+        lang === 'en' ? 'Open menu' : 'Apri menu'
+      );
+    }
+  };
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang;
+      if (!lang || lang === currentLang) return;
+      applyLangUI(lang);
+    });
+  });
+
+  applyLangUI(currentLang);
+}
+
 
 
 // =====================
@@ -2645,6 +2682,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("PF initLegalReader OK");
 
     initWorldCupCountdown();
+    setupLanguageSwitcher();
 
     const path = window.location.pathname.toLowerCase();
     console.log("[PF] path =", path);
