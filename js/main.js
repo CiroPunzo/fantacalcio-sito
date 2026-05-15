@@ -2578,24 +2578,35 @@ function initLegalReader() {
 }
 
 function initWorldCupCountdown() {
-  const daysEl = document.getElementById('pfDays');
-  const hoursEl = document.getElementById('pfHours');
-  const minutesEl = document.getElementById('pfMinutes');
-  const secondsEl = document.getElementById('pfSeconds');
+  const targetDate = new Date('2026-06-11T20:00:00+02:00').getTime();
 
-  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+  const groups = {
+    days: ['pfDays', 'pfDaysDesktop'],
+    hours: ['pfHours', 'pfHoursDesktop'],
+    minutes: ['pfMinutes', 'pfMinutesDesktop'],
+    seconds: ['pfSeconds', 'pfSecondsDesktop']
+  };
 
-  const targetDate = new Date('2026-06-11T00:00:00');
+  function setText(ids, value) {
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    });
+  }
+
+  function pad(value) {
+    return String(value).padStart(2, '0');
+  }
 
   function updateCountdown() {
-    const now = new Date();
+    const now = Date.now();
     const diff = targetDate - now;
 
     if (diff <= 0) {
-      daysEl.textContent = '00';
-      hoursEl.textContent = '00';
-      minutesEl.textContent = '00';
-      secondsEl.textContent = '00';
+      setText(groups.days, '00');
+      setText(groups.hours, '00');
+      setText(groups.minutes, '00');
+      setText(groups.seconds, '00');
       return;
     }
 
@@ -2604,10 +2615,10 @@ function initWorldCupCountdown() {
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
-    daysEl.textContent = String(days).padStart(2, '0');
-    hoursEl.textContent = String(hours).padStart(2, '0');
-    minutesEl.textContent = String(minutes).padStart(2, '0');
-    secondsEl.textContent = String(seconds).padStart(2, '0');
+    setText(groups.days, pad(days));
+    setText(groups.hours, pad(hours));
+    setText(groups.minutes, pad(minutes));
+    setText(groups.seconds, pad(seconds));
   }
 
   updateCountdown();
