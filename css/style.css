@@ -12835,3 +12835,246 @@ body.legal-page .legal-highlight {
     font-size: 0.6rem;
   }
 }
+
+/* === WORLD CUP COUNTDOWN / NEON STYLE === */
+
+.pf-wc-hero-v3-side-countdown{
+  display: flex;
+  justify-content: flex-end;
+  align-self: center;
+}
+
+.pf-wc-hero-v3-countdown,
+.pf-wc-hero-v3-countdown-mobile{
+  position: relative;
+}
+
+.pf-wc-hero-v3-countdown{
+  width: 100%;
+  max-width: 390px;
+  padding: 18px;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top center, rgba(0, 224, 255, 0.08), transparent 46%),
+    linear-gradient(180deg, rgba(5, 10, 38, 0.92), rgba(2, 6, 24, 0.84));
+  border: 1px solid rgba(120, 245, 255, 0.16);
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.42),
+    0 0 30px rgba(0, 225, 255, 0.08),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+
+.pf-wc-hero-v3-countdown::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), transparent 18%, transparent 82%, rgba(0,225,255,0.04));
+  pointer-events: none;
+}
+
+.pf-wc-hero-v3-countdown-top{
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.pf-wc-hero-v3-countdown-badge{
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(103, 245, 255, 0.08);
+  border: 1px solid rgba(103, 245, 255, 0.24);
+  color: #b9fbff;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pf-wc-hero-v3-countdown-date{
+  color: rgba(255,255,255,0.64);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pf-wc-hero-v3-countdown-title{
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  text-align: center;
+  font-family: Anton, sans-serif;
+  font-size: 1.15rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.35),
+    0 0 22px rgba(130,245,255,0.12);
+}
+
+.pf-wc-hero-v3-countdown-sub{
+  position: relative;
+  z-index: 2;
+  margin: 10px 0 0;
+  text-align: center;
+  color: rgba(255,255,255,0.68);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.pf-wc-hero-v3-countdown-grid{
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.pf-wc-hero-v3-timebox{
+  position: relative;
+  min-height: 120px;
+  padding: 14px 8px 12px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(180deg, rgba(8,16,48,0.86), rgba(2,8,26,0.95));
+  border: 2px solid rgba(122, 245, 255, 0.82);
+  box-shadow:
+    0 0 0 1px rgba(122,245,255,0.10) inset,
+    0 0 14px rgba(122,245,255,0.28),
+    0 0 30px rgba(122,245,255,0.16),
+    inset 0 0 18px rgba(122,245,255,0.06);
+  overflow: hidden;
+}
+
+.pf-wc-hero-v3-timebox::after{
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(122,245,255,0.30), transparent);
+  transform: translateY(-50%);
+  opacity: 0.55;
+}
+
+.pf-wc-hero-v3-timebox span{
+  position: relative;
+  z-index: 2;
+  display: block;
+  font-family: Anton, sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3.7rem);
+  line-height: 0.92;
+  letter-spacing: 0.04em;
+  color: #bfffff;
+  text-shadow:
+    0 0 6px rgba(180,255,255,0.9),
+    0 0 16px rgba(80,240,255,0.85),
+    0 0 30px rgba(80,240,255,0.45);
+}
+
+.pf-wc-hero-v3-timebox small{
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin-top: 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.pf-wc-hero-v3-countdown-mobile{
+  display: none;
+}
+
+@media (max-width: 980px){
+  .pf-wc-hero-v3-side-countdown{
+    display: none;
+  }
+
+  .pf-wc-hero-v3-countdown-mobile{
+    display: block;
+    margin-top: 18px;
+  }
+
+  .pf-wc-hero-v3-countdown-mobile .pf-wc-hero-v3-countdown{
+    max-width: 100%;
+  }
+
+  .pf-wc-hero-v3-countdown-mobile .pf-wc-hero-v3-countdown-grid{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .pf-wc-hero-v3-countdown-mobile .pf-wc-hero-v3-timebox{
+    min-height: 92px;
+    padding: 10px 6px;
+    border-radius: 18px;
+  }
+
+  .pf-wc-hero-v3-countdown-mobile .pf-wc-hero-v3-timebox span{
+    font-size: 1.9rem;
+  }
+
+  .pf-wc-hero-v3-countdown-mobile .pf-wc-hero-v3-timebox small{
+    font-size: 0.54rem;
+    letter-spacing: 0.10em;
+  }
+}
+
+@media (max-width: 640px){
+  .pf-wc-hero-v3-countdown{
+    padding: 14px;
+    border-radius: 22px;
+  }
+
+  .pf-wc-hero-v3-countdown-top{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .pf-wc-hero-v3-countdown-title{
+    font-size: 1rem;
+  }
+
+  .pf-wc-hero-v3-countdown-sub{
+    font-size: 0.8rem;
+  }
+
+  .pf-wc-hero-v3-countdown-mobile .pf-wc-hero-v3-countdown-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pf-wc-hero-v3-countdown-mobile .pf-wc-hero-v3-timebox{
+    min-height: 88px;
+  }
+
+  .pf-wc-hero-v3-countdown-mobile .pf-wc-hero-v3-timebox span{
+    font-size: 1.75rem;
+  }
+
+  .pf-wc-hero-v3-countdown-mobile .pf-wc-hero-v3-timebox small{
+    font-size: 0.58rem;
+  }
+}
