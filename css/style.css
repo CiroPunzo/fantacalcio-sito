@@ -11443,3 +11443,114 @@ body.legal-page .legal-highlight {
     transform: translateY(0);
   }
 }
+
+/* =========================
+   HERO COUNTDOWN REFINED
+   ========================= */
+
+.pf-hero-v2-panel {
+  background: linear-gradient(180deg, rgba(9, 13, 34, 0.78), rgba(9, 13, 34, 0.58));
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.025) inset;
+  backdrop-filter: blur(18px);
+}
+
+.pf-hero-v2-panel-top {
+  margin-bottom: 16px;
+}
+
+.pf-hero-v2-badge {
+  background: rgba(102, 247, 255, 0.08);
+  border: 1px solid rgba(102, 247, 255, 0.20);
+  color: #9ffbff;
+  box-shadow: 0 0 18px rgba(102, 247, 255, 0.08);
+}
+
+.pf-hero-v2-date {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.pf-hero-v2-countdown {
+  gap: 12px;
+}
+
+.pf-hero-v2-timebox {
+  position: relative;
+  min-height: 90px;
+  padding: 14px 10px;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.025));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 12px 28px rgba(0, 0, 0, 0.14);
+  overflow: hidden;
+}
+
+.pf-hero-v2-timebox::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(102, 247, 255, 0.10), transparent 58%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.pf-hero-v2-timebox span {
+  position: relative;
+  z-index: 1;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 16px rgba(102, 247, 255, 0.10);
+}
+
+.pf-hero-v2-timebox small {
+  position: relative;
+  z-index: 1;
+  margin-top: 7px;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.58);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pf-hero-v2-cards {
+  margin-top: 14px;
+  gap: 10px;
+}
+
+.pf-hero-v2-info-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+.pf-hero-v2-info-label {
+  color: #8fefff;
+}
+
+@media (max-width: 720px) {
+  .pf-hero-v2-countdown {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .pf-hero-v2-timebox {
+    min-height: 78px;
+    border-radius: 16px;
+    padding: 12px 8px;
+  }
+
+  .pf-hero-v2-timebox span {
+    font-size: 1.5rem;
+  }
+
+  .pf-hero-v2-timebox small {
+    font-size: 0.62rem;
+  }
+}
