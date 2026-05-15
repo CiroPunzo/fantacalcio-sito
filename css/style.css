@@ -11939,3 +11939,446 @@ body.legal-page .legal-highlight {
     line-height: 1.5;
   }
 }
+
+/* =========================================================
+   HERO WORLD CUP V3 — more visual, less spoken
+   ========================================================= */
+
+.pf-wc-hero-v3 {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 0, 128, 0.16), transparent 24%),
+    radial-gradient(circle at 78% 18%, rgba(255, 183, 0, 0.10), transparent 18%),
+    linear-gradient(135deg, #040611 0%, #060919 38%, #090511 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.pf-wc-hero-v3-bg,
+.pf-wc-hero-v3-streaks,
+.pf-wc-hero-v3-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pf-wc-hero-v3-bg {
+  z-index: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+}
+
+.pf-wc-hero-v3-streaks {
+  z-index: 0;
+}
+
+.pf-wc-hero-v3-streaks-a {
+  background:
+    linear-gradient(120deg, transparent 0 7%, rgba(255, 35, 135, 0.95) 7.2% 7.45%, transparent 7.7% 100%),
+    linear-gradient(120deg, transparent 0 12%, rgba(255, 168, 0, 0.88) 12.18% 12.34%, transparent 12.55% 100%),
+    linear-gradient(120deg, transparent 0 20%, rgba(37, 136, 255, 0.82) 20.18% 20.33%, transparent 20.55% 100%),
+    linear-gradient(120deg, transparent 0 28%, rgba(255, 35, 135, 0.6) 28.1% 28.22%, transparent 28.4% 100%);
+  opacity: 0.88;
+}
+
+.pf-wc-hero-v3-streaks-b {
+  background:
+    linear-gradient(120deg, transparent 0 76%, rgba(255, 168, 0, 0.34) 76.1% 76.22%, transparent 76.4% 100%),
+    linear-gradient(120deg, transparent 0 84%, rgba(37, 136, 255, 0.28) 84.12% 84.22%, transparent 84.4% 100%);
+  opacity: 0.55;
+}
+
+.pf-wc-hero-v3-noise {
+  z-index: 0;
+  width: 170px;
+  height: 140px;
+  top: 92px;
+  right: 11%;
+  background-image: radial-gradient(rgba(255, 35, 135, 0.32) 1px, transparent 1px);
+  background-size: 15px 15px;
+  opacity: 0.22;
+  mask-image: linear-gradient(135deg, rgba(0,0,0,1), rgba(0,0,0,0.2));
+}
+
+.pf-wc-hero-v3-shell {
+  position: relative;
+  z-index: 2;
+  min-height: 700px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  align-items: center;
+  gap: 34px;
+  padding-top: 116px;
+  padding-bottom: 46px;
+}
+
+.pf-wc-hero-v3-main {
+  max-width: 620px;
+}
+
+.pf-wc-hero-v3-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.84);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  backdrop-filter: blur(8px);
+}
+
+.pf-wc-hero-v3-title {
+  margin: 0;
+  font-family: Anton, sans-serif;
+  font-size: clamp(3.2rem, 8vw, 6.6rem);
+  line-height: 0.88;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 10px 26px rgba(0,0,0,0.34),
+    0 0 18px rgba(255,255,255,0.05);
+}
+
+.pf-wc-hero-v3-title span {
+  display: block;
+  margin-top: 6px;
+  color: #ff2b8e;
+  text-shadow:
+    0 0 20px rgba(255, 43, 142, 0.22),
+    0 8px 24px rgba(0,0,0,0.26);
+}
+
+.pf-wc-hero-v3-subtitle {
+  margin: 16px 0 0;
+  max-width: 28ch;
+  color: rgba(255,255,255,0.84);
+  font-size: clamp(1rem, 1.8vw, 1.12rem);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.pf-wc-hero-v3-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  min-height: 56px;
+  margin-top: 24px;
+  padding: 15px 26px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: linear-gradient(90deg, #ffd85c 0%, #ffbf1b 46%, #ff8d00 100%);
+  color: #07112c;
+  border: 1px solid rgba(255, 212, 74, 0.55);
+  box-shadow:
+    0 16px 40px rgba(255, 179, 0, 0.28),
+    0 0 0 4px rgba(255, 204, 27, 0.08);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+.pf-wc-hero-v3-cta:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 20px 46px rgba(255, 179, 0, 0.34),
+    0 0 26px rgba(255, 179, 0, 0.16),
+    0 0 0 4px rgba(255, 204, 27, 0.12);
+}
+
+.pf-wc-hero-v3-featured {
+  position: relative;
+  margin-top: 28px;
+  padding: 20px 20px 18px;
+  border-radius: 26px;
+  background:
+    linear-gradient(180deg, rgba(9, 12, 34, 0.85), rgba(7, 8, 23, 0.72));
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow:
+    0 18px 48px rgba(0,0,0,0.38),
+    0 0 0 1px rgba(255,255,255,0.03) inset;
+  backdrop-filter: blur(10px);
+}
+
+.pf-wc-hero-v3-featured-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pf-wc-hero-v3-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(255, 43, 142, 0.10);
+  border: 1px solid rgba(255, 43, 142, 0.24);
+  color: #ff63b1;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pf-wc-hero-v3-mini-year {
+  color: rgba(255,255,255,0.54);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pf-wc-hero-v3-featured-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 14px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 1.9rem;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 215, 88, 0.36), rgba(255, 170, 0, 0.08) 56%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255, 196, 0, 0.22);
+  box-shadow: 0 0 24px rgba(255, 191, 0, 0.12);
+}
+
+.pf-wc-hero-v3-featured-copy h2 {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-size: 1.12rem;
+  line-height: 1.2;
+}
+
+.pf-wc-hero-v3-featured-copy p {
+  margin: 0;
+  color: rgba(255,255,255,0.72);
+  font-size: 0.92rem;
+  line-height: 1.58;
+  max-width: 38ch;
+}
+
+.pf-wc-hero-v3-side {
+  min-width: 0;
+}
+
+.pf-wc-hero-v3-quickcards {
+  display: grid;
+  gap: 16px;
+}
+
+.pf-wc-quickcard {
+  position: relative;
+  padding: 18px 18px 16px;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(10, 12, 32, 0.84), rgba(7, 8, 24, 0.72));
+  border: 1px solid rgba(255,255,255,0.09);
+  box-shadow:
+    0 16px 40px rgba(0,0,0,0.34),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  overflow: hidden;
+}
+
+.pf-wc-quickcard::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: 24px 0 0 24px;
+  opacity: 0.9;
+}
+
+.pf-wc-quickcard:hover {
+  transform: translateY(-3px);
+}
+
+.pf-wc-quickcard.is-pink::before {
+  background: linear-gradient(180deg, #ff2b8e, #ff67b8);
+}
+.pf-wc-quickcard.is-blue::before {
+  background: linear-gradient(180deg, #2c8fff, #6fc2ff);
+}
+.pf-wc-quickcard.is-gold::before {
+  background: linear-gradient(180deg, #ffc31a, #ff8f00);
+}
+
+.pf-wc-quickcard-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: rgba(255,255,255,0.56);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pf-wc-quickcard strong {
+  display: block;
+  color: #ffffff;
+  font-size: 1.06rem;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.pf-wc-quickcard p {
+  margin: 0;
+  color: rgba(255,255,255,0.68);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* tablet */
+@media (max-width: 1080px) {
+  .pf-wc-hero-v3-shell {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 22px;
+    padding-top: 98px;
+    padding-bottom: 34px;
+  }
+
+  .pf-wc-hero-v3-main {
+    max-width: 100%;
+  }
+
+  .pf-wc-hero-v3-subtitle {
+    max-width: 34ch;
+  }
+}
+
+/* mobile */
+@media (max-width: 720px) {
+  .pf-wc-hero-v3 {
+    background:
+      radial-gradient(circle at 16% 16%, rgba(255, 0, 128, 0.14), transparent 24%),
+      linear-gradient(135deg, #040611 0%, #060919 38%, #090511 100%);
+  }
+
+  .pf-wc-hero-v3-noise {
+    width: 110px;
+    height: 90px;
+    top: 74px;
+    right: 8px;
+    opacity: 0.16;
+  }
+
+  .pf-wc-hero-v3-shell {
+    padding-top: 82px;
+    padding-bottom: 20px;
+    gap: 16px;
+  }
+
+  .pf-wc-hero-v3-eyebrow {
+    margin-bottom: 14px;
+    font-size: 0.66rem;
+    padding: 7px 12px;
+  }
+
+  .pf-wc-hero-v3-title {
+    font-size: clamp(2.6rem, 15vw, 4.2rem);
+    line-height: 0.9;
+  }
+
+  .pf-wc-hero-v3-title span {
+    margin-top: 2px;
+  }
+
+  .pf-wc-hero-v3-subtitle {
+    margin-top: 12px;
+    max-width: 20ch;
+    font-size: 0.96rem;
+    line-height: 1.4;
+  }
+
+  .pf-wc-hero-v3-cta {
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+    margin-top: 18px;
+    padding: 14px 18px;
+    font-size: 0.82rem;
+  }
+
+  .pf-wc-hero-v3-featured {
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .pf-wc-hero-v3-featured-top {
+    margin-bottom: 12px;
+  }
+
+  .pf-wc-hero-v3-badge {
+    font-size: 0.66rem;
+    padding: 6px 10px;
+  }
+
+  .pf-wc-hero-v3-featured-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    font-size: 1.6rem;
+  }
+
+  .pf-wc-hero-v3-featured-copy h2 {
+    font-size: 1rem;
+  }
+
+  .pf-wc-hero-v3-featured-copy p {
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .pf-wc-hero-v3-side {
+    overflow-x: auto;
+    padding-bottom: 6px;
+    margin-right: -4px;
+  }
+
+  .pf-wc-hero-v3-side::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .pf-wc-hero-v3-side::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.16);
+    border-radius: 999px;
+  }
+
+  .pf-wc-hero-v3-quickcards {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+    padding-right: 4px;
+  }
+
+  .pf-wc-quickcard {
+    width: 240px;
+    min-height: 126px;
+    flex: 0 0 auto;
+    border-radius: 20px;
+    padding: 16px 16px 14px;
+    scroll-snap-align: start;
+  }
+
+  .pf-wc-quickcard strong {
+    font-size: 0.98rem;
+  }
+
+  .pf-wc-quickcard p {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+}
