@@ -12382,3 +12382,254 @@ body.legal-page .legal-highlight {
     line-height: 1.45;
   }
 }
+
+.pf-wc-hero-v3-shell{
+  position: relative;
+  z-index: 2;
+  min-height: 700px;
+  display: block;
+  padding-top: 116px;
+  padding-bottom: 46px;
+}
+
+.pf-wc-hero-v3-main{
+  max-width: 760px;
+}
+
+.pf-wc-hero-v3-subtitle{
+  margin: 16px 0 0;
+  max-width: 28ch;
+  color: rgba(255,255,255,0.84);
+  font-size: clamp(1rem, 1.8vw, 1.12rem);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.pf-wc-hero-v3-cta{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 46px;
+  margin-top: 22px;
+  padding: 0 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: linear-gradient(135deg, rgba(8,14,40,0.92) 0%, rgba(16,20,52,0.88) 100%);
+  border: 1px solid rgba(102,247,255,0.22);
+  color: #f4f7ff;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.30),
+    0 0 0 1px rgba(255,255,255,0.03) inset;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+}
+
+.pf-wc-hero-v3-cta::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.00) 38%,
+    rgba(102,247,255,0.16) 50%,
+    rgba(255,255,255,0.00) 62%,
+    transparent 100%
+  );
+  transform: translateX(-140%);
+  transition: transform 0.7s ease;
+}
+
+.pf-wc-hero-v3-cta:hover{
+  transform: translateY(-2px);
+  border-color: rgba(102,247,255,0.42);
+  box-shadow:
+    0 16px 38px rgba(0,0,0,0.36),
+    0 0 22px rgba(102,247,255,0.10),
+    0 0 0 1px rgba(102,247,255,0.10) inset;
+}
+
+.pf-wc-hero-v3-cta:hover::before{
+  transform: translateX(140%);
+}
+
+.pf-wc-hero-v3-cta-label,
+.pf-wc-hero-v3-cta-icon{
+  position: relative;
+  z-index: 1;
+}
+
+.pf-wc-hero-v3-cta-icon{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  color: #66f7ff;
+  font-size: 0.9rem;
+  line-height: 1;
+  transition: transform 0.22s ease, background 0.22s ease;
+}
+
+.pf-wc-hero-v3-cta:hover .pf-wc-hero-v3-cta-icon{
+  transform: translateX(4px);
+  background: rgba(102,247,255,0.14);
+}
+
+.pf-wc-hero-v3-quickcards-main{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 26px;
+  width: 100%;
+}
+
+.pf-wc-quickcard{
+  min-height: 132px;
+  border-radius: 22px;
+  padding: 16px 16px 14px;
+  background: linear-gradient(180deg, rgba(10,12,40,0.78), rgba(6,8,24,0.62));
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 16px 36px rgba(0,0,0,0.26),
+    0 0 0 1px rgba(255,255,255,0.02) inset;
+  backdrop-filter: blur(10px);
+}
+
+.pf-wc-quickcard-label{
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.62);
+}
+
+.pf-wc-quickcard strong{
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1rem;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.pf-wc-quickcard p{
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.72);
+}
+
+.pf-wc-quickcard.is-pink{
+  border-color: rgba(255,79,216,0.16);
+  box-shadow:
+    0 16px 36px rgba(0,0,0,0.26),
+    0 0 24px rgba(255,79,216,0.05);
+}
+
+.pf-wc-quickcard.is-blue{
+  border-color: rgba(102,247,255,0.16);
+  box-shadow:
+    0 16px 36px rgba(0,0,0,0.26),
+    0 0 24px rgba(102,247,255,0.05);
+}
+
+.pf-wc-quickcard.is-gold{
+  border-color: rgba(255,191,27,0.16);
+  box-shadow:
+    0 16px 36px rgba(0,0,0,0.26),
+    0 0 24px rgba(255,191,27,0.05);
+}
+
+@media (max-width: 980px){
+  .pf-wc-hero-v3-shell{
+    min-height: auto;
+    padding-top: 94px;
+    padding-bottom: 30px;
+  }
+
+  .pf-wc-hero-v3-main{
+    max-width: 100%;
+  }
+
+  .pf-wc-hero-v3-quickcards-main{
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    width: calc(100% + 4px);
+    padding-right: 4px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pf-wc-hero-v3-quickcards-main::-webkit-scrollbar{
+    height: 6px;
+  }
+
+  .pf-wc-hero-v3-quickcards-main::-webkit-scrollbar-thumb{
+    background: rgba(255,255,255,0.16);
+    border-radius: 999px;
+  }
+
+  .pf-wc-quickcard{
+    width: 240px;
+    min-height: 126px;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 640px){
+  .pf-wc-hero-v3-title{
+    font-size: clamp(2.6rem, 15vw, 4.2rem);
+    line-height: 0.9;
+  }
+
+  .pf-wc-hero-v3-subtitle{
+    margin-top: 12px;
+    max-width: 20ch;
+    font-size: 0.96rem;
+    line-height: 1.4;
+  }
+
+  .pf-wc-hero-v3-cta{
+    width: auto;
+    min-height: 44px;
+    margin-top: 18px;
+    padding: 0 16px;
+    font-size: 0.74rem;
+    letter-spacing: 0.09em;
+  }
+
+  .pf-wc-hero-v3-quickcards-main{
+    margin-top: 18px;
+  }
+
+  .pf-wc-quickcard{
+    width: 220px;
+    min-height: 118px;
+    border-radius: 20px;
+    padding: 14px 14px 13px;
+  }
+
+  .pf-wc-quickcard strong{
+    font-size: 0.94rem;
+  }
+
+  .pf-wc-quickcard p{
+    font-size: 0.80rem;
+  }
+}
