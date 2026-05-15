@@ -13501,19 +13501,20 @@ body.legal-page .legal-highlight {
   }
 }
 
-/* TABLET / MOBILE */
 @media (max-width: 980px){
   .pf-wc-hero-v3-countdown-chip{
     position: static;
     margin-top: 14px;
     margin-bottom: 14px;
     width: 100%;
+    max-width: 100%;
     border-radius: 18px;
-    padding: 12px 14px;
+    padding: 12px 12px;
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
     align-items: start;
+    overflow: hidden;
   }
 
   .pf-wc-hero-v3-countdown-chip-label{
@@ -13528,9 +13529,12 @@ body.legal-page .legal-highlight {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 8px;
     width: 100%;
+    min-width: 0;
   }
 
   .pf-wc-hero-v3-countdown-chip-values span{
+    min-width: 0;
+    width: 100%;
     justify-content: center;
     padding: 8px 4px;
     border-radius: 12px;
@@ -13548,25 +13552,32 @@ body.legal-page .legal-highlight {
   }
 }
 
-/* SMALL MOBILE */
 @media (max-width: 640px){
   .pf-wc-hero-v3-countdown-chip{
-    padding: 10px 12px;
+    padding: 10px;
     border-radius: 16px;
     gap: 8px;
   }
 
   .pf-wc-hero-v3-countdown-chip-values{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 6px;
   }
 
   .pf-wc-hero-v3-countdown-chip-values span{
-    font-size: 0.66rem;
-    padding: 7px 2px;
+    font-size: 0.68rem;
+    padding: 8px 4px;
     border-radius: 10px;
   }
 
   .pf-wc-hero-v3-countdown-chip-values strong{
-    font-size: 0.94rem;
+    font-size: 1rem;
   }
+}
+
+.pf-wc-hero-v3-main,
+.pf-wc-hero-v3-countdown-chip,
+.pf-wc-hero-v3-countdown-chip-values,
+.pf-wc-hero-v3-countdown-chip-values span{
+  min-width: 0;
 }
