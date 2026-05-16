@@ -13753,3 +13753,493 @@ body.legal-page .legal-highlight {
     font-size: .72rem;
   }
 }
+
+/* ===== PF PICKS PREMIUM V3 — HERO PALETTE ALIGN ===== */
+.pf-picks-section{
+  position: relative;
+  padding: 76px 20px 58px;
+  background:
+    radial-gradient(circle at 14% 16%, rgba(176,108,255,.14), transparent 28%),
+    radial-gradient(circle at 85% 76%, rgba(255,204,27,.10), transparent 30%),
+    linear-gradient(180deg, #05081f 0%, #03062a 42%, #02041c 100%);
+  border-top: 1px solid rgba(102,247,255,0.08);
+  border-bottom: 1px solid rgba(255,204,27,0.10);
+  overflow: hidden;
+}
+
+.pf-picks-section::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 0%, rgba(255,255,255,.02) 22%, transparent 42%),
+    radial-gradient(circle at 20% 14%, rgba(176,108,255,.06), transparent 20%);
+  pointer-events: none;
+}
+
+.pf-picks-head{
+  max-width: 760px;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.pf-picks-kicker{
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,204,27,.86);
+}
+
+.pf-picks-title{
+  margin: 0 0 12px;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 4.1rem);
+  line-height: .96;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 10px 30px rgba(0,0,0,.35),
+    0 0 20px rgba(176,108,255,.08);
+}
+
+.pf-picks-subtitle{
+  max-width: 640px;
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.72;
+  color: rgba(255,255,255,.78);
+}
+
+.pf-picks-shell{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 2;
+}
+
+.pf-picks-viewport{
+  width: 100%;
+  overflow: hidden;
+}
+
+.pf-picks-track{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.pf-pick-card{
+  position: relative;
+  min-height: 390px;
+  display: block;
+  border-radius: 26px;
+  text-decoration: none;
+  color: #f5f5f5;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(176,108,255,.12), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(255,204,27,.08), transparent 28%),
+    linear-gradient(180deg, rgba(8,12,42,.98) 0%, rgba(4,6,26,.98) 56%, rgba(3,4,18,1) 100%);
+  border: 1px solid rgba(110,120,255,.16);
+  box-shadow:
+    0 22px 50px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.04);
+  transition:
+    border-color .34s ease,
+    box-shadow .34s ease,
+    filter .34s ease,
+    transform .34s cubic-bezier(.23,1,.32,1);
+  isolation: isolate;
+}
+
+.pf-pick-card::before{
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,.03);
+  pointer-events: none;
+}
+
+.pf-pick-card::after{
+  content: "";
+  position: absolute;
+  inset: auto -15% -24% auto;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,204,27,.10), transparent 68%);
+  opacity: .72;
+  pointer-events: none;
+}
+
+.pf-pick-noise{
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.015), transparent 38%),
+    radial-gradient(circle at 18% 12%, rgba(176,108,255,.08), transparent 18%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: .75;
+}
+
+.pf-pick-beam{
+  position: absolute;
+  top: -20%;
+  left: -50%;
+  width: 42%;
+  height: 150%;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,.20), transparent);
+  transform: rotate(18deg) translateX(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pf-pick-frame{
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 390px;
+  padding: 22px 22px 20px;
+}
+
+.pf-pick-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.pf-pick-badge{
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,204,27,.26);
+  background: linear-gradient(135deg, rgba(255,204,27,.10), rgba(176,108,255,.10));
+  color: #ffe27a;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.pf-pick-serial{
+  font-family: 'Anton', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: .12em;
+  color: rgba(176,108,255,.50);
+}
+
+.pf-pick-crest{
+  width: 72px;
+  height: 72px;
+  margin-bottom: 24px;
+  color: #ffd34d;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(180deg, rgba(255,204,27,.12), rgba(176,108,255,.08));
+  border: 1px solid rgba(255,204,27,.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.03),
+    0 10px 24px rgba(0,0,0,.22);
+}
+
+.pf-pick-crest svg{
+  width: 42px;
+  height: 42px;
+  display: block;
+}
+
+.pf-pick-body{
+  margin-bottom: 18px;
+}
+
+.pf-pick-name{
+  margin: 0 0 12px;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  line-height: .98;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 0 16px rgba(176,108,255,.06);
+}
+
+.pf-pick-text{
+  margin: 0;
+  max-width: 28ch;
+  font-size: .98rem;
+  line-height: 1.68;
+  color: rgba(232,236,255,.76);
+}
+
+.pf-pick-meta{
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.pf-pick-meta span{
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(125,140,255,.12);
+  color: rgba(229,233,255,.62);
+  font-size: .77rem;
+  letter-spacing: .03em;
+}
+
+.pf-pick-footer{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.pf-pick-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: .84rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: #ffdb57;
+}
+
+.pf-pick-link svg{
+  width: 18px;
+  height: 18px;
+  transition: transform .28s ease;
+}
+
+.pf-pick-card:hover,
+.pf-pick-card.is-active{
+  border-color: rgba(255,204,27,.34);
+  box-shadow:
+    0 28px 70px rgba(0,0,0,.56),
+    0 0 0 1px rgba(255,204,27,.10),
+    0 0 32px rgba(176,108,255,.12),
+    0 0 18px rgba(255,204,27,.10);
+  filter: brightness(1.04);
+}
+
+.pf-pick-card:hover .pf-pick-beam,
+.pf-pick-card.is-active .pf-pick-beam{
+  opacity: 1;
+  animation: pfPickSweep 1.15s ease forwards;
+}
+
+.pf-pick-card:hover .pf-pick-link svg,
+.pf-pick-card.is-active .pf-pick-link svg{
+  transform: translateX(5px);
+}
+
+.pf-pick-card:hover .pf-pick-crest,
+.pf-pick-card.is-active .pf-pick-crest{
+  border-color: rgba(255,204,27,.28);
+  background:
+    linear-gradient(180deg, rgba(255,204,27,.16), rgba(176,108,255,.12));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 16px 30px rgba(0,0,0,.28),
+    0 0 24px rgba(255,204,27,.08);
+}
+
+.pf-pick-card:hover .pf-pick-name,
+.pf-pick-card.is-active .pf-pick-name{
+  color: #fffef8;
+}
+
+.pf-pick-card:hover .pf-pick-frame,
+.pf-pick-card.is-active .pf-pick-frame{
+  transform: translateY(-1px);
+}
+
+@keyframes pfPickSweep{
+  0%{ transform: rotate(18deg) translateX(-120%); }
+  100%{ transform: rotate(18deg) translateX(340%); }
+}
+
+.pf-picks-arrow{
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,204,27,.18);
+  background: rgba(7,10,34,.76);
+  color: #ffd34d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.28),
+    0 0 20px rgba(176,108,255,.06);
+  transition: transform .24s ease, border-color .24s ease, background .24s ease;
+}
+
+.pf-picks-arrow:hover{
+  transform: scale(1.06);
+  border-color: rgba(255,204,27,.36);
+  background: rgba(12,16,44,.92);
+}
+
+.pf-picks-arrow svg{
+  width: 20px;
+  height: 20px;
+}
+
+.pf-picks-dots{
+  display: none;
+}
+
+@media (min-width: 981px){
+  .pf-picks-arrow{ display: none; }
+}
+
+@media (max-width: 980px){
+  .pf-picks-section{
+    padding: 62px 0 46px;
+  }
+
+  .pf-picks-head{
+    padding: 0 20px;
+    margin-bottom: 24px;
+  }
+
+  .pf-picks-shell{
+    gap: 0;
+  }
+
+  .pf-picks-arrow{
+    position: absolute;
+    top: 44%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 40px;
+    height: 40px;
+  }
+
+  .pf-picks-prev{ left: 10px; }
+  .pf-picks-next{ right: 10px; }
+
+  .pf-picks-viewport{
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 20px;
+  }
+
+  .pf-picks-viewport::-webkit-scrollbar{
+    display: none;
+  }
+
+  .pf-picks-track{
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    padding-right: 20px;
+  }
+
+  .pf-pick-card{
+    width: min(84vw, 324px);
+    min-height: 378px;
+    scroll-snap-align: center;
+  }
+
+  .pf-pick-frame{
+    min-height: 378px;
+  }
+
+  .pf-picks-dots{
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .pf-picks-dot{
+    width: 9px;
+    height: 9px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255,255,255,.18);
+    transition: all .22s ease;
+  }
+
+  .pf-picks-dot.is-active{
+    width: 28px;
+    background: linear-gradient(90deg, #b06cff, #ffcc1b);
+    box-shadow:
+      0 0 14px rgba(176,108,255,.22),
+      0 0 14px rgba(255,204,27,.18);
+  }
+}
+
+@media (max-width: 640px){
+  .pf-picks-title{
+    font-size: clamp(1.95rem, 10vw, 3rem);
+  }
+
+  .pf-picks-subtitle{
+    font-size: .96rem;
+  }
+
+  .pf-pick-card{
+    width: min(86vw, 310px);
+    min-height: 360px;
+    border-radius: 22px;
+  }
+
+  .pf-pick-frame{
+    min-height: 360px;
+    padding: 18px 18px 18px;
+  }
+
+  .pf-pick-card::before{
+    border-radius: 20px;
+  }
+
+  .pf-pick-name{
+    font-size: 1.55rem;
+  }
+
+  .pf-pick-text{
+    font-size: .94rem;
+  }
+
+  .pf-pick-crest{
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+  }
+
+  .pf-pick-meta{
+    gap: 6px;
+  }
+
+  .pf-pick-meta span{
+    font-size: .72rem;
+  }
+}
