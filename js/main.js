@@ -2578,50 +2578,41 @@ function initLegalReader() {
 }
 
 function initWorldCupCountdown() {
-  const daysEls = document.querySelectorAll('[data-countdown="days"]');
-  const hoursEls = document.querySelectorAll('[data-countdown="hours"]');
-  const minutesEls = document.querySelectorAll('[data-countdown="minutes"]');
-  const secondsEls = document.querySelectorAll('[data-countdown="seconds"]');
+  const daysEl = document.getElementById("pfDays");
+  const hoursEl = document.getElementById("pfHours");
+  const minutesEl = document.getElementById("pfMinutes");
+  const secondsEl = document.getElementById("pfSeconds");
+  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
-  if (!daysEls.length || !hoursEls.length || !minutesEls.length || !secondsEls.length) return;
-
-  const targetDate = new Date('2026-06-11T00:00:00+02:00');
-  let timer = null;
-
-  function setValue(elements, value) {
-    elements.forEach(el => {
-      el.textContent = String(value).padStart(2, '0');
-    });
-  }
+  const targetTs = new Date(2026, 5, 11, 0, 0, 0).getTime();
 
   function updateCountdown() {
-    const now = new Date();
-    const diff = targetDate.getTime() - now.getTime();
+    const nowTs = Date.now();
+    const diff = targetTs - nowTs;
 
     if (diff <= 0) {
-      setValue(daysEls, 0);
-      setValue(hoursEls, 0);
-      setValue(minutesEls, 0);
-      setValue(secondsEls, 0);
-      if (timer) clearInterval(timer);
+      daysEl.textContent = "00";
+      hoursEl.textContent = "00";
+      minutesEl.textContent = "00";
+      secondsEl.textContent = "00";
       return;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
 
-    setValue(daysEls, days);
-    setValue(hoursEls, hours);
-    setValue(minutesEls, minutes);
-    setValue(secondsEls, seconds);
+    daysEl.textContent = String(days).padStart(2, "0");
+    hoursEl.textContent = String(hours).padStart(2, "0");
+    minutesEl.textContent = String(minutes).padStart(2, "0");
+    secondsEl.textContent = String(seconds).padStart(2, "0");
   }
 
   updateCountdown();
-  timer = setInterval(updateCountdown, 1000);
+  setInterval(updateCountdown, 1000);
 }
-
 function setupLanguageSwitcher() {
   const buttons = Array.from(document.querySelectorAll('.pf-lang-btn'));
   if (!buttons.length) return;
