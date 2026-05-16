@@ -14450,3 +14450,531 @@ body.legal-page .legal-highlight {
     height: 250px;
   }
 }
+
+/* =========================================================
+   ACCESS EXPERIENCE — WORLD CUP EMOTIONAL SECTION
+   usa: img/world-cup/world-cup-access-bg.jpg
+   ========================================================= */
+
+.pf-access-experience{
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 86px 20px 54px;
+  background: #04071d;
+  border-top: 1px solid rgba(102,247,255,0.08);
+  border-bottom: 1px solid rgba(255,204,27,0.10);
+}
+
+.pf-access-media{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.pf-access-bg-image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  display: block;
+  transform: scale(1.02);
+}
+
+.pf-access-overlay{
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg,
+      rgba(4,7,29,0.96) 0%,
+      rgba(4,7,29,0.88) 16%,
+      rgba(4,7,29,0.62) 34%,
+      rgba(4,7,29,0.18) 56%,
+      rgba(4,7,29,0.30) 100%);
+}
+
+.pf-access-vignette{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 78% 30%, rgba(255,204,27,0.16), transparent 18%),
+    radial-gradient(circle at 72% 50%, rgba(176,108,255,0.16), transparent 24%),
+    radial-gradient(circle at 84% 62%, rgba(41,182,255,0.14), transparent 20%),
+    linear-gradient(180deg, rgba(4,7,29,0.16) 0%, rgba(4,7,29,0.08) 24%, rgba(4,7,29,0.34) 100%);
+  pointer-events: none;
+}
+
+.pf-access-shell{
+  position: relative;
+  z-index: 2;
+}
+
+.pf-access-hero{
+  display: grid;
+  grid-template-columns: minmax(0, 560px);
+  align-items: center;
+  min-height: 420px;
+  margin-bottom: 24px;
+}
+
+.pf-access-copy{
+  max-width: 560px;
+}
+
+.pf-access-kicker{
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,204,27,.24);
+  background: rgba(10,12,38,.42);
+  color: #ffd34d;
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 18px rgba(255,204,27,.10);
+  margin-bottom: 16px;
+}
+
+.pf-access-title{
+  margin: 0 0 14px;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2.7rem, 6vw, 5.6rem);
+  line-height: .90;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 10px 34px rgba(0,0,0,.42),
+    0 0 16px rgba(255,255,255,.05);
+}
+
+.pf-access-title span{
+  display: block;
+  background: linear-gradient(90deg, #ff43c0 0%, #b06cff 36%, #23b7ff 74%, #ffcc1b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pf-access-text{
+  max-width: 530px;
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.64;
+  color: rgba(255,255,255,.84);
+  text-shadow: 0 4px 20px rgba(0,0,0,.28);
+}
+
+/* ===== cards inside emotional scene ===== */
+.pf-picks-shell{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 3;
+}
+
+.pf-picks-viewport{
+  width: 100%;
+  overflow: hidden;
+}
+
+.pf-picks-track{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.pf-pick-card{
+  position: relative;
+  min-height: 388px;
+  display: block;
+  border-radius: 26px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #f5f5f5;
+  background:
+    linear-gradient(180deg, rgba(8,11,42,.48) 0%, rgba(5,7,30,.82) 44%, rgba(4,5,20,.96) 100%);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 24px 54px rgba(0,0,0,.44),
+    inset 0 1px 0 rgba(255,255,255,.05);
+  backdrop-filter: blur(10px);
+  transition:
+    transform .34s cubic-bezier(.23,1,.32,1),
+    border-color .34s ease,
+    box-shadow .34s ease,
+    filter .34s ease;
+  isolation: isolate;
+}
+
+.pf-pick-card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(176,108,255,.18), transparent 30%),
+    radial-gradient(circle at 78% 85%, rgba(255,204,27,.12), transparent 28%);
+  opacity: .9;
+  pointer-events: none;
+}
+
+.pf-pick-card::after{
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 38%;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.00), rgba(0,0,0,.12) 12%, rgba(0,0,0,.34) 100%);
+  pointer-events: none;
+}
+
+.pf-pick-noise{
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.02), transparent 40%),
+    radial-gradient(circle at 84% 24%, rgba(41,182,255,.12), transparent 18%);
+  opacity: .8;
+  pointer-events: none;
+}
+
+.pf-pick-beam{
+  position: absolute;
+  top: -20%;
+  left: -45%;
+  width: 42%;
+  height: 150%;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,.22), transparent);
+  transform: rotate(18deg) translateX(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pf-pick-frame{
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 388px;
+  height: 100%;
+  padding: 22px 22px 20px;
+}
+
+.pf-pick-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.pf-pick-badge{
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,204,27,.22);
+  background: rgba(10,12,38,.28);
+  color: #ffe27a;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.pf-pick-serial{
+  font-family: 'Anton', sans-serif;
+  font-size: 1.18rem;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.76);
+  text-shadow: 0 0 12px rgba(176,108,255,.18);
+}
+
+.pf-pick-body{
+  max-width: 28ch;
+}
+
+.pf-pick-name{
+  margin: 0 0 12px;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1.75rem, 3vw, 2.2rem);
+  line-height: .98;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 0 18px rgba(255,255,255,.04),
+    0 0 12px rgba(176,108,255,.10);
+}
+
+.pf-pick-text{
+  margin: 0;
+  font-size: .98rem;
+  line-height: 1.66;
+  color: rgba(236,241,255,.82);
+}
+
+.pf-pick-meta{
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.pf-pick-meta span{
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: rgba(8,12,40,.28);
+  border: 1px solid rgba(255,255,255,.10);
+  color: rgba(236,241,255,.72);
+  font-size: .77rem;
+  letter-spacing: .03em;
+  backdrop-filter: blur(8px);
+}
+
+.pf-pick-footer{
+  display: flex;
+  align-items: center;
+}
+
+.pf-pick-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffdb57;
+  font-size: .84rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+.pf-pick-link svg{
+  width: 18px;
+  height: 18px;
+  transition: transform .28s ease;
+}
+
+.pf-pick-card:hover,
+.pf-pick-card.is-active{
+  transform: translateY(-4px);
+  border-color: rgba(255,204,27,.30);
+  box-shadow:
+    0 30px 74px rgba(0,0,0,.54),
+    0 0 0 1px rgba(255,204,27,.08),
+    0 0 34px rgba(176,108,255,.12),
+    0 0 16px rgba(41,182,255,.10);
+  filter: brightness(1.04);
+}
+
+.pf-pick-card:hover .pf-pick-beam,
+.pf-pick-card.is-active .pf-pick-beam{
+  opacity: 1;
+  animation: pfPickSweep 1.15s ease forwards;
+}
+
+.pf-pick-card:hover .pf-pick-link svg,
+.pf-pick-card.is-active .pf-pick-link svg{
+  transform: translateX(5px);
+}
+
+@keyframes pfPickSweep{
+  0%{ transform: rotate(18deg) translateX(-120%); }
+  100%{ transform: rotate(18deg) translateX(340%); }
+}
+
+/* arrows + dots */
+.pf-picks-arrow{
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(8,12,40,.50);
+  color: #ffd34d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 28px rgba(0,0,0,.28);
+  transition: transform .24s ease, border-color .24s ease, background .24s ease;
+}
+
+.pf-picks-arrow:hover{
+  transform: scale(1.06);
+  border-color: rgba(255,204,27,.30);
+  background: rgba(10,14,48,.76);
+}
+
+.pf-picks-arrow svg{
+  width: 20px;
+  height: 20px;
+}
+
+.pf-picks-dots{
+  display: none;
+}
+
+/* desktop */
+@media (min-width: 981px){
+  .pf-picks-arrow{
+    display: none;
+  }
+}
+
+/* tablet/mobile */
+@media (max-width: 980px){
+  .pf-access-experience{
+    padding: 64px 0 44px;
+  }
+
+  .pf-access-bg-image{
+    object-position: 68% center;
+  }
+
+  .pf-access-overlay{
+    background:
+      linear-gradient(180deg,
+        rgba(4,7,29,0.28) 0%,
+        rgba(4,7,29,0.42) 20%,
+        rgba(4,7,29,0.68) 58%,
+        rgba(4,7,29,0.92) 100%);
+  }
+
+  .pf-access-shell{
+    padding: 0 20px;
+  }
+
+  .pf-access-hero{
+    min-height: auto;
+    margin-bottom: 22px;
+  }
+
+  .pf-access-copy{
+    max-width: 100%;
+  }
+
+  .pf-access-title{
+    font-size: clamp(2.2rem, 10vw, 4rem);
+  }
+
+  .pf-access-text{
+    max-width: 100%;
+    font-size: .98rem;
+  }
+
+  .pf-picks-shell{
+    gap: 0;
+  }
+
+  .pf-picks-arrow{
+    position: absolute;
+    top: 44%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 40px;
+    height: 40px;
+  }
+
+  .pf-picks-prev{ left: 10px; }
+  .pf-picks-next{ right: 10px; }
+
+  .pf-picks-viewport{
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 20px;
+  }
+
+  .pf-picks-viewport::-webkit-scrollbar{
+    display: none;
+  }
+
+  .pf-picks-track{
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    padding-right: 20px;
+  }
+
+  .pf-pick-card{
+    width: min(84vw, 324px);
+    min-height: 372px;
+    scroll-snap-align: center;
+  }
+
+  .pf-pick-frame{
+    min-height: 372px;
+  }
+
+  .pf-picks-dots{
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .pf-picks-dot{
+    width: 9px;
+    height: 9px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255,255,255,.18);
+    transition: all .22s ease;
+  }
+
+  .pf-picks-dot.is-active{
+    width: 28px;
+    background: linear-gradient(90deg, #b06cff, #ffcc1b);
+    box-shadow:
+      0 0 14px rgba(176,108,255,.22),
+      0 0 14px rgba(255,204,27,.18);
+  }
+}
+
+@media (max-width: 640px){
+  .pf-access-title{
+    font-size: clamp(2rem, 12vw, 3.3rem);
+  }
+
+  .pf-access-text{
+    font-size: .94rem;
+  }
+
+  .pf-pick-card{
+    width: min(86vw, 310px);
+    min-height: 356px;
+    border-radius: 22px;
+  }
+
+  .pf-pick-frame{
+    min-height: 356px;
+    padding: 18px 18px 18px;
+  }
+
+  .pf-pick-name{
+    font-size: 1.56rem;
+  }
+
+  .pf-pick-text{
+    font-size: .94rem;
+  }
+
+  .pf-pick-meta{
+    gap: 6px;
+  }
+
+  .pf-pick-meta span{
+    font-size: .72rem;
+  }
+}
