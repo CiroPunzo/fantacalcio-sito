@@ -2674,6 +2674,113 @@ function setupLanguageSwitcher() {
   applyLangUI(currentLang);
 }
 
+function initPFPicksSection() {
+  const viewport = document.getElementById("pf-picks-viewport");
+  const track = document.getElementById("pf-picks-track");
+  const cards = Array.from(document.querySelectorAll("[data-pick-card]"));
+  const prevBtn = document.querySelector(".pf-picks-prev");
+  const nextBtn = document.querySelector(".pf-picks-next");
+  const dots = Array.from(document.querySelectorAll("[data-pick-dot]"));
+
+  if (!viewport || !track || !cards.length) return;
+
+  let currentIndex = 0;
+
+  function setActiveCard(index) {
+    currentIndex = Math.max(0, Math.min(index, cards.length - 1));
+
+    cards.forEach((card, i) => {
+      card.classList.toggle("is-active", i === currentIndex);
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("is-active", i === currentIndex);
+    });
+  }
+
+  function scrollToCard(index) {
+    if (window.innerWidth > 980) {
+      setActiveCard(index);
+      return;
+    }
+
+    const card = cards[index];
+    if (!card) return;
+
+    const left = card.offsetLeft - 20;
+    viewport.scrollTo({
+      left,
+      behavior: "smooth"
+    });
+
+    setActiveCard(index);
+  }
+
+  function getNearestCardIndex() {
+    const viewportCenter = viewport.scrollLeft + viewport.offsetWidth / 2;
+
+    let nearestIndex = 0;
+    let nearestDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(viewportCenter - cardCenter);
+
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearestIndex = index;
+      }
+    });
+
+    return nearestIndex;
+  }
+
+  prevBtn?.addEventListener("click", () => {
+    const nextIndex = currentIndex === 0 ? cards.length - 1 : currentIndex - 1;
+    scrollToCard(nextIndex);
+  });
+
+  nextBtn?.addEventListener("click", () => {
+    const nextIndex = currentIndex === cards.length - 1 ? 0 : currentIndex + 1;
+    scrollToCard(nextIndex);
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      scrollToCard(index);
+    });
+  });
+
+  cards.forEach((card, index) => {
+    card.addEventListener("mouseenter", () => {
+      if (window.innerWidth > 980) setActiveCard(index);
+    });
+
+    card.addEventListener("click", () => {
+      setActiveCard(index);
+    });
+  });
+
+  let scrollTimeout;
+  viewport.addEventListener("scroll", () => {
+    if (window.innerWidth > 980) return;
+
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      setActiveCard(getNearestCardIndex());
+    }, 80);
+  }, { passive: true });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 980) {
+      viewport.scrollLeft = 0;
+    }
+    setActiveCard(currentIndex);
+  });
+
+  setActiveCard(0);
+}
+
 
 
 // =====================
@@ -2706,6 +2813,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     initWorldCupCountdown();
     setupLanguageSwitcher();
+    initPFPicksSection();
 
     const path = window.location.pathname.toLowerCase();
     console.log("[PF] path =", path);
