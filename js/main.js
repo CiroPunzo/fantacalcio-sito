@@ -2585,7 +2585,8 @@ function initWorldCupCountdown() {
 
   if (!daysEls.length || !hoursEls.length || !minutesEls.length || !secondsEls.length) return;
 
-  const targetDate = new Date('2026-06-11T00:00:00');
+  const targetDate = new Date('2026-06-11T00:00:00+02:00');
+  let timer = null;
 
   function setValue(elements, value) {
     elements.forEach(el => {
@@ -2595,13 +2596,14 @@ function initWorldCupCountdown() {
 
   function updateCountdown() {
     const now = new Date();
-    const diff = targetDate - now;
+    const diff = targetDate.getTime() - now.getTime();
 
     if (diff <= 0) {
       setValue(daysEls, 0);
       setValue(hoursEls, 0);
       setValue(minutesEls, 0);
       setValue(secondsEls, 0);
+      if (timer) clearInterval(timer);
       return;
     }
 
@@ -2617,7 +2619,7 @@ function initWorldCupCountdown() {
   }
 
   updateCountdown();
-  setInterval(updateCountdown, 1000);
+  timer = setInterval(updateCountdown, 1000);
 }
 
 function setupLanguageSwitcher() {
