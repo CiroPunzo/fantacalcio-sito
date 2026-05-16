@@ -13643,3 +13643,42 @@ body.legal-page .legal-highlight {
     font-size: 0.5rem !important;
   }
 }
+
+@media (max-width: 560px) {
+  .wc-hero-countdown,
+  .pf-hero-v2-countdown,
+  .pf-wc-floating-countdown .pf-wc-countdown {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .wc-hero-timebox,
+  .pf-hero-v2-timebox,
+  .pf-wc-floating-countdown .pf-wc-timebox {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 64px !important;
+    padding: 10px 12px !important;
+    border-radius: 14px !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    text-align: left !important;
+  }
+
+  .wc-hero-timebox span,
+  .pf-hero-v2-timebox span,
+  .pf-wc-floating-countdown .pf-wc-timebox span {
+    font-size: 1.35rem !important;
+    margin: 0 !important;
+  }
+
+  .wc-hero-timebox small,
+  .pf-hero-v2-timebox small,
+  .pf-wc-floating-countdown .pf-wc-timebox small {
+    margin: 0 !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.08em !important;
+    text-align: right !important;
+  }
+}
