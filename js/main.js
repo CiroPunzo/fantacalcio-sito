@@ -2578,28 +2578,30 @@ function initLegalReader() {
 }
 
 function initWorldCupCountdown() {
-  const targetDate = new Date('2026-06-11T20:00:00+02:00').getTime();
+  const daysEls = document.querySelectorAll('[data-countdown="days"]');
+  const hoursEls = document.querySelectorAll('[data-countdown="hours"]');
+  const minutesEls = document.querySelectorAll('[data-countdown="minutes"]');
+  const secondsEls = document.querySelectorAll('[data-countdown="seconds"]');
 
-  const daysEl = document.getElementById('pfDays');
-  const hoursEl = document.getElementById('pfHours');
-  const minutesEl = document.getElementById('pfMinutes');
-  const secondsEl = document.getElementById('pfSeconds');
+  if (!daysEls.length || !hoursEls.length || !minutesEls.length || !secondsEls.length) return;
 
-  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+  const targetDate = new Date('2026-06-11T00:00:00');
 
-  function pad(value) {
-    return String(value).padStart(2, '0');
+  function setValue(elements, value) {
+    elements.forEach(el => {
+      el.textContent = String(value).padStart(2, '0');
+    });
   }
 
   function updateCountdown() {
-    const now = Date.now();
+    const now = new Date();
     const diff = targetDate - now;
 
     if (diff <= 0) {
-      daysEl.textContent = '00';
-      hoursEl.textContent = '00';
-      minutesEl.textContent = '00';
-      secondsEl.textContent = '00';
+      setValue(daysEls, 0);
+      setValue(hoursEls, 0);
+      setValue(minutesEls, 0);
+      setValue(secondsEls, 0);
       return;
     }
 
@@ -2608,10 +2610,10 @@ function initWorldCupCountdown() {
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
-    daysEl.textContent = pad(days);
-    hoursEl.textContent = pad(hours);
-    minutesEl.textContent = pad(minutes);
-    secondsEl.textContent = pad(seconds);
+    setValue(daysEls, days);
+    setValue(hoursEls, hours);
+    setValue(minutesEls, minutes);
+    setValue(secondsEls, seconds);
   }
 
   updateCountdown();
