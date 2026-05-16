@@ -13581,3 +13581,38 @@ body.legal-page .legal-highlight {
 .pf-wc-hero-v3-countdown-chip-values span{
   min-width: 0;
 }
+
+/* Countdown hero mobile: 1x4 compatto e più pieno */
+@media (max-width: 640px) {
+  .wc-hero-countdown,
+  .pf-hero-v2-countdown,
+  .pf-wc-floating-countdown .pf-wc-countdown {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+
+  .wc-hero-timebox,
+  .pf-hero-v2-timebox,
+  .pf-wc-floating-countdown .pf-wc-timebox {
+    min-height: 64px !important;
+    padding: 8px 4px !important;
+    border-radius: 12px !important;
+  }
+
+  .wc-hero-timebox span,
+  .pf-hero-v2-timebox span,
+  .pf-wc-floating-countdown .pf-wc-timebox span {
+    font-size: 1.28rem !important;
+    line-height: 0.95 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .wc-hero-timebox small,
+  .pf-hero-v2-timebox small,
+  .pf-wc-floating-countdown .pf-wc-timebox small {
+    margin-top: 4px !important;
+    font-size: 0.54rem !important;
+    line-height: 1 !important;
+    letter-spacing: 0.08em !important;
+  }
+}
