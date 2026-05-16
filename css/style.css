@@ -13644,7 +13644,7 @@ body.legal-page .legal-highlight {
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 768px) {
   .wc-hero-countdown,
   .pf-hero-v2-countdown,
   .pf-wc-floating-countdown .pf-wc-countdown {
