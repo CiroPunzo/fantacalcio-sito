@@ -2578,36 +2578,60 @@ function initLegalReader() {
 }
 
 function initWorldCupCountdown() {
-  const daysEl = document.getElementById("pfDays");
-  const hoursEl = document.getElementById("pfHours");
-  const minutesEl = document.getElementById("pfMinutes");
-  const secondsEl = document.getElementById("pfSeconds");
-  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+  const daysEls = [
+    document.getElementById('pfDays'),
+    document.getElementById('pfDaysMobile')
+  ].filter(Boolean);
 
-  const targetTs = new Date(2026, 5, 11, 0, 0, 0).getTime();
+  const hoursEls = [
+    document.getElementById('pfHours'),
+    document.getElementById('pfHoursMobile')
+  ].filter(Boolean);
+
+  const minutesEls = [
+    document.getElementById('pfMinutes'),
+    document.getElementById('pfMinutesMobile')
+  ].filter(Boolean);
+
+  const secondsEls = [
+    document.getElementById('pfSeconds'),
+    document.getElementById('pfSecondsMobile')
+  ].filter(Boolean);
+
+  if (!daysEls.length || !hoursEls.length || !minutesEls.length || !secondsEls.length) {
+    console.warn('Countdown elements non trovati');
+    return;
+  }
+
+  const targetDate = new Date('2026-06-11T00:00:00');
+
+  function setAll(elements, value) {
+    elements.forEach(el => {
+      el.textContent = value;
+    });
+  }
 
   function updateCountdown() {
-    const nowTs = Date.now();
-    const diff = targetTs - nowTs;
+    const now = new Date();
+    const diff = targetDate - now;
 
     if (diff <= 0) {
-      daysEl.textContent = "00";
-      hoursEl.textContent = "00";
-      minutesEl.textContent = "00";
-      secondsEl.textContent = "00";
+      setAll(daysEls, '00');
+      setAll(hoursEls, '00');
+      setAll(minutesEls, '00');
+      setAll(secondsEls, '00');
       return;
     }
 
-    const totalSeconds = Math.floor(diff / 1000);
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
 
-    daysEl.textContent = String(days).padStart(2, "0");
-    hoursEl.textContent = String(hours).padStart(2, "0");
-    minutesEl.textContent = String(minutes).padStart(2, "0");
-    secondsEl.textContent = String(seconds).padStart(2, "0");
+    setAll(daysEls, String(days).padStart(2, '0'));
+    setAll(hoursEls, String(hours).padStart(2, '0'));
+    setAll(minutesEls, String(minutes).padStart(2, '0'));
+    setAll(secondsEls, String(seconds).padStart(2, '0'));
   }
 
   updateCountdown();
