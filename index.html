@@ -252,135 +252,161 @@
   </div>
 </section>
 
-    <section class="pf-access-experience" id="pf-picks">
-  <div class="pf-access-bg"></div>
-  <div class="pf-access-noise"></div>
-  <div class="container pf-access-shell">
+   <section class="pf-access-experience" id="pf-picks">
+  <div class="pf-access-media">
+    <img
+      src="img/world-cup/world-cup-access-bg.jpg"
+      alt="World Cup trophy visual"
+      class="pf-access-bg-image"
+    >
+    <div class="pf-access-overlay"></div>
+    <div class="pf-access-vignette"></div>
+  </div>
 
+  <div class="container pf-access-shell">
     <div class="pf-access-hero">
       <div class="pf-access-copy">
         <span class="pf-access-kicker">World Cup Edition</span>
+
         <h2 class="pf-access-title">
           Scegli il tuo
           <span>accesso</span>
         </h2>
+
         <p class="pf-access-text">
           Tre aree chiave per seguire l’evento con più profondità:
           giochi dedicati, aggiornamenti live e strumenti utili
           per leggere tutto meglio.
         </p>
       </div>
+    </div>
 
-      <div class="pf-access-visual" aria-hidden="true">
-        <div class="pf-access-orb pf-access-orb-a"></div>
-        <div class="pf-access-orb pf-access-orb-b"></div>
-        <div class="pf-access-rings"></div>
-        <div class="pf-access-trophy-wrap">
-          <img src="img/world-cup/trophy.png" alt="" class="pf-access-trophy">
+    <div class="pf-picks-shell">
+      <button class="pf-picks-arrow pf-picks-prev" type="button" aria-label="Card precedente">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="pf-picks-viewport" id="pf-picks-viewport">
+        <div class="pf-picks-track" id="pf-picks-track">
+
+          <a href="/world-cup-games.html" class="pf-pick-card is-active" data-pick-card>
+            <span class="pf-pick-noise"></span>
+            <span class="pf-pick-beam"></span>
+
+            <div class="pf-pick-frame">
+              <div class="pf-pick-top">
+                <span class="pf-pick-badge">Event Mode</span>
+                <span class="pf-pick-serial">01</span>
+              </div>
+
+              <div class="pf-pick-body">
+                <h3 class="pf-pick-name">World Cup Games</h3>
+                <p class="pf-pick-text">
+                  Sfide, format speciali e contenuti dedicati per vivere la competizione con più coinvolgimento.
+                </p>
+              </div>
+
+              <div class="pf-pick-meta">
+                <span>Special format</span>
+                <span>Exclusive area</span>
+              </div>
+
+              <div class="pf-pick-footer">
+                <span class="pf-pick-link">
+                  Apri area
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+
+          <a href="/transfers.html" class="pf-pick-card" data-pick-card>
+            <span class="pf-pick-noise"></span>
+            <span class="pf-pick-beam"></span>
+
+            <div class="pf-pick-frame">
+              <div class="pf-pick-top">
+                <span class="pf-pick-badge">Live Tracking</span>
+                <span class="pf-pick-serial">02</span>
+              </div>
+
+              <div class="pf-pick-body">
+                <h3 class="pf-pick-name">Transfers Live</h3>
+                <p class="pf-pick-text">
+                  Segui movimenti, aggiornamenti e focus mercato in una pagina sempre pronta da consultare.
+                </p>
+              </div>
+
+              <div class="pf-pick-meta">
+                <span>Market watch</span>
+                <span>Live updates</span>
+              </div>
+
+              <div class="pf-pick-footer">
+                <span class="pf-pick-link">
+                  Vai ai transfer
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+
+          <a href="/tools.html" class="pf-pick-card" data-pick-card>
+            <span class="pf-pick-noise"></span>
+            <span class="pf-pick-beam"></span>
+
+            <div class="pf-pick-frame">
+              <div class="pf-pick-top">
+                <span class="pf-pick-badge">Data Hub</span>
+                <span class="pf-pick-serial">03</span>
+              </div>
+
+              <div class="pf-pick-body">
+                <h3 class="pf-pick-name">Tools Hub</h3>
+                <p class="pf-pick-text">
+                  Comparatori, dati e strumenti per leggere meglio giocatori, scambi e scenari dell’evento.
+                </p>
+              </div>
+
+              <div class="pf-pick-meta">
+                <span>Tools & data</span>
+                <span>Smart analysis</span>
+              </div>
+
+              <div class="pf-pick-footer">
+                <span class="pf-pick-link">
+                  Apri tools
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+
         </div>
       </div>
+
+      <button class="pf-picks-arrow pf-picks-next" type="button" aria-label="Card successiva">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
 
-    <div class="pf-picks-track">
-      <!-- QUI dentro lasciamo temporaneamente le 3 card -->
+    <div class="pf-picks-dots" id="pf-picks-dots">
+      <button type="button" class="pf-picks-dot is-active" data-pick-dot="0" aria-label="Vai alla card 1"></button>
+      <button type="button" class="pf-picks-dot" data-pick-dot="1" aria-label="Vai alla card 2"></button>
+      <button type="button" class="pf-picks-dot" data-pick-dot="2" aria-label="Vai alla card 3"></button>
     </div>
-
   </div>
 </section>
-
-    <section class="neo-hero" aria-label="Dashboard strumenti e dati">
-      <div class="container neo-hero-inner">
-        <div class="neo-hero-left">
-          <span class="neo-kicker">Data Hub | ProFantasy</span>
-          <h2 class="neo-title">Live Data &amp; Tools</h2>
-          <p class="neo-subtitle">Risultati, comparatore giocatori, confronto scambi e classifiche aggiornate.</p>
-        </div>
-
-        <div class="neo-hero-right">
-          <div class="neo-matchday-picker">
-            <button type="button" class="neo-pill neo-pill-active" id="btn-matchday-current">
-              Giornata attuale
-            </button>
-            <button type="button" class="neo-pill" id="btn-matchday-prev">
-              Scorsa
-            </button>
-          </div>
-          <p class="neo-hint" id="matchday-status-text">Caricamento giornata…</p>
-        </div>
-      </div>
-
-      <div class="neo-hero-glow"></div>
-    </section>
-
-    <section class="neo-section" id="home-risultati">
-      <div class="container">
-        <div class="neo-section-head">
-          <div>
-            <h2 class="neo-section-title">Risultati di giornata</h2>
-            <p class="neo-section-subtitle">La parte operativa del sito resta disponibile, ma ora è inserita in un hub più ampio.</p>
-          </div>
-          <div class="neo-section-actions">
-            <a class="neo-link" href="predictions.html">Vai a Previsioni →</a>
-          </div>
-        </div>
-
-        <div class="neo-carousel neo-results-carousel">
-          <button class="neo-carousel-arrow neo-carousel-prev" type="button" aria-label="Precedente" id="results-prev">‹</button>
-
-          <div class="neo-carousel-track" id="results-carousel-track">
-            <div class="neo-card neo-card-skeleton">Carico i risultati…</div>
-          </div>
-
-          <button class="neo-carousel-arrow neo-carousel-next" type="button" aria-label="Successivo" id="results-next">›</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="neo-section" id="season-formats">
-      <div class="container">
-        <div class="neo-section-head">
-          <div>
-            <h2 class="neo-section-title">I format della prossima stagione</h2>
-            <p class="neo-section-subtitle">Due esperienze diverse, una community centrale.</p>
-          </div>
-        </div>
-
-        <div class="telegram-features">
-          <div class="telegram-feature">
-            <span class="telegram-feature-icon">🔓</span>
-            <div>
-              <strong>ProFantasy Open</strong>
-              <p>Format più accessibile, pensato per volume, community e partecipazione estesa.</p>
-            </div>
-          </div>
-
-          <div class="telegram-feature">
-            <span class="telegram-feature-icon">👑</span>
-            <div>
-              <strong>ProFantasy Exclusive</strong>
-              <p>Esperienza più selettiva con accessi limitati, vantaggi dedicati e posizionamento premium.</p>
-            </div>
-          </div>
-
-          <div class="telegram-feature">
-            <span class="telegram-feature-icon">📝</span>
-            <div>
-              <strong>Regolamenti in revisione</strong>
-              <p>Le basi sono già inserite sul sito, ma qui potrai poi mettere versione definitiva e CTA di iscrizione.</p>
-            </div>
-          </div>
-
-          <div class="telegram-feature">
-            <span class="telegram-feature-icon">📩</span>
-            <div>
-              <strong>Priorità agli iscritti</strong>
-              <p>Chi entra ora in community o lascia la mail riceve aggiornamenti prima del lancio ufficiale.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="neo-section" id="home-comparatore">
       <div class="container">
         <div class="neo-section-head">
