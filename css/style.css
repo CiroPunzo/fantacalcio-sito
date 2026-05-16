@@ -14978,3 +14978,401 @@ body.legal-page .legal-highlight {
     font-size: .72rem;
   }
 }
+
+/* =========================================================
+   PF PICKS — IMMERSIVE CARDS V4
+   ========================================================= */
+
+.pf-picks-track{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.pf-pick-card{
+  position: relative;
+  min-height: 430px;
+  display: block;
+  overflow: hidden;
+  border-radius: 28px;
+  text-decoration: none;
+  color: #ffffff;
+  background:
+    linear-gradient(180deg, rgba(8,12,42,.30) 0%, rgba(7,9,34,.70) 46%, rgba(5,6,22,.96) 100%);
+  border: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 24px 54px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.05);
+  transition:
+    transform .34s cubic-bezier(.23,1,.32,1),
+    box-shadow .34s ease,
+    border-color .34s ease,
+    filter .34s ease;
+  isolation: isolate;
+}
+
+.pf-pick-card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.02), transparent 18%),
+    radial-gradient(circle at 15% 14%, rgba(255,255,255,.06), transparent 24%);
+  pointer-events: none;
+}
+
+.pf-pick-card::after{
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 44%;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.14) 14%, rgba(0,0,0,.52) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.pf-pick-card-games{
+  border-color: rgba(255,70,190,.42);
+  box-shadow:
+    0 24px 54px rgba(0,0,0,.42),
+    0 0 0 1px rgba(255,70,190,.08),
+    0 0 34px rgba(255,70,190,.10);
+}
+
+.pf-pick-card-transfers{
+  border-color: rgba(35,183,255,.42);
+  box-shadow:
+    0 24px 54px rgba(0,0,0,.42),
+    0 0 0 1px rgba(35,183,255,.08),
+    0 0 34px rgba(35,183,255,.10);
+}
+
+.pf-pick-card-tools{
+  border-color: rgba(215,78,255,.38);
+  box-shadow:
+    0 24px 54px rgba(0,0,0,.42),
+    0 0 0 1px rgba(215,78,255,.08),
+    0 0 34px rgba(215,78,255,.10);
+}
+
+.pf-pick-noise{
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.02), transparent 40%),
+    radial-gradient(circle at 82% 18%, rgba(255,255,255,.04), transparent 14%);
+  opacity: .8;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pf-pick-beam{
+  position: absolute;
+  top: -20%;
+  left: -45%;
+  width: 42%;
+  height: 150%;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,.22), transparent);
+  transform: rotate(18deg) translateX(0);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.pf-pick-frame{
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 430px;
+  height: 100%;
+  padding: 22px 22px 20px;
+}
+
+.pf-pick-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.pf-pick-serial{
+  font-family: 'Anton', sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  letter-spacing: .03em;
+  color: #ffffff;
+  opacity: .92;
+}
+
+.pf-pick-card-games .pf-pick-serial{ color: #ff4bc8; }
+.pf-pick-card-transfers .pf-pick-serial{ color: #23b7ff; }
+.pf-pick-card-tools .pf-pick-serial{ color: #d760ff; }
+
+.pf-pick-icon{
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  background: rgba(10,12,38,.24);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 8px 20px rgba(0,0,0,.18);
+}
+
+.pf-pick-card-games .pf-pick-icon{
+  color: #ff4bc8;
+  border-color: rgba(255,75,200,.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 0 24px rgba(255,75,200,.10);
+}
+
+.pf-pick-card-transfers .pf-pick-icon{
+  color: #23b7ff;
+  border-color: rgba(35,183,255,.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 0 24px rgba(35,183,255,.10);
+}
+
+.pf-pick-card-tools .pf-pick-icon{
+  color: #d760ff;
+  border-color: rgba(215,96,255,.26);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 0 24px rgba(215,96,255,.10);
+}
+
+.pf-pick-icon svg{
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.pf-pick-body{
+  max-width: 26ch;
+  margin-bottom: 14px;
+}
+
+.pf-pick-name{
+  margin: 0 0 12px;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.3rem);
+  line-height: .96;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 6px 24px rgba(0,0,0,.34),
+    0 0 16px rgba(255,255,255,.03);
+}
+
+.pf-pick-text{
+  margin: 0;
+  max-width: 28ch;
+  font-size: .98rem;
+  line-height: 1.62;
+  color: rgba(240,244,255,.82);
+}
+
+.pf-pick-meta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.pf-pick-meta span{
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: rgba(7,10,34,.26);
+  border: 1px solid rgba(255,255,255,.10);
+  color: rgba(240,244,255,.74);
+  font-size: .77rem;
+  letter-spacing: .02em;
+  backdrop-filter: blur(8px);
+}
+
+.pf-pick-footer{
+  position: relative;
+  z-index: 4;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+}
+
+.pf-pick-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .86rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+.pf-pick-card-games .pf-pick-link{ color: #ff4bc8; }
+.pf-pick-card-transfers .pf-pick-link{ color: #23b7ff; }
+.pf-pick-card-tools .pf-pick-link{ color: #d760ff; }
+
+.pf-pick-link svg{
+  width: 18px;
+  height: 18px;
+  transition: transform .28s ease;
+}
+
+.pf-pick-scene{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.pf-pick-scene::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5,6,22,0) 0%, rgba(5,6,22,.16) 18%, rgba(5,6,22,.55) 100%);
+}
+
+.pf-pick-scene-image{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  opacity: .92;
+  transform: scale(1.03);
+}
+
+.pf-pick-card-games .pf-pick-scene{
+  background:
+    radial-gradient(circle at 50% 100%, rgba(255,75,200,.30), transparent 46%),
+    linear-gradient(180deg, rgba(255,75,200,.06), rgba(255,75,200,.14));
+}
+
+.pf-pick-card-transfers .pf-pick-scene{
+  background:
+    radial-gradient(circle at 50% 100%, rgba(35,183,255,.28), transparent 46%),
+    linear-gradient(180deg, rgba(35,183,255,.05), rgba(35,183,255,.14));
+}
+
+.pf-pick-card-tools .pf-pick-scene{
+  background:
+    radial-gradient(circle at 50% 100%, rgba(215,96,255,.24), transparent 46%),
+    linear-gradient(180deg, rgba(215,96,255,.05), rgba(215,96,255,.12));
+}
+
+.pf-pick-card:hover,
+.pf-pick-card.is-active{
+  transform: translateY(-5px);
+  filter: brightness(1.05);
+}
+
+.pf-pick-card-games:hover,
+.pf-pick-card-games.is-active{
+  box-shadow:
+    0 34px 80px rgba(0,0,0,.56),
+    0 0 0 1px rgba(255,75,200,.10),
+    0 0 38px rgba(255,75,200,.16);
+}
+
+.pf-pick-card-transfers:hover,
+.pf-pick-card-transfers.is-active{
+  box-shadow:
+    0 34px 80px rgba(0,0,0,.56),
+    0 0 0 1px rgba(35,183,255,.10),
+    0 0 38px rgba(35,183,255,.16);
+}
+
+.pf-pick-card-tools:hover,
+.pf-pick-card-tools.is-active{
+  box-shadow:
+    0 34px 80px rgba(0,0,0,.56),
+    0 0 0 1px rgba(215,96,255,.10),
+    0 0 38px rgba(215,96,255,.16);
+}
+
+.pf-pick-card:hover .pf-pick-link svg,
+.pf-pick-card.is-active .pf-pick-link svg{
+  transform: translateX(5px);
+}
+
+.pf-pick-card:hover .pf-pick-beam,
+.pf-pick-card.is-active .pf-pick-beam{
+  opacity: 1;
+  animation: pfPickSweep 1.1s ease forwards;
+}
+
+@keyframes pfPickSweep{
+  0%{ transform: rotate(18deg) translateX(-120%); }
+  100%{ transform: rotate(18deg) translateX(340%); }
+}
+
+@media (max-width: 980px){
+  .pf-picks-track{
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    padding-right: 20px;
+  }
+
+  .pf-pick-card{
+    width: min(84vw, 324px);
+    min-height: 408px;
+    scroll-snap-align: center;
+  }
+
+  .pf-pick-frame{
+    min-height: 408px;
+  }
+}
+
+@media (max-width: 640px){
+  .pf-pick-card{
+    width: min(86vw, 310px);
+    min-height: 390px;
+    border-radius: 22px;
+  }
+
+  .pf-pick-frame{
+    min-height: 390px;
+    padding: 18px 18px 18px;
+  }
+
+  .pf-pick-serial{
+    font-size: 1.7rem;
+  }
+
+  .pf-pick-icon{
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+  }
+
+  .pf-pick-name{
+    font-size: 1.55rem;
+  }
+
+  .pf-pick-text{
+    font-size: .93rem;
+  }
+
+  .pf-pick-meta span{
+    font-size: .72rem;
+  }
+}
