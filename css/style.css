@@ -13366,57 +13366,17 @@ body.legal-page .legal-highlight {
   }
 }
 
-/* MOBILE */
-@media (max-width: 980px){
-  .pf-wc-hero-v3-countdown-chip{
-    position: static;
-    margin-top: 14px;
-    margin-bottom: 14px;
-    width: 100%;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 10px 12px;
-  }
-
-  .pf-wc-hero-v3-countdown-chip-values{
-    gap: 8px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .pf-wc-hero-v3-countdown-chip-values::-webkit-scrollbar{
-    display: none;
-  }
-}
-
-@media (max-width: 640px){
-  .pf-wc-hero-v3-countdown-chip{
-    padding: 9px 10px;
-    gap: 8px;
-  }
-
-  .pf-wc-hero-v3-countdown-chip-label{
-    font-size: 0.54rem;
-    padding: 0 8px;
-  }
-
-  .pf-wc-hero-v3-countdown-chip-values{
-    gap: 6px;
-  }
-
-  .pf-wc-hero-v3-countdown-chip-values span{
-    font-size: 0.68rem;
-  }
-
-  .pf-wc-hero-v3-countdown-chip-values strong{
-    font-size: 0.95rem;
-  }
-}
-
-/* === COUNTDOWN CHIP / REFINED === */
+/* === COUNTDOWN CHIP / CLEAN === */
 
 .pf-wc-hero-v3-shell{
   position: relative;
+}
+
+.pf-wc-hero-v3-main,
+.pf-wc-hero-v3-countdown-chip,
+.pf-wc-hero-v3-countdown-chip-values,
+.pf-wc-hero-v3-countdown-chip-values span{
+  min-width: 0;
 }
 
 .pf-wc-hero-v3-countdown-chip{
@@ -13482,7 +13442,7 @@ body.legal-page .legal-highlight {
     0 0 8px rgba(90,240,255,0.12);
 }
 
-/* DESKTOP */
+/* === DESKTOP === */
 @media (min-width: 981px){
   .pf-wc-hero-v3-countdown-chip{
     position: absolute;
@@ -13501,6 +13461,7 @@ body.legal-page .legal-highlight {
   }
 }
 
+/* === TABLET / MOBILE === */
 @media (max-width: 980px){
   .pf-wc-hero-v3-countdown-chip{
     position: static;
@@ -13509,7 +13470,7 @@ body.legal-page .legal-highlight {
     width: 100%;
     max-width: 100%;
     border-radius: 18px;
-    padding: 12px 12px;
+    padding: 12px;
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
@@ -13536,6 +13497,7 @@ body.legal-page .legal-highlight {
     min-width: 0;
     width: 100%;
     justify-content: center;
+    align-items: baseline;
     padding: 8px 4px;
     border-radius: 12px;
     background: linear-gradient(180deg, rgba(8,16,48,0.58), rgba(2,8,26,0.72));
@@ -13552,6 +13514,7 @@ body.legal-page .legal-highlight {
   }
 }
 
+/* === SMALL MOBILE: 1x4 VERTICALE === */
 @media (max-width: 640px){
   .pf-wc-hero-v3-countdown-chip{
     padding: 10px;
@@ -13559,126 +13522,49 @@ body.legal-page .legal-highlight {
     gap: 8px;
   }
 
+  .pf-wc-hero-v3-countdown-chip-label{
+    font-size: 0.54rem;
+    padding: 0 8px;
+  }
+
   .pf-wc-hero-v3-countdown-chip-values{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 6px;
   }
 
   .pf-wc-hero-v3-countdown-chip-values span{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
     font-size: 0.68rem;
-    padding: 8px 4px;
     border-radius: 10px;
+    text-align: left;
   }
 
   .pf-wc-hero-v3-countdown-chip-values strong{
     font-size: 1rem;
+    flex-shrink: 0;
   }
 }
 
-.pf-wc-hero-v3-main,
-.pf-wc-hero-v3-countdown-chip,
-.pf-wc-hero-v3-countdown-chip-values,
-.pf-wc-hero-v3-countdown-chip-values span{
-  min-width: 0;
-}
-
-/* Countdown hero mobile: 1x4 compatto e più pieno */
-@media (max-width: 640px) {
-  .wc-hero-countdown,
-  .pf-hero-v2-countdown,
-  .pf-wc-floating-countdown .pf-wc-countdown {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    gap: 6px !important;
+/* === EXTRA SMALL === */
+@media (max-width: 380px){
+  .pf-wc-hero-v3-countdown-chip{
+    padding: 9px;
   }
 
-  .wc-hero-timebox,
-  .pf-hero-v2-timebox,
-  .pf-wc-floating-countdown .pf-wc-timebox {
-    min-height: 64px !important;
-    padding: 8px 4px !important;
-    border-radius: 12px !important;
+  .pf-wc-hero-v3-countdown-chip-values{
+    gap: 5px;
   }
 
-  .wc-hero-timebox span,
-  .pf-hero-v2-timebox span,
-  .pf-wc-floating-countdown .pf-wc-timebox span {
-    font-size: 1.28rem !important;
-    line-height: 0.95 !important;
-    letter-spacing: 0.02em !important;
+  .pf-wc-hero-v3-countdown-chip-values span{
+    padding: 9px 10px;
+    font-size: 0.64rem;
   }
 
-  .wc-hero-timebox small,
-  .pf-hero-v2-timebox small,
-  .pf-wc-floating-countdown .pf-wc-timebox small {
-    margin-top: 4px !important;
-    font-size: 0.54rem !important;
-    line-height: 1 !important;
-    letter-spacing: 0.08em !important;
-  }
-}
-
-@media (max-width: 380px) {
-  .wc-hero-countdown,
-  .pf-hero-v2-countdown,
-  .pf-wc-floating-countdown .pf-wc-countdown {
-    gap: 5px !important;
-  }
-
-  .wc-hero-timebox,
-  .pf-hero-v2-timebox,
-  .pf-wc-floating-countdown .pf-wc-timebox {
-    min-height: 60px !important;
-    padding: 7px 3px !important;
-  }
-
-  .wc-hero-timebox span,
-  .pf-hero-v2-timebox span,
-  .pf-wc-floating-countdown .pf-wc-timebox span {
-    font-size: 1.18rem !important;
-  }
-
-  .wc-hero-timebox small,
-  .pf-hero-v2-timebox small,
-  .pf-wc-floating-countdown .pf-wc-timebox small {
-    font-size: 0.5rem !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .wc-hero-countdown,
-  .pf-hero-v2-countdown,
-  .pf-wc-floating-countdown .pf-wc-countdown {
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
-  }
-
-  .wc-hero-timebox,
-  .pf-hero-v2-timebox,
-  .pf-wc-floating-countdown .pf-wc-timebox {
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 64px !important;
-    padding: 10px 12px !important;
-    border-radius: 14px !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    text-align: left !important;
-  }
-
-  .wc-hero-timebox span,
-  .pf-hero-v2-timebox span,
-  .pf-wc-floating-countdown .pf-wc-timebox span {
-    font-size: 1.35rem !important;
-    margin: 0 !important;
-  }
-
-  .wc-hero-timebox small,
-  .pf-hero-v2-timebox small,
-  .pf-wc-floating-countdown .pf-wc-timebox small {
-    margin: 0 !important;
-    font-size: 0.68rem !important;
-    letter-spacing: 0.08em !important;
-    text-align: right !important;
+  .pf-wc-hero-v3-countdown-chip-values strong{
+    font-size: 0.94rem;
   }
 }
