@@ -2585,7 +2585,7 @@ function initPfWorldCupCountdown() {
 
   if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
-  const targetDate = new Date('2026-06-01T00:00:00');
+  const targetDate = new Date("2026-06-11T19:00:00");
 
   function pad(value) {
     return String(value).padStart(2, '0');
