@@ -2797,6 +2797,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("PF initLegalReader OK");
 
     initWorldCupCountdown();
+    initPfWorldCupCountdown();
     setupLanguageSwitcher();
     initPFPicksSection();
 
