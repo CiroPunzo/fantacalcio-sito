@@ -17022,16 +17022,15 @@ body.legal-page .legal-highlight {
   pointer-events: none;
 }
 
-.pf-wc-hero-v3-shell{
+.pf-wc-hero-v3-shell {
   position: relative;
   z-index: 2;
   min-height: 720px;
   display: grid;
-  grid-template-columns: minmax(320px, 470px) minmax(500px, 1fr);
-  gap: 26px;
+  grid-template-columns: minmax(0, 0.95fr) minmax(420px, 0.85fr);
+  gap: 10px;
   align-items: center;
-  padding-top: 104px;
-  padding-bottom: 8px;
+  padding-top: 18px;
 }
 
 .pf-wc-hero-v3-copy{
