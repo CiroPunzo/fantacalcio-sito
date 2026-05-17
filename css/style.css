@@ -16933,7 +16933,7 @@ body.legal-page .legal-highlight {
 }
 
 /* =========================================================
-   PROFANTASY WORLD CUP HERO V3 — CLEAN / RESPONSIVE
+   PROFANTASY WORLD CUP HERO V3 — FINAL CLEAN / RESPONSIVE
    usa:
    img/world-cup/world-cup-hero-custom.jpg
    ========================================================= */
@@ -17025,7 +17025,7 @@ body.legal-page .legal-highlight {
   z-index: 2;
   min-height: 620px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 560px);
   gap: 24px;
   align-items: end;
   padding-top: 42px;
@@ -17172,16 +17172,6 @@ body.legal-page .legal-highlight {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  padding-bottom: 34px;
-  min-width: 0;
-}
-
-.pf-wc-hero-v3-side{
-  position: relative;
-  z-index: 3;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
   padding-bottom: 42px;
   min-width: 0;
 }
@@ -17205,6 +17195,32 @@ body.legal-page .legal-highlight {
   overflow: hidden;
 }
 
+.pf-wc-hero-v3-countdown::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255,70,194,.34), rgba(72,118,255,.34));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.pf-wc-hero-v3-countdown::after{
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 10px;
+  height: 24px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(65,118,255,.24) 0%, rgba(65,118,255,.08) 42%, transparent 72%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
 .pf-wc-hero-v3-countdown-top{
   position: relative;
   z-index: 2;
@@ -17213,6 +17229,20 @@ body.legal-page .legal-highlight {
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 14px;
+}
+
+.pf-wc-hero-v3-countdown-kicker,
+.pf-wc-hero-v3-countdown-date{
+  display: block;
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.84);
+}
+
+.pf-wc-hero-v3-countdown-date{
+  color: rgba(255,255,255,.56);
 }
 
 .pf-wc-hero-v3-countdown-main{
@@ -17262,81 +17292,41 @@ body.legal-page .legal-highlight {
   color: rgba(255,255,255,.82);
 }
 
-@media (max-width: 1180px){
-  .pf-wc-hero-v3-countdown{
-    max-width: 500px;
-  }
-
-  .pf-wc-hero-v3-count-col strong{
-    font-size: clamp(2rem, 3vw, 3rem);
-  }
-}
-
-@media (max-width: 980px){
-  .pf-wc-hero-v3-side{
-    padding-bottom: 20px;
-  }
-
-  .pf-wc-hero-v3-countdown{
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 640px){
-  .pf-wc-hero-v3-countdown{
-    padding: 16px 14px 14px;
-    border-radius: 22px;
-  }
-
-  .pf-wc-hero-v3-countdown-main{
-    gap: 8px;
-  }
-
-  .pf-wc-hero-v3-count-col strong{
-    font-size: clamp(1.8rem, 8vw, 2.6rem);
-  }
-
-  .pf-wc-hero-v3-count-col small{
-    margin-top: 6px;
-    font-size: .56rem;
-    letter-spacing: .10em;
-  }
-
-  .pf-wc-hero-v3-count-sep{
-    font-size: 1.45rem;
-    padding-bottom: 16px;
-  }
-}
-.pf-wc-hero-v3-bottom{
+.pf-wc-hero-v3-bottom-wrap{
   position: relative;
   z-index: 3;
+  margin-top: 16px;
+}
+
+.pf-wc-hero-v3-bottom{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
-  margin-top: 12px;
+  align-items: stretch;
 }
 
 .pf-wc-hero-v3-bottom-card{
   position: relative;
-  min-height: 210px;
-  padding: 20px 20px 18px;
-  border-radius: 26px;
+  min-height: 228px;
+  padding: 20px;
+  border-radius: 28px;
   text-decoration: none;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  background-color: #090d28;
+  background-color: #080b22;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,.12);
   box-shadow:
     0 18px 42px rgba(0,0,0,.30),
-    inset 0 1px 0 rgba(255,255,255,0.04);
+    inset 0 1px 0 rgba(255,255,255,.04);
   transition:
-    transform .25s ease,
-    box-shadow .25s ease,
-    border-color .25s ease;
+    transform .28s ease,
+    box-shadow .28s ease,
+    border-color .28s ease,
+    filter .28s ease;
   isolation: isolate;
 }
 
@@ -17344,22 +17334,23 @@ body.legal-page .legal-highlight {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(6,8,24,.18) 0%, rgba(6,8,24,.40) 38%, rgba(4,6,18,.88) 100%);
   z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(5,8,22,.08) 0%, rgba(5,8,22,.28) 36%, rgba(4,6,18,.88) 100%);
 }
 
 .pf-wc-hero-v3-bottom-card::after{
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgba(5,8,24,.82) 0%, rgba(5,8,24,.54) 36%, rgba(5,8,24,.18) 100%);
   z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(4,7,22,.88) 0%, rgba(4,7,22,.60) 38%, rgba(4,7,22,.18) 100%);
 }
 
 .pf-wc-hero-v3-bottom-card:hover{
-  transform: translateY(-4px);
+  transform: translateY(-5px);
+  filter: brightness(1.04);
 }
 
 .pf-wc-card-pink{
@@ -17417,13 +17408,13 @@ body.legal-page .legal-highlight {
 }
 
 .pf-wc-hero-v3-bottom-copy{
-  max-width: 240px;
+  max-width: 250px;
 }
 
 .pf-wc-hero-v3-bottom-copy h3{
-  margin: 0 0 8px;
+  margin: 0 0 9px;
   font-family: 'Anton', sans-serif;
-  font-size: 1.08rem;
+  font-size: 1.12rem;
   line-height: 1;
   letter-spacing: .04em;
   text-transform: uppercase;
@@ -17443,10 +17434,10 @@ body.legal-page .legal-highlight {
 
 .pf-wc-hero-v3-bottom-copy p{
   margin: 0;
-  color: rgba(255,255,255,.86);
-  font-size: .88rem;
-  line-height: 1.48;
-  max-width: 25ch;
+  color: rgba(255,255,255,.88);
+  font-size: .90rem;
+  line-height: 1.5;
+  max-width: 24ch;
 }
 
 .pf-wc-hero-v3-bottom-copy span{
@@ -17478,53 +17469,16 @@ body.legal-page .legal-highlight {
   transform: translateY(-1px);
 }
 
-@media (max-width: 980px){
-  .pf-wc-hero-v3-bottom{
-    grid-template-columns: 1fr;
-    gap: 14px;
-    margin-top: 16px;
+@media (max-width: 1180px){
+  .pf-wc-hero-v3-countdown{
+    max-width: 500px;
   }
 
-  .pf-wc-hero-v3-bottom-card{
-    min-height: 180px;
+  .pf-wc-hero-v3-count-col strong{
+    font-size: clamp(2rem, 3vw, 3rem);
   }
 }
 
-@media (max-width: 640px){
-  .pf-wc-hero-v3-bottom-card{
-    min-height: 168px;
-    padding: 16px;
-    border-radius: 22px;
-  }
-
-  .pf-wc-hero-v3-bottom-icon-wrap{
-    width: 52px;
-    height: 52px;
-    margin-bottom: 12px;
-  }
-
-  .pf-wc-hero-v3-bottom-icon-img{
-    width: 26px;
-    height: 26px;
-  }
-
-  .pf-wc-hero-v3-bottom-copy h3{
-    font-size: .96rem;
-  }
-
-  .pf-wc-hero-v3-bottom-copy p{
-    font-size: .80rem;
-    max-width: 100%;
-  }
-
-  .pf-wc-hero-v3-bottom-copy span{
-    font-size: .62rem;
-    margin-top: 12px;
-  }
-}
-/* =========================
-   tablet
-   ========================= */
 @media (max-width: 1080px){
   .pf-wc-hero-v3-shell{
     min-height: auto;
@@ -17550,21 +17504,36 @@ body.legal-page .legal-highlight {
   .pf-wc-hero-v3-countdown{
     max-width: 100%;
   }
+}
 
+@media (max-width: 980px){
   .pf-wc-hero-v3-bottom{
-    grid-template-columns: 1fr;
+    display: flex;
     gap: 14px;
-    margin-top: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .pf-wc-hero-v3-bottom::-webkit-scrollbar{
+    display: none;
   }
 
   .pf-wc-hero-v3-bottom-card{
-    min-height: 158px;
+    flex: 0 0 min(82vw, 320px);
+    min-height: 196px;
+    scroll-snap-align: center;
+    border-radius: 24px;
+    padding: 18px;
+  }
+
+  .pf-wc-hero-v3-bottom-copy{
+    max-width: 100%;
   }
 }
 
-/* =========================
-   mobile
-   ========================= */
 @media (max-width: 640px){
   .pf-wc-hero-v3{
     padding-bottom: 18px;
@@ -17637,79 +17606,82 @@ body.legal-page .legal-highlight {
   }
 
   .pf-wc-hero-v3-countdown{
-    padding: 14px 14px 13px;
-    border-radius: 20px;
+    padding: 16px 14px 14px;
+    border-radius: 22px;
   }
 
   .pf-wc-hero-v3-countdown::before{
-    border-radius: 20px;
+    border-radius: 22px;
   }
 
-  .pf-wc-hero-v3-countdown-head span{
+  .pf-wc-hero-v3-countdown-top{
+    margin-bottom: 10px;
+  }
+
+  .pf-wc-hero-v3-countdown-kicker,
+  .pf-wc-hero-v3-countdown-date{
     font-size: .60rem;
+    letter-spacing: .10em;
   }
 
-  .pf-wc-hero-v3-countdown-head strong{
-    margin-bottom: 12px;
-    font-size: .82rem;
-    line-height: 1.35;
+  .pf-wc-hero-v3-countdown-main{
+    gap: 8px;
   }
 
-  .pf-wc-hero-v3-countdown-grid{
-    gap: 4px;
+  .pf-wc-hero-v3-count-col strong{
+    font-size: clamp(1.8rem, 8vw, 2.6rem);
   }
 
-  .pf-wc-hero-v3-timebox span{
-    font-size: 1.42rem;
-  }
-
-  .pf-wc-hero-v3-timebox small{
-    margin-top: 5px;
-    font-size: .48rem;
+  .pf-wc-hero-v3-count-col small{
+    margin-top: 6px;
+    font-size: .56rem;
     letter-spacing: .10em;
   }
 
   .pf-wc-hero-v3-count-sep{
-    margin-bottom: 11px;
-    font-size: .96rem;
+    font-size: 1.45rem;
+    padding-bottom: 16px;
+  }
+
+  .pf-wc-hero-v3-bottom-wrap{
+    margin-top: 14px;
+  }
+
+  .pf-wc-hero-v3-bottom{
+    gap: 12px;
+    padding-inline: 2px;
   }
 
   .pf-wc-hero-v3-bottom-card{
-    min-height: 146px;
-    padding: 16px 18px 18px;
-    border-radius: 20px;
+    flex: 0 0 min(86vw, 300px);
+    min-height: 182px;
+    padding: 16px;
+    border-radius: 22px;
   }
 
   .pf-wc-hero-v3-bottom-icon-wrap{
-    width: 60px;
-    height: 60px;
+    width: 52px;
+    height: 52px;
     margin-bottom: 12px;
   }
 
   .pf-wc-hero-v3-bottom-icon-img{
-    width: 32px;
-    height: 32px;
+    width: 26px;
+    height: 26px;
   }
 
   .pf-wc-hero-v3-bottom-copy h3{
-    font-size: .96rem;
+    font-size: .98rem;
   }
 
   .pf-wc-hero-v3-bottom-copy p{
-    font-size: .80rem;
+    font-size: .81rem;
     max-width: 100%;
   }
 
   .pf-wc-hero-v3-bottom-copy span{
-    margin-top: 16px;
-    font-size: .66rem;
-    letter-spacing: .13em;
-  }
-
-  .pf-wc-hero-v3-card-art{
-    width: 36%;
-    max-width: 120px;
-    opacity: .22;
+    margin-top: 12px;
+    font-size: .62rem;
   }
 }
 
@@ -17718,20 +17690,16 @@ body.legal-page .legal-highlight {
     font-size: 2.2rem;
   }
 
-  .pf-wc-hero-v3-countdown-grid{
-    gap: 2px;
+  .pf-wc-hero-v3-count-col strong{
+    font-size: 1.58rem;
   }
 
-  .pf-wc-hero-v3-timebox span{
-    font-size: 1.24rem;
-  }
-
-  .pf-wc-hero-v3-timebox small{
-    font-size: .44rem;
+  .pf-wc-hero-v3-count-col small{
+    font-size: .48rem;
   }
 
   .pf-wc-hero-v3-count-sep{
-    font-size: .82rem;
-    margin-bottom: 10px;
+    font-size: 1rem;
+    padding-bottom: 14px;
   }
 }
