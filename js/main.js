@@ -2578,17 +2578,17 @@ function initLegalReader() {
 }
 
 function initPfWorldCupCountdown() {
-  const daysEl = document.getElementById('pf-wc-days');
-  const hoursEl = document.getElementById('pf-wc-hours');
-  const minutesEl = document.getElementById('pf-wc-minutes');
-  const secondsEl = document.getElementById('pf-wc-seconds');
+  const daysEl = document.getElementById("pf-wc-days");
+  const hoursEl = document.getElementById("pf-wc-hours");
+  const minutesEl = document.getElementById("pf-wc-minutes");
+  const secondsEl = document.getElementById("pf-wc-seconds");
 
   if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
   const targetDate = new Date("2026-06-11T19:00:00");
 
   function pad(value) {
-    return String(value).padStart(2, '0');
+    return String(value).padStart(2, "0");
   }
 
   function updateCountdown() {
@@ -2596,10 +2596,10 @@ function initPfWorldCupCountdown() {
     const diff = targetDate.getTime() - now.getTime();
 
     if (diff <= 0) {
-      daysEl.textContent = '00';
-      hoursEl.textContent = '00';
-      minutesEl.textContent = '00';
-      secondsEl.textContent = '00';
+      daysEl.textContent = "00";
+      hoursEl.textContent = "00";
+      minutesEl.textContent = "00";
+      secondsEl.textContent = "00";
       return;
     }
 
@@ -2619,37 +2619,35 @@ function initPfWorldCupCountdown() {
   setInterval(updateCountdown, 1000);
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  initPfWorldCupCountdown();
-});
 function setupLanguageSwitcher() {
-  const buttons = Array.from(document.querySelectorAll('.pf-lang-btn'));
+  const buttons = Array.from(document.querySelectorAll(".pf-lang-btn"));
   if (!buttons.length) return;
 
-  let currentLang = document.documentElement.lang?.toLowerCase() === 'en' ? 'en' : 'it';
+  let currentLang =
+    document.documentElement.lang?.toLowerCase() === "en" ? "en" : "it";
 
   const applyLangUI = (lang) => {
     currentLang = lang;
 
     buttons.forEach((btn) => {
       const isActive = btn.dataset.lang === lang;
-      btn.classList.toggle('active', isActive);
-      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      btn.classList.toggle("active", isActive);
+      btn.setAttribute("aria-pressed", isActive ? "true" : "false");
     });
 
-    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute("lang", lang);
 
-    const navToggle = document.getElementById('nav-toggle');
+    const navToggle = document.getElementById("nav-toggle");
     if (navToggle) {
       navToggle.setAttribute(
-        'aria-label',
-        lang === 'en' ? 'Open menu' : 'Apri menu'
+        "aria-label",
+        lang === "en" ? "Open menu" : "Apri menu"
       );
     }
   };
 
   buttons.forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener("click", () => {
       const lang = btn.dataset.lang;
       if (!lang || lang === currentLang) return;
       applyLangUI(lang);
@@ -2695,7 +2693,7 @@ function initPFPicksSection() {
     const left = card.offsetLeft - 20;
     viewport.scrollTo({
       left,
-      behavior: "smooth"
+      behavior: "smooth",
     });
 
     setActiveCard(index);
@@ -2747,14 +2745,18 @@ function initPFPicksSection() {
   });
 
   let scrollTimeout;
-  viewport.addEventListener("scroll", () => {
-    if (window.innerWidth > 980) return;
+  viewport.addEventListener(
+    "scroll",
+    () => {
+      if (window.innerWidth > 980) return;
 
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      setActiveCard(getNearestCardIndex());
-    }, 80);
-  }, { passive: true });
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        setActiveCard(getNearestCardIndex());
+      }, 80);
+    },
+    { passive: true }
+  );
 
   window.addEventListener("resize", () => {
     if (window.innerWidth > 980) {
@@ -2766,124 +2768,62 @@ function initPFPicksSection() {
   setActiveCard(0);
 }
 
-
-
 // =====================
 // INIT (UNA SOLA VOLTA)
 // =====================
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("[PF] DOM caricato");
 
-  try {
-    initHeroSlider();
-    console.log("[PF] initHeroSlider OK");
-
-    setupMobileNavbar();
-    console.log("[PF] setupMobileNavbar OK");
-
-    setupDashboardTabs();
-    console.log("[PF] setupDashboardTabs OK");
-
-    setupGlobalModalClose();
-    console.log("[PF] setupGlobalModalClose OK");
-
-    setupJoinModal();
-    console.log("[PF] setupJoinModal OK");
-
-    setupFullTablesModals();
-    console.log("[PF] setupFullTablesModals OK");
-
-    initLegalReader();
-    console.log("PF initLegalReader OK");
-
-    initPfWorldCupCountdown();initPfWorldCupCountdown();
-setupLanguageSwitcher();
-initPFPicksSection();
-
-setupLanguageSwitcher();
-initPFPicksSection();
-
-    const path = window.location.pathname.toLowerCase();
-    console.log("[PF] path =", path);
-
-    const isHome =
-      !path ||
-      path === "/" ||
-      path.endsWith("/index.html") ||
-      path.endsWith("index.html");
-
-    const isPredictions =
-      path.includes("predictions");
-
-    if (isHome) {
-      console.log("[PF] HOME init start");
-
-      try {
-        await populateClassifica();
-        console.log("[PF] populateClassifica OK");
-      } catch (e) {
-        console.error("[PF] populateClassifica ERROR", e);
-      }
-
-      try {
-        await populateMarcatori();
-        console.log("[PF] populateMarcatori OK");
-      } catch (e) {
-        console.error("[PF] populateMarcatori ERROR", e);
-      }
-
-      try {
-        await populateInfortunati();
-        console.log("[PF] populateInfortunati OK");
-      } catch (e) {
-        console.error("[PF] populateInfortunati ERROR", e);
-      }
-
-      try {
-        await neonHomeInit();
-        console.log("[PF] neonHomeInit HOME OK");
-      } catch (e) {
-        console.error("[PF] neonHomeInit HOME ERROR", e);
-      }
+  const safe = async (label, fn) => {
+    try {
+      await fn();
+      console.log(`[PF] ${label} OK`);
+    } catch (e) {
+      console.error(`[PF] ${label} ERROR`, e);
     }
+  };
 
-    if (isPredictions) {
-      console.log("[PF] PREDICTIONS init start");
+  await safe("initHeroSlider", () => initHeroSlider());
+  await safe("setupMobileNavbar", () => setupMobileNavbar());
+  await safe("setupDashboardTabs", () => setupDashboardTabs());
+  await safe("setupGlobalModalClose", () => setupGlobalModalClose());
+  await safe("setupJoinModal", () => setupJoinModal());
+  await safe("setupFullTablesModals", () => setupFullTablesModals());
+  await safe("initLegalReader", () => initLegalReader());
 
-      try {
-        await neonHomeInit();
-        console.log("[PF] neonHomeInit PREDICTIONS OK");
-      } catch (e) {
-        console.error("[PF] neonHomeInit PREDICTIONS ERROR", e);
-      }
+  await safe("initPfWorldCupCountdown", () => initPfWorldCupCountdown());
+  await safe("setupLanguageSwitcher", () => setupLanguageSwitcher());
+  await safe("initPFPicksSection", () => initPFPicksSection());
 
-      try {
-        await populateClassificaCompleta();
-        console.log("[PF] populateClassificaCompleta OK");
-      } catch (e) {
-        console.error("[PF] populateClassificaCompleta ERROR", e);
-      }
+  const path = window.location.pathname.toLowerCase();
+  console.log("[PF] path =", path);
 
-      setupClassificaCompletaSearch();
-      setupClassificaCompletaSorting();
-     
+  const isHome =
+    !path ||
+    path === "/" ||
+    path.endsWith("/index.html") ||
+    path.endsWith("index.html");
 
-      try {
-        await populateAnalisiFantacalcio();
-        console.log("[PF] populateAnalisiFantacalcio OK");
-      } catch (e) {
-        console.error("[PF] populateAnalisiFantacalcio ERROR", e);
-      }
+  const isPredictions = path.includes("predictions");
 
-      try {
-        await populatePronostici();
-        console.log("[PF] populatePronostici OK");
-      } catch (e) {
-        console.error("[PF] populatePronostici ERROR", e);
-      }
-    }
-  } catch (e) {
-    console.error("[PF] ERRORE BLOCCANTE INIT", e);
+  if (isHome) {
+    console.log("[PF] HOME init start");
+
+    await safe("populateClassifica", () => populateClassifica());
+    await safe("populateMarcatori", () => populateMarcatori());
+    await safe("populateInfortunati", () => populateInfortunati());
+    await safe("neonHomeInit HOME", () => neonHomeInit());
+  }
+
+  if (isPredictions) {
+    console.log("[PF] PREDICTIONS init start");
+
+    await safe("neonHomeInit PREDICTIONS", () => neonHomeInit());
+    await safe("populateClassificaCompleta", () => populateClassificaCompleta());
+    await safe("setupClassificaCompletaSearch", () => setupClassificaCompletaSearch());
+    await safe("setupClassificaCompletaSorting", () => setupClassificaCompletaSorting());
+    await safe("populateAnalisiFantacalcio", () => populateAnalisiFantacalcio());
+    await safe("populatePronostici", () => populatePronostici());
   }
 });
 
