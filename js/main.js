@@ -2619,6 +2619,46 @@ function initPfWorldCupCountdown() {
   setInterval(updateCountdown, 1000);
 }
 
+function initWorldCupCountdown() {
+  const root = document.querySelector('.pf-wc-hero-v3-countdown');
+  if (!root) return;
+
+  const daysEl = root.querySelector('[data-wc-days]');
+  const hoursEl = root.querySelector('[data-wc-hours]');
+  const minutesEl = root.querySelector('[data-wc-minutes]');
+  const secondsEl = root.querySelector('[data-wc-seconds]');
+
+  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+  const targetDate = new Date('2026-06-11T00:00:00').getTime();
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance <= 0) {
+      daysEl.textContent = '00';
+      hoursEl.textContent = '00';
+      minutesEl.textContent = '00';
+      secondsEl.textContent = '00';
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((distance / (1000 * 60)) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
+
+    daysEl.textContent = String(days).padStart(2, '0');
+    hoursEl.textContent = String(hours).padStart(2, '0');
+    minutesEl.textContent = String(minutes).padStart(2, '0');
+    secondsEl.textContent = String(seconds).padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   initPfWorldCupCountdown();
 });
