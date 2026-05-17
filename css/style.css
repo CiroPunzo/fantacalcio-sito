@@ -17176,49 +17176,33 @@ body.legal-page .legal-highlight {
   min-width: 0;
 }
 
+.pf-wc-hero-v3-side{
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-bottom: 42px;
+  min-width: 0;
+}
+
 .pf-wc-hero-v3-countdown{
   position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 560px;
   padding: 18px 22px 16px;
   border-radius: 26px;
   background:
     radial-gradient(circle at 20% 0%, rgba(255,255,255,.07), transparent 34%),
     linear-gradient(180deg, rgba(11,14,40,.90), rgba(7,9,28,.96));
-  border: 1px solid rgba(112, 93, 255, 0.30);
+  border: 1px solid rgba(112,93,255,.30);
   box-shadow:
     0 24px 60px rgba(0,0,0,.34),
     0 0 0 1px rgba(255,255,255,.03) inset,
-    0 0 22px rgba(150, 94, 255, .16),
-    0 0 40px rgba(39, 180, 255, .08);
+    0 0 22px rgba(150,94,255,.16),
+    0 0 40px rgba(39,180,255,.08);
   backdrop-filter: blur(18px);
   overflow: hidden;
-}
-
-.pf-wc-hero-v3-countdown::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 26px;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(255,70,194,.34), rgba(72,118,255,.34));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.pf-wc-hero-v3-countdown::after{
-  content: "";
-  position: absolute;
-  left: 18px;
-  right: 18px;
-  bottom: 10px;
-  height: 24px;
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(65,118,255,.24) 0%, rgba(65,118,255,.08) 42%, transparent 72%);
-  filter: blur(10px);
-  pointer-events: none;
 }
 
 .pf-wc-hero-v3-countdown-top{
@@ -17227,35 +17211,21 @@ body.legal-page .legal-highlight {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 16px;
   margin-bottom: 14px;
-}
-
-.pf-wc-hero-v3-countdown-kicker,
-.pf-wc-hero-v3-countdown-date{
-  display: block;
-  font-size: .76rem;
-  font-weight: 800;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.84);
-}
-
-.pf-wc-hero-v3-countdown-date{
-  color: rgba(255,255,255,.56);
 }
 
 .pf-wc-hero-v3-countdown-main{
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: auto auto auto auto auto auto auto;
+  grid-template-columns: minmax(64px,1fr) auto minmax(64px,1fr) auto minmax(64px,1fr) auto minmax(64px,1fr);
   align-items: end;
-  gap: 12px;
+  gap: 10px;
 }
 
 .pf-wc-hero-v3-count-col{
-  min-width: 72px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17264,7 +17234,7 @@ body.legal-page .legal-highlight {
 .pf-wc-hero-v3-count-col strong{
   display: block;
   font-family: 'Anton', sans-serif;
-  font-size: clamp(2.5rem, 4vw, 3.9rem);
+  font-size: clamp(2.2rem, 3.2vw, 3.45rem);
   line-height: .9;
   color: #ffffff;
   letter-spacing: .02em;
@@ -17276,7 +17246,7 @@ body.legal-page .legal-highlight {
 .pf-wc-hero-v3-count-col small{
   display: block;
   margin-top: 8px;
-  font-size: .80rem;
+  font-size: .74rem;
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -17285,15 +17255,28 @@ body.legal-page .legal-highlight {
 
 .pf-wc-hero-v3-count-sep{
   align-self: center;
-  padding-bottom: 22px;
+  padding-bottom: 20px;
   font-family: 'Anton', sans-serif;
-  font-size: 2.2rem;
+  font-size: 1.9rem;
   line-height: 1;
-  color: rgba(255,255,255,.86);
-  text-shadow: 0 0 12px rgba(255,255,255,.06);
+  color: rgba(255,255,255,.82);
+}
+
+@media (max-width: 1180px){
+  .pf-wc-hero-v3-countdown{
+    max-width: 500px;
+  }
+
+  .pf-wc-hero-v3-count-col strong{
+    font-size: clamp(2rem, 3vw, 3rem);
+  }
 }
 
 @media (max-width: 980px){
+  .pf-wc-hero-v3-side{
+    padding-bottom: 20px;
+  }
+
   .pf-wc-hero-v3-countdown{
     max-width: 100%;
   }
@@ -17305,26 +17288,8 @@ body.legal-page .legal-highlight {
     border-radius: 22px;
   }
 
-  .pf-wc-hero-v3-countdown::before{
-    border-radius: 22px;
-  }
-
-  .pf-wc-hero-v3-countdown-top{
-    margin-bottom: 10px;
-  }
-
-  .pf-wc-hero-v3-countdown-kicker,
-  .pf-wc-hero-v3-countdown-date{
-    font-size: .60rem;
-    letter-spacing: .10em;
-  }
-
   .pf-wc-hero-v3-countdown-main{
     gap: 8px;
-  }
-
-  .pf-wc-hero-v3-count-col{
-    min-width: 0;
   }
 
   .pf-wc-hero-v3-count-col strong{
