@@ -17848,3 +17848,45 @@ body.legal-page .legal-highlight {
     padding-bottom: 14px;
   }
 }
+
+/* FIX CLICK BLOCCATI */
+.pf-wc-hero-v3,
+.pf-wc-hero-v3-media,
+.pf-wc-hero-v3-overlay,
+.pf-wc-hero-v3-vignette,
+.pf-wc-hero-v3-lines,
+.pf-wc-hero-v3-floor-glow,
+.pf-wc-hero-v3-floating,
+.pf-wc-float-card,
+.pf-wc-float-card::before{
+  pointer-events: none !important;
+}
+
+.pf-wc-hero-v3-shell,
+.pf-wc-hero-v3-copy,
+.pf-wc-hero-v3-side,
+.pf-wc-hero-v3-bottom-wrap,
+.pf-wc-hero-v3-bottom,
+.pf-wc-hero-v3-bottom-card,
+.pf-wc-hero-v3-cta,
+.pf-wc-hero-v3-countdown{
+  pointer-events: auto !important;
+}
+
+.pf-wc-hero-v3{
+  z-index: 1;
+}
+
+#home-comparatore,
+.neo-section,
+.neo-card,
+.neo-compare-lock,
+.neo-compare-lock-content,
+.neo-join-actions,
+.neo-join-btn,
+.neo-join-btn-secondary,
+button,
+a{
+  position: relative;
+  z-index: 5;
+}
