@@ -2577,66 +2577,51 @@ function initLegalReader() {
   updateActiveState();
 }
 
-function initWorldCupCountdown() {
-  const daysEls = [
-    document.getElementById('pfDays'),
-    document.getElementById('pfDaysMobile')
-  ].filter(Boolean);
+function initPfWorldCupCountdown() {
+  const daysEl = document.getElementById('pf-wc-days');
+  const hoursEl = document.getElementById('pf-wc-hours');
+  const minutesEl = document.getElementById('pf-wc-minutes');
+  const secondsEl = document.getElementById('pf-wc-seconds');
 
-  const hoursEls = [
-    document.getElementById('pfHours'),
-    document.getElementById('pfHoursMobile')
-  ].filter(Boolean);
+  if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
-  const minutesEls = [
-    document.getElementById('pfMinutes'),
-    document.getElementById('pfMinutesMobile')
-  ].filter(Boolean);
+  const targetDate = new Date('2026-06-01T00:00:00');
 
-  const secondsEls = [
-    document.getElementById('pfSeconds'),
-    document.getElementById('pfSecondsMobile')
-  ].filter(Boolean);
-
-  if (!daysEls.length || !hoursEls.length || !minutesEls.length || !secondsEls.length) {
-    console.warn('Countdown elements non trovati');
-    return;
-  }
-
-  const targetDate = new Date('2026-06-11T00:00:00');
-
-  function setAll(elements, value) {
-    elements.forEach(el => {
-      el.textContent = value;
-    });
+  function pad(value) {
+    return String(value).padStart(2, '0');
   }
 
   function updateCountdown() {
     const now = new Date();
-    const diff = targetDate - now;
+    const diff = targetDate.getTime() - now.getTime();
 
     if (diff <= 0) {
-      setAll(daysEls, '00');
-      setAll(hoursEls, '00');
-      setAll(minutesEls, '00');
-      setAll(secondsEls, '00');
+      daysEl.textContent = '00';
+      hoursEl.textContent = '00';
+      minutesEl.textContent = '00';
+      secondsEl.textContent = '00';
       return;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
 
-    setAll(daysEls, String(days).padStart(2, '0'));
-    setAll(hoursEls, String(hours).padStart(2, '0'));
-    setAll(minutesEls, String(minutes).padStart(2, '0'));
-    setAll(secondsEls, String(seconds).padStart(2, '0'));
+    daysEl.textContent = pad(days);
+    hoursEl.textContent = pad(hours);
+    minutesEl.textContent = pad(minutes);
+    secondsEl.textContent = pad(seconds);
   }
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  initPfWorldCupCountdown();
+});
 function setupLanguageSwitcher() {
   const buttons = Array.from(document.querySelectorAll('.pf-lang-btn'));
   if (!buttons.length) return;
