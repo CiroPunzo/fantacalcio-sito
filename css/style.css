@@ -17890,3 +17890,94 @@ a{
   position: relative;
   z-index: 5;
 }
+
+/* ===== FIX INTERAZIONI COMPARATORI / MODALI ===== */
+
+.neo-card-compare,
+#compare-lock,
+#compare-lock.active,
+.neo-compare-lock,
+.neo-compare-lock-content,
+.neo-join-actions,
+#trade-tool,
+.trade-grid,
+.trade-mid,
+.neo-pick-card,
+.neo-picker,
+.neo-picker-panel,
+.neo-picker-list,
+.neo-picker-search,
+#join-modal,
+#join-modal .join-modal-content,
+#join-modal .join-modal-actions{
+  position: relative;
+}
+
+.neo-card-compare{
+  isolation: isolate;
+}
+
+#compare-lock,
+.neo-compare-lock{
+  z-index: 20;
+  pointer-events: none;
+}
+
+#compare-lock.active,
+.neo-compare-lock.active{
+  pointer-events: auto;
+}
+
+.neo-compare-lock-content,
+.neo-join-actions,
+.neo-compare-lock-content button,
+.neo-compare-lock-content a,
+#unlock-with-email,
+#unlock-after-telegram{
+  position: relative;
+  z-index: 25;
+  pointer-events: auto;
+}
+
+#trade-tool,
+.trade-grid,
+.trade-mid,
+.neo-pick-card,
+#trade-pick-a,
+#trade-pick-b,
+#trade-calendar,
+#trade-decision{
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.neo-picker{
+  z-index: 9998;
+}
+
+.neo-picker-backdrop{
+  pointer-events: auto;
+}
+
+.neo-picker-panel{
+  position: relative;
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+.neo-picker-list,
+.neo-picker-list *,
+.neo-picker-search,
+.neo-picker-search *,
+.neo-picker-close{
+  pointer-events: auto;
+}
+
+#join-modal{
+  z-index: 9998;
+}
+
+#join-modal.active,
+#join-modal.active *{
+  pointer-events: auto;
+}
