@@ -2837,9 +2837,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("PF initLegalReader OK");
 
     initWorldCupCountdown();
-    initPfWorldCupCountdown();
-    setupLanguageSwitcher();
-    initPFPicksSection();
+setupLanguageSwitcher();
+initPFPicksSection();
+
+setupLanguageSwitcher();
+initPFPicksSection();
 
     const path = window.location.pathname.toLowerCase();
     console.log("[PF] path =", path);
