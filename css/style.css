@@ -21203,3 +21203,17 @@ body.legal-page .legal-highlight {
     width: 18px;
   }
 }
+
+      body::before {
+  content: "CSS NUOVO LETTO";
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999999;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: red;
+  color: white;
+  font-weight: 900;
+  font-size: 14px;
+}
