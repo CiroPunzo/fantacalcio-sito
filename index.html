@@ -510,221 +510,230 @@
   </div>
 </section>
     
-    <section class="pf-command-center" id="home-comparatore" data-command-center>
-  <div class="pf-command-bg">
-    <div class="pf-command-grid"></div>
-    <div class="pf-command-orb pf-command-orb-a"></div>
-    <div class="pf-command-orb pf-command-orb-b"></div>
-    <div class="pf-command-scan"></div>
+    <section class="pfcc-section" id="profantasy-command-center" data-pfcc>
+  <div class="pfcc-background" aria-hidden="true">
+    <div class="pfcc-bg-grid"></div>
+    <div class="pfcc-bg-glow pfcc-bg-glow-one"></div>
+    <div class="pfcc-bg-glow pfcc-bg-glow-two"></div>
+    <div class="pfcc-bg-scan"></div>
   </div>
 
-  <div class="container pf-command-container">
-    <div class="pf-command-head">
-      <div>
-        <span class="pf-command-kicker">ProFantasy Live System</span>
+  <div class="container pfcc-container">
+    <header class="pfcc-header">
+      <div class="pfcc-header-copy">
+        <span class="pfcc-kicker">ProFantasy Live System</span>
 
-        <h2 class="pf-command-title">
+        <h2 class="pfcc-title">
           Command
           <span>Center</span>
         </h2>
 
-        <p class="pf-command-subtitle">
-          Non navigare a caso. Entra nella fase giusta del progetto:
-          Mondiale, mercato, preparazione fantacalcio e community.
-          Ogni missione ti porta nella sezione più utile in questo momento.
+        <p class="pfcc-description">
+          Scegli la tua prossima missione. Mondiale, mercato, strumenti e community
+          diventano un centro operativo unico, pensato per guidarti nella fase più calda
+          del progetto ProFantasy.
         </p>
       </div>
 
-      <div class="pf-command-status">
-        <span class="pf-command-status-dot"></span>
+      <div class="pfcc-system-card">
+        <span class="pfcc-system-light"></span>
+
         <div>
           <strong>System online</strong>
           <small>Road to World Cup · Pre-season mode</small>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="pf-command-shell">
-      <div class="pf-command-main">
-        <div class="pf-command-topbar">
+    <div class="pfcc-layout">
+      <div class="pfcc-stage">
+        <div class="pfcc-stage-top">
           <div>
             <span>Current mission</span>
-            <strong id="pf-command-current">Road to World Cup</strong>
+            <strong data-pfcc-current>Road to World Cup</strong>
           </div>
 
-          <div class="pf-command-live-badge">
-            <i></i>
+          <div class="pfcc-live-badge">
+            <span></span>
             Active
           </div>
         </div>
 
-        <div class="pf-command-screen">
-          <article class="pf-command-panel is-active" data-command-panel="worldcup">
-            <div class="pf-command-panel-content">
-              <span class="pf-command-panel-tag">Missione 01</span>
+        <div class="pfcc-screen">
+          <article class="pfcc-panel is-active" data-pfcc-panel="worldcup">
+            <div class="pfcc-panel-content">
+              <span class="pfcc-panel-label">Missione 01</span>
 
               <h3>Preparati al Mondiale</h3>
 
               <p>
-                La World Cup è il primo grande evento. Qui l’utente deve capire
-                che non sta entrando in una pagina, ma in una competizione.
-                Format, regolamento, premi e modalità speciali diventano il primo viaggio.
+                La World Cup è il primo grande evento. Qui l’utente non entra
+                semplicemente in una pagina, ma in una vera competizione:
+                format speciali, giochi, premi e contenuti dedicati.
               </p>
 
-              <div class="pf-command-actions">
-                <a href="world-cup-games.html" class="pf-command-primary">
+              <div class="pfcc-actions">
+                <a href="world-cup-games.html" class="pfcc-button-primary">
                   Entra nella World Cup
                   <span>→</span>
                 </a>
 
-                <a href="world-cup.html" class="pf-command-secondary">
+                <a href="world-cup.html" class="pfcc-button-secondary">
                   Vedi panoramica
                 </a>
               </div>
             </div>
 
-            <div class="pf-command-visual pf-command-visual-worldcup">
-              <div class="pf-command-radar">
+            <div class="pfcc-visual pfcc-visual-worldcup">
+              <div class="pfcc-radar">
                 <span></span>
                 <span></span>
                 <span></span>
-                <b>WC</b>
+                <strong>WC</strong>
               </div>
 
-              <div class="pf-command-floating-card pf-command-floating-a">
+              <div class="pfcc-mini-card pfcc-mini-card-one">
                 <span>Countdown</span>
                 <strong>Giugno 2026</strong>
               </div>
 
-              <div class="pf-command-floating-card pf-command-floating-b">
+              <div class="pfcc-mini-card pfcc-mini-card-two">
                 <span>Format</span>
                 <strong>Global Challenge</strong>
               </div>
             </div>
           </article>
 
-          <article class="pf-command-panel" data-command-panel="market">
-            <div class="pf-command-panel-content">
-              <span class="pf-command-panel-tag">Missione 02</span>
+          <article class="pfcc-panel" data-pfcc-panel="market">
+            <div class="pfcc-panel-content">
+              <span class="pfcc-panel-label">Missione 02</span>
 
               <h3>Segui il caos mercato</h3>
 
               <p>
-                A stagione finita il mercato diventa la sezione più viva.
-                Qui portiamo l’utente verso rumors, trasferimenti, impatto fantacalcio
-                e cambiamenti di valore prima che gli altri se ne accorgano.
+                A stagione finita il mercato diventa la sezione più viva:
+                rumors, trasferimenti, nuovi titolari, cambi di valore e impatto
+                fantacalcio prima che gli altri se ne accorgano.
               </p>
 
-              <div class="pf-command-actions">
-                <a href="transfers.html" class="pf-command-primary">
+              <div class="pfcc-actions">
+                <a href="transfers.html" class="pfcc-button-primary">
                   Entra nel mercato
                   <span>→</span>
                 </a>
 
-                <a href="community.html" class="pf-command-secondary">
+                <a href="community.html" class="pfcc-button-secondary">
                   Discuti in community
                 </a>
               </div>
             </div>
 
-            <div class="pf-command-visual pf-command-visual-market">
-              <div class="pf-command-market-lines">
-                <i></i><i></i><i></i><i></i><i></i>
+            <div class="pfcc-visual pfcc-visual-market">
+              <div class="pfcc-market-lines">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
               </div>
 
-              <div class="pf-command-floating-card pf-command-floating-a">
+              <div class="pfcc-mini-card pfcc-mini-card-one">
                 <span>Market pulse</span>
                 <strong>Transfer watch</strong>
               </div>
 
-              <div class="pf-command-floating-card pf-command-floating-b">
+              <div class="pfcc-mini-card pfcc-mini-card-two">
                 <span>Focus</span>
-                <strong>Nuovi titolari</strong>
+                <strong>Nuove gerarchie</strong>
               </div>
             </div>
           </article>
 
-          <article class="pf-command-panel" data-command-panel="draft">
-            <div class="pf-command-panel-content">
-              <span class="pf-command-panel-tag">Missione 03</span>
+          <article class="pfcc-panel" data-pfcc-panel="tools">
+            <div class="pfcc-panel-content">
+              <span class="pfcc-panel-label">Missione 03</span>
 
               <h3>Costruisci la strategia</h3>
 
               <p>
-                Quando il fantacalcio riparte, i tool tornano centrali.
-                Ma in home non devono sembrare strumenti freddi:
-                devono diventare armi da preparazione per asta, scambi e lettura giocatori.
+                I tool non devono sembrare strumenti freddi. Devono diventare
+                armi da preparazione per asta, scambi, lettura giocatori,
+                confronti e decisioni più intelligenti.
               </p>
 
-              <div class="pf-command-actions">
-                <a href="tools.html" class="pf-command-primary">
+              <div class="pfcc-actions">
+                <a href="tools.html" class="pfcc-button-primary">
                   Apri i tools
                   <span>→</span>
                 </a>
 
-                <a href="tools.html#comparatore" class="pf-command-secondary">
+                <a href="tools.html#comparatore" class="pfcc-button-secondary">
                   Vai al comparatore
                 </a>
               </div>
             </div>
 
-            <div class="pf-command-visual pf-command-visual-draft">
-              <div class="pf-command-bars">
-                <i style="height: 46%"></i>
-                <i style="height: 72%"></i>
-                <i style="height: 58%"></i>
-                <i style="height: 86%"></i>
-                <i style="height: 64%"></i>
-                <i style="height: 78%"></i>
+            <div class="pfcc-visual pfcc-visual-tools">
+              <div class="pfcc-bars">
+                <span style="--h: 46%"></span>
+                <span style="--h: 72%"></span>
+                <span style="--h: 58%"></span>
+                <span style="--h: 86%"></span>
+                <span style="--h: 64%"></span>
+                <span style="--h: 78%"></span>
               </div>
 
-              <div class="pf-command-floating-card pf-command-floating-a">
+              <div class="pfcc-mini-card pfcc-mini-card-one">
                 <span>Tool mode</span>
                 <strong>Comparatori</strong>
               </div>
 
-              <div class="pf-command-floating-card pf-command-floating-b">
+              <div class="pfcc-mini-card pfcc-mini-card-two">
                 <span>Draft prep</span>
                 <strong>Strategia asta</strong>
               </div>
             </div>
           </article>
 
-          <article class="pf-command-panel" data-command-panel="community">
-            <div class="pf-command-panel-content">
-              <span class="pf-command-panel-tag">Missione 04</span>
+          <article class="pfcc-panel" data-pfcc-panel="community">
+            <div class="pfcc-panel-content">
+              <span class="pfcc-panel-label">Missione 04</span>
 
               <h3>Entra nella community</h3>
 
               <p>
-                La community non deve essere una CTA finale. Deve sembrare il luogo
-                dove succedono le cose: discussioni, hype, decisioni, sondaggi,
-                aggiornamenti e vantaggio competitivo.
+                La community deve sembrare il luogo dove succedono le cose:
+                discussioni, hype, decisioni, sondaggi, aggiornamenti e vantaggio
+                competitivo condiviso.
               </p>
 
-              <div class="pf-command-actions">
-                <a href="community.html" class="pf-command-primary">
+              <div class="pfcc-actions">
+                <a href="community.html" class="pfcc-button-primary">
                   Entra nella community
                   <span>→</span>
                 </a>
 
-                <a href="https://t.me/hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="pf-command-secondary">
+                <a href="https://t.me/hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer" class="pfcc-button-secondary">
                   Apri Telegram
                 </a>
               </div>
             </div>
 
-            <div class="pf-command-visual pf-command-visual-community">
-              <div class="pf-command-nodes">
-                <i></i><i></i><i></i><i></i><i></i>
+            <div class="pfcc-visual pfcc-visual-community">
+              <div class="pfcc-nodes">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
               </div>
 
-              <div class="pf-command-floating-card pf-command-floating-a">
+              <div class="pfcc-mini-card pfcc-mini-card-one">
                 <span>Community</span>
                 <strong>Live talk</strong>
               </div>
 
-              <div class="pf-command-floating-card pf-command-floating-b">
+              <div class="pfcc-mini-card pfcc-mini-card-two">
                 <span>Mission</span>
                 <strong>Join now</strong>
               </div>
@@ -733,34 +742,38 @@
         </div>
       </div>
 
-      <aside class="pf-command-missions" aria-label="Missioni ProFantasy">
-        <button class="pf-command-mission is-active" type="button" data-command-mission="worldcup">
-          <span class="pf-command-mission-no">01</span>
-          <span>
+      <aside class="pfcc-menu" aria-label="Missioni ProFantasy">
+        <button class="pfcc-menu-item is-active" type="button" data-pfcc-mission="worldcup">
+          <span class="pfcc-menu-number">01</span>
+
+          <span class="pfcc-menu-text">
             <strong>Road to World Cup</strong>
             <small>Format, premi e competizione globale</small>
           </span>
         </button>
 
-        <button class="pf-command-mission" type="button" data-command-mission="market">
-          <span class="pf-command-mission-no">02</span>
-          <span>
+        <button class="pfcc-menu-item" type="button" data-pfcc-mission="market">
+          <span class="pfcc-menu-number">02</span>
+
+          <span class="pfcc-menu-text">
             <strong>Transfer Chaos</strong>
             <small>Mercato, rumors e nuove gerarchie</small>
           </span>
         </button>
 
-        <button class="pf-command-mission" type="button" data-command-mission="draft">
-          <span class="pf-command-mission-no">03</span>
-          <span>
+        <button class="pfcc-menu-item" type="button" data-pfcc-mission="tools">
+          <span class="pfcc-menu-number">03</span>
+
+          <span class="pfcc-menu-text">
             <strong>Draft Preparation</strong>
             <small>Tool, comparatori e strategia asta</small>
           </span>
         </button>
 
-        <button class="pf-command-mission" type="button" data-command-mission="community">
-          <span class="pf-command-mission-no">04</span>
-          <span>
+        <button class="pfcc-menu-item" type="button" data-pfcc-mission="community">
+          <span class="pfcc-menu-number">04</span>
+
+          <span class="pfcc-menu-text">
             <strong>Community Pulse</strong>
             <small>Discussioni, Telegram e aggiornamenti</small>
           </span>
@@ -768,8 +781,9 @@
       </aside>
     </div>
 
-    <div class="pf-command-route">
+    <div class="pfcc-route">
       <span>Suggested route</span>
+
       <a href="world-cup-games.html">World Cup</a>
       <i></i>
       <a href="transfers.html">Transfers</a>
