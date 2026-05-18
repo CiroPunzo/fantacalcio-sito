@@ -17873,7 +17873,7 @@ body.legal-page .legal-highlight {
   inset: 0;
   background:
     linear-gradient(180deg, rgba(4, 7, 24, 0.22), rgba(3, 5, 18, 0.34)),
-    url("img/comparatore-control-center-bg.jpg") center top / cover no-repeat;
+    url("../img/comparatore-control-center-bg.jpg") center top / cover no-repeat;
   opacity: 1;
   pointer-events: none;
 }
