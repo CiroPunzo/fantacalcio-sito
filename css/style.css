@@ -17872,8 +17872,8 @@ body.legal-page .legal-highlight {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(4, 7, 24, 0.22), rgba(3, 5, 18, 0.34)),
-    url("../img/comparatore-control-center-bg.jpg") center top / cover no-repeat;
+    linear-gradient(180deg, rgba(4, 7, 24, 0.16), rgba(3, 5, 18, 0.24)),
+    url("../img/comparatore-control-center-bg.jpg") center 40px / contain no-repeat;
   opacity: 1;
   pointer-events: none;
 }
@@ -17938,5 +17938,66 @@ body.legal-page .legal-highlight {
   #home-comparatore .neo-compare-grid {
     padding: 12px;
     border-radius: 22px;
+  }
+}
+
+/* ==========================================
+   BACKGROUND ADAPTIVE FIX
+========================================== */
+
+#home-comparatore {
+  min-height: 980px;
+}
+
+#home-comparatore .container {
+  min-height: 980px;
+}
+
+@media (max-width: 1200px) {
+  #home-comparatore {
+    min-height: 860px;
+  }
+
+  #home-comparatore .container {
+    min-height: 860px;
+  }
+
+  #home-comparatore::before {
+    background:
+      linear-gradient(180deg, rgba(4, 7, 24, 0.16), rgba(3, 5, 18, 0.24)),
+      url("../img/comparatore-control-center-bg.jpg") center 60px / 125% auto no-repeat;
+  }
+}
+
+@media (max-width: 900px) {
+  #home-comparatore {
+    min-height: 720px;
+    padding: 18px 0 26px;
+  }
+
+  #home-comparatore .container {
+    min-height: 720px;
+  }
+
+  #home-comparatore::before {
+    background:
+      linear-gradient(180deg, rgba(4, 7, 24, 0.18), rgba(3, 5, 18, 0.28)),
+      url("../img/comparatore-control-center-bg.jpg") center 80px / 155% auto no-repeat;
+  }
+}
+
+@media (max-width: 640px) {
+  #home-comparatore {
+    min-height: 620px;
+  }
+
+  #home-comparatore .container {
+    min-height: 620px;
+  }
+
+  #home-comparatore::before {
+    background:
+      linear-gradient(180deg, rgba(4, 7, 24, 0.2), rgba(3, 5, 18, 0.32)),
+      url("../img/comparatore-control-center-bg.jpg") center 110px / 190% auto no-repeat;
   }
 }
