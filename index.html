@@ -509,219 +509,328 @@
     </div>
   </div>
 </section>
+    
     <section class="neo-section" id="home-comparatore">
-      <div class="container">
-        <div class="neo-section-head">
-          <div>
-            <h2 class="neo-section-title">Comparatore giocatori</h2>
-            <p class="neo-section-subtitle">Confronta Gol e Assist e sblocca la funzione completa entrando nella community.</p>
-          </div>
+     <div class="container">
+  <div class="pf-control-center">
+    <div class="pf-cc-topbar">
+      <div class="pf-cc-system-pill">
+        <span class="pf-cc-system-label">PROFANTASY SYSTEM ONLINE</span>
+        <span class="pf-cc-system-meta">VERSION 3.2.1</span>
+        <span class="pf-cc-system-status">CONNECTED</span>
+      </div>
+
+      <div class="pf-cc-brand">
+        <div class="pf-cc-brand-title">PROFANTASY</div>
+        <div class="pf-cc-brand-sub">CONTROL CENTER</div>
+        <p class="pf-cc-brand-text">IL TUO HUB. IL TUO VANTAGGIO.</p>
+      </div>
+
+      <div class="pf-cc-user">
+        <div class="pf-cc-user-badge">PF</div>
+        <div class="pf-cc-user-meta">
+          <strong>CiroProFantasy</strong>
+          <span>LEGEND</span>
         </div>
+      </div>
+    </div>
 
-        <div class="neo-compare-grid">
-          <div class="neo-card neo-card-compare">
+    <div class="pf-cc-grid">
+      <div class="pf-cc-column pf-cc-column-left">
+        <article class="pf-cc-panel pf-cc-panel-small">
+          <div class="pf-cc-panel-head">
+            <span class="pf-cc-panel-number">01</span>
+            <div>
+              <h3>MATCH ANALYSIS</h3>
+              <p>ANALISI TATTICA AVANZATA</p>
+            </div>
+          </div>
 
-            <div class="neo-compare-controls neo-compare-controls-game">
-              <select id="player-a-select" class="neo-select neo-select-hidden" aria-hidden="true" tabindex="-1"></select>
-              <select id="player-b-select" class="neo-select neo-select-hidden" aria-hidden="true" tabindex="-1"></select>
-
-              <button type="button" id="pick-a" class="neo-pick-card" aria-label="Seleziona giocatore A">
-                <div class="neo-pick-logo" id="pick-a-logo"></div>
-                <div class="neo-pick-meta">
-                  <div class="neo-pick-kicker">Giocatore A</div>
-                  <div class="neo-pick-name" id="pick-a-name">Seleziona</div>
-                  <div class="neo-pick-sub" id="pick-a-sub">Clicca per scegliere</div>
-                  <div class="neo-pick-stats" id="pick-a-stats"></div>
+          <div class="pf-cc-mini-widgets">
+            <div class="pf-cc-mini-card">
+              <span>POSSESSO PALLA</span>
+              <div class="pf-cc-donut">
+                <div class="pf-cc-donut-ring"></div>
+                <div class="pf-cc-donut-values">
+                  <strong>58%</strong>
+                  <em>42%</em>
                 </div>
-                <div class="neo-pick-cta">Cambia</div>
-              </button>
-
-              <button type="button" id="pick-b" class="neo-pick-card" aria-label="Seleziona giocatore B">
-                <div class="neo-pick-logo" id="pick-b-logo"></div>
-                <div class="neo-pick-meta">
-                  <div class="neo-pick-kicker">Giocatore B</div>
-                  <div class="neo-pick-name" id="pick-b-name">Seleziona</div>
-                  <div class="neo-pick-sub" id="pick-b-sub">Clicca per scegliere</div>
-                  <div class="neo-pick-stats" id="pick-b-stats"></div>
-                </div>
-                <div class="neo-pick-cta">Cambia</div>
-              </button>
+              </div>
             </div>
 
-            <div class="neo-compare-output">
-              <div class="neo-compare-kpis" id="compare-kpis">
-                <div class="neo-mini-card">Seleziona due giocatori.</div>
+            <div class="pf-cc-mini-card">
+              <span>XG TOTALE</span>
+              <div class="pf-cc-inline-stat">
+                <strong>2.45</strong>
+                <em>1.23</em>
               </div>
+              <div class="pf-cc-sparkline pf-cc-sparkline-cyan"></div>
+            </div>
 
-              <div class="neo-radar-wrap">
+            <div class="pf-cc-mini-card">
+              <span>ZONE D'ATTACCO</span>
+              <div class="pf-cc-heatmap">
+                <i></i><i></i><i></i>
+              </div>
+              <div class="pf-cc-split-values">
+                <b>31%</b>
+                <b>42%</b>
+                <b>27%</b>
+              </div>
+            </div>
+
+            <div class="pf-cc-mini-card">
+              <span>PRESSING INTENSITY</span>
+              <div class="pf-cc-bars">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <small>ALTA</small>
+            </div>
+          </div>
+
+          <a href="predictions.html" class="pf-cc-panel-cta">
+            VAI ALL’ANALISI
+            <span>→</span>
+          </a>
+        </article>
+
+        <article class="pf-cc-panel pf-cc-panel-small pf-cc-player-panel">
+          <div class="pf-cc-panel-head">
+            <span class="pf-cc-panel-number">02</span>
+            <div>
+              <h3>PLAYER COMPARISON</h3>
+              <p>CONFRONTO GIOCATORI INTELLIGENTE</p>
+            </div>
+          </div>
+
+          <div class="pf-cc-player-vs">
+            <button type="button" id="pick-a" class="pf-cc-player-card" aria-label="Seleziona giocatore A">
+              <div class="pf-cc-player-avatar" id="pick-a-logo"></div>
+              <div class="pf-cc-player-copy">
+                <div class="pf-cc-player-role">GIOCATORE A</div>
+                <div class="pf-cc-player-name" id="pick-a-name">Seleziona</div>
+                <div class="pf-cc-player-team" id="pick-a-sub">Clicca per scegliere</div>
+                <div class="pf-cc-player-stats" id="pick-a-stats"></div>
+              </div>
+            </button>
+
+            <div class="pf-cc-radar-shell">
+              <div class="pf-cc-radar-labels">
+                <span>PAC</span>
+                <span>SHO</span>
+                <span>PAS</span>
+                <span>DRI</span>
+                <span>DEF</span>
+                <span>PHY</span>
+              </div>
+              <div class="pf-cc-radar-wrap neo-radar-wrap">
                 <canvas id="player-radar" height="240"></canvas>
               </div>
             </div>
 
-            <div id="compare-lock" class="neo-lock active" aria-hidden="false">
-              <div class="neo-lock-blur"></div>
-              <div class="neo-lock-panel">
-                <div class="neo-lock-icon">🔒</div>
-                <div class="neo-lock-title">Sblocca il Comparatore</div>
-                <div class="neo-lock-sub">
-                  Inserisci la tua email o entra su Telegram per usare il comparatore completo.
-                </div>
-
-                <div class="neo-lock-actions">
-                  <button type="button" class="neo-btn" id="unlock-with-email">
-                    Sblocca con email
-                  </button>
-                  <a class="neo-btn neo-btn-ghost" href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer">
-                    Entra su Telegram
-                  </a>
-                </div>
-
-                <div class="neo-lock-note">Niente spam. Solo novità utili, aggiornamenti e iniziative ProFantasy.</div>
+            <button type="button" id="pick-b" class="pf-cc-player-card" aria-label="Seleziona giocatore B">
+              <div class="pf-cc-player-avatar" id="pick-b-logo"></div>
+              <div class="pf-cc-player-copy">
+                <div class="pf-cc-player-role">GIOCATORE B</div>
+                <div class="pf-cc-player-name" id="pick-b-name">Seleziona</div>
+                <div class="pf-cc-player-team" id="pick-b-sub">Clicca per scegliere</div>
+                <div class="pf-cc-player-stats" id="pick-b-stats"></div>
               </div>
-
-              <button type="button" class="neo-btn neo-btn-ghost" id="unlock-after-telegram">
-                Ho joinato ✅
-              </button>
-            </div>
-
+            </button>
           </div>
 
-          <aside class="neo-card neo-card-sidebar" id="desktop-standings">
-            <div class="neo-tabs">
-              <button class="neo-tab active" data-neo-tab="classifica">Classifica</button>
-              <button class="neo-tab" data-neo-tab="marcatori">Marcatori</button>
-              <button class="neo-tab" data-neo-tab="assist">Assist</button>
-            </div>
-
-            <div class="neo-tab-panels">
-              <div class="neo-panel active" id="neo-panel-classifica">
-                <div class="neo-table-wrap">
-                  <table class="table classifica-table">
-                    <thead>
-                      <tr>
-                        <th>Pos</th>
-                        <th></th>
-                        <th>Squadra</th>
-                        <th>PG</th>
-                        <th>xG</th>
-                        <th>Punti</th>
-                      </tr>
-                    </thead>
-                    <tbody id="classifica-body"></tbody>
-                  </table>
-                </div>
-                <button type="button" class="dashboard-link" id="open-full-classifica">Vedi tutte le squadre →</button>
-              </div>
-
-              <div class="neo-panel" id="neo-panel-marcatori">
-                <div class="neo-table-wrap">
-                  <table class="dashboard-table">
-                    <thead>
-                      <tr>
-                        <th>Pos</th>
-                        <th>Giocatore</th>
-                        <th>Club</th>
-                        <th>Gol</th>
-                      </tr>
-                    </thead>
-                    <tbody id="marcatori-body"></tbody>
-                  </table>
-                </div>
-                <button type="button" class="dashboard-link" id="open-full-marcatori">Vedi la classifica completa →</button>
-              </div>
-
-              <div class="neo-panel" id="neo-panel-assist">
-                <div class="neo-table-wrap">
-                  <table class="dashboard-table">
-                    <thead>
-                      <tr>
-                        <th>Pos</th>
-                        <th>Giocatore</th>
-                        <th>Club</th>
-                        <th>Assist</th>
-                      </tr>
-                    </thead>
-                    <tbody id="assist-body"></tbody>
-                  </table>
-                </div>
-                <button type="button" class="dashboard-link" id="open-full-assist">Vedi la classifica completa →</button>
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        <div class="neo-mobile-standings" id="mobile-standings">
-          <div class="neo-card">
-            <h3 class="neo-subhead">Classifiche</h3>
-            <div class="neo-tabs neo-tabs-mobile">
-              <button class="neo-tab active" data-neo-tab="m-classifica">Classifica</button>
-              <button class="neo-tab" data-neo-tab="m-marcatori">Marcatori</button>
-              <button class="neo-tab" data-neo-tab="m-assist">Assist</button>
-            </div>
-
-            <div class="neo-tab-panels">
-              <div class="neo-panel active" id="neo-panel-m-classifica">
-                <div class="neo-standings-mobile-card">
-                  <div class="neo-standings-mobile-head">
-                    <div class="neo-standings-mobile-left">
-                      <span>Pos</span>
-                      <span></span>
-                      <span>Squadra</span>
-                    </div>
-
-                    <div class="neo-standings-mobile-right">
-                      <div class="neo-standings-mobile-right-track">
-                        <span>PG</span>
-                        <span>xG</span>
-                        <span>Punti</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div id="classifica-body-mobile" class="neo-standings-mobile-body"></div>
-                </div>
-
-                <button type="button" class="dashboard-link" id="open-full-classifica-mobile">Vedi tutte le squadre</button>
-              </div>
-
-              <div class="neo-panel" id="neo-panel-m-marcatori">
-                <div class="neo-table-wrap">
-                  <table class="dashboard-table">
-                    <thead>
-                      <tr>
-                        <th>Pos</th>
-                        <th>Giocatore</th>
-                        <th>Club</th>
-                        <th>Gol</th>
-                      </tr>
-                    </thead>
-                    <tbody id="marcatori-body-mobile"></tbody>
-                  </table>
-                </div>
-                <button type="button" class="dashboard-link" id="open-full-marcatori-mobile">Vedi la classifica completa →</button>
-              </div>
-
-              <div class="neo-panel" id="neo-panel-m-assist">
-                <div class="neo-table-wrap">
-                  <table class="dashboard-table">
-                    <thead>
-                      <tr>
-                        <th>Pos</th>
-                        <th>Giocatore</th>
-                        <th>Club</th>
-                        <th>Assist</th>
-                      </tr>
-                    </thead>
-                    <tbody id="assist-body-mobile"></tbody>
-                  </table>
-                </div>
-                <button type="button" class="dashboard-link" id="open-full-assist-mobile">Vedi la classifica completa →</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
+          <button type="button" class="pf-cc-panel-cta pf-cc-panel-cta-button" id="btn-compare">
+            VAI AL CONFRONTO
+            <span>→</span>
+          </button>
+        </article>
       </div>
+
+      <div class="pf-cc-column pf-cc-column-center">
+        <article class="pf-cc-panel pf-cc-panel-main neo-card-compare">
+          <div class="pf-cc-panel-head pf-cc-panel-head-main">
+            <span class="pf-cc-panel-number">03</span>
+            <div>
+              <h3>PREDICTIONS HUB</h3>
+              <p>INTELLIGENZA ARTIFICIALE AL TUO SERVIZIO</p>
+            </div>
+            <div class="pf-cc-confidence-box">
+              <span>AI CONFIDENCE</span>
+              <strong>92%</strong>
+            </div>
+          </div>
+
+          <div class="pf-cc-main-matchup">
+            <div class="pf-cc-main-team">
+              <div class="pf-cc-main-logo">INT</div>
+              <div class="pf-cc-main-team-name">INTER</div>
+            </div>
+
+            <div class="pf-cc-main-versus">
+              <span>PROSSIMA PARTITA</span>
+              <strong>VS</strong>
+              <em>DOM 12 MAG · 20:45</em>
+            </div>
+
+            <div class="pf-cc-main-team">
+              <div class="pf-cc-main-logo">JUV</div>
+              <div class="pf-cc-main-team-name">JUVENTUS</div>
+            </div>
+          </div>
+
+          <div class="pf-cc-main-kpis" id="compare-kpis">
+            <div class="pf-cc-kpi-box">
+              <span>PROBABILITÀ VITTORIA</span>
+              <strong>58%</strong>
+              <div class="pf-cc-kpi-bar"><i style="width:58%"></i></div>
+            </div>
+
+            <div class="pf-cc-kpi-box pf-cc-kpi-score">
+              <span>PREDIZIONE RISULTATO</span>
+              <strong>2 - 1</strong>
+              <em>CONFIDENCE HIGH</em>
+            </div>
+
+            <div class="pf-cc-kpi-box">
+              <span>EXPECTED GOALS (XG)</span>
+              <strong>2.14</strong>
+              <div class="pf-cc-kpi-bar"><i style="width:71%"></i></div>
+              <small>1.23</small>
+            </div>
+          </div>
+
+          <div class="pf-cc-main-bottom">
+            <div class="pf-cc-chart-panel">
+              <div class="pf-cc-block-title">ANDAMENTO PARTITA SIMULATA</div>
+              <div class="pf-cc-fake-chart">
+                <i class="pf-line-cyan"></i>
+                <i class="pf-line-purple"></i>
+              </div>
+            </div>
+
+            <div class="pf-cc-watchlist">
+              <div class="pf-cc-block-title">PLAYER DA TENERE D'OCCHIO</div>
+              <div class="pf-cc-watch-item">
+                <span>L. MARTINEZ</span>
+                <strong>7.8</strong>
+              </div>
+              <div class="pf-cc-watch-item">
+                <span>CHIESA</span>
+                <strong>7.2</strong>
+              </div>
+              <div class="pf-cc-watch-item">
+                <span>BARELLA</span>
+                <strong>6.9</strong>
+              </div>
+            </div>
+          </div>
+
+          <a href="predictions.html" class="pf-cc-panel-cta">
+            ESPLORA PREDICTIONS HUB
+            <span>→</span>
+          </a>
+
+          <div id="compare-lock" class="neo-lock active" aria-hidden="false">
+            <div class="neo-lock-blur"></div>
+            <div class="neo-lock-panel">
+              <div class="neo-lock-icon">🔒</div>
+              <div class="neo-lock-title">Sblocca il Comparatore</div>
+              <div class="neo-lock-sub">
+                Inserisci la tua email o entra su Telegram per usare il comparatore completo.
+              </div>
+              <div class="neo-lock-actions">
+                <button type="button" class="neo-btn" id="unlock-with-email">Sblocca con email</button>
+                <a class="neo-btn neo-btn-ghost" href="https://t.me/hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer">
+                  Entra su Telegram
+                </a>
+              </div>
+              <div class="neo-lock-note">
+                Niente spam. Solo novità utili, aggiornamenti e iniziative ProFantasy.
+              </div>
+              <button type="button" class="neo-btn neo-btn-ghost" id="unlock-after-telegram">Ho joinato</button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="pf-cc-column pf-cc-column-right">
+        <article class="pf-cc-panel pf-cc-panel-small">
+          <div class="pf-cc-panel-head">
+            <span class="pf-cc-panel-number">04</span>
+            <div>
+              <h3>LIVE SCORES</h3>
+              <p>TUTTE LE PARTITE IN TEMPO REALE</p>
+            </div>
+          </div>
+
+          <div class="pf-cc-live-list">
+            <div class="pf-cc-live-row"><span>MILAN</span><strong>2 - 1</strong><em>ROMA</em></div>
+            <div class="pf-cc-live-row"><span>LAZIO</span><strong>1 - 0</strong><em>FIORENTINA</em></div>
+            <div class="pf-cc-live-row"><span>ATALANTA</span><strong>3 - 2</strong><em>NAPOLI</em></div>
+            <div class="pf-cc-live-row"><span>TORINO</span><strong>0 - 0</strong><em>BOLOGNA</em></div>
+            <div class="pf-cc-live-row"><span>MONZA</span><strong>1 - 1</strong><em>SASSUOLO</em></div>
+          </div>
+
+          <a href="predictions.html" class="pf-cc-panel-cta">
+            TUTTI I RISULTATI LIVE
+            <span>→</span>
+          </a>
+        </article>
+
+        <article class="pf-cc-panel pf-cc-panel-small">
+          <div class="pf-cc-panel-head">
+            <span class="pf-cc-panel-number">05</span>
+            <div>
+              <h3>COMMUNITY TOOLS</h3>
+              <p>LA COMMUNITY CHE FA LA DIFFERENZA</p>
+            </div>
+          </div>
+
+          <div class="pf-cc-community-box">
+            <div class="pf-cc-community-col">
+              <span>SONDAGGIO ATTIVO</span>
+              <div class="pf-cc-community-stat">
+                <b>Inter</b>
+                <strong>61%</strong>
+              </div>
+              <div class="pf-cc-community-stat">
+                <b>Milan</b>
+                <strong>24%</strong>
+              </div>
+              <div class="pf-cc-community-stat">
+                <b>Juve</b>
+                <strong>15%</strong>
+              </div>
+            </div>
+
+            <div class="pf-cc-community-col">
+              <span>TRENDING TOPIC</span>
+              <div class="pf-cc-tag">#Formazioni</div>
+              <div class="pf-cc-tag">#ConsigliFantacalcio</div>
+              <div class="pf-cc-tag">#Top11</div>
+            </div>
+          </div>
+
+          <a href="community.html" class="pf-cc-panel-cta">
+            ENTRA NELLA COMMUNITY
+            <span>→</span>
+          </a>
+        </article>
+      </div>
+    </div>
+
+    <div class="pf-cc-bottom-dock">
+      <a href="index.html" class="pf-cc-dock-item active">DASHBOARD</a>
+      <a href="predictions.html" class="pf-cc-dock-item">ANALYSIS</a>
+      <a href="tools.html" class="pf-cc-dock-item pf-cc-dock-center">PF</a>
+      <a href="predictions.html" class="pf-cc-dock-item">PREDICTIONS</a>
+      <a href="community.html" class="pf-cc-dock-item">COMMUNITY</a>
+    </div>
+  </div>
+
+  <select id="player-a-select" class="neo-select neo-select-hidden" aria-hidden="true" tabindex="-1"></select>
+  <select id="player-b-select" class="neo-select neo-select-hidden" aria-hidden="true" tabindex="-1"></select>
+</div>
     </section>
 
     <div id="neo-player-picker" class="neo-picker" aria-hidden="true">
