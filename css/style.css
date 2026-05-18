@@ -17946,28 +17946,21 @@ body.legal-page .legal-highlight {
 ========================================== */
 
 #home-comparatore {
-  min-height: 980px;
+  min-height: 860px;
 }
 
 #home-comparatore .container {
-  min-height: 980px;
+  min-height: 860px;
 }
 
-@media (max-width: 1200px) {
+  @media (max-width: 1200px) {
   #home-comparatore {
-    min-height: 860px;
+    min-height: 760px;
   }
 
   #home-comparatore .container {
-    min-height: 860px;
+    min-height: 760px;
   }
-
-  #home-comparatore::before {
-    background:
-      linear-gradient(180deg, rgba(4, 7, 24, 0.16), rgba(3, 5, 18, 0.24)),
-      url("../img/comparatore-control-center-bg.jpg") center 60px / 125% auto no-repeat;
-  }
-}
 
 @media (max-width: 900px) {
   #home-comparatore {
@@ -17999,5 +17992,421 @@ body.legal-page .legal-highlight {
     background:
       linear-gradient(180deg, rgba(4, 7, 24, 0.2), rgba(3, 5, 18, 0.32)),
       url("../img/comparatore-control-center-bg.jpg") center 110px / 190% auto no-repeat;
+  }
+}
+
+      /* ==========================================
+   HOME COMPARATORE - STEP 2
+   card desktop + adattamento mobile
+========================================== */
+
+#home-comparatore .neo-section-head {
+  max-width: 760px;
+  margin: 0 auto 18px;
+  text-align: center;
+}
+
+#home-comparatore .neo-section-title {
+  font-family: Anton, sans-serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+#home-comparatore .neo-section-subtitle {
+  color: rgba(225, 236, 255, 0.82);
+  font-size: 0.98rem;
+}
+
+#home-comparatore .neo-compare-grid {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 300px;
+  gap: 18px;
+  align-items: start;
+  padding: 18px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+#home-comparatore .neo-card,
+#home-comparatore .neo-card-compare,
+#home-comparatore .neo-card-sidebar,
+#home-comparatore .neo-mobile-standings .neo-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(5, 10, 34, 0.58), rgba(4, 8, 24, 0.5));
+  border: 1px solid rgba(173, 101, 255, 0.26);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.02),
+    0 0 0 1px rgba(83, 213, 255, 0.08),
+    0 12px 34px rgba(0,0,0,0.22),
+    0 0 34px rgba(176,108,255,0.07);
+  backdrop-filter: blur(4px);
+}
+
+#home-comparatore .neo-card::before,
+#home-comparatore .neo-card-compare::before,
+#home-comparatore .neo-card-sidebar::before,
+#home-comparatore .neo-mobile-standings .neo-card::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 18px;
+  border: 1px solid rgba(95, 224, 255, 0.08);
+  pointer-events: none;
+}
+
+#home-comparatore .neo-card-compare {
+  min-height: 620px;
+  padding: 18px;
+}
+
+#home-comparatore .neo-card-sidebar {
+  min-height: 620px;
+  padding: 16px;
+}
+
+#home-comparatore .neo-compare-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+#home-comparatore .neo-pick-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 90px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(105, 228, 255, 0.14);
+  background: rgba(8, 14, 40, 0.34);
+  box-shadow: inset 0 0 24px rgba(83, 213, 255, 0.03);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+#home-comparatore .neo-pick-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(176,108,255,0.34);
+  box-shadow: 0 0 0 3px rgba(176,108,255,0.08);
+}
+
+#home-comparatore .neo-pick-logo {
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(18,25,58,0.95), rgba(6,8,24,0.98));
+  border: 1px solid rgba(105, 228, 255, 0.16);
+}
+
+#home-comparatore .neo-pick-logo img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+#home-comparatore .neo-pick-kicker {
+  color: rgba(227,238,255,0.56);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#home-comparatore .neo-pick-name {
+  margin-top: 4px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+#home-comparatore .neo-pick-sub {
+  margin-top: 2px;
+  color: rgba(227,238,255,0.74);
+  font-size: 0.8rem;
+}
+
+#home-comparatore .neo-pick-stats {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+#home-comparatore .neo-pick-cta {
+  color: #67ebff;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+#home-comparatore .neo-compare-output {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 14px;
+  align-items: start;
+}
+
+#home-comparatore .neo-compare-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+#home-comparatore .neo-mini-card {
+  min-height: 110px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(105, 228, 255, 0.12);
+  background: rgba(9, 14, 42, 0.32);
+  color: rgba(232,240,255,0.88);
+  box-shadow: inset 0 0 18px rgba(83, 213, 255, 0.025);
+}
+
+#home-comparatore .neo-radar-wrap {
+  min-height: 280px;
+  padding: 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(105, 228, 255, 0.12);
+  background: rgba(9, 14, 42, 0.28);
+}
+
+#home-comparatore .neo-radar-wrap canvas {
+  width: 100% !important;
+  height: 250px !important;
+}
+
+#home-comparatore .neo-lock {
+  background: rgba(3, 6, 20, 0.18);
+  backdrop-filter: blur(3px);
+}
+
+#home-comparatore .neo-lock-panel {
+  max-width: 440px;
+  background: rgba(8, 14, 38, 0.78);
+  border: 1px solid rgba(105, 228, 255, 0.16);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.25);
+}
+
+#home-comparatore .neo-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+#home-comparatore .neo-tab {
+  min-height: 40px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(176,108,255,0.18);
+  background: rgba(12, 16, 42, 0.46);
+  color: rgba(228,239,255,0.78);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#home-comparatore .neo-tab.active {
+  color: #67ebff;
+  border-color: rgba(103,235,255,0.28);
+  box-shadow: 0 0 0 3px rgba(103,235,255,0.06);
+}
+
+#home-comparatore .neo-panel {
+  padding: 10px 0 0;
+}
+
+#home-comparatore .neo-subhead {
+  font-family: Anton, sans-serif;
+  color: #fff;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+#home-comparatore .dashboard-table,
+#home-comparatore .classifica-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#home-comparatore .dashboard-table th,
+#home-comparatore .dashboard-table td,
+#home-comparatore .classifica-table th,
+#home-comparatore .classifica-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: rgba(232,240,255,0.88);
+  font-size: 0.84rem;
+  text-align: left;
+}
+
+#home-comparatore .dashboard-table th,
+#home-comparatore .classifica-table th {
+  color: rgba(232,240,255,0.58);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+#home-comparatore .dashboard-link {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,92,242,0.2);
+  background: rgba(18, 10, 40, 0.4);
+  color: #ff7eea;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+#home-comparatore .neo-mobile-standings {
+  display: none;
+}
+
+/* ---------- MOBILE / TABLET ---------- */
+@media (max-width: 1100px) {
+  #home-comparatore .neo-compare-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  #home-comparatore .neo-card-sidebar {
+    min-height: auto;
+  }
+
+  #home-comparatore .neo-compare-output {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  #home-comparatore .neo-section-head {
+    margin-bottom: 14px;
+    padding: 0 4px;
+  }
+
+  #home-comparatore .neo-section-title {
+    font-size: 1.6rem;
+  }
+
+  #home-comparatore .neo-section-subtitle {
+    font-size: 0.9rem;
+  }
+
+  #home-comparatore .neo-compare-grid {
+    padding: 0;
+    background: transparent;
+  }
+
+  #home-comparatore .neo-card-compare,
+  #home-comparatore .neo-card-sidebar {
+    padding: 14px;
+    min-height: auto;
+  }
+
+  #home-comparatore .neo-compare-controls {
+    grid-template-columns: 1fr;
+  }
+
+  #home-comparatore .neo-pick-card {
+    grid-template-columns: 52px 1fr;
+  }
+
+  #home-comparatore .neo-pick-cta {
+    display: none;
+  }
+
+  #home-comparatore .neo-compare-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  #home-comparatore .neo-radar-wrap {
+    min-height: 240px;
+  }
+
+  #home-comparatore .neo-radar-wrap canvas {
+    height: 220px !important;
+  }
+
+  #home-comparatore #desktop-standings {
+    display: none;
+  }
+
+  #home-comparatore .neo-mobile-standings {
+    display: block;
+    position: relative;
+    z-index: 3;
+    margin-top: 16px;
+  }
+
+  #home-comparatore .neo-mobile-standings .neo-card {
+    padding: 14px;
+  }
+
+  #home-comparatore .neo-tabs-mobile {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  #home-comparatore .neo-tabs-mobile::-webkit-scrollbar {
+    display: none;
+  }
+
+  #home-comparatore .neo-panel {
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  #home-comparatore {
+    min-height: auto;
+  }
+
+  #home-comparatore .container {
+    min-height: auto;
+  }
+
+  #home-comparatore::before {
+    background:
+      linear-gradient(180deg, rgba(4, 7, 24, 0.24), rgba(3, 5, 18, 0.34)),
+      url("../img/comparatore-control-center-bg.jpg") center 70px / 175% auto no-repeat;
+  }
+
+  #home-comparatore .neo-pick-card {
+    min-height: 82px;
+    padding: 12px;
+  }
+
+  #home-comparatore .neo-pick-name {
+    font-size: 0.92rem;
+  }
+
+  #home-comparatore .dashboard-table th,
+  #home-comparatore .dashboard-table td,
+  #home-comparatore .classifica-table th,
+  #home-comparatore .classifica-table td {
+    font-size: 0.78rem;
+    padding: 8px 6px;
   }
 }
