@@ -1,0 +1,1218 @@
+/* =========================================================
+   PROFANTASY HOME COMPARATORE / CONTROL CENTER
+   Scoped only to #home-comparatore
+   ========================================================= */
+
+#home-comparatore {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(56px, 7vw, 92px) 0;
+  background:
+    radial-gradient(circle at 16% 12%, rgba(255, 43, 214, 0.16), transparent 32%),
+    radial-gradient(circle at 82% 34%, rgba(0, 214, 255, 0.18), transparent 34%),
+    linear-gradient(180deg, #03051b 0%, #050827 48%, #020314 100%);
+  border-top: 1px solid rgba(102, 247, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 204, 27, 0.10);
+}
+
+#home-comparatore::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background-image: url("../img/comparatore-control-center-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.72;
+  transform: scale(1.02);
+}
+
+#home-comparatore::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(2, 3, 20, 0.92) 0%, rgba(3, 6, 28, 0.60) 44%, rgba(2, 3, 18, 0.92) 100%),
+    linear-gradient(180deg, rgba(2, 3, 18, 0.25) 0%, rgba(2, 3, 18, 0.86) 100%);
+  pointer-events: none;
+}
+
+#home-comparatore .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Stage principale */
+
+#home-comparatore .pf-compare-stage {
+  position: relative;
+  min-height: 680px;
+  padding: clamp(18px, 2.6vw, 34px);
+  border-radius: clamp(24px, 3vw, 42px);
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(7, 11, 42, 0.68), rgba(3, 5, 22, 0.84));
+  border: 1px solid rgba(120, 245, 255, 0.16);
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+#home-comparatore .pf-compare-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(102, 247, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(102, 247, 255, 0.07) 1px, transparent 1px);
+  background-size: 54px 54px;
+  opacity: 0.22;
+  mask-image: radial-gradient(circle at center, #000 0%, transparent 78%);
+  pointer-events: none;
+}
+
+#home-comparatore .pf-compare-bg-ui {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#home-comparatore .pf-compare-bg-ui::before,
+#home-comparatore .pf-compare-bg-ui::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(26px);
+  opacity: 0.55;
+}
+
+#home-comparatore .pf-compare-bg-ui::before {
+  width: 360px;
+  height: 360px;
+  left: -120px;
+  top: 18%;
+  background: radial-gradient(circle, rgba(255, 43, 214, 0.35), transparent 68%);
+}
+
+#home-comparatore .pf-compare-bg-ui::after {
+  width: 430px;
+  height: 430px;
+  right: -130px;
+  bottom: -80px;
+  background: radial-gradient(circle, rgba(0, 214, 255, 0.30), transparent 68%);
+}
+
+#home-comparatore .pf-compare-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(102, 247, 255, 0.10) 50%, transparent 100%);
+  height: 28%;
+  opacity: 0.16;
+  animation: pfHomeScan 7s linear infinite;
+}
+
+@keyframes pfHomeScan {
+  0% { transform: translateY(-120%); }
+  100% { transform: translateY(460%); }
+}
+
+/* Header control center */
+
+#home-comparatore .pf-compare-header {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto minmax(180px, 1fr);
+  gap: 18px;
+  align-items: center;
+  margin-bottom: clamp(20px, 3vw, 32px);
+}
+
+#home-comparatore .pf-compare-system,
+#home-comparatore .pf-compare-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 12px 14px;
+  border-radius: 20px;
+  background: rgba(5, 8, 31, 0.58);
+  border: 1px solid rgba(120, 245, 255, 0.13);
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+#home-comparatore .pf-compare-system {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+#home-comparatore .pf-compare-system span,
+#home-comparatore .pf-compare-user strong {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+#home-comparatore .pf-compare-system small,
+#home-comparatore .pf-compare-user span {
+  color: rgba(234, 242, 255, 0.54);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+#home-comparatore .pf-compare-brand {
+  text-align: center;
+}
+
+#home-comparatore .pf-compare-brand h2 {
+  margin: 0;
+  font-family: "Anton", sans-serif;
+  font-size: clamp(2rem, 4vw, 4.4rem);
+  line-height: 0.9;
+  letter-spacing: 0.055em;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 24px rgba(102, 247, 255, 0.16),
+    0 14px 38px rgba(0, 0, 0, 0.5);
+}
+
+#home-comparatore .pf-compare-brand p {
+  margin: 7px 0 0;
+  color: #66f7ff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+#home-comparatore .pf-compare-user {
+  justify-content: flex-end;
+}
+
+#home-comparatore .pf-compare-user-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 15px;
+  color: #071023;
+  font-weight: 900;
+  background: linear-gradient(135deg, #66f7ff, #ff3bd5);
+  box-shadow: 0 0 28px rgba(102, 247, 255, 0.22);
+}
+
+/* Layout desktop */
+
+#home-comparatore .pf-compare-layout {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.82fr) minmax(420px, 1.42fr) minmax(220px, 0.82fr);
+  gap: clamp(14px, 1.8vw, 22px);
+  align-items: stretch;
+  perspective: 1500px;
+}
+
+#home-comparatore .pf-compare-side {
+  display: grid;
+  gap: clamp(14px, 1.6vw, 18px);
+  align-content: stretch;
+}
+
+#home-comparatore .pf-compare-center {
+  min-width: 0;
+}
+
+/* Cards HUD */
+
+#home-comparatore .pf-hud-card,
+#home-comparatore .pf-main-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 26px;
+  background:
+    linear-gradient(180deg, rgba(10, 14, 48, 0.72), rgba(4, 6, 24, 0.90));
+  border: 1px solid rgba(120, 245, 255, 0.15);
+  box-shadow:
+    0 20px 56px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(14px);
+  transform: translateZ(0);
+  transition:
+    transform 0.36s cubic-bezier(.2,.8,.2,1),
+    border-color 0.28s ease,
+    box-shadow 0.28s ease,
+    background 0.28s ease,
+    filter 0.28s ease;
+}
+
+#home-comparatore .pf-hud-card {
+  padding: 18px;
+  min-height: 250px;
+}
+
+#home-comparatore .pf-main-screen {
+  min-height: 542px;
+  padding: clamp(18px, 2vw, 24px);
+  border-color: rgba(255, 43, 214, 0.20);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 43, 214, 0.12), transparent 42%),
+    linear-gradient(180deg, rgba(12, 16, 58, 0.72), rgba(4, 6, 24, 0.92));
+}
+
+#home-comparatore .pf-hud-card::before,
+#home-comparatore .pf-main-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.065) 46%, transparent 62%);
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+
+#home-comparatore .pf-hud-card:hover,
+#home-comparatore .pf-hud-card:focus-within,
+#home-comparatore .pf-main-screen:hover,
+#home-comparatore .pf-main-screen:focus-within {
+  transform: translateY(-8px) scale(1.025);
+  border-color: rgba(102, 247, 255, 0.42);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.52),
+    0 0 44px rgba(102, 247, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+#home-comparatore .pf-hud-card:hover::before,
+#home-comparatore .pf-main-screen:hover::before {
+  transform: translateX(120%);
+}
+
+#home-comparatore .pf-hud-card:active,
+#home-comparatore .pf-main-screen:active {
+  transform: translateY(-4px) scale(1.045);
+}
+
+/* Head delle card */
+
+#home-comparatore .pf-hud-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+#home-comparatore .pf-hud-index {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 15px;
+  color: #66f7ff;
+  font-family: "Anton", sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  background: rgba(102, 247, 255, 0.08);
+  border: 1px solid rgba(102, 247, 255, 0.20);
+  box-shadow: inset 0 0 22px rgba(102, 247, 255, 0.055);
+}
+
+#home-comparatore .pf-hud-head h3 {
+  margin: 0;
+  color: #ffffff;
+  font-family: "Anton", sans-serif;
+  font-size: clamp(1.2rem, 1.8vw, 1.7rem);
+  line-height: 0.95;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+#home-comparatore .pf-hud-head p {
+  margin: 5px 0 0;
+  color: rgba(234, 242, 255, 0.56);
+  font-size: 0.78rem;
+}
+
+/* Mini boxes */
+
+#home-comparatore .pf-mini-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+#home-comparatore .pf-mini-box,
+#home-comparatore .pf-community-box,
+#home-comparatore .pf-chart-box,
+#home-comparatore .pf-watch-box,
+#home-comparatore .pf-kpi-card {
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025));
+  border: 1px solid rgba(120, 245, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
+}
+
+#home-comparatore .pf-mini-box {
+  min-height: 84px;
+  padding: 12px;
+}
+
+#home-comparatore .pf-mini-box span,
+#home-comparatore .pf-box-title,
+#home-comparatore .pf-community-box span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(234, 242, 255, 0.54);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+#home-comparatore .pf-ring-stat {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 62px;
+}
+
+#home-comparatore .pf-ring {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background:
+    conic-gradient(#66f7ff 0 58%, rgba(255, 61, 213, 0.9) 58% 100%);
+  box-shadow: 0 0 24px rgba(102, 247, 255, 0.16);
+}
+
+#home-comparatore .pf-ring-center {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(4, 6, 24, 0.92);
+}
+
+#home-comparatore .pf-ring-center strong,
+#home-comparatore .pf-inline-split strong {
+  color: #ffffff;
+  font-size: 0.92rem;
+}
+
+#home-comparatore .pf-ring-center em,
+#home-comparatore .pf-inline-split em {
+  color: rgba(255, 61, 213, 0.92);
+  font-size: 0.72rem;
+  font-style: normal;
+}
+
+#home-comparatore .pf-inline-split {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+#home-comparatore .pf-fake-line {
+  height: 34px;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, transparent 0%, rgba(102, 247, 255, 0.30) 42%, rgba(255, 61, 213, 0.42) 100%);
+  clip-path: polygon(0 78%, 14% 64%, 28% 72%, 43% 38%, 57% 50%, 72% 24%, 100% 32%, 100% 100%, 0 100%);
+}
+
+#home-comparatore .pf-zones {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  height: 42px;
+}
+
+#home-comparatore .pf-zones i {
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(102, 247, 255, 0.45), rgba(255, 61, 213, 0.16));
+}
+
+#home-comparatore .pf-zones-values {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  color: rgba(234, 242, 255, 0.78);
+  font-size: 0.72rem;
+}
+
+#home-comparatore .pf-press-bars {
+  display: flex;
+  align-items: end;
+  gap: 4px;
+  height: 42px;
+}
+
+#home-comparatore .pf-press-bars i {
+  flex: 1;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffcc1b, #ff3bd5);
+  box-shadow: 0 0 18px rgba(255, 61, 213, 0.18);
+}
+
+#home-comparatore .pf-press-bars i:nth-child(odd) { height: 70%; }
+#home-comparatore .pf-press-bars i:nth-child(even) { height: 46%; }
+#home-comparatore .pf-press-bars i:nth-child(5) { height: 92%; }
+
+#home-comparatore .pf-mini-box small {
+  display: block;
+  margin-top: 6px;
+  color: #ffcc1b;
+  font-weight: 800;
+}
+
+/* Player comparison */
+
+#home-comparatore .pf-player-compare {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+#home-comparatore .pf-player-card {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  min-height: 76px;
+  padding: 10px;
+  border-radius: 18px;
+  color: #ffffff;
+  text-align: left;
+  background: rgba(7, 11, 42, 0.56);
+  border: 1px solid rgba(120, 245, 255, 0.13);
+  cursor: pointer;
+  transition:
+    transform 0.24s ease,
+    border-color 0.24s ease,
+    box-shadow 0.24s ease,
+    background 0.24s ease;
+}
+
+#home-comparatore .pf-player-card:hover,
+#home-comparatore .pf-player-card:focus-visible {
+  outline: none;
+  transform: translateX(6px);
+  border-color: rgba(255, 61, 213, 0.42);
+  background: rgba(255, 61, 213, 0.08);
+  box-shadow: 0 0 28px rgba(255, 61, 213, 0.12);
+}
+
+#home-comparatore .pf-player-logo {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, rgba(102,247,255,0.20), rgba(255,61,213,0.22));
+  border: 1px solid rgba(255,255,255,0.10);
+  overflow: hidden;
+}
+
+#home-comparatore .pf-player-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#home-comparatore .pf-player-kicker {
+  color: rgba(234, 242, 255, 0.52);
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#home-comparatore .pf-player-name {
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.94rem;
+}
+
+#home-comparatore .pf-player-sub,
+#home-comparatore .pf-player-stats {
+  color: rgba(234, 242, 255, 0.54);
+  font-size: 0.72rem;
+}
+
+#home-comparatore .pf-player-radar {
+  min-height: 178px;
+  padding: 10px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at center, rgba(102,247,255,0.12), transparent 58%),
+    rgba(7, 11, 42, 0.42);
+  border: 1px solid rgba(120,245,255,0.10);
+}
+
+#home-comparatore .pf-player-radar-shell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 156px;
+}
+
+#home-comparatore .pf-player-radar canvas {
+  width: 100% !important;
+  max-height: 170px !important;
+}
+
+/* Main center screen */
+
+#home-comparatore .pf-main-head {
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#home-comparatore .pf-main-confidence {
+  margin-left: auto;
+  text-align: right;
+  padding: 9px 11px;
+  border-radius: 15px;
+  background: rgba(88, 255, 180, 0.08);
+  border: 1px solid rgba(88, 255, 180, 0.18);
+}
+
+#home-comparatore .pf-main-confidence span {
+  display: block;
+  color: rgba(234,242,255,0.54);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+#home-comparatore .pf-main-confidence strong {
+  color: #58ffb4;
+  font-size: 1.02rem;
+}
+
+#home-comparatore .pf-main-battle {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: center;
+  margin: 22px 0;
+  padding: clamp(14px, 2vw, 22px);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at center, rgba(255, 61, 213, 0.12), transparent 56%),
+    rgba(5, 8, 31, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+#home-comparatore .pf-team-side {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+#home-comparatore .pf-team-logo {
+  display: grid;
+  place-items: center;
+  width: clamp(58px, 6vw, 82px);
+  height: clamp(58px, 6vw, 82px);
+  border-radius: 24px;
+  color: #071023;
+  font-family: "Anton", sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+  background: linear-gradient(135deg, #66f7ff, #ff3bd5);
+  box-shadow: 0 0 34px rgba(102, 247, 255, 0.20);
+}
+
+#home-comparatore .pf-team-name {
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.82rem;
+  letter-spacing: 0.10em;
+}
+
+#home-comparatore .pf-battle-mid {
+  text-align: center;
+}
+
+#home-comparatore .pf-battle-mid span,
+#home-comparatore .pf-battle-mid em {
+  display: block;
+  color: rgba(234, 242, 255, 0.56);
+  font-size: 0.70rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+#home-comparatore .pf-battle-mid strong {
+  display: block;
+  color: #ffffff;
+  font-family: "Anton", sans-serif;
+  font-size: clamp(2.1rem, 5vw, 4.4rem);
+  line-height: 0.9;
+  text-shadow:
+    0 0 24px rgba(255, 61, 213, 0.18),
+    0 0 40px rgba(102, 247, 255, 0.12);
+}
+
+#home-comparatore .pf-main-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+#home-comparatore .pf-kpi-card {
+  min-height: 112px;
+  padding: 14px;
+}
+
+#home-comparatore .pf-kpi-card span {
+  display: block;
+  color: rgba(234, 242, 255, 0.54);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+#home-comparatore .pf-kpi-card strong {
+  display: block;
+  margin-top: 8px;
+  color: #ffffff;
+  font-family: "Anton", sans-serif;
+  font-size: clamp(1.7rem, 2.8vw, 2.7rem);
+  line-height: 1;
+}
+
+#home-comparatore .pf-kpi-card em,
+#home-comparatore .pf-kpi-card small {
+  color: rgba(234, 242, 255, 0.58);
+  font-style: normal;
+  font-size: 0.72rem;
+}
+
+#home-comparatore .pf-kpi-bar {
+  height: 8px;
+  margin-top: 12px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.08);
+}
+
+#home-comparatore .pf-kpi-bar i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #66f7ff, #ff3bd5);
+  box-shadow: 0 0 18px rgba(102, 247, 255, 0.22);
+}
+
+#home-comparatore .pf-kpi-score {
+  text-align: center;
+  border-color: rgba(255, 204, 27, 0.20);
+}
+
+#home-comparatore .pf-main-lower {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+#home-comparatore .pf-chart-box,
+#home-comparatore .pf-watch-box {
+  padding: 14px;
+  min-height: 126px;
+}
+
+#home-comparatore .pf-big-chart {
+  position: relative;
+  height: 78px;
+  border-radius: 16px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(102,247,255,0.06), rgba(255,61,213,0.05));
+}
+
+#home-comparatore .pf-big-chart i {
+  position: absolute;
+  inset: 0;
+  opacity: 0.85;
+  clip-path: polygon(0 72%, 14% 58%, 30% 64%, 46% 26%, 63% 42%, 77% 18%, 100% 28%, 100% 100%, 0 100%);
+}
+
+#home-comparatore .pf-big-chart-cyan {
+  background: linear-gradient(90deg, rgba(102,247,255,0.45), rgba(102,247,255,0.02));
+}
+
+#home-comparatore .pf-big-chart-purple {
+  transform: translateY(14px);
+  background: linear-gradient(90deg, rgba(255,61,213,0.40), rgba(255,61,213,0.02));
+}
+
+#home-comparatore .pf-watch-row,
+#home-comparatore .pf-live-row,
+#home-comparatore .pf-community-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+#home-comparatore .pf-watch-row:last-child,
+#home-comparatore .pf-live-row:last-child,
+#home-comparatore .pf-community-row:last-child {
+  border-bottom: 0;
+}
+
+#home-comparatore .pf-watch-row span,
+#home-comparatore .pf-live-row span,
+#home-comparatore .pf-live-row em,
+#home-comparatore .pf-community-row b {
+  color: rgba(234, 242, 255, 0.72);
+  font-size: 0.78rem;
+  font-style: normal;
+}
+
+#home-comparatore .pf-watch-row strong,
+#home-comparatore .pf-live-row strong,
+#home-comparatore .pf-community-row strong {
+  color: #66f7ff;
+  font-weight: 900;
+}
+
+/* Sidebar right */
+
+#home-comparatore .pf-live-list {
+  position: relative;
+  z-index: 2;
+}
+
+#home-comparatore .pf-community-grid {
+  display: grid;
+  gap: 10px;
+}
+
+#home-comparatore .pf-community-box {
+  padding: 12px;
+}
+
+#home-comparatore .pf-topic-pill {
+  display: inline-flex;
+  margin: 4px 4px 0 0;
+  padding: 7px 9px;
+  border-radius: 999px;
+  color: rgba(234, 242, 255, 0.82);
+  background: rgba(255, 61, 213, 0.08);
+  border: 1px solid rgba(255, 61, 213, 0.16);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/* Buttons */
+
+#home-comparatore .pf-hud-btn,
+#home-comparatore .neo-btn {
+  position: relative;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 14px;
+  padding: 0 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(102, 247, 255, 0.18);
+  background: rgba(102, 247, 255, 0.08);
+  color: #66f7ff;
+  text-decoration: none;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    transform 0.24s ease,
+    border-color 0.24s ease,
+    box-shadow 0.24s ease,
+    background 0.24s ease;
+}
+
+#home-comparatore .pf-hud-btn:hover,
+#home-comparatore .neo-btn:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 61, 213, 0.40);
+  background: rgba(255, 61, 213, 0.10);
+  box-shadow: 0 0 30px rgba(255, 61, 213, 0.14);
+}
+
+#home-comparatore .pf-hud-btn-full {
+  width: 100%;
+}
+
+#home-comparatore .neo-btn-ghost {
+  color: rgba(234, 242, 255, 0.84);
+  background: rgba(255,255,255,0.05);
+}
+
+/* Lock overlay */
+
+#home-comparatore .neo-lock {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  display: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+#home-comparatore .neo-lock.active {
+  display: block;
+}
+
+#home-comparatore .neo-lock-blur {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(3, 5, 22, 0.14), rgba(3, 5, 22, 0.82));
+  backdrop-filter: blur(10px);
+}
+
+#home-comparatore .neo-lock-panel {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  width: min(420px, calc(100% - 32px));
+  transform: translateX(-50%);
+  padding: 18px;
+  border-radius: 22px;
+  text-align: center;
+  background: rgba(5, 8, 31, 0.82);
+  border: 1px solid rgba(120, 245, 255, 0.18);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.52);
+}
+
+#home-comparatore .neo-lock-icon {
+  font-size: 1.45rem;
+  margin-bottom: 8px;
+}
+
+#home-comparatore .neo-lock-title {
+  color: #ffffff;
+  font-family: "Anton", sans-serif;
+  font-size: 1.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+#home-comparatore .neo-lock-sub,
+#home-comparatore .neo-lock-note {
+  color: rgba(234, 242, 255, 0.64);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+#home-comparatore .neo-lock-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* Dock bottom */
+
+#home-comparatore .pf-bottom-dock {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 24px auto 0;
+  padding: 8px;
+  border-radius: 999px;
+  background: rgba(5, 8, 31, 0.70);
+  border: 1px solid rgba(120, 245, 255, 0.14);
+  backdrop-filter: blur(14px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+#home-comparatore .pf-bottom-dock::-webkit-scrollbar {
+  display: none;
+}
+
+#home-comparatore .pf-dock-item {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  color: rgba(234, 242, 255, 0.66);
+  text-decoration: none;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+#home-comparatore .pf-dock-item.active,
+#home-comparatore .pf-dock-item:hover {
+  color: #071023;
+  background: linear-gradient(135deg, #66f7ff, #ff3bd5);
+}
+
+#home-comparatore .pf-dock-item-center {
+  min-width: 48px;
+  color: #071023;
+  background: linear-gradient(135deg, #ffcc1b, #ff3bd5);
+  font-weight: 900;
+}
+
+/* Hidden selects: non toccano layout */
+
+#home-comparatore .neo-select-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+
+/* Tablet */
+
+@media (max-width: 1180px) {
+  #home-comparatore .pf-compare-stage {
+    min-height: auto;
+  }
+
+  #home-comparatore .pf-compare-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #home-comparatore .pf-compare-side {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #home-comparatore .pf-compare-side-left {
+    order: 2;
+  }
+
+  #home-comparatore .pf-compare-center {
+    order: 1;
+  }
+
+  #home-comparatore .pf-compare-side-right {
+    order: 3;
+  }
+
+  #home-comparatore .pf-main-screen {
+    min-height: auto;
+  }
+
+  #home-comparatore .pf-player-compare {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #home-comparatore .pf-player-radar {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+}
+
+/* Mobile: esperienza semplificata */
+
+@media (max-width: 760px) {
+  #home-comparatore {
+    padding: 48px 0;
+  }
+
+  #home-comparatore::before {
+    opacity: 0.46;
+    background-position: 58% center;
+  }
+
+  #home-comparatore .container {
+    padding: 0 14px;
+  }
+
+  #home-comparatore .pf-compare-stage {
+    padding: 16px;
+    border-radius: 28px;
+  }
+
+  #home-comparatore .pf-compare-header {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  #home-comparatore .pf-compare-brand {
+    text-align: left;
+    order: -1;
+  }
+
+  #home-comparatore .pf-compare-brand h2 {
+    font-size: clamp(2.5rem, 15vw, 4.5rem);
+  }
+
+  #home-comparatore .pf-compare-brand p {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+  }
+
+  #home-comparatore .pf-compare-system,
+  #home-comparatore .pf-compare-user {
+    min-height: auto;
+    justify-content: flex-start;
+  }
+
+  #home-comparatore .pf-compare-side {
+    grid-template-columns: 1fr;
+  }
+
+  #home-comparatore .pf-hud-card,
+  #home-comparatore .pf-main-screen {
+    border-radius: 22px;
+  }
+
+  #home-comparatore .pf-hud-card {
+    min-height: auto;
+    padding: 15px;
+  }
+
+  #home-comparatore .pf-main-screen {
+    padding: 15px;
+  }
+
+  #home-comparatore .pf-hud-card:hover,
+  #home-comparatore .pf-hud-card:focus-within,
+  #home-comparatore .pf-main-screen:hover,
+  #home-comparatore .pf-main-screen:focus-within {
+    transform: none;
+  }
+
+  #home-comparatore .pf-main-head {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+  }
+
+  #home-comparatore .pf-main-confidence {
+    grid-column: 1 / -1;
+    width: 100%;
+    text-align: left;
+    margin: 4px 0 0;
+  }
+
+  #home-comparatore .pf-main-battle {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    text-align: center;
+  }
+
+  #home-comparatore .pf-battle-mid {
+    order: -1;
+  }
+
+  #home-comparatore .pf-main-kpis,
+  #home-comparatore .pf-main-lower,
+  #home-comparatore .pf-mini-grid,
+  #home-comparatore .pf-player-compare {
+    grid-template-columns: 1fr;
+  }
+
+  #home-comparatore .pf-player-radar {
+    min-height: 230px;
+  }
+
+  #home-comparatore .pf-player-radar-shell {
+    min-height: 210px;
+  }
+
+  #home-comparatore .pf-player-radar canvas {
+    max-height: 220px !important;
+  }
+
+  #home-comparatore .neo-lock-panel {
+    bottom: 14px;
+    padding: 14px;
+  }
+
+  #home-comparatore .neo-lock-actions {
+    flex-direction: column;
+  }
+
+  #home-comparatore .neo-lock-actions .neo-btn {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  #home-comparatore .pf-bottom-dock {
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  #home-comparatore .pf-compare-stage {
+    padding: 12px;
+    border-radius: 24px;
+  }
+
+  #home-comparatore .pf-hud-head h3 {
+    font-size: 1.18rem;
+  }
+
+  #home-comparatore .pf-hud-index {
+    width: 38px;
+    height: 38px;
+    border-radius: 13px;
+  }
+
+  #home-comparatore .pf-player-card {
+    grid-template-columns: 42px 1fr;
+  }
+
+  #home-comparatore .pf-player-logo {
+    width: 42px;
+    height: 42px;
+  }
+}
