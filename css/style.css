@@ -17848,3 +17848,95 @@ body.legal-page .legal-highlight {
     padding-bottom: 14px;
   }
 }
+
+/* ==========================================
+   HOME COMPARATORE - STEP 1
+   solo background scena + contenitore
+========================================== */
+
+#home-comparatore {
+  position: relative;
+  padding: 28px 0 42px;
+  overflow: hidden;
+  background: #05081d;
+}
+
+#home-comparatore .container {
+  position: relative;
+  z-index: 2;
+  max-width: 1480px;
+}
+
+#home-comparatore::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(4, 7, 24, 0.22), rgba(3, 5, 18, 0.34)),
+    url("img/comparatore-control-center-bg.jpg") center top / cover no-repeat;
+  opacity: 1;
+  pointer-events: none;
+}
+
+#home-comparatore::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(60, 180, 255, 0.08), transparent 24%),
+    radial-gradient(circle at 50% 100%, rgba(180, 80, 255, 0.12), transparent 22%),
+    linear-gradient(180deg, rgba(7, 10, 30, 0.08), rgba(3, 5, 18, 0.18));
+  pointer-events: none;
+}
+
+#home-comparatore .neo-section-head {
+  position: relative;
+  z-index: 3;
+  margin-bottom: 22px;
+  padding: 0 8px;
+}
+
+#home-comparatore .neo-section-title,
+#home-comparatore .neo-section-subtitle {
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
+}
+
+#home-comparatore .neo-compare-grid,
+#home-comparatore .neo-mobile-standings {
+  position: relative;
+  z-index: 3;
+}
+
+#home-comparatore .neo-compare-grid {
+  padding: 18px;
+  border-radius: 30px;
+  border: 1px solid rgba(117, 226, 255, 0.12);
+  background: linear-gradient(180deg, rgba(5, 8, 28, 0.18), rgba(4, 6, 18, 0.22));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.025),
+    0 20px 60px rgba(0,0,0,0.24);
+  backdrop-filter: blur(2px);
+}
+
+#home-comparatore .neo-card,
+#home-comparatore .neo-card-compare,
+#home-comparatore .neo-card-sidebar,
+#home-comparatore .neo-mobile-standings .neo-card {
+  background: rgba(6, 10, 30, 0.16);
+  border: 1px solid rgba(129, 108, 255, 0.16);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.02),
+    0 10px 30px rgba(0,0,0,0.16);
+  backdrop-filter: blur(2px);
+}
+
+@media (max-width: 900px) {
+  #home-comparatore {
+    padding: 22px 0 30px;
+  }
+
+  #home-comparatore .neo-compare-grid {
+    padding: 12px;
+    border-radius: 22px;
+  }
+}
