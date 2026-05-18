@@ -20008,3 +20008,173 @@ body.legal-page .legal-highlight {
   position: relative;
   z-index: 2;
 }
+
+/* ==========================================
+   FIX PROPORZIONI CONTROL CENTER
+========================================== */
+
+#home-comparatore .pf-compare-stage {
+  min-height: 920px;
+}
+
+#home-comparatore .pf-compare-header {
+  padding: 18px 28px 8px;
+}
+
+#home-comparatore .pf-compare-brand h2 {
+  font-size: clamp(2.1rem, 3vw, 3.2rem);
+}
+
+#home-comparatore .pf-compare-brand p {
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+}
+
+#home-comparatore .pf-compare-layout {
+  grid-template-columns: 280px minmax(0, 560px) 280px;
+  justify-content: center;
+  gap: 26px;
+  padding: 4px 20px 140px;
+}
+
+#home-comparatore .pf-compare-side {
+  gap: 20px;
+}
+
+#home-comparatore .pf-hud-card {
+  min-height: 330px;
+  padding: 16px;
+}
+
+#home-comparatore .pf-main-screen {
+  min-height: 600px;
+  padding: 16px;
+}
+
+#home-comparatore .pf-main-battle {
+  min-height: 150px;
+  padding: 16px 14px;
+}
+
+#home-comparatore .pf-team-logo {
+  width: 62px;
+  height: 62px;
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+}
+
+#home-comparatore .pf-team-name {
+  font-size: 1.55rem;
+}
+
+#home-comparatore .pf-battle-mid strong {
+  font-size: 2.35rem;
+}
+
+#home-comparatore .pf-main-kpis {
+  gap: 10px;
+}
+
+#home-comparatore .pf-kpi-card {
+  min-height: 108px;
+  padding: 12px;
+}
+
+#home-comparatore .pf-kpi-card strong {
+  margin: 10px 0 8px;
+  font-size: 1.65rem;
+}
+
+#home-comparatore .pf-main-lower {
+  grid-template-columns: 1fr 170px;
+  gap: 10px;
+}
+
+#home-comparatore .pf-chart-box,
+#home-comparatore .pf-watch-box {
+  min-height: 160px;
+  padding: 12px;
+}
+
+#home-comparatore .pf-big-chart {
+  height: 104px;
+}
+
+#home-comparatore .pf-player-compare {
+  grid-template-columns: 1fr 120px 1fr;
+  gap: 8px;
+}
+
+#home-comparatore .pf-player-card {
+  grid-template-columns: 48px 1fr;
+  padding: 10px;
+}
+
+#home-comparatore .pf-player-logo {
+  width: 48px;
+  height: 48px;
+}
+
+#home-comparatore .pf-player-logo img {
+  width: 28px;
+  height: 28px;
+}
+
+#home-comparatore .pf-player-name {
+  font-size: 0.88rem;
+}
+
+#home-comparatore .pf-player-sub {
+  font-size: 0.72rem;
+}
+
+#home-comparatore .pf-live-row {
+  padding: 10px 12px;
+}
+
+#home-comparatore .pf-community-box {
+  min-height: 150px;
+  padding: 12px;
+}
+
+#home-comparatore .pf-hud-btn {
+  min-height: 44px;
+  font-size: 0.72rem;
+}
+
+#home-comparatore .neo-lock {
+  padding: 18px;
+}
+
+#home-comparatore .neo-lock-panel {
+  max-width: 440px;
+  padding: 22px 20px;
+  transform: scale(0.94);
+  transform-origin: center;
+}
+
+#home-comparatore .neo-lock-title {
+  font-size: 1.5rem;
+}
+
+#home-comparatore .neo-lock-sub,
+#home-comparatore .neo-lock-note {
+  font-size: 0.92rem;
+}
+
+#home-comparatore .pf-bottom-dock {
+  bottom: 18px;
+  transform: translateX(-50%) scale(0.94);
+  transform-origin: center;
+}
+
+@media (max-width: 1260px) {
+  #home-comparatore .pf-compare-layout {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  #home-comparatore .pf-main-screen {
+    min-height: auto;
+  }
+}
