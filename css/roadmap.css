@@ -1167,3 +1167,21 @@
     min-width: 460px;
   }
 }
+/* Blu neon definitivo per ROADMAP */
+@media (min-width: 761px) {
+  .pf-roadmap-title span {
+    background: linear-gradient(
+      180deg,
+      #ecfbff 0%,
+      #61e6ff 30%,
+      #1ba7ff 62%,
+      #245bff 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+      0 0 14px rgba(97, 230, 255, 0.32),
+      0 0 28px rgba(36, 91, 255, 0.28);
+  }
+}
