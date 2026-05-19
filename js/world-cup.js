@@ -37,4 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
+  const menuToggle = document.querySelector("#wc-menu-toggle");
+const navLinks = document.querySelectorAll(".wc-nav-links a");
+
+navLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    if (menuToggle) {
+      menuToggle.checked = false;
+    }
+  }
+}
 });
