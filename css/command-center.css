@@ -1,5 +1,175 @@
-#profantasy-command-center {
-  background: red !important;
-  border: 8px solid lime !important;
-  min-height: 500px !important;
+/* ================================
+   PROFANTASY COMMAND CENTER
+   File: css/command-center.css
+================================ */
+
+#profantasy-command-center,
+.pfcc-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 110px 0;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(0, 132, 255, 0.26), transparent 32%),
+    radial-gradient(circle at 82% 22%, rgba(184, 149, 107, 0.22), transparent 34%),
+    linear-gradient(135deg, #020041 0%, #050018 55%, #01000d 100%);
+  color: #ffffff;
+}
+
+.pfcc-background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.pfcc-bg-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.24;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 58px 58px;
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+
+.pfcc-bg-glow {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(45px);
+  opacity: 0.35;
+}
+
+.pfcc-bg-glow-one {
+  top: 10%;
+  left: -120px;
+  background: #0084ff;
+}
+
+.pfcc-bg-glow-two {
+  right: -150px;
+  bottom: 8%;
+  background: #b8956b;
+}
+
+.pfcc-bg-scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 255, 255, 0.08) 48%,
+    transparent 56%
+  );
+  animation: pfccScan 5s linear infinite;
+}
+
+@keyframes pfccScan {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.pfcc-container {
+  position: relative;
+  z-index: 2;
+}
+
+.pfcc-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 42px;
+}
+
+.pfcc-header-copy {
+  max-width: 720px;
+}
+
+.pfcc-kicker {
+  display: inline-flex;
+  margin-bottom: 12px;
+  color: #00d9ff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.pfcc-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(3rem, 7vw, 6.4rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  margin: 0 0 18px;
+}
+
+.pfcc-title span {
+  display: block;
+  color: #b8956b;
+  text-shadow: 0 0 28px rgba(184, 149, 107, 0.42);
+}
+
+.pfcc-description {
+  max-width: 680px;
+  color: rgba(255,255,255,0.72);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.pfcc-system-card {
+  min-width: 250px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(5, 8, 35, 0.72);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+  backdrop-filter: blur(16px);
+}
+
+.pfcc-system-light {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #00ff88;
+  box-shadow: 0 0 18px rgba(0,255,136,0.9);
+}
+
+.pfcc-system-card strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.pfcc-system-card small {
+  display: block;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.75rem;
+}
+
+.pfcc-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.pfcc-stage,
+.pfcc-menu {
+  border-radius: 28px;
+  background: rgba(4, 7, 28, 0.74);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.44);
+  backdrop-filter: blur(18px);
 }
