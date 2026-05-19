@@ -1786,3 +1786,62 @@ body.wc-page a {
     transform: scaleX(0.9);
   }
 }
+
+/* =========================================================
+   MOBILE NAV OVERLAY FIX
+   Il menu mobile copre davvero la hero
+========================================================= */
+
+@media (max-width: 1080px) {
+  .wc-navbar {
+    z-index: 9999;
+  }
+
+  .wc-nav-inner {
+    z-index: 10000;
+    background: rgba(4, 5, 20, 0.98);
+  }
+
+  .wc-nav-links,
+  .wc-nav-actions {
+    z-index: 9999;
+    background:
+      linear-gradient(180deg, rgba(5, 5, 22, 0.99), rgba(3, 3, 15, 0.99));
+    box-shadow:
+      0 24px 60px rgba(0, 0, 0, 0.75),
+      0 0 34px rgba(184, 76, 255, 0.22);
+  }
+
+  .wc-nav-links::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background:
+      linear-gradient(180deg, #050516 0%, #03030f 100%);
+  }
+
+  .wc-nav-actions::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background:
+      linear-gradient(180deg, #03030f 0%, #03030f 100%);
+  }
+
+  .wc-menu-toggle:checked ~ .wc-nav-links,
+  .wc-menu-toggle:checked ~ .wc-nav-actions {
+    display: flex;
+  }
+
+  .wc-menu-toggle:checked ~ .wc-nav-links {
+    backdrop-filter: none;
+  }
+
+  .wc-menu-toggle:checked ~ .wc-nav-actions {
+    backdrop-filter: none;
+  }
+}
