@@ -1845,3 +1845,18 @@ body.wc-page a {
     backdrop-filter: none;
   }
 }
+
+@media (max-width: 1080px) {
+  body:has(#wc-menu-toggle:checked) .wc-hero {
+    filter: brightness(0.45);
+  }
+
+  body:has(#wc-menu-toggle:checked) .wc-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    background: rgba(3, 3, 15, 0.35);
+    pointer-events: none;
+  }
+}
