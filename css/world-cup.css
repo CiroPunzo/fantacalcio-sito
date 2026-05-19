@@ -1769,3 +1769,20 @@ body.wc-page a {
     font-size: 0.78rem;
   }
 }
+
+@media (max-width: 768px) {
+  .wc-hero h1 {
+    word-break: normal;
+  }
+
+  .wc-hero h1 span {
+    transform: scaleX(0.94);
+    transform-origin: left center;
+  }
+}
+
+@media (max-width: 430px) {
+  .wc-hero h1 span {
+    transform: scaleX(0.9);
+  }
+}
