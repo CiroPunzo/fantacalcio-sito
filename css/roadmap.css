@@ -1058,3 +1058,34 @@
     min-height: auto;
   }
 }
+
+/* =========================================================
+   ROADMAP REFINEMENT 02
+   - Titolo desktop più piccolo
+   - ROADMAP blu neon
+   - Fix clipping lettere
+========================================================= */
+
+@media (min-width: 761px) {
+  .pf-roadmap-title {
+    margin: 16px 0 14px;
+    font-size: clamp(3.2rem, 6.3vw, 5.8rem);
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    overflow: visible;
+  }
+
+  .pf-roadmap-title span {
+    background: linear-gradient(180deg, #dff8ff 0%, #53d8ff 35%, #1ea7ff 68%, #006bff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+      0 0 18px rgba(83, 216, 255, 0.35),
+      0 0 32px rgba(0, 107, 255, 0.22);
+  }
+
+  .pf-roadmap-copy {
+    padding-top: 6px;
+  }
+}
