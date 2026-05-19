@@ -4255,3 +4255,111 @@ body.wc-page a {
     font-size: 0.72rem;
   }
 }
+
+/* =========================================================
+   WORLD CUP PERFORMANCE / SCROLL SMOOTH FIX
+   Add at the VERY END of world-cup.css
+========================================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body.wc-page {
+  min-height: 100%;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Evita micro-jitter causati dai background fixed */
+.wc-games-cyber,
+.wc-hero-bg,
+.wc-roadmap-section,
+.wc-player-hub-section,
+.wc-final-cta {
+  background-attachment: scroll !important;
+}
+
+/* Riduce il costo grafico degli elementi fuori schermo */
+.wc-player-hub-section,
+.wc-games-cyber,
+.wc-roadmap-section,
+.wc-final-cta {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+
+/* Stabilizza navbar e sezioni principali */
+.wc-navbar,
+.wc-nav-inner,
+.wc-hero,
+.wc-player-hub,
+.wc-cyber-card,
+.wc-roadmap-card,
+.wc-final-cta-inner {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Limita animazioni troppo costose */
+.wc-cyber-card,
+.wc-roadmap-card,
+.wc-feature-card,
+.wc-main-cta,
+.wc-secondary-cta,
+.wc-card-action,
+.wc-hub-action,
+.wc-roadmap-cta {
+  will-change: transform;
+}
+
+/* Evita che troppe ombre pesanti impattino durante lo scroll */
+@media (hover: none) {
+  .wc-cyber-card:hover,
+  .wc-roadmap-card:hover,
+  .wc-feature-card:hover,
+  .wc-main-cta:hover,
+  .wc-secondary-cta:hover,
+  .wc-card-action:hover,
+  .wc-hub-action:hover,
+  .wc-roadmap-cta:hover {
+    transform: none;
+  }
+}
+
+/* Mobile: alleggerisce blur e ombre */
+@media (max-width: 820px) {
+  .wc-nav-inner,
+  .wc-live-card,
+  .wc-player-hub,
+  .wc-final-cta-inner {
+    backdrop-filter: blur(10px);
+  }
+
+  .wc-cyber-card,
+  .wc-roadmap-card,
+  .wc-hub-stat,
+  .wc-dash-card {
+    box-shadow:
+      0 0 20px rgba(0, 0, 0, 0.22),
+      inset 0 0 18px rgba(255, 255, 255, 0.025);
+  }
+
+  .wc-games-cyber::before,
+  .wc-roadmap-bg {
+    opacity: 0.12;
+  }
+}
+
+/* Per utenti/dispositivi con animazioni ridotte */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
