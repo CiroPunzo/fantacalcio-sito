@@ -47,251 +47,217 @@
 </header>
 
     <!-- LOBBY CONTENT -->
-    <section class="arena-lobby" id="lobby">
+    <section class="arena-hero" id="lobby">
 
-      <!-- LEFT COLUMN -->
-      <aside class="arena-left">
+  <!-- LEFT INTRO AREA -->
+  <div class="arena-hero__left">
 
-        <!-- WELCOME PANEL -->
-        <article class="arena-panel arena-welcome">
-          <span class="arena-panel__label">World Cup Arena</span>
+    <article class="arena-intro-card">
+      <span class="arena-kicker">World Cup Arena</span>
 
-          <h1>
-            Entra nella Lobby.
-            <span>Pronostica. Scala. Vinci.</span>
-          </h1>
+      <h1>
+        Entra nell’Arena.
+        <span>Vivi ogni partita.</span>
+      </h1>
 
-          <p>
-            Ogni 3 ore una nuova partita pronosticabile. Scegli 1, X o 2,
-            usa i tuoi token e prova a scalare la classifica globale.
-          </p>
+      <p>
+        Pronostica una partita ogni 3 ore, usa i tuoi token,
+        completa missioni e scala la classifica globale.
+      </p>
+    </article>
 
-          <div class="arena-welcome__actions">
-            <a href="#daily-prediction" class="arena-btn arena-btn--primary">
-              Gioca ora
-            </a>
+    <article class="arena-register-box" id="register" data-auth-card>
+      <div class="arena-register-box__text">
+        <span>Inizia subito</span>
 
-            <a href="#missions" class="arena-btn arena-btn--ghost">
-              Vedi missioni
-            </a>
-          </div>
-        </article>
+        <h2>
+          Registrati e ricevi
+          <strong>1000</strong>
+          token iniziali
+        </h2>
 
-        <!-- REGISTER BONUS CARD -->
-        <article class="arena-panel arena-register-card" id="register" data-auth-card>
-          <div class="arena-register-card__content">
-            <span class="arena-panel__label">Bonus iniziale</span>
+        <a href="#" class="arena-gold-btn">
+          Registrati ora
+          <b>›</b>
+        </a>
+      </div>
 
-            <h2>Registrati e ricevi</h2>
+      <div class="arena-register-box__visual">
+        <img src="img/token-chest.png" alt="Forziere token ProFantasy" />
+      </div>
+    </article>
 
-            <div class="arena-register-card__tokens">
-              1000
-              <span>token</span>
-            </div>
+  </div>
 
-            <p>
-              Crea il tuo profilo Arena e inizia subito con il pacchetto
-              di benvenuto.
-            </p>
+  <!-- CENTER MATCH CARD -->
+  <article class="arena-main-prediction" id="daily-prediction">
 
-            <a href="#" class="arena-btn arena-btn--primary">
-              Registrati ora
-            </a>
-          </div>
+    <div class="arena-main-prediction__header">
+      <div>
+        <span class="arena-kicker">Previsione giornaliera</span>
+        <strong>1 / X / 2</strong>
+      </div>
 
-          <div class="arena-register-card__visual">
-            <img src="img/token-chest.png" alt="Forziere token ProFantasy" />
-          </div>
-        </article>
+      <div class="arena-lock-timer">
+        <span>Prossimo lock</span>
+        <strong>02H 42M 18S</strong>
+      </div>
+    </div>
 
-      </aside>
+    <div class="arena-main-prediction__content">
 
-      <!-- CENTER COLUMN -->
-      <section class="arena-center" id="daily-prediction">
+      <span class="arena-match-label">Match of the day</span>
 
-        <!-- DAILY MATCH CARD -->
-        <article class="arena-match-card">
+      <div class="arena-match-title-row">
 
-          <div class="arena-match-card__top">
-            <div>
-              <span class="arena-panel__label">Match pronosticabile</span>
-              <h2>Daily Prediction</h2>
-            </div>
-
-            <div class="arena-countdown" data-match-countdown>
-              <span class="arena-countdown__label">Prossimo lock</span>
-              <span class="arena-countdown__time">02H 42M 18S</span>
-            </div>
-          </div>
-
-          <div class="arena-match-card__body">
-
-            <div class="arena-match-status">
-              <span>Partita 01 / 08</span>
-              <strong>Disponibile ora</strong>
-            </div>
-
-            <div class="arena-teams">
-
-              <div class="arena-team">
-                <div class="arena-team__flag">
-                  <img src="img/flags/brazil.png" alt="Brasile" />
-                </div>
-
-                <div class="arena-team__text">
-                  <span>Brasile</span>
-                  <strong>BRA</strong>
-                </div>
-              </div>
-
-              <div class="arena-versus">
-                <span>VS</span>
-                <small>Oggi · 21:00</small>
-              </div>
-
-              <div class="arena-team arena-team--right">
-                <div class="arena-team__flag">
-                  <img src="img/flags/argentina.png" alt="Argentina" />
-                </div>
-
-                <div class="arena-team__text">
-                  <span>Argentina</span>
-                  <strong>ARG</strong>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="arena-prediction-options" role="group" aria-label="Seleziona pronostico">
-              <button class="prediction-card" type="button" data-prediction="1">
-                <span>1</span>
-                <small>Casa</small>
-              </button>
-
-              <button class="prediction-card" type="button" data-prediction="X">
-                <span>X</span>
-                <small>Pareggio</small>
-              </button>
-
-              <button class="prediction-card" type="button" data-prediction="2">
-                <span>2</span>
-                <small>Trasferta</small>
-              </button>
-            </div>
-
-            <div class="arena-match-economy">
-
-              <div class="arena-economy-item">
-                <span>Costo giocata</span>
-                <strong>50 token</strong>
-              </div>
-
-              <div class="arena-economy-item">
-                <span>Reward se indovini</span>
-                <strong>+150 token</strong>
-              </div>
-
-              <div class="arena-economy-item">
-                <span>XP bonus</span>
-                <strong>+75 XP</strong>
-              </div>
-
-            </div>
-
-            <button class="arena-play-btn" type="button">
-              Conferma pronostico
-            </button>
-
-          </div>
-
-          <div class="arena-match-card__bottom">
-
-            <button class="arena-match-switch" type="button" data-prev-match>
-              ← Partita precedente
-            </button>
-
-            <div class="arena-match-progress">
-              <span class="is-active"></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-
-            <button class="arena-match-switch" type="button" data-next-match>
-              Prossima partita →
-            </button>
-
-          </div>
-
-        </article>
-
-        <!-- QUICK MODES -->
-        <div class="arena-mode-grid">
-
-          <article class="arena-mode-card" id="missions">
-            <div class="arena-mode-card__icon">
-              <img src="img/icons/missions.png" alt="" />
-            </div>
-
-            <div>
-              <span>Daily Mode</span>
-              <h3>Missioni giornaliere</h3>
-              <p>Completa obiettivi quotidiani e ottieni token extra.</p>
-            </div>
-
-            <a href="#" class="arena-mode-card__link">Apri missioni</a>
-          </article>
-
-          <article class="arena-mode-card" id="bracket">
-            <div class="arena-mode-card__icon">
-              <img src="img/icons/bracket.png" alt="" />
-            </div>
-
-            <div>
-              <span>Main Event</span>
-              <h3>Bracket Prediction</h3>
-              <p>Prevedi il cammino delle nazionali fino alla finale.</p>
-            </div>
-
-            <a href="#" class="arena-mode-card__link">Gioca bracket</a>
-          </article>
-
-          <article class="arena-mode-card" id="leaderboard">
-            <div class="arena-mode-card__icon">
-              <img src="img/icons/trophy.png" alt="" />
-            </div>
-
-            <div>
-              <span>Global Rank</span>
-              <h3>Classifica globale</h3>
-              <p>Scala la leaderboard e dimostra di essere il migliore.</p>
-            </div>
-
-            <a href="#" class="arena-mode-card__link">Vedi classifica</a>
-          </article>
-
-          <article class="arena-mode-card" id="referral">
-            <div class="arena-mode-card__icon">
-              <img src="img/icons/referral.png" alt="" />
-            </div>
-
-            <div>
-              <span>Bonus Mode</span>
-              <h3>Referral bonus</h3>
-              <p>Invita amici e guadagna token per ogni nuovo player.</p>
-            </div>
-
-            <a href="#" class="arena-mode-card__link">Invita ora</a>
-          </article>
-
+        <div class="arena-flag">
+          <img src="img/flags/brazil.png" alt="Brasile" />
         </div>
 
-      </section>
+        <div class="arena-match-title">
+          <strong class="team-home">BRA</strong>
+          <span>VS</span>
+          <strong class="team-away">ARG</strong>
+        </div>
 
+        <div class="arena-flag">
+          <img src="img/flags/argentina.png" alt="Argentina" />
+        </div>
+
+      </div>
+
+      <div class="arena-match-time">
+        Oggi · 21:00
+      </div>
+
+      <div class="arena-pick-grid">
+        <button class="arena-pick-card arena-pick-card--one" type="button">
+          <strong>1</strong>
+        </button>
+
+        <button class="arena-pick-card arena-pick-card--draw" type="button">
+          <strong>X</strong>
+        </button>
+
+        <button class="arena-pick-card arena-pick-card--two" type="button">
+          <strong>2</strong>
+        </button>
+      </div>
+
+      <div class="arena-reward-row">
+
+        <div>
+          <span>Costo giocata</span>
+          <strong>50 token</strong>
+        </div>
+
+        <div>
+          <span>Reward se indovini</span>
+          <strong>+150 token bonus</strong>
+        </div>
+
+      </div>
+
+      <button class="arena-play-main" type="button">
+        Gioca ora
+      </button>
+
+    </div>
+
+    <div class="arena-main-prediction__footer">
+
+      <button type="button">‹‹</button>
+
+      <span>
+        Le tue prediction oggi: <strong>0 / 3</strong>
+      </span>
+
+      <button type="button">››</button>
+
+    </div>
+
+  </article>
+
+  <!-- RIGHT PLAYER HUB -->
+  <aside class="arena-player-hub">
+
+    <div class="arena-player-card">
+
+      <div class="arena-player-card__top">
+        <div class="arena-player-avatar">
+          <img src="img/user-avatar-placeholder.png" alt="Avatar player" />
+        </div>
+
+        <div>
+          <h2>ProFantasy</h2>
+          <span>Season 1 · Pre-season</span>
+        </div>
+
+        <small>Live</small>
+      </div>
+
+      <div class="arena-player-level">
+        <div>
+          <span>LVL 12</span>
+          <strong>XP 2.450 / 5.000</strong>
+        </div>
+
+        <div class="arena-player-level__bar">
+          <i style="width: 49%;"></i>
+        </div>
+      </div>
+
+      <div class="arena-player-stats">
+
+        <div class="arena-player-stat">
+          <img src="img/icons/token.png" alt="" />
+          <div>
+            <span>Token disponibili</span>
+            <strong>1.250</strong>
+          </div>
+          <button type="button">+</button>
+        </div>
+
+        <div class="arena-player-stat">
+          <img src="img/icons/fire.png" alt="" />
+          <div>
+            <span>Daily streak</span>
+            <strong>7 giorni</strong>
+          </div>
+        </div>
+
+        <div class="arena-player-stat">
+          <img src="img/icons/star.png" alt="" />
+          <div>
+            <span>XP totale</span>
+            <strong>2.450 XP</strong>
+          </div>
+        </div>
+
+        <div class="arena-player-stat">
+          <img src="img/icons/rank.png" alt="" />
+          <div>
+            <span>Posizione globale</span>
+            <strong>#1.248</strong>
+          </div>
+        </div>
+
+        <div class="arena-player-stat">
+          <img src="img/icons/referral-small.png" alt="" />
+          <div>
+            <span>Referral bonus</span>
+            <strong>250</strong>
+          </div>
+          <button type="button">+</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+</section>
       <!-- RIGHT COLUMN -->
       <aside class="arena-right">
 
