@@ -6,22 +6,17 @@
 
   <title>ProFantasy | World Cup Arena</title>
 
-  <!-- CSS globali del sito -->
   <link rel="stylesheet" href="css/style.css" />
-
-  <!-- CSS specifico World Cup -->
   <link rel="stylesheet" href="css/world-cup.css" />
 </head>
 
 <body class="wc-page">
 
-  <!-- ================= NAVBAR ================= -->
+  <!-- NAVBAR -->
   <header class="wc-navbar">
     <div class="wc-nav-inner">
 
-      <a href="index.html" class="wc-logo" aria-label="Vai alla Home">
-        PROFANTASY
-      </a>
+      <a href="index.html" class="wc-logo">PROFANTASY</a>
 
       <input type="checkbox" id="wc-menu-toggle" class="wc-menu-toggle" />
 
@@ -50,26 +45,21 @@
   </header>
 
 
-  <!-- ================= HERO WORLD CUP ================= -->
+  <!-- HERO -->
   <main>
     <section class="wc-hero">
 
-      <div class="wc-hero-bg">
-        <div class="wc-grid"></div>
-        <div class="wc-glow wc-glow-purple"></div>
-        <div class="wc-glow wc-glow-blue"></div>
-        <div class="wc-stadium-lines"></div>
-        <div class="wc-particles"></div>
-      </div>
+      <div class="wc-hero-bg"></div>
+
+      <div class="wc-hero-overlay"></div>
 
       <div class="wc-hero-inner">
 
-        <!-- LEFT CONTENT -->
         <div class="wc-hero-content">
 
           <div class="wc-eyebrow">
-            <span class="wc-eyebrow-icon">🏆</span>
-            <span>World Cup Edition</span>
+            <span>🏆</span>
+            <strong>World Cup Edition</strong>
           </div>
 
           <h1>
@@ -110,138 +100,79 @@
             </div>
           </div>
 
-          <div class="wc-feature-carousel" aria-label="Caratteristiche World Cup">
+          <div class="wc-feature-carousel">
 
-            <article class="wc-feature-card blue">
-              <div class="wc-card-icon">🌍</div>
-              <div>
+            <article class="wc-feature-card">
+              <img src="img/wc-card-global.png" alt="Global Challenge" />
+              <div class="wc-feature-content">
                 <h3>Global Challenge</h3>
                 <p>Gioca contro utenti da tutto il mondo.</p>
+                <span>→</span>
               </div>
-              <span class="wc-card-arrow">→</span>
             </article>
 
-            <article class="wc-feature-card purple">
-              <div class="wc-card-icon">🏆</div>
-              <div>
+            <article class="wc-feature-card">
+              <img src="img/wc-card-prizes.png" alt="Premi esclusivi" />
+              <div class="wc-feature-content">
                 <h3>Premi esclusivi</h3>
                 <p>Montepremi, bonus e riconoscimenti speciali.</p>
+                <span>→</span>
               </div>
-              <span class="wc-card-arrow">→</span>
             </article>
 
-            <article class="wc-feature-card cyan">
-              <div class="wc-card-icon">📊</div>
-              <div>
+            <article class="wc-feature-card">
+              <img src="img/wc-card-ranking.png" alt="Live Ranking" />
+              <div class="wc-feature-content">
                 <h3>Live ranking</h3>
                 <p>Classifiche e aggiornamenti sempre attivi.</p>
+                <span>→</span>
               </div>
-              <span class="wc-card-arrow">→</span>
             </article>
 
           </div>
 
         </div>
 
+        <aside class="wc-live-card">
 
-        <!-- RIGHT VISUAL AREA -->
-        <div class="wc-hero-visual" aria-hidden="true">
-
-          <div class="wc-floating-panel wc-ranking">
-            <span>Live Ranking</span>
-
-            <ul>
-              <li>
-                <strong>01</strong>
-                <span>PROFANTASY_10</span>
-                <em>2.560</em>
-              </li>
-              <li>
-                <strong>02</strong>
-                <span>DREAM_TEAM</span>
-                <em>2.430</em>
-              </li>
-              <li>
-                <strong>03</strong>
-                <span>FUTURE11</span>
-                <em>2.310</em>
-              </li>
-            </ul>
-
-            <b>LIVE</b>
+          <div class="wc-live-top">
+            <span>Modalità attuale</span>
+            <b>Live</b>
           </div>
 
-          <div class="wc-floating-panel wc-news-panel">
-            <span>World Cup</span>
-            <strong>Is Coming</strong>
-            <i>🏆</i>
-          </div>
-
-          <div class="wc-arena-title">
-            ProFantasy
-            <span>World Cup Arena</span>
-          </div>
-
-          <div class="wc-trophy">
-            <div class="wc-trophy-cup">
-              <span>WC</span>
-            </div>
-            <div class="wc-trophy-stem"></div>
-            <div class="wc-trophy-base"></div>
-          </div>
-
-          <div class="wc-player">
-            <div class="wc-player-head"></div>
-            <div class="wc-player-body">
-              <span>10</span>
-            </div>
-            <div class="wc-player-arm left"></div>
-            <div class="wc-player-arm right"></div>
-            <div class="wc-player-leg left"></div>
-            <div class="wc-player-leg right"></div>
-          </div>
-
-          <div class="wc-ball"></div>
-
-          <aside class="wc-live-card">
-            <div class="wc-live-top">
-              <span>Modalità attuale</span>
-              <b>Live</b>
-            </div>
-
+          <div class="wc-live-title-row">
             <h2>World Cup</h2>
+            <span>Pre-season</span>
+          </div>
 
-            <div class="wc-season-label">Pre-season</div>
+          <p class="wc-countdown-label">Il Mondiale inizia tra</p>
 
-            <p>Il Mondiale inizia tra</p>
-
-            <div class="wc-countdown">
-              <div>
-                <strong>12</strong>
-                <span>Giorni</span>
-              </div>
-              <div>
-                <strong>08</strong>
-                <span>Ore</span>
-              </div>
-              <div>
-                <strong>34</strong>
-                <span>Min</span>
-              </div>
-              <div>
-                <strong>21</strong>
-                <span>Sec</span>
-              </div>
+          <div class="wc-countdown" data-countdown="2026-06-11T21:00:00">
+            <div>
+              <strong data-days>00</strong>
+              <span>Giorni</span>
             </div>
-
-            <div class="wc-prize">
-              <span>Montepremi totale</span>
-              <strong>€50.000+</strong>
-              <p>Bonus esclusivi e premi reali</p>
+            <div>
+              <strong data-hours>00</strong>
+              <span>Ore</span>
             </div>
-          </aside>
+            <div>
+              <strong data-minutes>00</strong>
+              <span>Min</span>
+            </div>
+            <div>
+              <strong data-seconds>00</strong>
+              <span>Sec</span>
+            </div>
+          </div>
 
-        </div>
+          <div class="wc-prize">
+            <span>Montepremi totale</span>
+            <strong>€50.000+</strong>
+            <p>Bonus esclusivi e premi reali</p>
+          </div>
+
+        </aside>
 
       </div>
 
@@ -253,14 +184,14 @@
       </div>
 
     </section>
+
+    <section class="wc-next-preview">
+      <div></div>
+    </section>
   </main>
 
-  <!-- JS globali -->
   <script src="js/main.js"></script>
-
-  <!-- JS specifico World Cup -->
   <script src="js/world-cup.js"></script>
 
 </body>
-  
 </html>
