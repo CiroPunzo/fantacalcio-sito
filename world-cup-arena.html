@@ -22,43 +22,29 @@
     <!-- TOP BAR -->
     <header class="arena-topbar">
 
-      <div class="arena-brand">
-        <a href="index.html" class="home-card">
-          <span class="home-card__eyebrow">Esci dall'arena</span>
-          <span class="home-card__title">Torna alla Home</span>
-        </a>
+  <a href="index.html" class="arena-logo" aria-label="Torna alla home ProFantasy">
+    <span class="arena-logo__main">PROFANTASY</span>
+    <span class="arena-logo__sub">World Cup Arena</span>
+  </a>
 
-        <div class="arena-logo">
-          <span class="arena-logo__main">PROFANTASY</span>
-          <span class="arena-logo__sub">World Cup Arena</span>
-        </div>
-      </div>
+  <nav class="arena-nav" aria-label="Navigazione Arena">
+    <a href="#lobby" class="arena-nav__link is-active">Lobby</a>
+    <a href="#daily-prediction" class="arena-nav__link">Daily Prediction</a>
+    <a href="#missions" class="arena-nav__link">Missioni</a>
+    <a href="#bracket" class="arena-nav__link">Bracket</a>
+    <a href="#leaderboard" class="arena-nav__link">Leaderboard</a>
+    <a href="#referral" class="arena-nav__link">Referral</a>
+  </nav>
 
-      <nav class="arena-nav" aria-label="Navigazione Arena">
-        <a href="#lobby" class="arena-nav__link is-active">Lobby</a>
-        <a href="#daily-prediction" class="arena-nav__link">Daily Prediction</a>
-        <a href="#missions" class="arena-nav__link">Missioni</a>
-        <a href="#bracket" class="arena-nav__link">Bracket</a>
-        <a href="#leaderboard" class="arena-nav__link">Classifica</a>
-        <a href="#referral" class="arena-nav__link">Referral</a>
-      </nav>
+  <div class="arena-auth">
+    <a href="#login" class="arena-auth__login">Accedi</a>
+    <a href="#register" class="arena-auth__register">
+      Registrati
+      <span>›</span>
+    </a>
+  </div>
 
-      <div class="arena-user">
-        <button class="arena-user__profile" type="button">
-          <span class="arena-user__avatar">
-            <img src="img/user-avatar-placeholder.png" alt="Avatar utente" />
-          </span>
-
-          <span class="arena-user__info">
-            <span class="arena-user__name">Guest Player</span>
-            <span class="arena-user__level">LVL 01 · Pre-season</span>
-          </span>
-        </button>
-
-        <a href="#register" class="arena-btn arena-btn--primary">Registrati</a>
-      </div>
-
-    </header>
+</header>
 
     <!-- LOBBY CONTENT -->
     <section class="arena-lobby" id="lobby">
