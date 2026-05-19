@@ -511,20 +511,22 @@
   </div>
 </section>
     
-    <!-- =========================
+   <!-- =========================
      PROFANTASY PIT STOP ROADMAP
      Sostituisce il vecchio Command Center
 ========================= -->
 <section class="pf-roadmap" id="profantasy-roadmap">
-  <div class="pf-roadmap-bg">
-    <img src="img/roadmap/roadmap-bg.jpg" alt="" class="pf-roadmap-bg-img">
+
+  <!-- BACKGROUND UNICO -->
+  <div class="pf-roadmap-background" aria-hidden="true">
+    <img src="img/roadmap/background.jpg" alt="" class="pf-roadmap-background-img">
   </div>
 
-  <div class="pf-roadmap-overlay"></div>
+  <div class="pf-roadmap-overlay" aria-hidden="true"></div>
 
   <div class="pf-roadmap-container">
 
-    <!-- TOP HERO ROADMAP -->
+    <!-- HERO TESTUALE -->
     <div class="pf-roadmap-hero">
 
       <div class="pf-roadmap-copy">
@@ -542,10 +544,6 @@
           Il percorso più veloce per capire dove andare su ProFantasy durante la fase più calda della stagione.
           Scegli il tuo momento, segui il flusso e resta sempre un giro avanti.
         </p>
-      </div>
-
-      <div class="pf-roadmap-player">
-        <img src="img/roadmap/roadmap-player.png" alt="Giocatore ProFantasy in corsa" class="pf-roadmap-player-img">
       </div>
 
       <aside class="pf-roadmap-phase-card">
@@ -581,191 +579,217 @@
 
     </div>
 
-    <!-- MAIN ROADMAP BODY -->
-    <div class="pf-roadmap-board">
+    <!-- ROADMAP PRINCIPALE -->
+    <div class="pf-roadmap-layout">
 
-      <div class="pf-roadmap-board-head">
-        <span>Season Route</span>
-        <div class="pf-roadmap-arrows" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span>
+      <div class="pf-roadmap-board">
+
+        <div class="pf-roadmap-board-head">
+          <span>Season Route</span>
+
+          <div class="pf-roadmap-arrows" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
+
+        <div class="pf-roadmap-track" aria-hidden="true">
+          <span class="pf-roadmap-track-line"></span>
+          <span class="pf-roadmap-step-dot pf-roadmap-step-dot-1">01</span>
+          <span class="pf-roadmap-step-dot pf-roadmap-step-dot-2">02</span>
+          <span class="pf-roadmap-step-dot pf-roadmap-step-dot-3">03</span>
+          <span class="pf-roadmap-step-dot pf-roadmap-step-dot-4">04</span>
+          <span class="pf-roadmap-flag">🏁</span>
+        </div>
+
+        <div class="pf-roadmap-cards">
+
+          <!-- CARD 01 -->
+          <article class="pf-roadmap-card pf-roadmap-card-market">
+            <a href="transfers.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione Transfers Live">
+
+              <div class="pf-roadmap-card-media">
+                <img src="img/roadmap/card-market-radar.jpg" alt="Market Radar ProFantasy" class="pf-roadmap-card-img">
+              </div>
+
+              <div class="pf-roadmap-card-body">
+                <span class="pf-roadmap-card-number">01</span>
+
+                <h3>Market Radar</h3>
+
+                <p>
+                  Rumors, gerarchie e mosse da seguire prima che diventino ovvie.
+                </p>
+
+                <div class="pf-roadmap-card-status">
+                  <span></span>
+                  <small>Scansione in corso</small>
+                </div>
+              </div>
+
+            </a>
+          </article>
+
+          <!-- CARD 02 -->
+          <article class="pf-roadmap-card pf-roadmap-card-tools">
+            <a href="tools.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione Tools Hub">
+
+              <div class="pf-roadmap-card-media">
+                <img src="img/roadmap/card-tool-check.jpg" alt="Tool Check ProFantasy" class="pf-roadmap-card-img">
+              </div>
+
+              <div class="pf-roadmap-card-body">
+                <span class="pf-roadmap-card-number">02</span>
+
+                <h3>Tool Check</h3>
+
+                <p>
+                  Comparatori, analisi e strumenti per migliorare asta, scambi e strategia.
+                </p>
+
+                <div class="pf-roadmap-card-status">
+                  <span></span>
+                  <small>Dati aggiornati</small>
+                </div>
+              </div>
+
+            </a>
+          </article>
+
+          <!-- CARD 03 -->
+          <article class="pf-roadmap-card pf-roadmap-card-worldcup">
+            <a href="world-cup.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione World Cup">
+
+              <div class="pf-roadmap-card-media">
+                <img src="img/roadmap/card-world-cup.jpg" alt="World Cup Mode ProFantasy" class="pf-roadmap-card-img">
+              </div>
+
+              <div class="pf-roadmap-card-body">
+                <span class="pf-roadmap-card-number">03</span>
+
+                <h3>World Cup Mode</h3>
+
+                <p>
+                  Format, premi, giochi speciali e sfide globali verso il Mondiale.
+                </p>
+
+                <div class="pf-roadmap-card-status">
+                  <span></span>
+                  <small>Modalità attiva</small>
+                </div>
+              </div>
+
+            </a>
+          </article>
+
+          <!-- CARD 04 -->
+          <article class="pf-roadmap-card pf-roadmap-card-community">
+            <a href="community.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione Community">
+
+              <div class="pf-roadmap-card-media">
+                <img src="img/roadmap/card-community-boost.jpg" alt="Community Boost ProFantasy" class="pf-roadmap-card-img">
+              </div>
+
+              <div class="pf-roadmap-card-body">
+                <span class="pf-roadmap-card-number">04</span>
+
+                <h3>Community Boost</h3>
+
+                <p>
+                  Telegram, sondaggi, update live e iniziative per entrare nel progetto.
+                </p>
+
+                <div class="pf-roadmap-card-status">
+                  <span></span>
+                  <small>Sempre connessi</small>
+                </div>
+              </div>
+
+            </a>
+          </article>
+
+        </div>
+
+        <div class="pf-roadmap-bottom">
+          <a href="community.html" class="pf-roadmap-main-cta">
+            <span>Scopri il percorso</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
       </div>
 
-      <div class="pf-roadmap-track" aria-hidden="true">
-        <span class="pf-roadmap-track-line"></span>
-        <span class="pf-roadmap-step-dot pf-roadmap-step-dot-1">01</span>
-        <span class="pf-roadmap-step-dot pf-roadmap-step-dot-2">02</span>
-        <span class="pf-roadmap-step-dot pf-roadmap-step-dot-3">03</span>
-        <span class="pf-roadmap-step-dot pf-roadmap-step-dot-4">04</span>
-        <span class="pf-roadmap-flag">🏁</span>
-      </div>
+      <!-- ANTEPRIMA MOBILE DECORATIVA -->
+      <aside class="pf-roadmap-mobile-preview" aria-label="Anteprima mobile ProFantasy Roadmap">
 
-      <div class="pf-roadmap-content">
+        <div class="pf-roadmap-mobile-head">
+          <span>Anteprima Mobile</span>
+        </div>
 
-        <!-- CARD 01 -->
-        <article class="pf-roadmap-card pf-roadmap-card-market">
-          <a href="transfers.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione Transfers Live">
-            <div class="pf-roadmap-card-media">
-              <img src="img/roadmap/card-market-radar.jpg" alt="Market Radar ProFantasy" class="pf-roadmap-card-img">
-            </div>
+        <div class="pf-roadmap-phone">
+          <div class="pf-roadmap-phone-screen">
 
-            <div class="pf-roadmap-card-body">
-              <span class="pf-roadmap-card-number">01</span>
+            <h3>
+              Pit Stop<br>
+              <span>Roadmap</span>
+            </h3>
 
-              <h3>Market Radar</h3>
+            <div class="pf-roadmap-phone-list">
 
-              <p>
-                Rumors, gerarchie e mosse da seguire prima che diventino ovvie.
-              </p>
-
-              <div class="pf-roadmap-card-status">
-                <span></span>
-                <small>Scansione in corso</small>
+              <div class="pf-roadmap-phone-item">
+                <strong>01</strong>
+                <div>
+                  <span>Market Radar</span>
+                  <small>Rumors, gerarchie e mosse da seguire.</small>
+                </div>
               </div>
-            </div>
-          </a>
-        </article>
 
-        <!-- CARD 02 -->
-        <article class="pf-roadmap-card pf-roadmap-card-tools">
-          <a href="tools.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione Tools Hub">
-            <div class="pf-roadmap-card-media">
-              <img src="img/roadmap/card-tool-check.jpg" alt="Tool Check ProFantasy" class="pf-roadmap-card-img">
-            </div>
-
-            <div class="pf-roadmap-card-body">
-              <span class="pf-roadmap-card-number">02</span>
-
-              <h3>Tool Check</h3>
-
-              <p>
-                Comparatori, analisi e strumenti per migliorare asta, scambi e strategia.
-              </p>
-
-              <div class="pf-roadmap-card-status">
-                <span></span>
-                <small>Dati aggiornati</small>
+              <div class="pf-roadmap-phone-item">
+                <strong>02</strong>
+                <div>
+                  <span>Tool Check</span>
+                  <small>Comparatori, analisi e strategia asta.</small>
+                </div>
               </div>
-            </div>
-          </a>
-        </article>
 
-        <!-- CARD 03 -->
-        <article class="pf-roadmap-card pf-roadmap-card-worldcup">
-          <a href="world-cup.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione World Cup">
-            <div class="pf-roadmap-card-media">
-              <img src="img/roadmap/card-world-cup.jpg" alt="World Cup Mode ProFantasy" class="pf-roadmap-card-img">
-            </div>
-
-            <div class="pf-roadmap-card-body">
-              <span class="pf-roadmap-card-number">03</span>
-
-              <h3>World Cup Mode</h3>
-
-              <p>
-                Format, premi, giochi speciali e sfide globali verso il Mondiale.
-              </p>
-
-              <div class="pf-roadmap-card-status">
-                <span></span>
-                <small>Modalità attiva</small>
+              <div class="pf-roadmap-phone-item">
+                <strong>03</strong>
+                <div>
+                  <span>World Cup Mode</span>
+                  <small>Format, premi e sfide globali.</small>
+                </div>
               </div>
-            </div>
-          </a>
-        </article>
 
-        <!-- CARD 04 -->
-        <article class="pf-roadmap-card pf-roadmap-card-community">
-          <a href="community.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione Community">
-            <div class="pf-roadmap-card-media">
-              <img src="img/roadmap/card-community-boost.jpg" alt="Community Boost ProFantasy" class="pf-roadmap-card-img">
-            </div>
-
-            <div class="pf-roadmap-card-body">
-              <span class="pf-roadmap-card-number">04</span>
-
-              <h3>Community Boost</h3>
-
-              <p>
-                Telegram, sondaggi, update live e iniziative per entrare nel progetto.
-              </p>
-
-              <div class="pf-roadmap-card-status">
-                <span></span>
-                <small>Sempre connessi</small>
+              <div class="pf-roadmap-phone-item">
+                <strong>04</strong>
+                <div>
+                  <span>Community Boost</span>
+                  <small>Telegram, sondaggi e update live.</small>
+                </div>
               </div>
+
             </div>
-          </a>
-        </article>
 
-      </div>
+            <a href="community.html" class="pf-roadmap-phone-cta">
+              Scopri il percorso →
+            </a>
 
-      <div class="pf-roadmap-bottom">
-        <a href="community.html" class="pf-roadmap-main-cta">
-          <span>Scopri il percorso</span>
-          <span aria-hidden="true">→</span>
-        </a>
-      </div>
+          </div>
+        </div>
+
+        <div class="pf-roadmap-mobile-dots" aria-hidden="true">
+          <span class="is-active"></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+      </aside>
 
     </div>
-
-    <!-- MOBILE PREVIEW -->
-    <aside class="pf-roadmap-mobile-preview" aria-label="Anteprima mobile ProFantasy Roadmap">
-      <div class="pf-roadmap-mobile-head">
-        <span>Anteprima Mobile</span>
-      </div>
-
-      <div class="pf-roadmap-phone">
-        <div class="pf-roadmap-phone-screen">
-          <h3>Pit Stop<br><span>Roadmap</span></h3>
-
-          <div class="pf-roadmap-phone-list">
-            <div class="pf-roadmap-phone-item">
-              <strong>01</strong>
-              <div>
-                <span>Market Radar</span>
-                <small>Rumors, gerarchie e mosse da seguire.</small>
-              </div>
-            </div>
-
-            <div class="pf-roadmap-phone-item">
-              <strong>02</strong>
-              <div>
-                <span>Tool Check</span>
-                <small>Comparatori, analisi e strategia asta.</small>
-              </div>
-            </div>
-
-            <div class="pf-roadmap-phone-item">
-              <strong>03</strong>
-              <div>
-                <span>World Cup Mode</span>
-                <small>Format, premi e sfide globali.</small>
-              </div>
-            </div>
-
-            <div class="pf-roadmap-phone-item">
-              <strong>04</strong>
-              <div>
-                <span>Community Boost</span>
-                <small>Telegram, sondaggi e update live.</small>
-              </div>
-            </div>
-          </div>
-
-          <a href="community.html" class="pf-roadmap-phone-cta">
-            Scopri il percorso →
-          </a>
-        </div>
-      </div>
-
-      <div class="pf-roadmap-mobile-dots" aria-hidden="true">
-        <span class="is-active"></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </aside>
 
   </div>
 </section>
