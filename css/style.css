@@ -21203,3 +21203,61 @@ body.legal-page .legal-highlight {
     width: 18px;
   }
 }
+
+      /* =========================================================
+   GLOBAL HEADER LINK RESET / PROFANTASY NAVBAR FIX
+   Da aggiungere in fondo a css/style.css
+========================================================= */
+
+.wc-navbar a,
+.wc-navbar a:link,
+.wc-navbar a:visited,
+.wc-navbar a:hover,
+.wc-navbar a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+.wc-nav-links a,
+.wc-nav-links a:link,
+.wc-nav-links a:visited {
+  color: rgba(241, 237, 255, 0.78);
+  text-decoration: none;
+}
+
+.wc-nav-links a:hover,
+.wc-nav-links a.active {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.wc-btn,
+.wc-btn:link,
+.wc-btn:visited,
+.wc-btn:hover,
+.wc-btn:active,
+.wc-logo,
+.wc-logo:link,
+.wc-logo:visited,
+.wc-logo:hover,
+.wc-logo:active {
+  text-decoration: none;
+}
+
+.wc-logo,
+.wc-logo:link,
+.wc-logo:visited {
+  color: var(--wc-purple, #b84cff);
+}
+
+.wc-btn-login,
+.wc-btn-login:link,
+.wc-btn-login:visited {
+  color: #ffffff;
+}
+
+.wc-btn-register,
+.wc-btn-register:link,
+.wc-btn-register:visited {
+  color: #130d03;
+}
