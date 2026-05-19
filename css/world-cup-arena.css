@@ -2396,3 +2396,348 @@ img {
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================================
+   FIX REFERENCE LAYOUT - STEP 3
+   Avvicina la lobby alla reference originale
+   ========================================================= */
+
+/* NAVBAR più fedele alla reference */
+.arena-topbar {
+  min-height: 86px;
+  padding: 0 34px;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid rgba(22, 231, 255, 0.14);
+  background: rgba(3, 4, 17, 0.86);
+  box-shadow: 0 12px 44px rgba(0, 0, 0, 0.42);
+}
+
+.arena-logo {
+  min-width: 260px;
+}
+
+.arena-logo__main {
+  font-size: 2rem;
+  letter-spacing: 0.06em;
+}
+
+.arena-logo__sub {
+  margin-top: 7px;
+  font-size: 0.62rem;
+  letter-spacing: 0.38em;
+}
+
+.arena-nav {
+  gap: 30px;
+  overflow: visible;
+}
+
+.arena-nav__link {
+  height: 86px;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+}
+
+.arena-auth {
+  min-width: 260px;
+  gap: 18px;
+}
+
+.arena-auth__login,
+.arena-auth__register {
+  min-height: 50px;
+  padding: 0 28px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+}
+
+/* HERO: deve sembrare un'unica scena, non una dashboard a blocchi */
+.arena-hero {
+  min-height: calc(100vh - 86px);
+  grid-template-columns: 34% 38% 28%;
+  gap: 24px;
+  align-items: center;
+  padding: 26px 42px 24px;
+  background:
+    linear-gradient(90deg, rgba(3, 4, 17, 0.88) 0%, rgba(3, 4, 17, 0.34) 48%, rgba(3, 4, 17, 0.78) 100%),
+    linear-gradient(180deg, rgba(3, 4, 17, 0.28) 0%, rgba(3, 4, 17, 0.90) 100%);
+}
+
+/* tolgo effetto card gigante a sinistra */
+.arena-intro-card {
+  max-width: 520px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.arena-intro-card h1 {
+  margin-top: 18px;
+  font-size: clamp(3.1rem, 4.3vw, 5.2rem);
+  line-height: 0.95;
+}
+
+.arena-intro-card p {
+  max-width: 470px;
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+/* card registrazione più piccola e più simile alla reference */
+.arena-register-box {
+  max-width: 455px;
+  min-height: 205px;
+  grid-template-columns: 1fr 150px;
+  padding: 22px 22px 20px;
+  border-radius: 0;
+  clip-path: polygon(
+    18px 0,
+    100% 0,
+    100% calc(100% - 18px),
+    calc(100% - 18px) 100%,
+    0 100%,
+    0 18px
+  );
+  background:
+    linear-gradient(135deg, rgba(20, 10, 50, 0.72), rgba(5, 7, 24, 0.68)),
+    radial-gradient(circle at 82% 50%, rgba(183, 44, 255, 0.34), transparent 36%);
+}
+
+.arena-register-box h2 {
+  font-size: 1.02rem;
+}
+
+.arena-register-box h2 strong {
+  font-size: 4rem;
+}
+
+.arena-register-box__text > span {
+  color: var(--arena-cyan);
+}
+
+.arena-register-box__visual img {
+  max-height: 145px;
+}
+
+.arena-gold-btn {
+  min-height: 42px;
+  padding: 0 18px;
+  font-size: 0.68rem;
+}
+
+/* CARD CENTRALE: più spartana, più piccola, meno web app */
+.arena-main-prediction {
+  max-width: 580px;
+  border-radius: 0;
+  align-self: center;
+  transform: translateY(12px);
+  background:
+    linear-gradient(180deg, rgba(9, 13, 38, 0.78), rgba(5, 7, 24, 0.84)),
+    radial-gradient(circle at 50% 38%, rgba(183, 44, 255, 0.18), transparent 42%);
+  clip-path: polygon(
+    24px 0,
+    100% 0,
+    100% calc(100% - 24px),
+    calc(100% - 24px) 100%,
+    0 100%,
+    0 24px
+  );
+}
+
+.arena-main-prediction__header {
+  min-height: 58px;
+  padding: 14px 22px;
+}
+
+.arena-main-prediction__content {
+  padding: 22px 24px 20px;
+}
+
+.arena-main-prediction__header .arena-kicker {
+  font-size: 0.62rem;
+}
+
+.arena-main-prediction__header strong {
+  font-size: 0.68rem;
+}
+
+.arena-lock-timer strong {
+  font-size: 0.76rem;
+}
+
+.arena-match-title-row {
+  grid-template-columns: 56px 1fr 56px;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.arena-flag {
+  height: 42px;
+  border-radius: 8px;
+}
+
+.arena-match-title {
+  gap: 16px;
+}
+
+.arena-match-title strong {
+  font-size: clamp(2.3rem, 3.4vw, 3.7rem);
+}
+
+.arena-match-title span {
+  font-size: clamp(1.6rem, 2.3vw, 2.6rem);
+}
+
+.arena-pick-grid {
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.arena-pick-card {
+  min-height: 108px;
+  border-radius: 0;
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+}
+
+.arena-pick-card strong {
+  font-size: clamp(3rem, 4.2vw, 4.5rem);
+}
+
+.arena-reward-row {
+  margin-top: 18px;
+  border-radius: 0;
+}
+
+.arena-reward-row div {
+  padding: 13px 16px;
+}
+
+.arena-play-main {
+  min-height: 56px;
+  margin-top: 16px;
+  border-radius: 0;
+  font-size: 1.2rem;
+}
+
+.arena-main-prediction__footer {
+  min-height: 46px;
+  padding: 0 24px 18px;
+}
+
+/* PROFILE: torna a destra anche su schermi non enormi */
+.arena-player-hub {
+  grid-column: auto;
+  max-width: none;
+  width: 100%;
+  align-self: center;
+}
+
+.arena-player-card {
+  min-height: 575px;
+  padding: 20px;
+  border-radius: 0;
+  clip-path: polygon(
+    22px 0,
+    100% 0,
+    100% calc(100% - 22px),
+    calc(100% - 22px) 100%,
+    0 100%,
+    0 22px
+  );
+  background:
+    linear-gradient(180deg, rgba(9, 12, 34, 0.70), rgba(5, 7, 22, 0.64)),
+    radial-gradient(circle at 20% 8%, rgba(183, 44, 255, 0.28), transparent 26%),
+    radial-gradient(circle at 90% 44%, rgba(22, 231, 255, 0.16), transparent 34%);
+  box-shadow:
+    0 0 30px rgba(183, 44, 255, 0.24),
+    0 0 36px rgba(22, 231, 255, 0.12),
+    inset 0 0 28px rgba(255, 255, 255, 0.035);
+}
+
+.arena-player-card__top {
+  grid-template-columns: 58px 1fr auto;
+  gap: 13px;
+  padding-bottom: 16px;
+}
+
+.arena-player-avatar {
+  width: 58px;
+  height: 58px;
+}
+
+.arena-player-card__top h2 {
+  font-size: 1.05rem;
+}
+
+.arena-player-card__top span {
+  font-size: 0.58rem;
+}
+
+.arena-player-stat {
+  min-height: 66px;
+  grid-template-columns: 38px 1fr auto;
+  padding: 11px 12px;
+}
+
+.arena-player-stat img {
+  width: 32px;
+  height: 32px;
+}
+
+.arena-player-stat span {
+  font-size: 0.56rem;
+}
+
+.arena-player-stat strong {
+  font-size: 1rem;
+}
+
+/* annulliamo il vecchio breakpoint che mandava il profilo sotto troppo presto */
+@media (max-width: 1500px) {
+  .arena-hero {
+    grid-template-columns: 32% 40% 28%;
+    gap: 20px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .arena-player-hub {
+    grid-column: auto;
+    max-width: none;
+    justify-self: stretch;
+  }
+
+  .arena-player-card {
+    min-height: 540px;
+  }
+
+  .arena-player-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* sotto tablet invece va a colonna */
+@media (max-width: 1150px) {
+  .arena-hero {
+    grid-template-columns: 1fr;
+    padding: 24px 18px;
+  }
+
+  .arena-intro-card,
+  .arena-register-box,
+  .arena-main-prediction,
+  .arena-player-hub {
+    max-width: 760px;
+    width: 100%;
+    justify-self: center;
+  }
+}
