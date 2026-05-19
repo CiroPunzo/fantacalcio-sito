@@ -843,3 +843,218 @@
     min-height: 74px;
   }
 }
+
+/* =========================================================
+   ROADMAP REFINEMENT 01
+   - Sezione più compatta desktop
+   - Rimozione spazio anteprima mobile
+========================================================= */
+
+/* La roadmap torna a tutta larghezza dopo aver tolto il mockup mobile */
+.pf-roadmap-layout {
+  grid-template-columns: 1fr;
+  max-width: 1188px;
+  margin: 0 auto;
+}
+
+/* Compatta l'altezza generale della sezione */
+.pf-roadmap {
+  padding: 56px 0 72px;
+}
+
+/* Contenitore leggermente più controllato */
+.pf-roadmap-container {
+  width: min(1360px, calc(100% - 48px));
+}
+
+/* Hero meno alta, così titolo e board entrano meglio nello schermo */
+.pf-roadmap-hero {
+  min-height: 285px;
+  margin-bottom: 24px;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 28px;
+}
+
+/* Titolo più compatto */
+.pf-roadmap-title {
+  margin: 18px 0 14px;
+  font-size: clamp(3.7rem, 7.8vw, 7.1rem);
+  line-height: 0.82;
+}
+
+/* Testo meno ingombrante */
+.pf-roadmap-subtitle {
+  max-width: 610px;
+  font-size: clamp(0.98rem, 1.45vw, 1.12rem);
+  line-height: 1.42;
+}
+
+/* Badge più piccolo */
+.pf-roadmap-kicker {
+  padding: 8px 18px;
+  font-size: 0.74rem;
+}
+
+/* Current Phase più compatta */
+.pf-roadmap-phase-card {
+  width: min(100%, 380px);
+  padding: 18px;
+  border-radius: 19px;
+}
+
+.pf-roadmap-phase-text {
+  margin-bottom: 14px;
+  font-size: 0.94rem;
+}
+
+.pf-roadmap-phase-stats {
+  gap: 10px;
+}
+
+.pf-roadmap-phase-stat {
+  min-height: 82px;
+  padding: 10px 6px;
+}
+
+.pf-roadmap-phase-icon {
+  font-size: 1.45rem;
+}
+
+.pf-roadmap-phase-stat small {
+  font-size: 0.58rem;
+}
+
+.pf-roadmap-phase-stat strong {
+  font-size: 0.76rem;
+}
+
+/* Board più compatta */
+.pf-roadmap-board {
+  padding: 22px 26px 26px;
+  border-radius: 22px;
+}
+
+/* Header board meno alto */
+.pf-roadmap-board-head {
+  margin-bottom: 18px;
+  font-size: 0.76rem;
+}
+
+/* Timeline più bassa */
+.pf-roadmap-track {
+  height: 52px;
+  margin: 0 20px 10px;
+}
+
+.pf-roadmap-track-line {
+  top: 24px;
+}
+
+.pf-roadmap-step-dot {
+  width: 52px;
+  height: 52px;
+  font-size: 1.32rem;
+}
+
+.pf-roadmap-flag {
+  top: 4px;
+  font-size: 2.15rem;
+}
+
+/* Card leggermente più basse */
+.pf-roadmap-cards {
+  gap: 20px;
+}
+
+.pf-roadmap-card,
+.pf-roadmap-card-link {
+  min-height: 285px;
+}
+
+.pf-roadmap-card-media {
+  height: 138px;
+}
+
+.pf-roadmap-card-body {
+  padding: 16px 16px 16px;
+}
+
+.pf-roadmap-card h3 {
+  margin-bottom: 8px;
+  font-size: clamp(1.12rem, 1.35vw, 1.42rem);
+}
+
+.pf-roadmap-card p {
+  min-height: 50px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  line-height: 1.32;
+}
+
+.pf-roadmap-card-status {
+  padding: 8px 11px;
+}
+
+.pf-roadmap-card-status small {
+  font-size: 0.62rem;
+}
+
+/* CTA più sottile */
+.pf-roadmap-bottom {
+  margin-top: 22px;
+}
+
+.pf-roadmap-main-cta {
+  min-width: min(500px, 100%);
+  padding: 16px 28px;
+  font-size: 0.9rem;
+}
+
+/* Eliminiamo completamente il mockup mobile decorativo */
+.pf-roadmap-mobile-preview {
+  display: none !important;
+}
+
+/* Desktop medio: mantiene tutto ordinato */
+@media (max-width: 1180px) {
+  .pf-roadmap-layout {
+    max-width: 100%;
+  }
+
+  .pf-roadmap-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .pf-roadmap-phase-card {
+    justify-self: start;
+  }
+}
+
+/* Mobile: manteniamo la resa che già ti piaceva */
+@media (max-width: 760px) {
+  .pf-roadmap {
+    padding: 70px 0 78px;
+  }
+
+  .pf-roadmap-hero {
+    margin-bottom: 28px;
+  }
+
+  .pf-roadmap-title {
+    font-size: clamp(3.2rem, 18vw, 5.2rem);
+  }
+
+  .pf-roadmap-board {
+    padding: 22px 16px 24px;
+  }
+
+  .pf-roadmap-card-media {
+    height: 175px;
+  }
+
+  .pf-roadmap-card,
+  .pf-roadmap-card-link {
+    min-height: auto;
+  }
+}
