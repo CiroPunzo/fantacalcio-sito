@@ -21261,3 +21261,85 @@ body.legal-page .legal-highlight {
 .wc-btn-register:visited {
   color: #130d03;
 }
+
+      /* =========================================================
+   PROFANTASY HEADER DEFINITIVE LINK FIX
+   Da mettere ALLA FINE di css/style.css
+========================================================= */
+
+header.wc-navbar a,
+header.wc-navbar a:link,
+header.wc-navbar a:visited,
+header.wc-navbar a:hover,
+header.wc-navbar a:focus,
+header.wc-navbar a:active,
+.wc-navbar a,
+.wc-navbar a:link,
+.wc-navbar a:visited,
+.wc-navbar a:hover,
+.wc-navbar a:focus,
+.wc-navbar a:active {
+  text-decoration: none !important;
+  text-underline-offset: 0 !important;
+}
+
+
+/* Logo */
+
+header.wc-navbar .wc-logo,
+header.wc-navbar .wc-logo:link,
+header.wc-navbar .wc-logo:visited,
+header.wc-navbar .wc-logo:hover,
+header.wc-navbar .wc-logo:active {
+  color: #b84cff !important;
+  text-decoration: none !important;
+}
+
+
+/* Link centrali */
+
+header.wc-navbar .wc-nav-links a,
+header.wc-navbar .wc-nav-links a:link,
+header.wc-navbar .wc-nav-links a:visited {
+  color: rgba(241, 237, 255, 0.78) !important;
+  text-decoration: none !important;
+}
+
+header.wc-navbar .wc-nav-links a:hover,
+header.wc-navbar .wc-nav-links a.active {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+
+/* Bottoni */
+
+header.wc-navbar .wc-btn,
+header.wc-navbar .wc-btn:link,
+header.wc-navbar .wc-btn:visited,
+header.wc-navbar .wc-btn:hover,
+header.wc-navbar .wc-btn:active {
+  text-decoration: none !important;
+}
+
+header.wc-navbar .wc-btn-login,
+header.wc-navbar .wc-btn-login:link,
+header.wc-navbar .wc-btn-login:visited {
+  color: #ffffff !important;
+}
+
+header.wc-navbar .wc-btn-register,
+header.wc-navbar .wc-btn-register:link,
+header.wc-navbar .wc-btn-register:visited {
+  color: #130d03 !important;
+}
+
+
+/* Evita che eventuali effetti globali sui link della home entrino nella navbar */
+
+header.wc-navbar .wc-nav-links a::selection,
+header.wc-navbar .wc-logo::selection,
+header.wc-navbar .wc-btn::selection {
+  background: rgba(184, 76, 255, 0.35);
+  color: #ffffff;
+}
