@@ -46,5 +46,5 @@ navLinks.forEach((link) => {
       menuToggle.checked = false;
     }
   }
-}
+});
 });
