@@ -1860,3 +1860,34 @@ body.wc-page a {
     pointer-events: none;
   }
 }
+
+/* =========================================================
+   EXCLUSIVE CLUB REWARD FIX
+========================================================= */
+
+.wc-exclusive-club strong {
+  max-width: 100%;
+  font-size: clamp(2rem, 2.45vw, 2.65rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  background: linear-gradient(180deg, #fff1b5, #f3b942 48%, #a85d13);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgba(247, 191, 79, 0.35));
+}
+
+.wc-exclusive-club p {
+  max-width: 240px;
+  line-height: 1.45;
+}
+
+@media (max-width: 680px) {
+  .wc-exclusive-club strong {
+    font-size: 2rem;
+  }
+
+  .wc-exclusive-club p {
+    max-width: 100%;
+  }
+}
