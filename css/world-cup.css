@@ -3463,3 +3463,325 @@ body.wc-page a {
     font-size: 0.74rem;
   }
 }
+
+/* =========================================================
+   WORLD CUP PLAYER HUB - COMPACT DASHBOARD STRIP
+   Add at the VERY END of world-cup.css
+========================================================= */
+
+.wc-player-hub-section {
+  position: relative;
+  padding: 70px 0 58px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 24% 0%, rgba(255, 53, 245, 0.18), transparent 34%),
+    radial-gradient(circle at 76% 18%, rgba(0, 163, 255, 0.16), transparent 32%),
+    linear-gradient(180deg, #050512 0%, #03030f 100%);
+}
+
+.wc-player-hub-section::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: min(92%, 1360px);
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(184, 76, 255, 0.88), rgba(0, 163, 255, 0.72), transparent);
+  box-shadow:
+    0 0 18px rgba(184, 76, 255, 0.8),
+    0 0 34px rgba(0, 163, 255, 0.42);
+}
+
+.wc-player-hub {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.05fr 2.25fr auto;
+  align-items: center;
+  gap: 22px;
+  width: min(94%, 1540px);
+  margin: 0 auto;
+  padding: 22px 24px;
+  border: 1px solid rgba(184, 76, 255, 0.44);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(10, 10, 38, 0.92), rgba(4, 5, 22, 0.96)),
+    radial-gradient(circle at 50% 0%, rgba(184, 76, 255, 0.18), transparent 42%);
+  box-shadow:
+    0 0 42px rgba(184, 76, 255, 0.18),
+    0 0 80px rgba(0, 163, 255, 0.08),
+    inset 0 0 28px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(18px);
+}
+
+.wc-player-hub::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 21px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07), transparent 28%, transparent 72%, rgba(0, 240, 255, 0.07));
+}
+
+.wc-hub-intro {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.wc-hub-emblem {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 53, 245, 0.38);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 53, 245, 0.2), transparent 58%),
+    rgba(10, 8, 35, 0.9);
+  box-shadow:
+    0 0 24px rgba(255, 53, 245, 0.18),
+    inset 0 0 18px rgba(255, 255, 255, 0.04);
+}
+
+.wc-hub-emblem img {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px rgba(184, 76, 255, 0.55));
+}
+
+.wc-hub-intro span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--wc-gold);
+  font-size: 0.7rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.wc-hub-intro h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.45rem, 2vw, 2.35rem);
+  line-height: 0.95;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+}
+
+.wc-hub-intro p {
+  max-width: 360px;
+  margin: 8px 0 0;
+  color: rgba(226, 222, 255, 0.68);
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+
+.wc-hub-stats {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.wc-hub-stat {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 92px;
+  padding: 14px 16px;
+  border: 1px solid rgba(119, 137, 204, 0.24);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(8, 12, 38, 0.82), rgba(4, 6, 24, 0.88));
+  box-shadow:
+    inset 0 0 18px rgba(255, 255, 255, 0.025),
+    0 0 18px rgba(0, 0, 0, 0.16);
+}
+
+.wc-hub-stat img {
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 10px rgba(184, 76, 255, 0.46))
+    drop-shadow(0 0 16px rgba(0, 163, 255, 0.18));
+}
+
+.wc-hub-stat span {
+  display: block;
+  margin-bottom: 6px;
+  color: rgba(216, 210, 245, 0.66);
+  font-size: 0.66rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+}
+
+.wc-hub-stat strong {
+  display: block;
+  color: #fff;
+  font-size: clamp(1.25rem, 1.55vw, 1.9rem);
+  line-height: 1;
+  font-weight: 1000;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+.wc-hub-stat:nth-child(1) strong {
+  color: var(--wc-gold-light);
+  text-shadow: 0 0 16px rgba(247, 191, 79, 0.34);
+}
+
+.wc-hub-stat:nth-child(2) strong {
+  color: #ff8dff;
+  text-shadow: 0 0 16px rgba(255, 53, 245, 0.42);
+}
+
+.wc-hub-stat:nth-child(3) strong {
+  color: #8eefff;
+  text-shadow: 0 0 16px rgba(0, 240, 255, 0.34);
+}
+
+.wc-hub-action {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 210px;
+  min-height: 64px;
+  padding: 0 24px;
+  border: 1px solid rgba(255, 53, 245, 0.74);
+  border-radius: 14px;
+  color: #fff;
+  background:
+    linear-gradient(135deg, rgba(255, 53, 245, 0.24), rgba(184, 76, 255, 0.12)),
+    rgba(12, 4, 28, 0.86);
+  box-shadow:
+    0 0 26px rgba(255, 53, 245, 0.34),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+  font-size: 0.84rem;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  transition: 0.25s ease;
+}
+
+.wc-hub-action span {
+  font-size: 1.8rem;
+}
+
+.wc-hub-action:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 34px rgba(255, 53, 245, 0.48),
+    0 0 62px rgba(184, 76, 255, 0.22);
+}
+
+
+/* ================= RESPONSIVE PLAYER HUB ================= */
+
+@media (max-width: 1320px) {
+  .wc-player-hub {
+    grid-template-columns: 1fr;
+  }
+
+  .wc-hub-intro {
+    justify-content: flex-start;
+  }
+
+  .wc-hub-action {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .wc-player-hub-section {
+    padding: 52px 0 44px;
+  }
+
+  .wc-player-hub {
+    width: calc(100% - 28px);
+    padding: 18px;
+    gap: 18px;
+  }
+
+  .wc-hub-stats {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 4px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .wc-hub-stats::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wc-hub-stat {
+    flex: 0 0 235px;
+    scroll-snap-align: start;
+  }
+
+  .wc-hub-action {
+    min-height: 58px;
+  }
+}
+
+@media (max-width: 560px) {
+  .wc-hub-intro {
+    align-items: flex-start;
+  }
+
+  .wc-hub-emblem {
+    flex-basis: 58px;
+    width: 58px;
+    height: 58px;
+    border-radius: 15px;
+  }
+
+  .wc-hub-emblem img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .wc-hub-intro h2 {
+    font-size: 1.35rem;
+  }
+
+  .wc-hub-intro p {
+    font-size: 0.8rem;
+  }
+
+  .wc-hub-stat {
+    flex-basis: 220px;
+    min-height: 86px;
+  }
+
+  .wc-hub-stat img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .wc-hub-stat strong {
+    font-size: 1.35rem;
+  }
+
+  .wc-hub-action {
+    min-width: 0;
+    width: 100%;
+  }
+}
