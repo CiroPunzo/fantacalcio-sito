@@ -4363,3 +4363,20 @@ body.wc-page {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* =========================================================
+   FIX NAVBAR POSITION AFTER PERFORMANCE OPTIMIZATION
+========================================================= */
+
+body.wc-page {
+  transform: none !important;
+}
+
+.wc-navbar {
+  left: 50% !important;
+  transform: translateX(-50%) translateZ(0) !important;
+}
+
+.wc-nav-inner {
+  transform: none !important;
+}
