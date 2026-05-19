@@ -1891,3 +1891,669 @@ body.wc-page a {
     max-width: 100%;
   }
 }
+
+/* =========================================================
+   WORLD CUP ARENA LANDING SECTIONS
+   Add at the END of world-cup.css
+========================================================= */
+
+.wc-arena-preview,
+.wc-games-section,
+.wc-how-section,
+.wc-final-cta {
+  position: relative;
+  overflow: hidden;
+  background: #050512;
+}
+
+.wc-arena-preview {
+  padding: 110px 0 70px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(184, 76, 255, 0.22), transparent 34%),
+    radial-gradient(circle at 84% 18%, rgba(0, 163, 255, 0.13), transparent 28%),
+    linear-gradient(180deg, #050512 0%, #03030f 100%);
+}
+
+.wc-section-head {
+  width: min(92%, 1180px);
+  margin: 0 auto 46px;
+  text-align: center;
+}
+
+.wc-section-eyebrow {
+  margin-bottom: 18px;
+}
+
+.wc-section-head h2 {
+  max-width: 900px;
+  margin: 0 auto;
+  color: #fff;
+  font-size: clamp(2.7rem, 4.7vw, 5.8rem);
+  line-height: 0.92;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: -0.06em;
+  text-shadow: 0 0 28px rgba(255, 255, 255, 0.15);
+}
+
+.wc-section-head h2 span {
+  display: block;
+  color: transparent;
+  background: linear-gradient(180deg, #fff1b5 0%, #f8c450 38%, #b66e14 82%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 16px rgba(247, 191, 79, 0.22));
+}
+
+.wc-section-head p {
+  max-width: 760px;
+  margin: 24px auto 0;
+  color: rgba(226, 222, 255, 0.82);
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+
+
+/* ================= DASHBOARD PREVIEW ================= */
+
+.wc-dashboard-preview {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  width: min(92%, 1360px);
+  margin: 0 auto;
+  padding: 18px;
+  border: 1px solid rgba(184, 76, 255, 0.28);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(11, 13, 45, 0.86), rgba(4, 5, 22, 0.94)),
+    radial-gradient(circle at 50% 0%, rgba(184, 76, 255, 0.16), transparent 40%);
+  box-shadow:
+    0 0 44px rgba(184, 76, 255, 0.16),
+    inset 0 0 26px rgba(255, 255, 255, 0.04);
+}
+
+.wc-dash-card {
+  position: relative;
+  min-height: 178px;
+  padding: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(119, 137, 204, 0.24);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(8, 12, 38, 0.9), rgba(4, 6, 24, 0.96));
+  box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.035);
+}
+
+.wc-dash-card::before {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: rgba(184, 76, 255, 0.14);
+  filter: blur(10px);
+}
+
+.wc-dash-card span {
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin-bottom: 12px;
+  color: rgba(216, 210, 245, 0.74);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.wc-dash-card strong {
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: clamp(2rem, 2.6vw, 3.2rem);
+  line-height: 0.9;
+  font-weight: 1000;
+  letter-spacing: -0.05em;
+}
+
+.wc-dash-card p {
+  position: relative;
+  z-index: 2;
+  max-width: 260px;
+  margin: 0;
+  color: rgba(226, 222, 255, 0.74);
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.wc-dash-wallet strong {
+  color: var(--wc-gold-light);
+  text-shadow: 0 0 18px rgba(247, 191, 79, 0.35);
+}
+
+.wc-dash-streak strong {
+  color: #ff8dff;
+  text-shadow: 0 0 18px rgba(255, 53, 245, 0.46);
+}
+
+.wc-dash-level strong {
+  color: #8eefff;
+  text-shadow: 0 0 18px rgba(0, 240, 255, 0.36);
+}
+
+.wc-dash-rank strong {
+  color: #ffffff;
+  text-shadow: 0 0 18px rgba(184, 76, 255, 0.46);
+}
+
+
+/* ================= GAME CARDS ================= */
+
+.wc-games-section {
+  padding: 70px 0 90px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 53, 245, 0.13), transparent 30%),
+    radial-gradient(circle at 78% 28%, rgba(0, 163, 255, 0.13), transparent 34%),
+    #03030f;
+}
+
+.wc-games-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.15fr 1fr;
+  gap: 22px;
+  width: min(96%, 1640px);
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+.wc-game-card {
+  position: relative;
+  min-height: 440px;
+  padding: 30px 28px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 163, 255, 0.34);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(8, 12, 42, 0.82), rgba(3, 5, 20, 0.96));
+  box-shadow:
+    0 0 30px rgba(0, 0, 0, 0.28),
+    inset 0 0 28px rgba(255, 255, 255, 0.035);
+  transition: 0.25s ease;
+}
+
+.wc-game-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.72;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.06), transparent 30%),
+    radial-gradient(circle at 74% 18%, rgba(184, 76, 255, 0.16), transparent 28%);
+  pointer-events: none;
+}
+
+.wc-game-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 53, 245, 0.5);
+  box-shadow:
+    0 0 36px rgba(184, 76, 255, 0.24),
+    inset 0 0 28px rgba(255, 255, 255, 0.05);
+}
+
+.wc-game-featured {
+  min-height: 520px;
+  border-color: rgba(255, 53, 245, 0.58);
+  background:
+    radial-gradient(circle at 50% 48%, rgba(255, 53, 245, 0.22), transparent 34%),
+    linear-gradient(180deg, rgba(20, 10, 52, 0.88), rgba(4, 5, 22, 0.98));
+  box-shadow:
+    0 0 44px rgba(255, 53, 245, 0.22),
+    inset 0 0 34px rgba(255, 255, 255, 0.05);
+}
+
+.wc-game-badge,
+.wc-game-icon,
+.wc-game-card h3,
+.wc-game-card p,
+.wc-game-card ul,
+.wc-mini-match,
+.wc-mission-list,
+.wc-game-link,
+.wc-bracket-lines {
+  position: relative;
+  z-index: 2;
+}
+
+.wc-game-badge {
+  display: inline-flex;
+  margin-bottom: 26px;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 240, 255, 0.34);
+  border-radius: 999px;
+  color: #9ffaff;
+  background: rgba(0, 240, 255, 0.08);
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.wc-game-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 22px;
+  border-radius: 18px;
+  background: rgba(184, 76, 255, 0.14);
+  box-shadow: 0 0 24px rgba(184, 76, 255, 0.22);
+  font-size: 1.85rem;
+}
+
+.wc-game-card h3 {
+  margin: 0 0 18px;
+  color: #fff;
+  font-size: clamp(1.9rem, 2.05vw, 2.7rem);
+  line-height: 0.96;
+  font-weight: 1000;
+  letter-spacing: -0.05em;
+}
+
+.wc-game-card h3 span {
+  display: block;
+  color: transparent;
+  background: linear-gradient(180deg, #ffffff, #8eefff 48%, #00a3ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.wc-game-featured h3 span {
+  background: linear-gradient(180deg, #ffdcff, #ff35f5 52%, #8d2cff);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.wc-game-card p {
+  margin: 0 0 22px;
+  color: rgba(226, 222, 255, 0.78);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.wc-game-card ul {
+  display: grid;
+  gap: 12px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wc-game-card li {
+  padding: 12px 14px;
+  border: 1px solid rgba(119, 137, 204, 0.22);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(5, 8, 28, 0.62);
+  font-size: 0.9rem;
+}
+
+.wc-mini-match {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.wc-mini-match div {
+  min-height: 90px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(0, 163, 255, 0.28);
+  border-radius: 16px;
+  background: rgba(4, 8, 30, 0.78);
+}
+
+.wc-mini-match strong {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+}
+
+.wc-mini-match span {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 1000;
+  text-shadow: 0 0 16px rgba(0, 163, 255, 0.55);
+}
+
+.wc-bracket-lines {
+  display: grid;
+  gap: 16px;
+  margin: 42px 0 34px;
+}
+
+.wc-bracket-lines span {
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, rgba(255, 53, 245, 0.1), rgba(255, 53, 245, 0.85), rgba(0, 163, 255, 0.65));
+  box-shadow: 0 0 18px rgba(255, 53, 245, 0.3);
+}
+
+.wc-bracket-lines span:nth-child(2) {
+  width: 82%;
+}
+
+.wc-bracket-lines span:nth-child(3) {
+  width: 62%;
+}
+
+.wc-bracket-lines span:nth-child(4) {
+  width: 42%;
+}
+
+.wc-game-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(100%, 290px);
+  min-height: 58px;
+  padding: 0 24px;
+  border: 1px solid rgba(255, 53, 245, 0.74);
+  border-radius: 12px;
+  color: #fff;
+  background: rgba(255, 53, 245, 0.14);
+  box-shadow: 0 0 22px rgba(255, 53, 245, 0.26);
+  font-size: 0.86rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.wc-game-link span {
+  font-size: 1.7rem;
+}
+
+.wc-mission-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.wc-mission-list div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid rgba(0, 240, 255, 0.22);
+  border-radius: 14px;
+  background: rgba(4, 16, 28, 0.72);
+}
+
+.wc-mission-list span {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.88rem;
+}
+
+.wc-mission-list strong {
+  color: var(--wc-gold);
+  font-size: 1rem;
+}
+
+
+/* ================= HOW IT WORKS ================= */
+
+.wc-how-section {
+  padding: 96px 0;
+  background:
+    linear-gradient(180deg, #03030f 0%, #070719 100%);
+}
+
+.wc-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  width: min(92%, 1240px);
+  margin: 0 auto;
+}
+
+.wc-step {
+  position: relative;
+  min-height: 260px;
+  padding: 32px;
+  border: 1px solid rgba(184, 76, 255, 0.25);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(10, 12, 42, 0.74), rgba(4, 5, 20, 0.94));
+  box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.035);
+}
+
+.wc-step span {
+  display: block;
+  margin-bottom: 34px;
+  color: transparent;
+  background: linear-gradient(180deg, #fff1b5, #f8c450 45%, #b66e14);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 3.5rem;
+  line-height: 1;
+  font-weight: 1000;
+  letter-spacing: -0.07em;
+}
+
+.wc-step h3 {
+  margin: 0 0 14px;
+  color: #fff;
+  font-size: 1.55rem;
+}
+
+.wc-step p {
+  margin: 0;
+  color: rgba(226, 222, 255, 0.76);
+  line-height: 1.55;
+}
+
+
+/* ================= FINAL CTA ================= */
+
+.wc-final-cta {
+  padding: 90px 0 120px;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 53, 245, 0.2), transparent 34%),
+    radial-gradient(circle at 22% 28%, rgba(0, 163, 255, 0.14), transparent 32%),
+    #03030f;
+}
+
+.wc-final-cta-inner {
+  width: min(92%, 1180px);
+  margin: 0 auto;
+  padding: clamp(34px, 5vw, 74px);
+  text-align: center;
+  border: 1px solid rgba(255, 53, 245, 0.36);
+  border-radius: 28px;
+  background:
+    linear-gradient(135deg, rgba(18, 10, 52, 0.88), rgba(4, 5, 22, 0.96));
+  box-shadow:
+    0 0 48px rgba(255, 53, 245, 0.18),
+    inset 0 0 34px rgba(255, 255, 255, 0.045);
+}
+
+.wc-final-cta-inner > span {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--wc-gold);
+  font-size: 0.82rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.wc-final-cta h2 {
+  max-width: 900px;
+  margin: 0 auto;
+  color: #fff;
+  font-size: clamp(2.45rem, 4.6vw, 5.6rem);
+  line-height: 0.94;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: -0.06em;
+}
+
+.wc-final-cta h2 strong {
+  display: block;
+  color: transparent;
+  background: linear-gradient(180deg, #fff1b5, #f8c450 45%, #b66e14);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.wc-final-cta p {
+  max-width: 720px;
+  margin: 24px auto 34px;
+  color: rgba(226, 222, 255, 0.78);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.wc-final-actions {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+
+/* ================= RESPONSIVE ARENA SECTIONS ================= */
+
+@media (max-width: 1280px) {
+  .wc-dashboard-preview {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wc-games-grid {
+    grid-template-columns: repeat(2, 1fr);
+    width: min(92%, 1040px);
+  }
+
+  .wc-game-featured {
+    min-height: 440px;
+  }
+}
+
+@media (max-width: 820px) {
+  .wc-arena-preview {
+    padding: 78px 0 50px;
+  }
+
+  .wc-games-section,
+  .wc-how-section {
+    padding: 68px 0;
+  }
+
+  .wc-section-head {
+    margin-bottom: 34px;
+    text-align: left;
+  }
+
+  .wc-section-head h2 {
+    font-size: clamp(2.35rem, 11vw, 4.4rem);
+  }
+
+  .wc-section-head p {
+    font-size: 0.98rem;
+  }
+
+  .wc-dashboard-preview,
+  .wc-games-grid,
+  .wc-steps {
+    grid-template-columns: 1fr;
+    width: calc(100% - 28px);
+  }
+
+  .wc-dashboard-preview {
+    padding: 12px;
+  }
+
+  .wc-dash-card {
+    min-height: 150px;
+  }
+
+  .wc-game-card,
+  .wc-game-featured {
+    min-height: auto;
+    padding: 26px 22px;
+  }
+
+  .wc-game-card h3 {
+    font-size: 2rem;
+  }
+
+  .wc-steps {
+    gap: 16px;
+  }
+
+  .wc-step {
+    min-height: auto;
+    padding: 26px 22px;
+  }
+
+  .wc-step span {
+    margin-bottom: 22px;
+    font-size: 3rem;
+  }
+
+  .wc-final-cta {
+    padding: 70px 0 90px;
+  }
+
+  .wc-final-cta-inner {
+    width: calc(100% - 28px);
+    text-align: left;
+  }
+
+  .wc-final-cta h2 {
+    font-size: clamp(2.2rem, 10vw, 4rem);
+  }
+
+  .wc-final-actions {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .wc-final-actions .wc-main-cta,
+  .wc-final-actions .wc-secondary-cta {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .wc-section-head h2 {
+    font-size: 2.28rem;
+  }
+
+  .wc-dash-card strong {
+    font-size: 2.15rem;
+  }
+
+  .wc-game-card h3 {
+    font-size: 1.82rem;
+  }
+
+  .wc-mini-match {
+    grid-template-columns: 1fr;
+  }
+
+  .wc-mini-match div {
+    min-height: 72px;
+  }
+
+  .wc-final-cta h2 {
+    font-size: 2.15rem;
+  }
+}
