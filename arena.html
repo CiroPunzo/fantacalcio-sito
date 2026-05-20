@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <title>ProFantasy World Cup Arena</title>
+
+  <link rel="stylesheet" href="css/arena.css" />
+</head>
+
+<body>
+  <div class="arena-page">
+
+    <!-- BACKGROUND -->
+    <div class="arena-bg"></div>
+    <div class="arena-overlay"></div>
+
+    <!-- NAVBAR -->
+    <header class="arena-header">
+      <a href="index.html" class="arena-logo" aria-label="Torna alla home ProFantasy">
+        <span class="arena-logo-main">PROFANTASY</span>
+        <span class="arena-logo-sub">World Cup Arena</span>
+      </a>
+
+      <nav class="arena-nav" aria-label="Navigazione Arena">
+        <a href="#lobby" class="arena-nav-link is-active">Lobby</a>
+        <a href="#daily-prediction" class="arena-nav-link">Daily Prediction</a>
+        <a href="#missions" class="arena-nav-link">Missioni</a>
+        <a href="#bracket" class="arena-nav-link">Bracket</a>
+        <a href="#leaderboard" class="arena-nav-link">Leaderboard</a>
+        <a href="#referral" class="arena-nav-link">Referral</a>
+      </nav>
+
+      <div class="arena-header-actions">
+        <a href="#login" class="arena-btn arena-btn-secondary">Accedi</a>
+        <a href="#register" class="arena-btn arena-btn-primary">
+          Registrati
+          <span aria-hidden="true">›</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- MAIN LOBBY -->
+    <main id="lobby" class="arena-main">
+
+      <!-- LEFT COLUMN -->
+      <section class="arena-left">
+        <div class="arena-kicker">World Cup Arena</div>
+
+        <h1 class="arena-hero-title">
+  <span>ENTRA NELL’ARENA.</span>
+  <strong>VIVI OGNI PARTITA.</strong>
+</h1>
+
+        <p class="arena-description">
+          Registrati, ottieni 1000 token iniziali e gioca ogni giorno:
+          pronostici 1/X/2, streak, missioni, classifica globale e bracket
+          prediction per diventare una leggenda.
+        </p>
+
+        <aside class="arena-bonus-card">
+  <div class="arena-bonus-bg"></div>
+
+  <div class="arena-bonus-content">
+    <span class="arena-bonus-kicker">INIZIA SUBITO</span>
+
+    <h2>
+      REGISTRATI E RICEVI
+      <strong>1000</strong>
+      <span>TOKEN INIZIALI</span>
+    </h2>
+
+    <p>
+      Entra nell’Arena, ricevi il bonus di benvenuto e inizia subito la tua scalata.
+    </p>
+
+    <a href="#" class="arena-bonus-btn">
+      REGISTRATI ORA
+      <span>›</span>
+    </a>
+  </div>
+</aside>
+      </section>
+
+      <!-- CENTER COLUMN -->
+      <section class="arena-prediction-card" data-match-id="bra-arg-01">
+  <div class="prediction-frame-line top"></div>
+
+ <div class="prediction-header">
+  <div class="prediction-header-title">
+    <span>PREVISIONE GIORNALIERA</span>
+  </div>
+
+  <div class="prediction-countdown">
+    <span>COUNTDOWN</span>
+    <strong>10h 42m 33s</strong>
+  </div>
+</div>
+
+  <div class="prediction-divider"></div>
+
+  <div class="prediction-body">
+    <span class="prediction-label">MATCH OF THE DAY</span>
+    <p class="prediction-time">OGGI • 21:00</p>
+
+    <div class="prediction-teams">
+      <div class="prediction-team">
+        <div class="team-flag team-flag-left">
+          <img src="img/flags/bra.png" alt="Brasile">
+        </div>
+        <strong>BRA</strong>
+      </div>
+
+      <span class="prediction-vs">VS</span>
+
+      <div class="prediction-team prediction-team-right">
+        <strong>ARG</strong>
+        <div class="team-flag team-flag-right">
+          <img src="img/flags/arg.png" alt="Argentina">
+        </div>
+      </div>
+    </div>
+
+    <div class="prediction-choices" aria-label="Scegli pronostico">
+      <button class="prediction-choice choice-one" type="button" data-choice="1">
+        <span>1</span>
+        <small>Casa</small>
+      </button>
+
+      <button class="prediction-choice choice-x" type="button" data-choice="X">
+        <span>X</span>
+        <small>Pari</small>
+      </button>
+
+      <button class="prediction-choice choice-two" type="button" data-choice="2">
+        <span>2</span>
+        <small>Ospite</small>
+      </button>
+    </div>
+
+    <div class="prediction-stats" aria-hidden="true">
+      <div class="prediction-stat">
+        <span>1</span>
+        <div><i style="width: 42%;"></i></div>
+        <strong>42%</strong>
+      </div>
+
+      <div class="prediction-stat">
+        <span>X</span>
+        <div><i style="width: 21%;"></i></div>
+        <strong>21%</strong>
+      </div>
+
+      <div class="prediction-stat">
+        <span>2</span>
+        <div><i style="width: 37%;"></i></div>
+        <strong>37%</strong>
+      </div>
+    </div>
+
+  <div class="prediction-economy">
+  <div class="prediction-economy-item">
+    <div class="prediction-economy-icon">
+      <img src="img/ui/token-coin.png" alt="Token">
+    </div>
+
+    <div class="prediction-economy-text">
+      <span>COSTO GIOCATA</span>
+      <strong>50 TOKEN</strong>
+    </div>
+  </div>
+
+  <div class="prediction-economy-divider"></div>
+
+  <div class="prediction-economy-item">
+    <div class="prediction-economy-icon">
+      <img src="img/ui/bonus-gift.png" alt="Reward">
+    </div>
+
+    <div class="prediction-economy-text">
+      <span>REWARD</span>
+      <strong>+125 TOKEN BONUS</strong>
+    </div>
+  </div>
+</div>
+
+<div class="prediction-actions prediction-actions-ref">
+  <button class="prediction-arrow prediction-arrow-faded" type="button" aria-label="Pronostico precedente">
+    ‹‹
+  </button>
+
+  <button class="prediction-play prediction-play-next" type="button">
+    VAI AL PROSSIMO
+  </button>
+
+  <button class="prediction-arrow prediction-arrow-faded" type="button" aria-label="Pronostico successivo">
+    ››
+  </button>
+</div>
+
+<div class="prediction-footer prediction-footer-ref">
+  <span class="prediction-footer-dot"></span>
+  <span>PREDICTION DEL GIORNO: <strong>1 / 3</strong></span>
+  <button class="prediction-footer-info" type="button" aria-label="Info prediction del giorno">i</button>
+</div>
+
+  <div class="prediction-frame-line bottom"></div>
+</section>
+
+      <!-- RIGHT COLUMN -->
+      <aside class="arena-right">
+        <article class="profile-card">
+
+          <div class="profile-head">
+            <div class="profile-avatar">
+              <img src="img/avatar-arena.png" alt="Avatar utente ProFantasy" />
+            </div>
+
+            <div class="profile-user">
+              <div class="profile-name-row">
+                <h2>ProFantasy</h2>
+                <span class="live-badge">Live</span>
+              </div>
+
+              <p>Season 1 • Pre-season</p>
+            </div>
+          </div>
+
+          <div class="profile-level">
+            <span>LVL 12</span>
+
+            <div class="xp-block">
+              <div class="xp-text">
+                <span>XP</span>
+                <strong>2.450 / 5.000</strong>
+              </div>
+
+              <div class="xp-bar">
+                <span style="width: 49%;"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-stats">
+
+            <div class="profile-stat">
+              <div class="stat-icon">🪙</div>
+              <div>
+                <span>Token disponibili</span>
+                <strong>1.250</strong>
+              </div>
+              <button type="button" aria-label="Aggiungi token">+</button>
+            </div>
+
+            <div class="profile-stat">
+              <div class="stat-icon">🔥</div>
+              <div>
+                <span>Daily streak</span>
+                <strong>7 giorni</strong>
+              </div>
+            </div>
+
+            <div class="profile-stat">
+              <div class="stat-icon">⭐</div>
+              <div>
+                <span>XP totale</span>
+                <strong>2.450 XP</strong>
+              </div>
+            </div>
+
+            <div class="profile-stat">
+              <div class="stat-icon">🏆</div>
+              <div>
+                <span>Posizione globale</span>
+                <strong>#1.248</strong>
+              </div>
+            </div>
+
+            <div class="profile-stat">
+              <div class="stat-icon">👥</div>
+              <div>
+                <span>Referral bonus</span>
+                <strong>250</strong>
+              </div>
+              <button type="button" aria-label="Invita amici">+</button>
+            </div>
+
+          </div>
+
+        </article>
+      </aside>
+
+    </main>
+
+  </div>
+</body>
+</html>
