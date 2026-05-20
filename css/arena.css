@@ -49,7 +49,7 @@ html {
 body {
   min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
-  background: var(--bg-dark);
+  : var(--bg-dark);
   color: var(--text-main);
   overflow-x: hidden;
 }
@@ -84,12 +84,12 @@ img {
   overflow: hidden;
 }
 
-/* BACKGROUND */
+/*  */
 .arena-bg {
   position: fixed;
   inset: 0;
   z-index: -3;
-  background:
+  :
     linear-gradient(90deg, rgba(5, 6, 23, 0.82) 0%, rgba(5, 6, 23, 0.38) 40%, rgba(5, 6, 23, 0.70) 100%),
     linear-gradient(180deg, rgba(5, 6, 23, 0.18) 0%, rgba(5, 6, 23, 0.50) 100%),
     url("../img/world-cup-arena-bg.jpg") center center / cover no-repeat;
@@ -101,7 +101,7 @@ img {
   inset: 0;
   z-index: -2;
   pointer-events: none;
-  background:
+  :
     radial-gradient(circle at 20% 30%, rgba(184, 60, 255, 0.12), transparent 28%),
     radial-gradient(circle at 62% 42%, rgba(37, 217, 255, 0.10), transparent 24%),
     radial-gradient(circle at 82% 18%, rgba(255, 191, 60, 0.08), transparent 18%),
@@ -113,7 +113,7 @@ img {
   content: "";
   position: absolute;
   inset: 0;
-  background:
+  :
     linear-gradient(120deg, transparent 0%, rgba(184, 60, 255, 0.05) 48%, transparent 52%),
     linear-gradient(70deg, transparent 0%, rgba(37, 217, 255, 0.05) 62%, transparent 66%);
   mix-blend-mode: screen;
@@ -131,7 +131,7 @@ img {
   align-items: center;
   gap: 18px;
   padding: 0 34px;
-  background: linear-gradient(180deg, rgba(4, 5, 20, 0.92), rgba(4, 5, 20, 0.78));
+  : linear-gradient(180deg, rgba(4, 5, 20, 0.92), rgba(4, 5, 20, 0.78));
   border-bottom: 1px solid rgba(37, 217, 255, 0.10);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.34);
   backdrop-filter: blur(16px);
@@ -202,7 +202,7 @@ img {
   width: 0;
   height: 3px;
   transform: translateX(-50%);
-  background: linear-gradient(90deg, var(--purple), var(--gold));
+  : linear-gradient(90deg, var(--purple), var(--gold));
   border-radius: 999px;
   box-shadow: 0 0 16px rgba(255, 191, 60, 0.8);
   transition: width 0.25s ease;
@@ -243,7 +243,7 @@ img {
 .arena-btn-secondary {
   color: #fff;
   border: 1px solid rgba(255, 191, 60, 0.45);
-  background: rgba(2, 4, 16, 0.55);
+  : rgba(2, 4, 16, 0.55);
 }
 
 .arena-btn-secondary:hover {
@@ -254,7 +254,7 @@ img {
 .arena-btn-primary {
   color: #130907;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  background:
+  :
     linear-gradient(135deg, #ffe08a, #ffad30 42%, #ff7a25 100%);
   box-shadow:
     inset 0 0 18px rgba(255, 255, 255, 0.36),
@@ -287,7 +287,7 @@ img {
   padding: 7px 16px;
   border: 1px solid rgba(37, 217, 255, 0.34);
   border-radius: 999px;
-  background: rgba(37, 217, 255, 0.08);
+  : rgba(37, 217, 255, 0.08);
   color: var(--cyan);
   font-size: 11px;
   font-weight: 950;
@@ -334,7 +334,7 @@ img {
   gap: 12px;
   padding: 24px;
   overflow: hidden;
-  background:
+  :
     linear-gradient(135deg, rgba(18, 9, 48, 0.82), rgba(11, 13, 38, 0.70)),
     radial-gradient(circle at 75% 50%, rgba(184, 60, 255, 0.20), transparent 45%);
   border: 1px solid rgba(184, 60, 255, 0.45);
@@ -397,7 +397,7 @@ img {
   gap: 10px;
   padding: 0 20px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #ffe08a, #ffb13b 45%, #ff8429);
+  : linear-gradient(135deg, #ffe08a, #ffb13b 45%, #ff8429);
   color: #130907;
   font-size: 11px;
   font-weight: 950;
@@ -431,7 +431,7 @@ img {
   padding: 18px 22px 18px;
   margin-inline: auto;
 
-  background:
+  :
     radial-gradient(circle at 50% 22%, rgba(92, 32, 162, 0.14), transparent 30%),
     radial-gradient(circle at 22% 75%, rgba(181, 52, 255, 0.08), transparent 28%),
     radial-gradient(circle at 80% 18%, rgba(54, 214, 255, 0.07), transparent 22%),
@@ -493,7 +493,7 @@ img {
   pointer-events: none;
   opacity: 0.55;
   filter: blur(14px);
-  background:
+  :
     radial-gradient(circle at 8% 50%, rgba(177, 61, 255, 0.18), transparent 18%),
     radial-gradient(circle at 92% 50%, rgba(54, 214, 255, 0.14), transparent 18%),
     radial-gradient(circle at 50% 0%, rgba(116, 64, 255, 0.12), transparent 20%);
@@ -502,38 +502,31 @@ img {
 
 /* HEADER più fedele */
 
+/* ================================
+   PREDICTION HEADER CLEAN VERSION
+================================ */
+
 .prediction-header {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: 1fr auto auto;
+  display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 18px;
+
   margin-bottom: 14px;
   padding: 0 0 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.prediction-header div:first-child {
-  display: contents;
-}
-
-.prediction-header span {
-  color: #51d8ff;
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 0.62rem;
-  font-weight: 900;
-  line-height: 1.15;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.prediction-header strong {
-  color: #ffffff;
+.prediction-header-title span {
+  display: block;
+  color: #58e6ff;
   font-family: "Orbitron", system-ui, sans-serif;
   font-size: 0.68rem;
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
@@ -541,61 +534,37 @@ img {
 .prediction-countdown {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  min-height: 38px;
-  padding: 0 16px;
+  gap: 10px;
 
-  border: 1px solid rgba(92, 215, 255, 0.34);
+  min-height: 36px;
+  padding: 0 15px;
+
+  border: 1px solid rgba(97, 218, 255, 0.38);
   border-radius: 999px;
 
-  background:
-    linear-gradient(180deg, rgba(18, 41, 79, 0.82), rgba(11, 24, 49, 0.92));
+  :
+    linear-gradient(180deg, rgba(13, 35, 68, 0.82), rgba(7, 19, 45, 0.96));
 
   box-shadow:
-    inset 0 0 12px rgba(56, 182, 255, 0.06),
-    0 0 8px rgba(56, 182, 255, 0.06);
+    inset 0 0 14px rgba(56, 214, 255, 0.07),
+    0 0 10px rgba(56, 214, 255, 0.08);
 }
 
-.prediction-countdown span,
+.prediction-countdown span {
+  color: rgba(255, 255, 255, 0.62);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
 .prediction-countdown strong {
-  color: #66e4ff;
+  color: #66eaff;
+  font-family: "Orbitron", system-ui, sans-serif;
   font-size: 0.68rem;
+  font-weight: 900;
   letter-spacing: 0.03em;
-}
-/* Header */
-
-.prediction-header {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: start;
-  gap: 18px;
-  margin-bottom: 18px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.prediction-header div:first-child {
-  display: contents;
-}
-
-.prediction-header span {
-  color: #59deff;
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 0.68rem;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  line-height: 1.2;
-}
-
-.prediction-header strong {
-  color: #ffffff;
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  line-height: 1.2;
 }
 
 /* Abbassa visivamente la card */
@@ -647,7 +616,7 @@ img {
   margin: 0 0 18px;
   padding: 18px 20px;
 
-  background:
+  :
     linear-gradient(180deg, rgba(4, 10, 31, 0.98), rgba(2, 7, 24, 0.98));
   border: 1px solid rgba(56, 120, 196, 0.22);
 
@@ -716,7 +685,7 @@ img {
   width: 1px;
   height: 60px;
   margin-inline: auto;
-  background: linear-gradient(
+  : linear-gradient(
     180deg,
     transparent,
     rgba(255, 255, 255, 0.12),
@@ -817,7 +786,7 @@ img {
   font-size: 52px;
   font-weight: 950;
   border-radius: 18px;
-  background: linear-gradient(180deg, rgba(20, 18, 52, 0.86), rgba(7, 8, 24, 0.94));
+  : linear-gradient(180deg, rgba(20, 18, 52, 0.86), rgba(7, 8, 24, 0.94));
   border: 1px solid rgba(255, 255, 255, 0.08);
   text-shadow: 0 0 18px currentColor;
   transition: transform 0.22s ease, filter 0.22s ease, box-shadow 0.22s ease;
@@ -871,7 +840,7 @@ img {
   padding: 16px 18px;
   border: 1px solid rgba(37, 217, 255, 0.14);
   border-radius: 14px;
-  background: rgba(0, 0, 0, 0.18);
+  : rgba(0, 0, 0, 0.18);
 }
 
 .prediction-info-item span {
@@ -899,7 +868,7 @@ img {
 .prediction-info-divider {
   width: 1px;
   height: 42px;
-  background: rgba(255, 255, 255, 0.12);
+  : rgba(255, 255, 255, 0.12);
 }
 
 /* ACTIONS */
@@ -918,7 +887,7 @@ img {
   border-radius: 14px;
   color: var(--cyan);
   font-size: 32px;
-  background: rgba(37, 217, 255, 0.07);
+  : rgba(37, 217, 255, 0.07);
   border: 1px solid rgba(37, 217, 255, 0.26);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -936,7 +905,7 @@ img {
   font-weight: 950;
   letter-spacing: 2.4px;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #ffe38f, #ffbc3e 42%, #ff831f 100%);
+  : linear-gradient(135deg, #ffe38f, #ffbc3e 42%, #ff831f 100%);
   box-shadow:
     inset 0 0 16px rgba(255, 255, 255, 0.25),
     0 0 20px rgba(255, 191, 60, 0.32);
@@ -956,7 +925,7 @@ img {
   padding: 9px 22px;
   border: 1px solid rgba(37, 217, 255, 0.28);
   border-radius: 999px;
-  background: rgba(37, 217, 255, 0.08);
+  : rgba(37, 217, 255, 0.08);
   color: var(--text-soft);
   font-size: 11px;
   font-weight: 800;
@@ -977,7 +946,7 @@ img {
 .profile-card {
   width: min(100%, 365px);
   padding: 22px;
-  background:
+  :
     linear-gradient(180deg, rgba(12, 14, 40, 0.84), rgba(5, 7, 24, 0.90)),
     radial-gradient(circle at 40% 0%, rgba(184, 60, 255, 0.14), transparent 40%);
   border: 1px solid rgba(184, 60, 255, 0.34);
@@ -1001,7 +970,7 @@ img {
   height: 64px;
   padding: 4px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--purple), var(--cyan));
+  : linear-gradient(135deg, var(--purple), var(--cyan));
   box-shadow: 0 0 18px rgba(184, 60, 255, 0.34);
 }
 
@@ -1024,7 +993,7 @@ img {
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  background: #090b1f;
+  : #090b1f;
 }
 
 .profile-name-row {
@@ -1038,7 +1007,7 @@ img {
   padding: 5px 9px;
   border: 1px solid rgba(37, 217, 255, 0.6);
   border-radius: 8px;
-  background: rgba(37, 217, 255, 0.08);
+  : rgba(37, 217, 255, 0.08);
   color: var(--cyan);
   font-size: 10px;
   font-weight: 950;
@@ -1060,7 +1029,7 @@ img {
   justify-content: center;
   border: 1px solid rgba(255, 191, 60, 0.38);
   border-radius: 9px;
-  background: rgba(255, 191, 60, 0.08);
+  : rgba(255, 191, 60, 0.08);
   color: #fff;
   font-size: 12px;
   font-weight: 950;
@@ -1086,14 +1055,14 @@ img {
   height: 7px;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
+  : rgba(255, 255, 255, 0.12);
 }
 
 .xp-bar span {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--purple), var(--pink), var(--gold));
+  : linear-gradient(90deg, var(--purple), var(--pink), var(--gold));
   box-shadow: 0 0 16px rgba(255, 79, 216, 0.85);
 }
 
@@ -1116,7 +1085,7 @@ img {
   padding: 12px 13px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+  : linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
 }
 
 .profile-stat strong {
@@ -1144,7 +1113,7 @@ img {
   color: var(--gold);
   font-size: 26px;
   line-height: 1;
-  background: rgba(184, 60, 255, 0.12);
+  : rgba(184, 60, 255, 0.12);
   border: 1px solid rgba(184, 60, 255, 0.55);
   box-shadow: 0 0 18px rgba(184, 60, 255, 0.28);
 }
@@ -1234,7 +1203,7 @@ img {
   }
 
   .arena-bg {
-    background:
+    :
       linear-gradient(180deg, rgba(5, 6, 23, 0.52) 0%, rgba(5, 6, 23, 0.72) 100%),
       linear-gradient(90deg, rgba(5, 6, 23, 0.62) 0%, rgba(5, 6, 23, 0.22) 40%, rgba(5, 6, 23, 0.60) 100%),
       url("../img/world-cup-arena-bg.jpg") 62% center / cover no-repeat;
@@ -1319,7 +1288,7 @@ img {
   }
 
   .arena-bg {
-    background:
+    :
       linear-gradient(180deg, rgba(5, 6, 23, 0.68) 0%, rgba(5, 6, 23, 0.82) 100%),
       url("../img/world-cup-arena-bg.jpg") 68% center / cover no-repeat;
     filter: saturate(1.06) brightness(0.88);
@@ -1552,7 +1521,7 @@ body {
   margin: 0;
   font-family: "Inter", "Montserrat", "Arial", sans-serif;
   color: var(--white);
-  background: var(--bg);
+  : var(--bg);
   overflow-x: hidden;
 }
 
@@ -1572,7 +1541,7 @@ img {
 }
 
 /* =========================================================
-   BACKGROUND
+   
    ========================================================= */
 
 .arena-page,
@@ -1581,17 +1550,17 @@ img {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  background: #050713;
+  : #050713;
 }
 
 .arena-bg {
   position: fixed;
   inset: 0;
   z-index: -4;
-  background-image: url("../img/world-cup-arena-bg.jpg");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+  -image: url("../img/world-cup-arena-bg.jpg");
+  -size: cover;
+  -position: center center;
+  -repeat: no-repeat;
   transform: scale(1.02);
   filter: saturate(1.18) contrast(1.08) brightness(0.82);
 }
@@ -1600,7 +1569,7 @@ img {
   content: "";
   position: absolute;
   inset: 0;
-  background:
+  :
     radial-gradient(circle at 72% 44%, rgba(36, 223, 255, 0.14), transparent 32%),
     radial-gradient(circle at 18% 42%, rgba(185, 54, 255, 0.25), transparent 36%),
     radial-gradient(circle at 52% 92%, rgba(255, 191, 60, 0.08), transparent 30%),
@@ -1613,7 +1582,7 @@ img {
   content: "";
   position: absolute;
   inset: 0;
-  background:
+  :
     linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 15%, transparent 85%, rgba(255, 255, 255, 0.03)),
     radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.42) 100%);
   mix-blend-mode: screen;
@@ -1626,7 +1595,7 @@ img {
   inset: 0;
   z-index: -3;
   pointer-events: none;
-  background:
+  :
     radial-gradient(circle at 50% 26%, rgba(36, 223, 255, 0.08), transparent 34%),
     radial-gradient(circle at 13% 55%, rgba(185, 54, 255, 0.16), transparent 35%),
     radial-gradient(circle at 88% 22%, rgba(255, 191, 60, 0.08), transparent 28%),
@@ -1645,7 +1614,7 @@ body::after,
 .arena-page::after,
 .world-cup-arena::before,
 .world-cup-arena::after {
-  background-image: none;
+  -image: none;
 }
 
 /* =========================================================
@@ -1663,7 +1632,7 @@ body::after,
   align-items: center;
   justify-content: space-between;
   padding: 0 clamp(22px, 3vw, 48px);
-  background:
+  :
     linear-gradient(180deg, rgba(4, 6, 19, 0.94), rgba(6, 8, 24, 0.76));
   border-bottom: 1px solid rgba(36, 223, 255, 0.16);
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.34);
@@ -1755,7 +1724,7 @@ body::after,
   width: 0;
   height: 3px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--purple), var(--pink), var(--gold));
+  : linear-gradient(90deg, var(--purple), var(--pink), var(--gold));
   box-shadow: 0 0 16px rgba(255, 79, 232, 0.75);
   transform: translateX(-50%);
   transition: width 0.22s ease;
@@ -1793,7 +1762,7 @@ body::after,
   padding: 0 30px;
   border-radius: 10px;
   border: 1px solid rgba(255, 191, 60, 0.42);
-  background: rgba(7, 9, 24, 0.72);
+  : rgba(7, 9, 24, 0.72);
   color: #fff;
   font-size: 0.78rem;
   font-weight: 950;
@@ -1803,7 +1772,7 @@ body::after,
   transition:
     transform 0.22s ease,
     box-shadow 0.22s ease,
-    background 0.22s ease,
+     0.22s ease,
     border-color 0.22s ease;
 }
 
@@ -1824,7 +1793,7 @@ body::after,
 .header-actions a:last-child {
   border: 0;
   color: #17100a;
-  background: linear-gradient(135deg, #ffe184 0%, #ffb13c 48%, #ff7c30 100%);
+  : linear-gradient(135deg, #ffe184 0%, #ffb13c 48%, #ff7c30 100%);
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.18) inset,
     0 0 28px rgba(255, 166, 47, 0.52);
@@ -1884,7 +1853,7 @@ body::after,
   margin-bottom: 19px;
   border: 1px solid rgba(36, 223, 255, 0.4);
   border-radius: 999px;
-  background: rgba(36, 223, 255, 0.08);
+  : rgba(36, 223, 255, 0.08);
   color: var(--cyan);
   font-size: 0.68rem;
   font-weight: 950;
@@ -1944,7 +1913,7 @@ h1 span {
   padding: 29px 30px;
   overflow: hidden;
   border-radius: 0 28px 0 28px;
-  background:
+  :
     linear-gradient(135deg, rgba(23, 11, 45, 0.9), rgba(8, 11, 30, 0.82) 58%, rgba(23, 10, 39, 0.88)),
     radial-gradient(circle at 78% 42%, rgba(185, 54, 255, 0.18), transparent 38%);
   border: 1px solid rgba(185, 54, 255, 0.42);
@@ -1976,7 +1945,7 @@ h1 span {
   bottom: -10px;
   width: 190px;
   height: 160px;
-  background: url("../img/token-chest.png") center / contain no-repeat;
+  : url("../img/token-chest.png") center / contain no-repeat;
   filter: drop-shadow(0 0 24px rgba(185, 54, 255, 0.48));
   opacity: 0.9;
   pointer-events: none;
@@ -2061,7 +2030,7 @@ h1 span {
   padding: 0 25px;
   border: 0;
   border-radius: 10px;
-  background: linear-gradient(135deg, #ffe17c, #ffb238 50%, #ff812f);
+  : linear-gradient(135deg, #ffe17c, #ffb238 50%, #ff812f);
   color: #160f08;
   font-size: 0.73rem;
   font-weight: 1000;
@@ -2087,7 +2056,7 @@ h1 span {
   border: 1px solid rgba(36, 223, 255, 0.42);
   border-radius: 28px;
   clip-path: polygon(6% 0, 94% 0, 100% 10%, 100% 90%, 94% 100%, 6% 100%, 0 90%, 0 10%);
-  background:
+  :
     linear-gradient(180deg, rgba(9, 14, 35, 0.96), rgba(6, 9, 25, 0.94)),
     radial-gradient(circle at 50% 48%, rgba(36, 223, 255, 0.12), transparent 42%),
     radial-gradient(circle at 22% 68%, rgba(185, 54, 255, 0.13), transparent 34%);
@@ -2120,7 +2089,7 @@ h1 span {
   top: 50%;
   width: 420px;
   height: 420px;
-  background:
+  :
     radial-gradient(circle, rgba(185, 54, 255, 0.18), transparent 62%);
   transform: translate(-50%, -50%);
   opacity: 0.55;
@@ -2178,7 +2147,7 @@ h1 span {
   padding: 0 15px;
   border: 1px solid rgba(36, 223, 255, 0.35);
   border-radius: 999px;
-  background: rgba(36, 223, 255, 0.08);
+  : rgba(36, 223, 255, 0.08);
   color: var(--cyan);
   font-size: 0.72rem;
   font-weight: 950;
@@ -2296,7 +2265,7 @@ h1 span {
   min-height: 102px;
   border-radius: 16px;
   border: 1px solid rgba(255, 79, 232, 0.52);
-  background:
+  :
     radial-gradient(circle at 50% 45%, rgba(255, 79, 232, 0.2), transparent 55%),
     linear-gradient(180deg, rgba(18, 13, 39, 0.92), rgba(7, 9, 25, 0.95));
   color: #ff6bed;
@@ -2321,7 +2290,7 @@ h1 span {
 .choice-btn:nth-child(3) {
   border-color: rgba(36, 223, 255, 0.58);
   color: var(--cyan);
-  background:
+  :
     radial-gradient(circle at 50% 45%, rgba(36, 223, 255, 0.2), transparent 55%),
     linear-gradient(180deg, rgba(11, 20, 42, 0.92), rgba(7, 9, 25, 0.95));
   text-shadow: 0 0 20px rgba(36, 223, 255, 0.72);
@@ -2347,7 +2316,7 @@ h1 span {
   margin-bottom: 22px;
   border: 1px solid rgba(36, 223, 255, 0.2);
   border-radius: 14px;
-  background: rgba(5, 9, 24, 0.66);
+  : rgba(5, 9, 24, 0.66);
   overflow: hidden;
 }
 
@@ -2404,7 +2373,7 @@ h1 span {
   justify-content: center;
   border: 0;
   border-radius: 14px;
-  background: linear-gradient(135deg, #ffe78b 0%, #ffbd45 45%, #ff872f 100%);
+  : linear-gradient(135deg, #ffe78b 0%, #ffbd45 45%, #ff872f 100%);
   color: #171009;
   font-size: clamp(1.15rem, 1.6vw, 1.45rem);
   font-weight: 1000;
@@ -2437,7 +2406,7 @@ h1 span {
   padding: 9px 18px;
   border: 1px solid rgba(36, 223, 255, 0.32);
   border-radius: 999px;
-  background: rgba(36, 223, 255, 0.08);
+  : rgba(36, 223, 255, 0.08);
   color: rgba(255, 255, 255, 0.74);
   font-size: 0.66rem;
   font-weight: 950;
@@ -2460,7 +2429,7 @@ h1 span {
   overflow: hidden;
   border-radius: 28px 28px 0 28px;
   border: 1px solid rgba(185, 54, 255, 0.44);
-  background:
+  :
     linear-gradient(180deg, rgba(17, 13, 42, 0.94), rgba(7, 10, 28, 0.92)),
     radial-gradient(circle at 28% 0%, rgba(185, 54, 255, 0.25), transparent 37%);
   box-shadow:
@@ -2506,7 +2475,7 @@ h1 span {
   flex: 0 0 72px;
   border-radius: 50%;
   padding: 4px;
-  background: linear-gradient(135deg, var(--cyan), var(--purple), var(--gold));
+  : linear-gradient(135deg, var(--cyan), var(--purple), var(--gold));
   box-shadow: 0 0 24px rgba(185, 54, 255, 0.44);
 }
 
@@ -2517,7 +2486,7 @@ h1 span {
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  background: #07091c;
+  : #07091c;
 }
 
 .profile-name,
@@ -2552,7 +2521,7 @@ h1 span {
   padding: 0 10px;
   border: 1px solid rgba(36, 223, 255, 0.5);
   border-radius: 8px;
-  background: rgba(36, 223, 255, 0.09);
+  : rgba(36, 223, 255, 0.09);
   color: var(--cyan);
   font-size: 0.64rem;
   font-weight: 1000;
@@ -2580,7 +2549,7 @@ h1 span {
   padding: 0 14px;
   border-radius: 10px;
   border: 1px solid rgba(255, 191, 60, 0.35);
-  background: rgba(255, 191, 60, 0.08);
+  : rgba(255, 191, 60, 0.08);
   color: #fff;
   font-size: 0.72rem;
   font-weight: 1000;
@@ -2595,7 +2564,7 @@ h1 span {
   height: 8px;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.14);
+  : rgba(255, 255, 255, 0.14);
 }
 
 .xp-bar span,
@@ -2605,7 +2574,7 @@ h1 span {
   width: 56%;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--purple), var(--pink), var(--gold));
+  : linear-gradient(90deg, var(--purple), var(--pink), var(--gold));
   box-shadow: 0 0 16px rgba(255, 79, 232, 0.56);
 }
 
@@ -2628,7 +2597,7 @@ h1 span {
   padding: 13px 13px 13px 14px;
   border: 1px solid rgba(255, 255, 255, 0.105);
   border-radius: 14px;
-  background:
+  :
     linear-gradient(90deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025));
   box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.02);
 }
@@ -2642,7 +2611,7 @@ h1 span {
   align-items: center;
   justify-content: center;
   border-radius: 13px;
-  background:
+  :
     radial-gradient(circle, rgba(255, 191, 60, 0.28), rgba(255, 191, 60, 0.08));
   color: var(--gold);
   font-size: 1.55rem;
@@ -2683,7 +2652,7 @@ h1 span {
   justify-content: center;
   border-radius: 11px;
   border: 1px solid rgba(185, 54, 255, 0.58);
-  background: rgba(185, 54, 255, 0.12);
+  : rgba(185, 54, 255, 0.12);
   color: var(--gold);
   font-size: 1.35rem;
   font-weight: 900;
@@ -2716,7 +2685,7 @@ h1 span {
   padding: 22px 24px;
   border-radius: 0 18px 0 18px;
   border: 1px solid rgba(36, 223, 255, 0.26);
-  background:
+  :
     linear-gradient(135deg, rgba(13, 18, 41, 0.86), rgba(7, 9, 24, 0.86));
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
 }
@@ -2864,18 +2833,18 @@ h1 span {
   }
 
   body {
-    background: #050713;
+    : #050713;
   }
 
   .arena-bg {
-    background-size: cover;
-    background-position: 58% center;
+    -size: cover;
+    -position: 58% center;
     filter: saturate(1.22) contrast(1.08) brightness(0.72);
     transform: scale(1.04);
   }
 
   .arena-bg::before {
-    background:
+    :
       radial-gradient(circle at 50% 18%, rgba(185, 54, 255, 0.2), transparent 34%),
       radial-gradient(circle at 50% 48%, rgba(36, 223, 255, 0.12), transparent 36%),
       linear-gradient(180deg, rgba(4, 7, 18, 0.6), rgba(4, 7, 18, 0.5) 34%, rgba(4, 7, 18, 0.92) 100%),
@@ -3361,12 +3330,12 @@ h1 span {
   border: 1px solid rgba(209, 65, 255, 0.72);
   border-radius: 0;
 
-  background:
+  :
     linear-gradient(90deg, rgba(13, 7, 32, 0.96) 0%, rgba(25, 8, 48, 0.88) 42%, rgba(12, 8, 30, 0.15) 100%),
     url("../img/arena-token-bg.png");
 
-  background-size: cover;
-  background-position: center right;
+  -size: cover;
+  -position: center right;
 
   box-shadow:
     0 0 34px rgba(196, 51, 255, 0.28),
@@ -3406,7 +3375,7 @@ h1 span {
   bottom: -90px;
   width: 260px;
   height: 260px;
-  background: radial-gradient(circle, rgba(255, 183, 52, 0.45), transparent 62%);
+  : radial-gradient(circle, rgba(255, 183, 52, 0.45), transparent 62%);
   filter: blur(16px);
   z-index: 1;
   pointer-events: none;
@@ -3416,7 +3385,7 @@ h1 span {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background:
+  :
     linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 22%),
     radial-gradient(circle at 76% 55%, rgba(255, 188, 55, 0.22), transparent 28%),
     radial-gradient(circle at 18% 22%, rgba(203, 54, 255, 0.18), transparent 34%);
@@ -3505,7 +3474,7 @@ h1 span {
   border-radius: 7px;
 
   color: #160b04;
-  background: linear-gradient(135deg, #ffe783 0%, #ffaf38 48%, #ff8e2d 100%);
+  : linear-gradient(135deg, #ffe783 0%, #ffaf38 48%, #ff8e2d 100%);
 
   font-family: "Orbitron", "Rajdhani", system-ui, sans-serif;
   font-size: 0.72rem;
@@ -3596,7 +3565,7 @@ h1 span {
   padding: 22px 40px 26px;
   margin-inline: auto;
 
-  background:
+  :
     linear-gradient(180deg, rgba(6, 10, 29, 0.96), rgba(4, 7, 21, 0.98)),
     radial-gradient(circle at 50% 0%, rgba(0, 224, 255, 0.16), transparent 36%);
 
@@ -3633,7 +3602,7 @@ h1 span {
   left: 58px;
   right: 58px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 221, 255, 0.65), transparent);
+  : linear-gradient(90deg, transparent, rgba(0, 221, 255, 0.65), transparent);
 }
 
 .prediction-frame-line.top {
@@ -3684,7 +3653,7 @@ h1 span {
   padding: 0 16px;
   border: 1px solid rgba(0, 221, 255, 0.45);
   border-radius: 999px;
-  background: rgba(0, 174, 255, 0.12);
+  : rgba(0, 174, 255, 0.12);
   box-shadow: inset 0 0 18px rgba(0, 221, 255, 0.08);
 }
 
@@ -3698,7 +3667,7 @@ h1 span {
 .prediction-divider {
   height: 1px;
   margin-bottom: 24px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  : linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
 }
 
 .prediction-body {
@@ -3763,7 +3732,7 @@ h1 span {
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.24);
-  background: rgba(255, 255, 255, 0.08);
+  : rgba(255, 255, 255, 0.08);
   box-shadow: 0 0 22px rgba(0, 221, 255, 0.12);
 }
 
@@ -3785,7 +3754,7 @@ h1 span {
   min-height: 112px;
   border-radius: 18px;
   cursor: pointer;
-  background: rgba(5, 9, 28, 0.9);
+  : rgba(5, 9, 28, 0.9);
   transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
@@ -3845,7 +3814,7 @@ h1 span {
   padding: 16px;
   border: 1px solid rgba(0, 221, 255, 0.2);
   border-radius: 16px;
-  background: rgba(0, 0, 0, 0.22);
+  : rgba(0, 0, 0, 0.22);
 }
 
 .prediction-stat {
@@ -3866,7 +3835,7 @@ h1 span {
 .prediction-stat div {
   height: 7px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
+  : rgba(255, 255, 255, 0.12);
   overflow: hidden;
 }
 
@@ -3874,7 +3843,7 @@ h1 span {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #ff4df0, #22e7ff);
+  : linear-gradient(90deg, #ff4df0, #22e7ff);
 }
 
 .prediction-info {
@@ -3883,7 +3852,7 @@ h1 span {
   margin-bottom: 24px;
   border: 1px solid rgba(0, 221, 255, 0.2);
   border-radius: 16px;
-  background: rgba(0, 0, 0, 0.26);
+  : rgba(0, 0, 0, 0.26);
   overflow: hidden;
 }
 
@@ -3931,7 +3900,7 @@ h1 span {
   border: 1px solid rgba(0, 221, 255, 0.42);
   border-radius: 14px;
   color: #22e7ff;
-  background: rgba(0, 174, 255, 0.1);
+  : rgba(0, 174, 255, 0.1);
   font-size: 2rem;
   font-weight: 900;
   cursor: pointer;
@@ -3944,7 +3913,7 @@ h1 span {
   cursor: pointer;
 
   color: #120905;
-  background: linear-gradient(135deg, #ffe77e, #ff982f);
+  : linear-gradient(135deg, #ffe77e, #ff982f);
 
   font-family: "Orbitron", system-ui, sans-serif;
   font-size: 1.35rem;
@@ -3966,7 +3935,7 @@ h1 span {
   border-radius: 999px;
 
   color: rgba(255, 255, 255, 0.72);
-  background: rgba(0, 174, 255, 0.1);
+  : rgba(0, 174, 255, 0.1);
 
   font-family: "Orbitron", system-ui, sans-serif;
   font-size: 0.68rem;
@@ -3993,7 +3962,7 @@ h1 span {
 
   border: 1px solid rgba(40, 112, 190, 0.28);
   border-radius: 0;
-  background:
+  :
     linear-gradient(180deg, rgba(7, 11, 28, 0.95), rgba(5, 8, 22, 0.98));
   clip-path: polygon(
     2.5% 0,
@@ -4067,7 +4036,7 @@ h1 span {
   width: 1px;
   height: 44px;
   margin-inline: auto;
-  background: linear-gradient(
+  : linear-gradient(
     180deg,
     transparent,
     rgba(255, 255, 255, 0.18),
@@ -4093,7 +4062,7 @@ h1 span {
   cursor: pointer;
 
   color: #ffd86e;
-  background:
+  :
     linear-gradient(180deg, rgba(100, 63, 8, 0.92), rgba(58, 36, 6, 0.96));
   font-family: "Orbitron", system-ui, sans-serif;
   font-size: 1.05rem;
@@ -4137,7 +4106,7 @@ h1 span {
 .prediction-arrow-faded {
   height: 50px;
   border: 0;
-  background: transparent;
+  : transparent;
   color: rgba(91, 133, 214, 0.34);
   font-size: 2rem;
   font-weight: 900;
@@ -4156,7 +4125,7 @@ h1 span {
 
   border: 1px solid rgba(44, 114, 193, 0.34);
   border-radius: 0;
-  background:
+  :
     linear-gradient(180deg, rgba(8, 14, 36, 0.92), rgba(6, 10, 28, 0.98));
 
   color: rgba(214, 229, 255, 0.82);
@@ -4183,7 +4152,7 @@ h1 span {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #56b7ff;
+  : #56b7ff;
   box-shadow: 0 0 10px rgba(86, 183, 255, 0.8);
 }
 
@@ -4193,7 +4162,7 @@ h1 span {
   padding: 0;
   border: 1px solid rgba(164, 196, 255, 0.3);
   border-radius: 50%;
-  background: transparent;
+  : transparent;
   color: rgba(214, 229, 255, 0.72);
   font-size: 0.65rem;
   font-weight: 800;
@@ -4300,4 +4269,38 @@ h1 span {
 
 .prediction-footer-ref {
   min-height: 32px;
+}
+
+/* ================================
+    BOOST
+================================ */
+
+body::before {
+  opacity: 0.72;
+}
+
+body::after {
+  opacity: 0.28;
+}
+
+.arena-page::before,
+.world-cup-arena::before,
+.arena-lobby::before {
+  :
+    radial-gradient(circle at 22% 35%, rgba(146, 44, 255, 0.22), transparent 34%),
+    radial-gradient(circle at 76% 38%, rgba(0, 221, 255, 0.14), transparent 30%),
+    linear-gradient(90deg, rgba(7, 4, 22, 0.44), rgba(4, 7, 22, 0.18), rgba(4, 7, 22, 0.36)) !important;
+}
+
+@media (max-width: 768px) {
+  .prediction-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .prediction-countdown {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
