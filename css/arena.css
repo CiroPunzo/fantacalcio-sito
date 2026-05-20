@@ -3898,3 +3898,37 @@ h1 span {
   line-height: 1;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .prediction-info-ref {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .prediction-info-separator {
+    display: none;
+  }
+
+  .prediction-actions-ref {
+    grid-template-columns: 40px 1fr 40px;
+    gap: 8px;
+  }
+
+  .prediction-play-next {
+    height: 58px;
+    font-size: 0.84rem;
+    letter-spacing: 0.08em;
+  }
+
+  .prediction-arrow-faded {
+    font-size: 1.4rem;
+  }
+
+  .prediction-footer-ref {
+    width: 100%;
+    font-size: 0.56rem;
+    padding: 0 12px;
+    text-align: center;
+  }
+}
