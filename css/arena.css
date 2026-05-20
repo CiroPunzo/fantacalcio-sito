@@ -3044,3 +3044,147 @@ h1 span {
     padding-right: 14px;
   }
 }
+
+/* ================================
+   LEFT BONUS CARD - ARENA STYLE
+================================ */
+
+.arena-bonus-card {
+  position: relative;
+  width: 100%;
+  min-height: 260px;
+  padding: 34px 32px;
+  border: 1px solid rgba(217, 77, 255, 0.55);
+  border-radius: 22px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(44, 8, 72, 0.92), rgba(9, 12, 34, 0.96)),
+    url("../img/arena-token-bg.png");
+  background-size: cover;
+  background-position: center right;
+  box-shadow:
+    0 0 28px rgba(198, 55, 255, 0.28),
+    inset 0 0 35px rgba(63, 220, 255, 0.08);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 34px) 0,
+    100% 34px,
+    100% 100%,
+    34px 100%,
+    0 calc(100% - 34px)
+  );
+}
+
+.arena-bonus-card::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  clip-path: inherit;
+  pointer-events: none;
+}
+
+.arena-bonus-card::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  bottom: -90px;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(255, 189, 64, 0.35), transparent 62%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.arena-bonus-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 75% 50%, rgba(255, 191, 64, 0.18), transparent 28%),
+    radial-gradient(circle at 30% 10%, rgba(218, 52, 255, 0.22), transparent 34%),
+    linear-gradient(90deg, rgba(7, 9, 25, 0.95) 0%, rgba(16, 8, 41, 0.72) 56%, rgba(7, 9, 25, 0.18) 100%);
+  z-index: 1;
+}
+
+.arena-bonus-content {
+  position: relative;
+  z-index: 2;
+  max-width: 270px;
+}
+
+.arena-bonus-kicker {
+  display: block;
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+}
+
+.arena-bonus-content h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  line-height: 0.98;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.arena-bonus-content h2 strong {
+  display: block;
+  margin: 8px 0 2px;
+  color: #ffc94a;
+  font-size: clamp(3.8rem, 6vw, 5.4rem);
+  line-height: 0.85;
+  letter-spacing: 0.02em;
+  text-shadow:
+    0 0 18px rgba(255, 191, 65, 0.55),
+    0 0 40px rgba(255, 133, 32, 0.25);
+}
+
+.arena-bonus-content h2 span {
+  display: block;
+  color: #ffffff;
+  font-size: clamp(1.1rem, 1.7vw, 1.45rem);
+}
+
+.arena-bonus-content p {
+  margin: 14px 0 20px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.arena-bonus-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-width: 205px;
+  min-height: 54px;
+  padding: 0 24px;
+  border-radius: 10px;
+  color: #160b05;
+  background: linear-gradient(135deg, #ffe27b, #ff9b35);
+  font-size: 0.85rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  box-shadow:
+    0 0 22px rgba(255, 181, 62, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.arena-bonus-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 34px rgba(255, 181, 62, 0.62),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.arena-bonus-btn span {
+  font-size: 1.5rem;
+  line-height: 1;
+}
