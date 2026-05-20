@@ -3,7 +3,7 @@
    File: css/arena.css
 ================================ */
 
-background:root {
+:root {
   --bg-dark: #050617;
   --bg-card: rgba(9, 12, 35, 0.72);
   --bg-card-strong: rgba(12, 16, 45, 0.9);
@@ -1474,7 +1474,7 @@ img {
   box-sizing: border-box;
 }
 
-background:root {
+:root {
   --bg: #050713;
   --panel: rgba(8, 12, 31, 0.82);
   --panel-strong: rgba(10, 14, 36, 0.92);
@@ -1772,7 +1772,7 @@ body::after,
   transition:
     transform 0.22s ease,
     box-shadow 0.22s ease,
-    background 0.22s ease,
+     0.22s ease,
     border-color 0.22s ease;
 }
 
@@ -2751,7 +2751,7 @@ h1 span {
 }
 
 @media (max-width: 1120px) {
-  background:root {
+  :root {
     --header-h: 72px;
   }
 
@@ -2828,7 +2828,7 @@ h1 span {
 }
 
 @media (max-width: 860px) {
-  background:root {
+  :root {
     --header-h: 68px;
   }
 
@@ -4460,4 +4460,728 @@ h1 span {
 .arena-bonus-btn {
   appearance: none !important;
   -webkit-appearance: none !important;
+}
+
+
+/* =========================================================
+   PROFANTASY ARENA — STABILITY PATCH V3
+   Correzione desktop/mobile + colori testi scuri
+   ========================================================= */
+
+html,
+body {
+  background: #030612 !important;
+  color: #ffffff !important;
+  overflow-x: hidden !important;
+}
+
+body {
+  font-family: "Orbitron", "Rajdhani", "Inter", "Montserrat", Arial, sans-serif !important;
+}
+
+.arena-page,
+.world-cup-arena,
+.arena-wrapper {
+  background: #030612 !important;
+  color: #ffffff !important;
+}
+
+.arena-bg {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -4 !important;
+  background-image: url("../img/world-cup-arena-bg.jpg") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  transform: scale(1.015) !important;
+  filter: saturate(1.16) contrast(1.08) brightness(0.86) !important;
+}
+
+.arena-bg::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background:
+    radial-gradient(circle at 18% 38%, rgba(165, 45, 255, 0.22), transparent 34%),
+    radial-gradient(circle at 70% 38%, rgba(33, 208, 255, 0.10), transparent 30%),
+    linear-gradient(90deg, rgba(3, 5, 16, 0.72) 0%, rgba(3, 5, 16, 0.32) 48%, rgba(3, 5, 16, 0.74) 100%),
+    linear-gradient(180deg, rgba(3, 5, 16, 0.10) 0%, rgba(3, 5, 16, 0.72) 100%) !important;
+  pointer-events: none !important;
+}
+
+.arena-overlay {
+  background:
+    radial-gradient(circle at 18% 42%, rgba(185, 54, 255, 0.13), transparent 33%),
+    radial-gradient(circle at 70% 36%, rgba(36, 223, 255, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(3, 5, 16, 0.02), rgba(3, 5, 16, 0.44)) !important;
+}
+
+/* Header: testi sempre chiari */
+.arena-header,
+.header,
+.site-header {
+  background: linear-gradient(180deg, rgba(3, 5, 17, 0.96), rgba(5, 7, 22, 0.84)) !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(36, 223, 255, 0.13) !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38) !important;
+}
+
+.arena-logo,
+.arena-logo *,
+.logo,
+.logo *,
+.brand,
+.brand *,
+.arena-nav,
+.arena-nav *,
+.nav,
+.nav *,
+.main-nav,
+.main-nav *,
+.arena-header-actions,
+.arena-header-actions *,
+.arena-actions,
+.arena-actions *,
+.header-actions,
+.header-actions * {
+  color: inherit;
+}
+
+.arena-logo-main,
+.logo-main,
+.arena-logo strong,
+.logo strong,
+.brand strong {
+  color: #ffffff !important;
+  text-shadow: 0 0 12px rgba(185, 54, 255, 0.68), 0 0 18px rgba(36, 223, 255, 0.22) !important;
+}
+
+.arena-logo-sub,
+.logo-sub,
+.arena-logo span,
+.logo span,
+.brand span {
+  color: #ffbf3c !important;
+  text-shadow: 0 0 12px rgba(255, 191, 60, 0.42) !important;
+}
+
+.arena-nav-link,
+.arena-nav a,
+.nav a,
+.main-nav a {
+  color: rgba(255, 255, 255, 0.84) !important;
+}
+
+.arena-nav-link:hover,
+.arena-nav-link.is-active,
+.arena-nav a:hover,
+.arena-nav a.active,
+.nav a:hover,
+.nav a.active,
+.main-nav a:hover,
+.main-nav a.active {
+  color: #ffffff !important;
+  text-shadow: 0 0 14px rgba(185, 54, 255, 0.78) !important;
+}
+
+.arena-btn-secondary,
+.login-btn,
+.btn-login,
+.arena-actions a:first-child,
+.header-actions a:first-child {
+  color: #ffffff !important;
+  background: rgba(5, 7, 22, 0.72) !important;
+  border: 1px solid rgba(255, 191, 60, 0.42) !important;
+}
+
+.arena-btn-primary,
+.register-btn,
+.btn-register,
+.arena-btn.primary,
+.btn.primary,
+.arena-actions a:last-child,
+.header-actions a:last-child {
+  color: #140d06 !important;
+  background: linear-gradient(135deg, #ffe17d, #ffad38 52%, #ff7f2f) !important;
+  box-shadow: 0 0 24px rgba(255, 177, 53, 0.46), 0 0 24px rgba(185, 54, 255, 0.18) !important;
+}
+
+/* Layout desktop: evita card tagliate e bilancia le tre colonne */
+.arena-main,
+.main-arena,
+.hero-arena {
+  width: 100% !important;
+  min-height: 100vh !important;
+  display: grid !important;
+  grid-template-columns: minmax(330px, 0.9fr) minmax(500px, 1fr) minmax(320px, 0.82fr) !important;
+  gap: clamp(22px, 2.2vw, 36px) !important;
+  align-items: center !important;
+  padding: calc(var(--header-h, 78px) + 34px) clamp(30px, 3vw, 48px) 34px !important;
+  overflow: visible !important;
+}
+
+.arena-left,
+.hero-left,
+.lobby-left {
+  width: 100% !important;
+  max-width: 440px !important;
+  justify-self: start !important;
+  overflow: visible !important;
+}
+
+.arena-center {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+
+.arena-right {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  overflow: visible !important;
+}
+
+/* Titolo sinistro non deve uscire dallo schermo */
+.arena-title,
+.hero-title,
+.arena-hero-title,
+h1 {
+  max-width: 100% !important;
+  color: #ffffff !important;
+  font-size: clamp(3.2rem, 4.25vw, 5.15rem) !important;
+  line-height: 0.88 !important;
+  letter-spacing: -0.055em !important;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.14), 0 0 24px rgba(185, 54, 255, 0.20) !important;
+}
+
+.arena-title span,
+.hero-title span,
+.arena-hero-title strong,
+h1 span,
+h1 strong {
+  color: #ffbf3c !important;
+  text-shadow: 0 0 16px rgba(255, 191, 60, 0.42), 0 0 28px rgba(255, 129, 38, 0.18) !important;
+}
+
+.arena-description,
+.hero-description,
+.arena-hero-copy,
+.arena-left p,
+.hero-left p {
+  color: rgba(255, 255, 255, 0.78) !important;
+  max-width: 430px !important;
+}
+
+/* Bonus card: colori e bottone leggibile */
+.arena-bonus-card,
+.bonus-card,
+.signup-bonus,
+.register-bonus,
+.token-bonus-card {
+  background:
+    linear-gradient(90deg, rgba(12, 7, 29, 0.92) 0%, rgba(24, 8, 47, 0.78) 46%, rgba(10, 8, 28, 0.28) 100%),
+    url("../img/arena-token-bg.png") center right / cover no-repeat !important;
+  border-color: rgba(190, 55, 255, 0.56) !important;
+  box-shadow: 0 0 26px rgba(185, 54, 255, 0.18), inset 0 0 26px rgba(36, 223, 255, 0.04) !important;
+}
+
+.arena-bonus-card *,
+.bonus-card *,
+.signup-bonus *,
+.register-bonus *,
+.token-bonus-card * {
+  color: inherit;
+}
+
+.arena-bonus-kicker,
+.bonus-label,
+.bonus-card small,
+.signup-bonus small,
+.register-bonus small {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+.arena-bonus-content h2,
+.bonus-card h2,
+.bonus-card h3,
+.signup-bonus h2,
+.signup-bonus h3,
+.register-bonus h2,
+.register-bonus h3 {
+  color: #ffffff !important;
+}
+
+.arena-bonus-content h2 strong,
+.bonus-card strong,
+.signup-bonus strong,
+.register-bonus strong,
+.bonus-card .bonus-number {
+  color: #ffc348 !important;
+}
+
+.arena-bonus-content p,
+.bonus-card p,
+.signup-bonus p,
+.register-bonus p {
+  color: rgba(255, 255, 255, 0.74) !important;
+}
+
+.arena-bonus-btn,
+.bonus-btn,
+.bonus-card a,
+.signup-bonus a,
+.register-bonus a,
+.bonus-card button,
+.signup-bonus button,
+.register-bonus button {
+  color: #170d05 !important;
+  background: linear-gradient(135deg, #ffe57a 0%, #ffaf39 54%, #ff8f2e 100%) !important;
+  border: 1px solid rgba(255, 237, 177, 0.58) !important;
+  box-shadow: 0 0 18px rgba(255, 178, 55, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Card centrale: palette scura corretta */
+.arena-prediction-card,
+.prediction-card,
+.daily-card,
+.arena-prediction,
+.match-card {
+  width: min(100%, 560px) !important;
+  max-width: 560px !important;
+  min-height: auto !important;
+  padding: 18px 22px 18px !important;
+  color: #ffffff !important;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(92, 32, 162, 0.14), transparent 30%),
+    radial-gradient(circle at 22% 75%, rgba(181, 52, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 80% 18%, rgba(54, 214, 255, 0.07), transparent 22%),
+    linear-gradient(180deg, #071126 0%, #050d20 52%, #030816 100%) !important;
+  border: 1px solid rgba(84, 155, 255, 0.20) !important;
+  border-radius: 0 !important;
+  clip-path: polygon(4.8% 0, 38% 0, 41.8% 2.3%, 58.2% 2.3%, 62% 0, 95.2% 0, 100% 8.5%, 100% 91.5%, 95.2% 100%, 4.8% 100%, 0 91.5%, 0 8.5%) !important;
+  box-shadow: 0 0 14px rgba(168, 61, 255, 0.10), 0 0 18px rgba(41, 198, 255, 0.08), inset 0 0 26px rgba(99, 46, 180, 0.05) !important;
+}
+
+.arena-prediction-card *,
+.prediction-card *,
+.daily-card *,
+.arena-prediction *,
+.match-card * {
+  box-sizing: border-box;
+}
+
+.prediction-header,
+.prediction-top,
+.card-header,
+.match-header {
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 14px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.prediction-header-title span,
+.prediction-label,
+.prediction-title,
+.card-label {
+  color: #58e6ff !important;
+}
+
+.prediction-countdown,
+.countdown,
+.timer,
+.prediction-timer {
+  color: #66eaff !important;
+  background: linear-gradient(180deg, rgba(13, 35, 68, 0.82), rgba(7, 19, 45, 0.96)) !important;
+  border: 1px solid rgba(97, 218, 255, 0.38) !important;
+}
+
+.prediction-countdown span,
+.prediction-countdown strong,
+.countdown,
+.timer,
+.prediction-timer {
+  color: #66eaff !important;
+}
+
+.prediction-time,
+.match-meta strong,
+.match-time,
+.match-date {
+  color: rgba(255, 255, 255, 0.86) !important;
+}
+
+.prediction-team strong,
+.prediction-vs,
+.team span,
+.team-code,
+.team-name span,
+.vs,
+.match-vs {
+  color: #ffffff !important;
+}
+
+.prediction-choice,
+.prediction-option,
+.option,
+.bet-option,
+.choice-btn {
+  color: #ff58e8 !important;
+  background: linear-gradient(180deg, rgba(11, 12, 33, 0.98), rgba(4, 8, 22, 0.98)) !important;
+  border: 1px solid rgba(242, 72, 255, 0.82) !important;
+  box-shadow: 0 0 14px rgba(232, 71, 255, 0.15), inset 0 0 18px rgba(232, 71, 255, 0.05) !important;
+}
+
+.choice-two,
+.prediction-choice:nth-child(3),
+.prediction-option:nth-child(3),
+.option:nth-child(3),
+.bet-option:nth-child(3),
+.choice-btn:nth-child(3) {
+  color: #49dfff !important;
+  border-color: rgba(62, 218, 255, 0.82) !important;
+  box-shadow: 0 0 14px rgba(62, 218, 255, 0.14), inset 0 0 18px rgba(62, 218, 255, 0.05) !important;
+}
+
+.prediction-choice span,
+.prediction-option span,
+.option span,
+.bet-option span,
+.choice-btn span {
+  color: currentColor !important;
+}
+
+.prediction-choice small {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.prediction-economy,
+.prediction-info,
+.prediction-info-ref {
+  color: #ffffff !important;
+  background: linear-gradient(180deg, rgba(5, 11, 29, 0.98), rgba(2, 7, 21, 0.98)) !important;
+  border: 1px solid rgba(64, 118, 187, 0.20) !important;
+}
+
+.prediction-economy-text span,
+.prediction-info span,
+.prediction-info-copy span,
+.prediction-info-item span {
+  color: rgba(255, 255, 255, 0.56) !important;
+}
+
+.prediction-economy-text strong,
+.prediction-info strong,
+.prediction-info-copy strong,
+.prediction-info-item strong {
+  color: #56deff !important;
+}
+
+.prediction-play-next,
+.play-btn,
+.prediction-play {
+  color: #f7d76b !important;
+  background: linear-gradient(180deg, rgba(118, 80, 20, 0.95), rgba(73, 47, 9, 0.98)) !important;
+  border: 1px solid rgba(230, 188, 98, 0.58) !important;
+  box-shadow: 0 0 12px rgba(255, 187, 71, 0.16), inset 0 0 18px rgba(255, 207, 109, 0.08) !important;
+}
+
+.prediction-arrow-faded,
+.prediction-arrow,
+.match-arrow {
+  color: rgba(109, 150, 220, 0.58) !important;
+  background: transparent !important;
+}
+
+.prediction-footer-ref,
+.prediction-footer {
+  color: rgba(211, 226, 255, 0.84) !important;
+  background: linear-gradient(180deg, rgba(6, 13, 32, 0.96), rgba(4, 9, 24, 0.98)) !important;
+  border: 1px solid rgba(52, 104, 176, 0.22) !important;
+}
+
+/* Profilo destro: testi scuri corretti */
+.profile-card {
+  color: #ffffff !important;
+  background: linear-gradient(180deg, rgba(13, 12, 36, 0.88), rgba(6, 8, 25, 0.94)), radial-gradient(circle at 18% 0%, rgba(185, 54, 255, 0.18), transparent 40%) !important;
+  border: 1px solid rgba(185, 54, 255, 0.38) !important;
+}
+
+.profile-card,
+.profile-card * {
+  color: inherit;
+}
+
+.profile-user h2,
+.profile-stat strong,
+.profile-level > span {
+  color: #ffffff !important;
+}
+
+.profile-user p,
+.profile-stat span,
+.xp-text {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.profile-stat {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+
+.profile-stat button {
+  color: #ffbf3c !important;
+  background: rgba(184, 60, 255, 0.12) !important;
+  border: 1px solid rgba(184, 60, 255, 0.56) !important;
+}
+
+.live-badge {
+  color: #24dfff !important;
+}
+
+/* Tablet */
+@media (max-width: 1180px) {
+  .arena-header {
+    position: sticky !important;
+    top: 0 !important;
+    height: auto !important;
+    min-height: 76px !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 16px !important;
+    padding: 14px 20px !important;
+  }
+
+  .arena-nav,
+  .nav,
+  .main-nav {
+    display: none !important;
+  }
+
+  .arena-main,
+  .main-arena,
+  .hero-arena {
+    min-height: auto !important;
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    gap: 22px !important;
+    padding: 30px 20px 34px !important;
+  }
+
+  .arena-left,
+  .hero-left,
+  .lobby-left {
+    max-width: 720px !important;
+    text-align: center !important;
+    justify-self: center !important;
+    display: grid !important;
+    justify-items: center !important;
+  }
+
+  .arena-right {
+    justify-content: center !important;
+  }
+
+  .profile-card {
+    width: min(100%, 560px) !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .arena-header {
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    gap: 12px !important;
+    padding: 16px 14px !important;
+  }
+
+  .arena-header-actions,
+  .arena-actions,
+  .header-actions {
+    width: 100% !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+
+  .arena-btn,
+  .btn,
+  .login-btn,
+  .register-btn,
+  .btn-login,
+  .btn-register {
+    min-width: 132px !important;
+    min-height: 42px !important;
+    padding: 0 18px !important;
+    font-size: 0.68rem !important;
+  }
+
+  .arena-main,
+  .main-arena,
+  .hero-arena {
+    padding: 24px 14px 30px !important;
+    gap: 18px !important;
+  }
+
+  .arena-title,
+  .hero-title,
+  .arena-hero-title,
+  h1 {
+    font-size: clamp(2.55rem, 14vw, 3.75rem) !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.055em !important;
+  }
+
+  .arena-description,
+  .hero-description,
+  .arena-hero-copy,
+  .arena-left p,
+  .hero-left p {
+    font-size: 0.94rem !important;
+    line-height: 1.55 !important;
+    margin: 18px 0 22px !important;
+  }
+
+  .arena-bonus-card,
+  .bonus-card,
+  .signup-bonus,
+  .register-bonus,
+  .token-bonus-card {
+    width: 100% !important;
+    max-width: 420px !important;
+    min-height: 220px !important;
+    padding: 24px 22px !important;
+  }
+
+  .arena-prediction-card,
+  .prediction-card,
+  .daily-card,
+  .arena-prediction,
+  .match-card {
+    width: 100% !important;
+    max-width: 460px !important;
+    padding: 18px 16px !important;
+    clip-path: polygon(5% 0, 95% 0, 100% 7%, 100% 93%, 95% 100%, 5% 100%, 0 93%, 0 7%) !important;
+  }
+
+  .prediction-header,
+  .prediction-top,
+  .card-header,
+  .match-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .prediction-countdown,
+  .countdown,
+  .timer,
+  .prediction-timer {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  .prediction-teams,
+  .teams,
+  .match-teams,
+  .team-row,
+  .match-board {
+    gap: 10px !important;
+  }
+
+  .prediction-team strong,
+  .team span,
+  .team-code,
+  .team-name span {
+    font-size: clamp(2.15rem, 12vw, 3.1rem) !important;
+  }
+
+  .prediction-choices,
+  .prediction-options,
+  .options,
+  .bet-options {
+    gap: 10px !important;
+  }
+
+  .prediction-choice,
+  .prediction-option,
+  .option,
+  .bet-option,
+  .choice-btn {
+    min-height: 82px !important;
+    border-radius: 14px !important;
+  }
+
+  .prediction-choice span {
+    font-size: 2.65rem !important;
+  }
+
+  .prediction-economy,
+  .prediction-info,
+  .prediction-info-ref {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    padding: 14px !important;
+  }
+
+  .prediction-economy-divider,
+  .prediction-info-divider,
+  .prediction-info-separator {
+    display: none !important;
+  }
+
+  .prediction-actions,
+  .prediction-actions-ref {
+    grid-template-columns: 42px 1fr 42px !important;
+    gap: 8px !important;
+  }
+
+  .prediction-play-next,
+  .play-btn,
+  .prediction-play {
+    height: 52px !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .profile-card {
+    width: 100% !important;
+    max-width: 460px !important;
+    padding: 18px 16px !important;
+    clip-path: none !important;
+    border-radius: 22px !important;
+  }
+}
+
+@media (max-width: 460px) {
+  .prediction-choices,
+  .prediction-options,
+  .options,
+  .bet-options {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .prediction-choice,
+  .prediction-option,
+  .option,
+  .bet-option,
+  .choice-btn {
+    min-height: 68px !important;
+  }
+
+  .prediction-choice span {
+    font-size: 2.1rem !important;
+  }
+
+  .prediction-choice small {
+    font-size: 0.5rem !important;
+  }
 }
