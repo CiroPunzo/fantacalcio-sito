@@ -3230,3 +3230,54 @@ h1 span {
   font-size: 1.25rem;
   line-height: 1;
 }
+
+/* ================================
+   HERO LEFT TITLE - COMPACT GAME UI
+================================ */
+
+.arena-hero-title {
+  margin: 22px 0 22px;
+  max-width: 520px;
+
+  font-family: "Rajdhani", "Orbitron", system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  line-height: 0.82;
+  font-weight: 900;
+
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.12),
+    0 0 46px rgba(181, 57, 255, 0.2);
+}
+
+.arena-hero-title span,
+.arena-hero-title strong {
+  display: block;
+}
+
+.arena-hero-title span {
+  color: #ffffff;
+  font-size: clamp(3.4rem, 5.1vw, 6.1rem);
+}
+
+.arena-hero-title strong {
+  margin-top: 4px;
+  color: #ffc348;
+  font-size: clamp(3.2rem, 4.7vw, 5.7rem);
+  font-weight: 900;
+
+  text-shadow:
+    0 0 18px rgba(255, 191, 64, 0.42),
+    0 0 42px rgba(255, 136, 36, 0.18);
+}
+
+.arena-hero-copy {
+  max-width: 500px;
+  margin: 0 0 28px;
+
+  color: rgba(255, 255, 255, 0.82);
+  font-family: "Rajdhani", system-ui, sans-serif;
+  font-size: 1.08rem;
+  line-height: 1.45;
+  font-weight: 500;
+}
