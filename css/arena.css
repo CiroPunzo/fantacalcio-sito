@@ -3046,32 +3046,37 @@ h1 span {
 }
 
 /* ================================
-   LEFT BONUS CARD - ARENA STYLE
+   LEFT BONUS CARD - PRO VERSION
 ================================ */
 
 .arena-bonus-card {
   position: relative;
   width: 100%;
-  min-height: 260px;
-  padding: 34px 32px;
-  border: 1px solid rgba(217, 77, 255, 0.55);
-  border-radius: 22px;
+  min-height: 230px;
+  padding: 28px 30px;
   overflow: hidden;
+
+  border: 1px solid rgba(209, 65, 255, 0.72);
+  border-radius: 0;
+
   background:
-    linear-gradient(135deg, rgba(44, 8, 72, 0.92), rgba(9, 12, 34, 0.96)),
+    linear-gradient(90deg, rgba(13, 7, 32, 0.96) 0%, rgba(25, 8, 48, 0.88) 42%, rgba(12, 8, 30, 0.15) 100%),
     url("../img/arena-token-bg.png");
+
   background-size: cover;
   background-position: center right;
+
   box-shadow:
-    0 0 28px rgba(198, 55, 255, 0.28),
-    inset 0 0 35px rgba(63, 220, 255, 0.08);
+    0 0 34px rgba(196, 51, 255, 0.28),
+    inset 0 0 42px rgba(95, 214, 255, 0.08);
+
   clip-path: polygon(
-    0 0,
-    calc(100% - 34px) 0,
-    100% 34px,
-    100% 100%,
-    34px 100%,
-    0 calc(100% - 34px)
+    7% 0,
+    100% 0,
+    100% 78%,
+    92% 100%,
+    0 100%,
+    0 16%
   );
 }
 
@@ -3080,111 +3085,148 @@ h1 span {
   position: absolute;
   inset: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  clip-path: inherit;
+  clip-path: polygon(
+    7% 0,
+    100% 0,
+    100% 78%,
+    92% 100%,
+    0 100%,
+    0 16%
+  );
   pointer-events: none;
+  z-index: 2;
 }
 
 .arena-bonus-card::after {
   content: "";
   position: absolute;
-  right: -80px;
+  right: -90px;
   bottom: -90px;
   width: 260px;
   height: 260px;
-  background: radial-gradient(circle, rgba(255, 189, 64, 0.35), transparent 62%);
-  filter: blur(8px);
+  background: radial-gradient(circle, rgba(255, 183, 52, 0.45), transparent 62%);
+  filter: blur(16px);
+  z-index: 1;
   pointer-events: none;
 }
 
 .arena-bonus-bg {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 75% 50%, rgba(255, 191, 64, 0.18), transparent 28%),
-    radial-gradient(circle at 30% 10%, rgba(218, 52, 255, 0.22), transparent 34%),
-    linear-gradient(90deg, rgba(7, 9, 25, 0.95) 0%, rgba(16, 8, 41, 0.72) 56%, rgba(7, 9, 25, 0.18) 100%);
   z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 22%),
+    radial-gradient(circle at 76% 55%, rgba(255, 188, 55, 0.22), transparent 28%),
+    radial-gradient(circle at 18% 22%, rgba(203, 54, 255, 0.18), transparent 34%);
 }
 
 .arena-bonus-content {
   position: relative;
-  z-index: 2;
-  max-width: 270px;
+  z-index: 3;
+  max-width: 250px;
 }
 
 .arena-bonus-kicker {
   display: block;
   margin-bottom: 12px;
+
   color: rgba(255, 255, 255, 0.62);
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.28em;
+  font-family: "Orbitron", "Rajdhani", system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
 }
 
 .arena-bonus-content h2 {
   margin: 0;
+
   color: #ffffff;
-  font-size: clamp(1.35rem, 2vw, 1.85rem);
-  line-height: 0.98;
-  font-weight: 950;
-  letter-spacing: 0.04em;
+  font-family: "Rajdhani", "Orbitron", system-ui, sans-serif;
+  font-size: 1.38rem;
+  line-height: 0.92;
+  font-weight: 800;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .arena-bonus-content h2 strong {
   display: block;
-  margin: 8px 0 2px;
-  color: #ffc94a;
-  font-size: clamp(3.8rem, 6vw, 5.4rem);
-  line-height: 0.85;
+  margin: 8px 0 3px;
+
+  color: #ffc64b;
+  font-family: "Orbitron", "Rajdhani", system-ui, sans-serif;
+  font-size: 4.15rem;
+  line-height: 0.86;
+  font-weight: 900;
   letter-spacing: 0.02em;
+
   text-shadow:
-    0 0 18px rgba(255, 191, 65, 0.55),
-    0 0 40px rgba(255, 133, 32, 0.25);
+    0 0 16px rgba(255, 199, 74, 0.65),
+    0 0 38px rgba(255, 122, 39, 0.35);
 }
 
 .arena-bonus-content h2 span {
   display: block;
+
   color: #ffffff;
-  font-size: clamp(1.1rem, 1.7vw, 1.45rem);
+  font-family: "Rajdhani", system-ui, sans-serif;
+  font-size: 1.15rem;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0.06em;
 }
 
 .arena-bonus-content p {
-  margin: 14px 0 20px;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.9rem;
-  line-height: 1.5;
+  max-width: 230px;
+  margin: 13px 0 17px;
+
+  color: rgba(255, 255, 255, 0.68);
+  font-family: "Rajdhani", system-ui, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.35;
+  font-weight: 500;
 }
 
 .arena-bonus-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  min-width: 205px;
-  min-height: 54px;
-  padding: 0 24px;
-  border-radius: 10px;
-  color: #160b05;
-  background: linear-gradient(135deg, #ffe27b, #ff9b35);
-  font-size: 0.85rem;
-  font-weight: 950;
-  letter-spacing: 0.08em;
+  gap: 13px;
+
+  min-width: 190px;
+  min-height: 48px;
+  padding: 0 22px;
+
+  border: 1px solid rgba(255, 239, 169, 0.65);
+  border-radius: 7px;
+
+  color: #160b04;
+  background: linear-gradient(135deg, #ffe783 0%, #ffaf38 48%, #ff8e2d 100%);
+
+  font-family: "Orbitron", "Rajdhani", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
   text-decoration: none;
+  text-transform: uppercase;
+
   box-shadow:
-    0 0 22px rgba(255, 181, 62, 0.42),
-    inset 0 1px 0 rgba(255, 255, 255, 0.55);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+    0 0 18px rgba(255, 176, 56, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .arena-bonus-btn:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 0 34px rgba(255, 181, 62, 0.62),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    0 0 30px rgba(255, 176, 56, 0.68),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
 .arena-bonus-btn span {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   line-height: 1;
 }
