@@ -4270,3 +4270,41 @@ h1 span {
 .prediction-footer-ref {
   min-height: 32px;
 }
+
+     /* ================================
+   SAFE BACKGROUND BOOST
+   Non sbianca la pagina
+================================ */
+
+body {
+  background-color: #030612;
+}
+
+body::before,
+body::after {
+  pointer-events: none;
+}
+
+/* overlay globale più leggero ma sempre scuro */
+.arena-page,
+.world-cup-arena,
+.arena-lobby {
+  position: relative;
+}
+
+/* aumenta la visibilità del background senza bruciare i colori */
+.arena-page::before,
+.world-cup-arena::before,
+.arena-lobby::before {
+  opacity: 0.55 !important;
+  mix-blend-mode: normal !important;
+}
+
+/* se hai un layer background dedicato */
+.arena-bg,
+.hero-bg,
+.lobby-bg,
+.game-bg {
+  opacity: 1 !important;
+  filter: saturate(1.25) contrast(1.08) brightness(1.12);
+}
