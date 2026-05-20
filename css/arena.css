@@ -416,74 +416,295 @@ img {
   justify-content: center;
 }
 
-.prediction-card {
+/* =================================
+   CENTRAL CARD SHELL - COMPACT HUD
+================================= */
+
+.arena-prediction-card {
   position: relative;
-  width: min(100%, 560px);
-  padding: 24px 26px 20px;
+  width: 100%;
+  max-width: 620px;
+  min-height: auto;
+  padding: 22px 26px 22px;
+  margin-inline: auto;
+
   background:
-    linear-gradient(180deg, rgba(8, 12, 35, 0.84), rgba(6, 8, 25, 0.88)),
-    radial-gradient(circle at 50% 20%, rgba(37, 217, 255, 0.08), transparent 42%);
-  border: 1px solid rgba(37, 217, 255, 0.34);
-  border-radius: 30px;
+    radial-gradient(circle at 50% 0%, rgba(72, 27, 129, 0.22), transparent 36%),
+    radial-gradient(circle at 82% 20%, rgba(0, 228, 255, 0.10), transparent 26%),
+    linear-gradient(180deg, rgba(5, 10, 30, 0.97), rgba(2, 7, 22, 0.99));
+
+  border: 1px solid rgba(73, 176, 255, 0.32);
+
+  clip-path: polygon(
+    5% 0,
+    38% 0,
+    41.5% 2.8%,
+    58.5% 2.8%,
+    62% 0,
+    95% 0,
+    100% 9%,
+    100% 91%,
+    95% 100%,
+    5% 100%,
+    0 91%,
+    0 9%
+  );
+
   box-shadow:
-    0 0 28px rgba(37, 217, 255, 0.12),
-    inset 0 0 24px rgba(37, 217, 255, 0.04);
-  clip-path: polygon(6% 0, 94% 0, 100% 12%, 100% 88%, 94% 100%, 6% 100%, 0 88%, 0 12%);
+    0 0 0 1px rgba(111, 218, 255, 0.08),
+    0 0 26px rgba(0, 218, 255, 0.10),
+    0 0 34px rgba(148, 43, 255, 0.10),
+    inset 0 0 32px rgba(0, 180, 255, 0.05),
+    inset 0 0 34px rgba(126, 38, 255, 0.05);
 }
 
-.prediction-card::before {
+.arena-prediction-card::before {
   content: "";
   position: absolute;
-  inset: 11px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  inset: 10px;
+  border: 1px solid rgba(96, 202, 255, 0.18);
+  clip-path: polygon(
+    5% 0,
+    38% 0,
+    41.5% 2.8%,
+    58.5% 2.8%,
+    62% 0,
+    95% 0,
+    100% 9%,
+    100% 91%,
+    95% 100%,
+    5% 100%,
+    0 91%,
+    0 9%
+  );
   pointer-events: none;
-  clip-path: polygon(6% 0, 94% 0, 100% 12%, 100% 88%, 94% 100%, 6% 100%, 0 88%, 0 12%);
 }
 
-.prediction-card-top {
+.arena-prediction-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      rgba(140, 45, 255, 0.00) 0%,
+      rgba(140, 45, 255, 0.24) 18%,
+      rgba(0, 228, 255, 0.20) 50%,
+      rgba(0, 228, 255, 0.24) 82%,
+      rgba(140, 45, 255, 0.00) 100%);
+  filter: blur(16px);
+  opacity: 0.55;
+  z-index: 0;
+}
+
+/* Header */
+
+.prediction-header {
   position: relative;
   z-index: 2;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 22px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid rgba(37, 217, 255, 0.14);
-}
-
-.prediction-card-top > div:first-child {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: start;
   gap: 18px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.section-label {
-  color: var(--cyan);
-  font-size: 11px;
-  font-weight: 950;
-  letter-spacing: 2.2px;
-  text-transform: uppercase;
+.prediction-header div:first-child {
+  display: contents;
 }
 
-.prediction-card-top strong {
-  color: #fff;
-  font-size: 12px;
-  letter-spacing: 3px;
+.prediction-header span {
+  color: #59deff;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  line-height: 1.2;
+}
+
+.prediction-header strong {
+  color: #ffffff;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  line-height: 1.2;
 }
 
 .prediction-countdown {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
-  border: 1px solid rgba(37, 217, 255, 0.22);
+  min-height: 40px;
+  padding: 0 18px;
+  border: 1px solid rgba(92, 220, 255, 0.42);
   border-radius: 999px;
-  background: rgba(37, 217, 255, 0.06);
-  color: var(--cyan);
-  font-size: 11px;
-  font-weight: 900;
-  white-space: nowrap;
+  background: linear-gradient(180deg, rgba(20, 38, 73, 0.76), rgba(11, 24, 51, 0.9));
+  box-shadow:
+    inset 0 0 16px rgba(0, 225, 255, 0.06),
+    0 0 12px rgba(0, 225, 255, 0.08);
+}
+
+.prediction-countdown span,
+.prediction-countdown strong {
+  color: #68e6ff;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+/* Abbassa visivamente la card */
+
+.prediction-body {
+  text-align: center;
+}
+
+.prediction-label {
+  margin-bottom: 6px;
+}
+
+.prediction-time {
+  margin: 0 0 18px;
+}
+
+.prediction-teams {
+  margin-bottom: 22px;
+}
+
+.prediction-choices {
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.prediction-choice {
+  min-height: 96px;
+  border-radius: 20px;
+}
+
+.prediction-choice span {
+  font-size: 3.6rem;
+}
+
+.prediction-choice small {
+  margin-top: 2px;
+  font-size: 0.66rem;
+}
+
+/* =================================
+   COST / REWARD BOX - REFERENCE STYLE
+================================= */
+
+.prediction-economy {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
+  gap: 0;
+  margin: 0 0 18px;
+  padding: 18px 20px;
+
+  background:
+    linear-gradient(180deg, rgba(4, 10, 31, 0.98), rgba(2, 7, 24, 0.98));
+  border: 1px solid rgba(56, 120, 196, 0.22);
+
+  clip-path: polygon(
+    3% 0,
+    97% 0,
+    100% 18%,
+    100% 82%,
+    97% 100%,
+    3% 100%,
+    0 82%,
+    0 18%
+  );
+
+  box-shadow:
+    inset 0 0 22px rgba(0, 140, 255, 0.03),
+    0 0 16px rgba(0, 160, 255, 0.04);
+}
+
+.prediction-economy-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 78px;
+  text-align: left;
+}
+
+.prediction-economy-icon {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+}
+
+.prediction-economy-icon img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: block;
+}
+
+.prediction-economy-text span {
+  display: block;
+  margin-bottom: 5px;
+  color: rgba(255, 255, 255, 0.58);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1.25;
+}
+
+.prediction-economy-text strong {
+  display: block;
+  color: #64e8ff;
+  font-family: "Rajdhani", system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.prediction-economy-divider {
+  width: 1px;
+  height: 60px;
+  margin-inline: auto;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+}
+
+/* CTA leggermente più compatta */
+
+.prediction-actions-ref {
+  grid-template-columns: 46px 1fr 46px;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.prediction-play-next {
+  height: 58px;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+}
+
+.prediction-arrow-faded {
+  font-size: 1.8rem;
+}
+
+/* footer più discreto */
+
+.prediction-footer-ref {
+  min-height: 34px;
+  padding: 0 16px;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
 }
 
 .match-meta {
@@ -973,6 +1194,43 @@ img {
       linear-gradient(180deg, rgba(5, 6, 23, 0.52) 0%, rgba(5, 6, 23, 0.72) 100%),
       linear-gradient(90deg, rgba(5, 6, 23, 0.62) 0%, rgba(5, 6, 23, 0.22) 40%, rgba(5, 6, 23, 0.60) 100%),
       url("../img/world-cup-arena-bg.jpg") 62% center / cover no-repeat;
+  }
+}
+@media (max-width: 768px) {
+  .arena-prediction-card {
+    max-width: 100%;
+    padding: 18px 16px 18px;
+  }
+
+  .prediction-header {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .prediction-countdown {
+    justify-self: start;
+  }
+
+  .prediction-choice {
+    min-height: 84px;
+  }
+
+  .prediction-choice span {
+    font-size: 2.8rem;
+  }
+
+  .prediction-economy {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .prediction-economy-divider {
+    display: none;
+  }
+
+  .prediction-economy-item {
+    min-height: auto;
   }
 }
 
