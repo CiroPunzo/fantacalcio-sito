@@ -4308,3 +4308,194 @@ body::after {
   opacity: 1 !important;
   filter: saturate(1.25) contrast(1.08) brightness(1.12);
 }
+
+     /* =========================================================
+   EMERGENCY FIX - RIPRISTINO COLORI CARD CENTRALE
+   INCOLLARE IN FONDO AL CSS
+========================================================= */
+
+/* Guscio card centrale */
+.arena-prediction-card {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(109, 38, 187, 0.12), transparent 28%),
+    radial-gradient(circle at 80% 20%, rgba(0, 201, 255, 0.06), transparent 22%),
+    linear-gradient(180deg, #071126 0%, #040b1d 55%, #030714 100%) !important;
+  border: 1px solid rgba(86, 152, 255, 0.16) !important;
+  box-shadow:
+    0 0 14px rgba(163, 65, 255, 0.08),
+    0 0 18px rgba(35, 197, 255, 0.07),
+    inset 0 0 24px rgba(81, 38, 163, 0.04) !important;
+}
+
+/* header card */
+.prediction-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.prediction-header-title span {
+  color: #4fe2ff !important;
+}
+
+.prediction-countdown {
+  background: linear-gradient(180deg, rgba(15, 34, 68, 0.88), rgba(8, 19, 42, 0.96)) !important;
+  border: 1px solid rgba(82, 212, 255, 0.34) !important;
+  box-shadow:
+    inset 0 0 10px rgba(57, 196, 255, 0.05),
+    0 0 8px rgba(57, 196, 255, 0.05) !important;
+}
+
+.prediction-countdown span {
+  color: rgba(255, 255, 255, 0.64) !important;
+}
+
+.prediction-countdown strong {
+  color: #65e6ff !important;
+}
+
+/* Match labels */
+.prediction-label {
+  color: rgba(255, 255, 255, 0.38) !important;
+}
+
+.prediction-time {
+  color: #ffffff !important;
+}
+
+.prediction-team strong,
+.prediction-vs {
+  color: #ffffff !important;
+}
+
+/* ---------------------------------------------------------
+   BOTTONI 1 / X / 2  -> FIX PRINCIPALE
+--------------------------------------------------------- */
+.prediction-choice {
+  background: linear-gradient(180deg, rgba(10, 10, 29, 0.98), rgba(4, 8, 22, 0.98)) !important;
+  box-shadow: none !important;
+}
+
+.choice-one,
+.choice-x {
+  border: 1px solid rgba(242, 72, 255, 0.86) !important;
+  box-shadow:
+    0 0 14px rgba(232, 71, 255, 0.16),
+    inset 0 0 18px rgba(232, 71, 255, 0.05) !important;
+}
+
+.choice-two {
+  border: 1px solid rgba(62, 218, 255, 0.86) !important;
+  box-shadow:
+    0 0 14px rgba(62, 218, 255, 0.14),
+    inset 0 0 18px rgba(62, 218, 255, 0.05) !important;
+}
+
+.choice-one span,
+.choice-x span {
+  color: #ef58ff !important;
+  text-shadow: 0 0 14px rgba(239, 88, 255, 0.34) !important;
+}
+
+.choice-two span {
+  color: #49dfff !important;
+  text-shadow: 0 0 14px rgba(73, 223, 255, 0.30) !important;
+}
+
+.prediction-choice small {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+/* ---------------------------------------------------------
+   BOX COSTO / REWARD
+--------------------------------------------------------- */
+.prediction-economy {
+  background: linear-gradient(180deg, rgba(5, 11, 29, 0.98), rgba(2, 7, 21, 0.98)) !important;
+  border: 1px solid rgba(64, 118, 187, 0.18) !important;
+  box-shadow: inset 0 0 14px rgba(0, 157, 255, 0.03) !important;
+}
+
+.prediction-economy-text span {
+  color: rgba(255, 255, 255, 0.52) !important;
+}
+
+.prediction-economy-text strong {
+  color: #56deff !important;
+}
+
+.prediction-economy-divider {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(255, 255, 255, 0.10),
+    transparent
+  ) !important;
+}
+
+/* ---------------------------------------------------------
+   CTA VAI AL PROSSIMO
+--------------------------------------------------------- */
+.prediction-play-next {
+  color: #f2c95d !important;
+  background:
+    linear-gradient(180deg, rgba(118, 80, 20, 0.95), rgba(73, 47, 9, 0.98)) !important;
+  border: 1px solid rgba(230, 188, 98, 0.58) !important;
+  box-shadow:
+    0 0 12px rgba(255, 187, 71, 0.12),
+    inset 0 0 18px rgba(255, 207, 109, 0.08),
+    inset 0 1px 0 rgba(255, 233, 179, 0.18) !important;
+}
+
+.prediction-play-next:hover {
+  background:
+    linear-gradient(180deg, rgba(130, 88, 23, 0.98), rgba(83, 53, 10, 0.98)) !important;
+}
+
+/* Frecce laterali */
+.prediction-arrow-faded {
+  background: transparent !important;
+  border: 0 !important;
+  color: rgba(95, 122, 191, 0.52) !important;
+  box-shadow: none !important;
+}
+
+/* Footer prediction del giorno */
+.prediction-footer-ref {
+  background: linear-gradient(180deg, rgba(6, 13, 32, 0.96), rgba(4, 9, 24, 0.98)) !important;
+  border: 1px solid rgba(52, 104, 176, 0.22) !important;
+  color: rgba(211, 226, 255, 0.80) !important;
+}
+
+.prediction-footer-ref strong {
+  color: #ffffff !important;
+}
+
+.prediction-footer-dot {
+  background: #53b9ff !important;
+  box-shadow: 0 0 8px rgba(83, 185, 255, 0.55) !important;
+}
+
+.prediction-footer-info {
+  background: transparent !important;
+  color: rgba(211, 226, 255, 0.72) !important;
+  border: 1px solid rgba(170, 194, 241, 0.24) !important;
+}
+
+/* ---------------------------------------------------------
+   CARD BONUS SINISTRA - RIPRISTINO BOTTONE
+--------------------------------------------------------- */
+.arena-bonus-btn {
+  color: #150b04 !important;
+  background: linear-gradient(135deg, #ffe57a 0%, #ffad38 55%, #ff912e 100%) !important;
+  border: 1px solid rgba(255, 233, 170, 0.58) !important;
+  box-shadow:
+    0 0 14px rgba(255, 182, 61, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42) !important;
+}
+
+/* Se qualche regola globale sta sbiancando i button */
+.prediction-choice,
+.prediction-play-next,
+.prediction-arrow-faded,
+.arena-bonus-btn {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
