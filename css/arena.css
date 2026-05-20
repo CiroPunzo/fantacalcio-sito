@@ -4234,3 +4234,70 @@ h1 span {
     text-align: center;
   }
 }
+
+/* Riduce l'effetto "schermatona alta" */
+
+.prediction-divider {
+  margin-bottom: 18px;
+}
+
+.prediction-label {
+  margin-bottom: 4px;
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+}
+
+.prediction-time {
+  margin: 0 0 14px;
+  font-size: 0.92rem;
+}
+
+.prediction-teams {
+  margin-bottom: 18px;
+}
+
+.prediction-team strong {
+  font-size: clamp(2.9rem, 4vw, 4rem);
+}
+
+.team-flag {
+  width: 52px;
+  height: 38px;
+  border-radius: 10px;
+}
+
+.prediction-choices {
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.prediction-choice {
+  min-height: 84px;
+  border-radius: 16px;
+}
+
+.prediction-choice span {
+  font-size: 3.1rem;
+}
+
+.prediction-choice small {
+  margin-top: 2px;
+  font-size: 0.58rem;
+}
+
+.prediction-economy {
+  margin-bottom: 14px;
+  padding: 14px 16px;
+}
+
+.prediction-actions-ref {
+  margin-bottom: 10px;
+}
+
+.prediction-play-next {
+  height: 54px;
+}
+
+.prediction-footer-ref {
+  min-height: 32px;
+}
