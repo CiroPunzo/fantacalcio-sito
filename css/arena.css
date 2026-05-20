@@ -3675,3 +3675,226 @@ h1 span {
 .prediction-footer strong {
   color: #ffffff;
 }
+
+/* ================================
+   PREDICTION CARD - LOWER SECTION
+   MORE FAITHFUL TO REFERENCE
+================================ */
+
+.prediction-info-ref {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 18px;
+  padding: 14px 18px;
+
+  border: 1px solid rgba(40, 112, 190, 0.28);
+  border-radius: 0;
+  background:
+    linear-gradient(180deg, rgba(7, 11, 28, 0.95), rgba(5, 8, 22, 0.98));
+  clip-path: polygon(
+    2.5% 0,
+    97.5% 0,
+    100% 22%,
+    100% 78%,
+    97.5% 100%,
+    2.5% 100%,
+    0 78%,
+    0 22%
+  );
+
+  box-shadow:
+    inset 0 0 24px rgba(44, 93, 180, 0.08),
+    0 0 18px rgba(0, 215, 255, 0.05);
+}
+
+.prediction-info-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  text-align: left;
+}
+
+.prediction-info-box-right {
+  justify-content: flex-start;
+}
+
+.prediction-info-icon {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+}
+
+.prediction-info-icon img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(165, 96, 255, 0.35));
+}
+
+.prediction-info-copy span {
+  display: block;
+  margin-bottom: 4px;
+  color: rgba(255, 255, 255, 0.58);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.prediction-info-copy strong {
+  display: block;
+  color: #ffffff;
+  font-family: "Rajdhani", system-ui, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  line-height: 1.05;
+}
+
+.prediction-info-box-right .prediction-info-copy strong {
+  color: #dff6ff;
+}
+
+.prediction-info-separator {
+  width: 1px;
+  height: 44px;
+  margin-inline: auto;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+}
+
+/* CTA area */
+
+.prediction-actions-ref {
+  display: grid;
+  grid-template-columns: 54px 1fr 54px;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.prediction-play-next {
+  position: relative;
+  height: 68px;
+  border: 1px solid rgba(255, 223, 137, 0.72);
+  border-radius: 0;
+  cursor: pointer;
+
+  color: #ffd86e;
+  background:
+    linear-gradient(180deg, rgba(100, 63, 8, 0.92), rgba(58, 36, 6, 0.96));
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  clip-path: polygon(
+    4% 0,
+    96% 0,
+    100% 28%,
+    100% 72%,
+    96% 100%,
+    4% 100%,
+    0 72%,
+    0 28%
+  );
+
+  box-shadow:
+    0 0 18px rgba(255, 187, 64, 0.28),
+    inset 0 0 22px rgba(255, 200, 83, 0.16),
+    inset 0 1px 0 rgba(255, 243, 189, 0.42);
+}
+
+.prediction-play-next::before {
+  content: "";
+  position: absolute;
+  inset: 6px 14px;
+  border-top: 1px solid rgba(255, 225, 132, 0.25);
+  border-bottom: 1px solid rgba(255, 225, 132, 0.14);
+  pointer-events: none;
+}
+
+.prediction-play-next:hover {
+  box-shadow:
+    0 0 24px rgba(255, 187, 64, 0.44),
+    inset 0 0 22px rgba(255, 200, 83, 0.22),
+    inset 0 1px 0 rgba(255, 243, 189, 0.55);
+}
+
+.prediction-arrow-faded {
+  height: 50px;
+  border: 0;
+  background: transparent;
+  color: rgba(91, 133, 214, 0.34);
+  font-size: 2rem;
+  font-weight: 900;
+  box-shadow: none;
+}
+
+/* Footer daily predictions */
+
+.prediction-footer-ref {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 0 18px;
+
+  border: 1px solid rgba(44, 114, 193, 0.34);
+  border-radius: 0;
+  background:
+    linear-gradient(180deg, rgba(8, 14, 36, 0.92), rgba(6, 10, 28, 0.98));
+
+  color: rgba(214, 229, 255, 0.82);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+
+  clip-path: polygon(
+    6% 0,
+    94% 0,
+    100% 50%,
+    94% 100%,
+    6% 100%,
+    0 50%
+  );
+}
+
+.prediction-footer-ref strong {
+  color: #ffffff;
+}
+
+.prediction-footer-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #56b7ff;
+  box-shadow: 0 0 10px rgba(86, 183, 255, 0.8);
+}
+
+.prediction-footer-info {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid rgba(164, 196, 255, 0.3);
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(214, 229, 255, 0.72);
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+}
