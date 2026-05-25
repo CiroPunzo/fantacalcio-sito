@@ -7900,3 +7900,45 @@ body.pfa-ready main {
   .daily-match-countdown { align-items: flex-start; flex-direction: column; gap: 4px; }
   .daily-match-countdown strong { font-size: 13px; }
 }
+
+
+/* Auth success page */
+.auth-success-shell {
+  align-items: stretch;
+}
+.auth-success-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+.auth-success-card p {
+  color: rgba(244, 247, 255, .78);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+.auth-success-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin-top: 6px;
+}
+.auth-success-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(94, 234, 255, .92);
+  text-decoration: none;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+.auth-success-secondary:hover {
+  color: #ffd166;
+}
+@media (max-width: 860px) {
+  .auth-success-shell {
+    grid-template-columns: 1fr;
+  }
+}

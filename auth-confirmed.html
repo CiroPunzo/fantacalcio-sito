@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <title>Autenticazione riuscita | ProFantasy Arena</title>
+  <link rel="stylesheet" href="css/arena.css?v=auth-success-v1" />
+</head>
+<body>
+  <div class="arena-page game-page register-page login-page auth-success-page">
+    <div class="arena-bg"></div>
+    <div class="arena-overlay"></div>
+
+    <header class="arena-header">
+      <a href="arena.html" class="arena-logo" aria-label="Torna alla lobby ProFantasy">
+        <span class="arena-logo-main">PROFANTASY</span>
+        <span class="arena-logo-sub">World Cup Arena</span>
+      </a>
+      <nav class="arena-nav" aria-label="Navigazione Arena">
+        <a href="arena.html" class="arena-nav-link">Lobby</a>
+        <a href="daily-prediction.html" class="arena-nav-link">Daily Prediction</a>
+        <a href="missions.html" class="arena-nav-link">Missioni</a>
+        <a href="bracket.html" class="arena-nav-link">Bracket</a>
+        <a href="leaderboard.html" class="arena-nav-link">Leaderboard</a>
+        <a href="referral.html" class="arena-nav-link">Referral</a>
+      </nav>
+    </header>
+
+    <main class="game-main register-main auth-success-main">
+      <section class="register-shell auth-single-shell auth-success-shell">
+        <div class="register-copy auth-success-copy">
+          <span class="game-kicker">Account verificato</span>
+          <h1>Autenticazione <strong>riuscita</strong></h1>
+          <p>Il tuo profilo Arena è stato confermato correttamente. Ora puoi accedere, ricevere i tuoi token iniziali e iniziare la World Cup Arena.</p>
+          <div class="register-bonus-line">
+            <article><span>Profilo</span><strong>Verificato</strong></article>
+            <article><span>Token iniziali</span><strong>1000</strong></article>
+            <article><span>Arena</span><strong>Pronta</strong></article>
+          </div>
+        </div>
+
+        <div class="register-card login-card auth-success-card">
+          <span class="game-kicker small">Step completato</span>
+          <h2>Benvenuto nella World Cup Arena</h2>
+          <p class="register-small-note">Accedi con email e password per entrare nella lobby e iniziare a giocare.</p>
+          <a class="register-submit auth-login-submit auth-success-cta" href="login.html?confirmed=1">Torna al Login <span>›</span></a>
+          <a class="auth-switch auth-success-secondary" href="arena.html">Vai alla Lobby</a>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js?v=auth-success-v1"></script>
+  <script src="js/world-cup-fixtures.js?v=auth-success-v1"></script>
+  <script src="js/arena-game.js?v=auth-success-v1"></script>
+</body>
+</html>

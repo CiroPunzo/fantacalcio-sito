@@ -9,10 +9,10 @@ window.PFA_SUPABASE_ANON_KEY = "sb_publishable_pRe0PkY4s0cxgk66eyrL1g_nYjeM65v";
 // URL usata dalle email Supabase dopo la conferma account.
 // In produzione viene calcolata automaticamente dal dominio attuale, così funziona sia su GitHub Pages sia su dominio custom.
 (function () {
-  const fallback = "https://ciropunzo.github.io/fantacalcio-sito/login.html";
+  const fallback = "https://ciropunzo.github.io/fantacalcio-sito/auth-confirmed.html";
   try {
     const origin = window.location.origin;
-    const path = window.location.pathname.replace(/\/[^/]*$/, "/login.html");
+    const path = window.location.pathname.replace(/\/[^/]*$/, "/auth-confirmed.html");
     window.PFA_AUTH_REDIRECT_URL = (origin && origin !== "null") ? `${origin}${path}` : fallback;
   } catch (error) {
     window.PFA_AUTH_REDIRECT_URL = fallback;

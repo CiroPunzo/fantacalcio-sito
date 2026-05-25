@@ -376,7 +376,10 @@
     });
     if (error) throw error;
 
-    if (data.user && !data.session) {
+    // Con conferma email attiva Supabase non crea una sessione immediata.
+    // In produzione trattiamo questo caso come registrazione corretta in attesa di conferma,
+    // evitando messaggi tecnici tipo "sessione non attiva".
+    if (!data.session) {
       return { pendingEmail: true, email, redirectUrl: getAuthRedirectUrl() };
     }
 
@@ -1103,7 +1106,7 @@
         if (SUPABASE_ENABLED) {
           const user = await createSupabaseAccount({ username, email, password, avatar, referredBy });
           if (user && user.pendingEmail) {
-            if (message) message.textContent = "Registrazione creata. Controlla la tua email, conferma l’account e poi accedi dalla pagina Login.";
+            if (message) message.textContent = "Registrazione creata. Controlla la tua email, clicca su Verifica account e poi accedi all’Arena.";
             if (submit) submit.disabled = false;
             return;
           }
