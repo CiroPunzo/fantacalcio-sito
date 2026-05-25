@@ -1004,15 +1004,63 @@
     renderLobbyNextMatch(user);
   }
 
+  function getNextPredictionResetTarget(now = getNow()) {
+    const days = groupFixturesByDay(getFixturePool());
+    if (!days.length) return null;
+
+    const activeDay = getActivePredictionDay(now);
+    const nextFutureDay = days.find((day) =>
+      day.key !== activeDay.key && day.matches.some((match) => match.kickoff > now)
+    );
+
+    if (activeDay.isFuture && activeDay.unlockAt) {
+      return {
+        type: "unlock",
+        date: activeDay.unlockAt,
+        day: activeDay,
+        label: `Le prediction del ${activeDay.matches[0]?.dateLabel || "prossimo matchday"} si sbloccano alle 00:01.`
+      };
+    }
+
+    if (nextFutureDay) {
+      const unlockAt = getPredictionUnlockAt(nextFutureDay);
+      const targetDate = unlockAt && unlockAt > now ? unlockAt : nextFutureDay.firstKickoff;
+      return {
+        type: "next-day",
+        date: targetDate,
+        day: nextFutureDay,
+        label: `Prossimo reset: ${nextFutureDay.matches[0]?.dateLabel || "matchday successivo"} alle 00:01.`
+      };
+    }
+
+    const nextMatch = getNextFixture(now);
+    if (nextMatch) {
+      return {
+        type: "match",
+        date: nextMatch.kickoff,
+        day: null,
+        label: `Prossimo match: ${nextMatch.home} vs ${nextMatch.away}.`
+      };
+    }
+
+    return null;
+  }
+
   function countdownToMidnight() {
-    const now = new Date();
-    const next = new Date(now);
-    next.setHours(24, 1, 0, 0);
-    const diff = Math.max(0, next - now);
-    const h = String(Math.floor(diff / 36e5)).padStart(2, "0");
-    const m = String(Math.floor((diff % 36e5) / 6e4)).padStart(2, "0");
-    const s = String(Math.floor((diff % 6e4) / 1000)).padStart(2, "0");
-    document.querySelectorAll("[data-midnight-countdown]").forEach((el) => (el.textContent = `${h}h ${m}m ${s}s`));
+    const now = getNow();
+    const target = getNextPredictionResetTarget(now);
+
+    document.querySelectorAll("[data-midnight-countdown]").forEach((el) => {
+      if (!target || !target.date) {
+        el.textContent = "--:--:--";
+        return;
+      }
+      el.textContent = formatCountdown(target.date - now);
+    });
+
+    document.querySelectorAll("[data-next-prediction-label]").forEach((el) => {
+      el.textContent = target?.label || "Nessuna prediction futura programmata.";
+    });
   }
 
   function renderMissionsPage(user = getUser()) {
