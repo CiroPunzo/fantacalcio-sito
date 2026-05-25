@@ -140,17 +140,36 @@
     const supabase = getSupabase();
     if(!supabase || !profile || !profile.isSupabase || getSaved()) return;
     try{
-      const { data, error } = await supabase
-        .from("group_predictions")
-        .select("group_ranking, created_at")
-        .eq("user_id", profile.id)
-        .maybeSingle();
-      if(error || !data) return;
+      let data = null;
+      let error = null;
+      try {
+        const response = await supabase.rpc("pfa_get_my_group_prediction");
+        error = response.error;
+        data = Array.isArray(response.data) ? response.data[0] : response.data;
+      } catch(rpcError) {
+        error = rpcError;
+      }
+      if(error || !data) {
+        const fallback = await supabase
+          .from("group_predictions")
+          .select("group_ranking, created_at, status, resolved_at, exact_positions, perfect_groups, tokens_reward, result_details")
+          .eq("user_id", profile.id)
+          .maybeSingle();
+        if(fallback.error || !fallback.data) return;
+        data = { ...fallback.data, xp_reward: 0 };
+      }
       const payload = {
         savedAt: data.created_at || new Date().toISOString(),
         phase: "groups",
         groupRanking: data.group_ranking || {},
-        knockoutLocked: true
+        knockoutLocked: true,
+        status: data.status || "saved",
+        resolvedAt: data.resolved_at || "",
+        exactPositions: Number(data.exact_positions || 0),
+        perfectGroups: Number(data.perfect_groups || 0),
+        tokensReward: Number(data.tokens_reward || 0),
+        xpReward: Number(data.xp_reward || 0),
+        resultDetails: data.result_details || null
       };
       localStorage.setItem(GROUP_BRACKET_KEY, JSON.stringify(payload));
     }catch(e){
@@ -330,15 +349,31 @@
     if(!box || !saved) return;
     const groupsHtml = groups.map(([g,...list]) => {
       const ranks = saved.groupRanking?.[g] || {};
+      const details = saved.resultDetails?.[g] || null;
       const ordered = [...list].sort((a,b)=>Number(ranks[a.code]||99)-Number(ranks[b.code]||99));
-      return `<article class="saved-group-mini"><h4>Girone ${g}</h4>${ordered.map(team => `<span><i class="flag" style="background-image:url('img/flags/${flagFile(team.code)}.png')"></i><b>${team.name}</b><em>${ranks[team.code] || "-"}°</em></span>`).join("")}</article>`;
+      const rewardTag = details ? `<small class="saved-group-score ${details.perfect ? "is-perfect" : ""}">${Number(details.exact_positions || 0)}/4 esatte${details.perfect ? " · Perfetto" : ""}</small>` : "";
+      return `<article class="saved-group-mini"><h4>Girone ${g}${rewardTag}</h4>${ordered.map(team => `<span><i class="flag" style="background-image:url('img/flags/${flagFile(team.code)}.png')"></i><b>${team.name}</b><em>${ranks[team.code] || "-"}°</em></span>`).join("")}</article>`;
     }).join("");
+    const resolved = saved.status === "resolved" || saved.resolvedAt;
+    const rewardSummary = resolved ? `
+      <div class="bracket-reward-summary">
+        <article><span>Posizioni esatte</span><strong>${Number(saved.exactPositions || 0)}/48</strong></article>
+        <article><span>Gironi perfetti</span><strong>${Number(saved.perfectGroups || 0)}/12</strong></article>
+        <article><span>Reward token</span><strong>+${Number(saved.tokensReward || 0).toLocaleString("it-IT")}</strong></article>
+        <article><span>Reward XP</span><strong>+${Number(saved.xpReward || 0).toLocaleString("it-IT")}</strong></article>
+      </div>
+    ` : `
+      <div class="bracket-reward-summary is-pending">
+        <article><span>Reward gironi</span><strong>In attesa</strong><p>Verrà calcolato quando l'admin confermerà le classifiche reali.</p></article>
+      </div>
+    `;
     box.innerHTML = `
       <div class="saved-champion-hero saved-group-stage-hero">
         <span>Modalità salvata</span>
         <strong>Group Stage Prediction</strong>
         <p>Knockout Prediction bloccata fino alla fine dei gironi reali.</p>
       </div>
+      ${rewardSummary}
       <div class="saved-groups-strip">${groupsHtml}</div>
     `;
   }

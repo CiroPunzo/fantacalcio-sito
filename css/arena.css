@@ -7957,3 +7957,172 @@ body.pfa-ready main {
   color: #ffc84d;
   text-shadow: 0 0 14px rgba(255, 193, 58, .35);
 }
+
+/* =========================================================
+   BRACKET REWARDS V1
+   ========================================================= */
+.admin-reward-btn {
+  border-color: rgba(255,191,61,.48) !important;
+  background: linear-gradient(135deg, rgba(255,191,61,.92), rgba(183,57,255,.82)) !important;
+  color: #070818 !important;
+  box-shadow: 0 0 26px rgba(255,191,61,.20), 0 0 32px rgba(183,57,255,.14);
+}
+
+.admin-reward-rules-card {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 16px;
+  border: 1px solid rgba(255,191,61,.20);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 88% 10%, rgba(255,191,61,.14), transparent 32%),
+    linear-gradient(135deg, rgba(13,16,45,.88), rgba(4,8,24,.82));
+  box-shadow: inset 0 0 20px rgba(255,255,255,.025), 0 0 22px rgba(255,191,61,.08);
+}
+
+.admin-reward-rules-card strong {
+  color: #fff;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.admin-reward-rules-card span,
+.admin-reward-rules-card em {
+  color: rgba(255,255,255,.72);
+  font-size: 14px;
+  font-style: normal;
+}
+
+.admin-reward-rules-card em {
+  color: rgba(255,255,255,.52);
+  font-size: 12px;
+}
+
+.admin-group-reward-audit {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 14px;
+}
+
+.admin-group-reward-audit article {
+  padding: 13px;
+  border: 1px solid rgba(37,223,255,.16);
+  border-radius: 16px;
+  background: rgba(255,255,255,.045);
+}
+
+.admin-group-reward-audit article span {
+  display: block;
+  margin: 0 0 5px;
+  color: rgba(255,255,255,.55);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.admin-group-reward-audit article strong {
+  color: var(--gold, #ffbf3d);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 18px;
+}
+
+.admin-group-reward-audit article p {
+  margin: 5px 0 0;
+  color: rgba(255,255,255,.58);
+  font-size: 12px;
+}
+
+.admin-group-reward-audit.is-pending {
+  grid-template-columns: 1fr;
+}
+
+.bracket-reward-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 16px 0 18px;
+}
+
+.bracket-reward-summary article {
+  padding: 14px;
+  border: 1px solid rgba(37,223,255,.17);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(37,223,255,.10), transparent 36%),
+    linear-gradient(135deg, rgba(8,12,35,.86), rgba(4,8,24,.80));
+  box-shadow: inset 0 0 18px rgba(255,255,255,.025);
+}
+
+.bracket-reward-summary article span {
+  display: block;
+  color: rgba(255,255,255,.54);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.bracket-reward-summary article strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--gold, #ffbf3d);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 1;
+  text-shadow: 0 0 18px rgba(255,191,61,.22);
+}
+
+.bracket-reward-summary article p {
+  margin: 8px 0 0;
+  color: rgba(255,255,255,.60);
+  font-size: 13px;
+}
+
+.bracket-reward-summary.is-pending {
+  grid-template-columns: 1fr;
+}
+
+.saved-group-score {
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+  padding: 4px 7px;
+  border-radius: 999px;
+  color: rgba(255,255,255,.70);
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  font-size: 9px;
+  line-height: 1;
+}
+
+.saved-group-score.is-perfect {
+  color: #071021;
+  background: linear-gradient(135deg, var(--gold, #ffbf3d), #fff0b8);
+  border-color: rgba(255,191,61,.40);
+}
+
+@media (max-width: 760px) {
+  .admin-group-reward-audit,
+  .bracket-reward-summary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bracket-reward-summary.is-pending,
+  .admin-group-reward-audit.is-pending {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-group-reward-audit,
+  .bracket-reward-summary {
+    grid-template-columns: 1fr;
+  }
+}

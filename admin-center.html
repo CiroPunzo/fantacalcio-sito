@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex,nofollow" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
   <title>Admin Center — ProFantasy World Cup Arena</title>
-  <link rel="stylesheet" href="css/arena.css?v=countdown-real-v2" />
+  <link rel="stylesheet" href="css/arena.css?v=bracket-rewards-v1" />
 </head>
 <body>
   <div class="arena-page admin-page">
@@ -79,12 +79,20 @@
 
         <div class="admin-actions-row admin-actions-row-groups">
           <button type="button" class="arena-btn arena-btn-primary" data-admin-save-groups>Salva classifiche gironi</button>
+          <button type="button" class="arena-btn arena-btn-primary admin-reward-btn" data-admin-resolve-groups>Calcola reward bracket</button>
           <button type="button" class="arena-btn arena-btn-secondary" data-admin-autofill-groups>Compila rapido</button>
           <button type="button" class="arena-btn arena-btn-secondary" data-admin-clear-groups>Cancella classifiche</button>
         </div>
 
         <div class="admin-groups-grid" data-admin-groups-grid>
           <article class="admin-empty-log">Caricamento gironi...</article>
+        </div>
+
+        <div class="admin-reward-rules-card">
+          <strong>Regole reward bracket</strong>
+          <span>+25 token e +10 XP per ogni posizione esatta</span>
+          <span>+50 token e +40 XP bonus per ogni girone perfetto</span>
+          <em>Il calcolo reward può essere eseguito una sola volta per ogni prediction salvata.</em>
         </div>
 
         <div class="admin-knockout-preview" data-admin-knockout-preview>
@@ -140,8 +148,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js?v=countdown-real-v2"></script>
-  <script src="js/world-cup-fixtures.js?v=countdown-real-v2"></script>
-  <script src="js/arena-game.js?v=countdown-real-v2"></script>
+  <script src="js/supabase-config.js?v=bracket-rewards-v1"></script>
+  <script src="js/world-cup-fixtures.js?v=bracket-rewards-v1"></script>
+  <script src="js/arena-game.js?v=bracket-rewards-v1"></script>
 </body>
 </html>

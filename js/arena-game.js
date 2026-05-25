@@ -2111,11 +2111,70 @@
     return rows;
   }
 
+  async function fetchSupabaseGroupStandings() {
+    const supabase = getSupabase();
+    if (!supabase) return getAdminGroupStandings();
+    const { data, error } = await supabase.rpc("pfa_admin_get_group_standings");
+    if (error) {
+      console.warn("Supabase group standings fetch error", error);
+      return getAdminGroupStandings();
+    }
+    const row = Array.isArray(data) ? data[0] : data;
+    if (!row || !row.standings) return getAdminGroupStandings();
+    const payload = {
+      standings: row.standings || {},
+      knockoutPreview: buildAdminKnockoutPreview(row.standings || {}),
+      updatedAt: row.updated_at || new Date().toISOString(),
+      resolvedAt: row.resolved_at || "",
+      resolvedPredictions: Number(row.resolved_predictions || 0),
+      totalTokens: Number(row.total_tokens || 0),
+      totalXp: Number(row.total_xp || 0)
+    };
+    saveAdminGroupStandings(payload);
+    return payload;
+  }
+
+  async function setSupabaseAdminGroupStandings(standings) {
+    const supabase = getSupabase();
+    if (!supabase) return null;
+    const { data, error } = await supabase.rpc("pfa_admin_save_group_standings", {
+      p_standings: standings
+    });
+    if (error) {
+      const message = String(error.message || "");
+      if (message.includes("Could not find the function") || message.includes("schema cache")) {
+        throw new Error("Funzione classifiche gironi non trovata. Esegui SUPABASE_BRACKET_REWARDS_V1_SQL.sql e ricarica Admin Center.");
+      }
+      throw error;
+    }
+    await fetchSupabaseGroupStandings();
+    return data;
+  }
+
+  async function resolveSupabaseAdminGroupRewards() {
+    const supabase = getSupabase();
+    if (!supabase) return null;
+    const { data, error } = await supabase.rpc("pfa_admin_resolve_group_predictions");
+    if (error) {
+      const message = String(error.message || "");
+      if (message.includes("Could not find the function") || message.includes("schema cache")) {
+        throw new Error("Funzione reward bracket non trovata. Esegui SUPABASE_BRACKET_REWARDS_V1_SQL.sql e ricarica Admin Center.");
+      }
+      throw error;
+    }
+    await fetchSupabaseGroupStandings();
+    await fetchSupabaseTransactions();
+    await refreshSupabaseLeaderboard();
+    await refreshSupabaseProfileCache();
+    return data;
+  }
+
   async function refreshSupabaseAdminCache() {
     if (!SUPABASE_ENABLED || !getSupabase()) return;
     try {
       await fetchSupabaseMatchResults();
       await fetchSupabaseTransactions();
+      await fetchSupabaseGroupStandings();
       SUPABASE_ADMIN_CACHE_READY = true;
     } catch (error) {
       console.warn("Supabase admin cache refresh failed", error);
@@ -2456,11 +2515,24 @@
       if (!knockout) {
         preview.innerHTML = `<article class="admin-empty-log">Completa e salva tutte le posizioni dei 12 gironi per vedere gli accoppiamenti sicuri.</article>`;
       } else {
+        const savedPayload = saved && saved.standings ? saved : null;
+        const rewardAudit = savedPayload && savedPayload.resolvedAt ? `
+          <div class="admin-group-reward-audit">
+            <article><span>Prediction risolte</span><strong>${Number(savedPayload.resolvedPredictions || 0).toLocaleString("it-IT")}</strong></article>
+            <article><span>Token accreditati</span><strong>+${Number(savedPayload.totalTokens || 0).toLocaleString("it-IT")}</strong></article>
+            <article><span>XP accreditati</span><strong>+${Number(savedPayload.totalXp || 0).toLocaleString("it-IT")}</strong></article>
+          </div>
+        ` : `
+          <div class="admin-group-reward-audit is-pending">
+            <article><span>Reward bracket</span><strong>Pronto</strong><p>+25 token per posizione esatta, +50 bonus per girone perfetto.</p></article>
+          </div>
+        `;
         preview.innerHTML = `
           <div class="admin-knockout-head">
             <span>Anteprima tabellone</span>
             <strong>Accoppiamenti sicuri</strong>
           </div>
+          ${rewardAudit}
           <div class="admin-knockout-scroll">
             ${knockout.map((match) => `
               <article class="admin-ko-match">
@@ -2484,7 +2556,7 @@
 
     const saveBtn = root.querySelector("[data-admin-save-groups]");
     if (saveBtn) {
-      saveBtn.addEventListener("click", () => {
+      saveBtn.addEventListener("click", async () => {
         const groups = getAdminGroupTeams();
         const standings = buildAdminStandingsFromForm(root);
         if (!areAdminGroupsComplete(standings, groups)) {
@@ -2492,13 +2564,46 @@
           return;
         }
         const preview = buildAdminKnockoutPreview(standings, groups);
-        saveAdminGroupStandings({
-          standings,
-          knockoutPreview: preview,
-          updatedAt: new Date().toISOString()
-        });
-        renderAdminGroupsPanel();
-        alert("Classifiche gironi salvate. Ora il bracket può mostrare gli accoppiamenti sicuri disponibili.");
+        try {
+          if (SUPABASE_ENABLED && isAdminUser()) await setSupabaseAdminGroupStandings(standings);
+          saveAdminGroupStandings({
+            standings,
+            knockoutPreview: preview,
+            updatedAt: new Date().toISOString()
+          });
+          renderAdminGroupsPanel();
+          alert("Classifiche gironi salvate. Puoi ora calcolare i reward bracket quando sei sicuro dei risultati.");
+        } catch (error) {
+          console.error(error);
+          alert(error.message || "Errore durante il salvataggio classifiche gironi.");
+        }
+      });
+    }
+
+    const resolveGroupsBtn = root.querySelector("[data-admin-resolve-groups]");
+    if (resolveGroupsBtn) {
+      resolveGroupsBtn.addEventListener("click", async () => {
+        const groups = getAdminGroupTeams();
+        const standings = buildAdminStandingsFromForm(root);
+        if (!areAdminGroupsComplete(standings, groups)) {
+          alert("Completa tutte le posizioni dei 12 gironi prima di calcolare i reward.");
+          return;
+        }
+        if (!confirm("Confermi il calcolo reward per tutte le Group Stage Prediction salvate? L'accredito non sarà duplicabile.")) return;
+        try {
+          if (SUPABASE_ENABLED && isAdminUser()) {
+            await setSupabaseAdminGroupStandings(standings);
+            const result = await resolveSupabaseAdminGroupRewards();
+            renderAdminGroupsPanel();
+            renderAdminConsole();
+            alert(`Reward bracket calcolati. Prediction risolte: ${Number(result?.resolved_predictions || 0)} · Token accreditati: ${Number(result?.total_tokens || 0).toLocaleString("it-IT")}`);
+            return;
+          }
+          alert("Il calcolo reward reale richiede Supabase attivo e account admin.");
+        } catch (error) {
+          console.error(error);
+          alert(error.message || "Errore durante il calcolo reward bracket.");
+        }
       });
     }
 
