@@ -1150,7 +1150,10 @@
             "leaderboard.html",
             "referral.html"
           ]);
-          const destination = safeRedirects.has(redirectTarget) ? redirectTarget : (user.isAdmin ? "admin-center.html" : "arena.html");
+          // Production flow: even admin accounts land in the Arena after a normal login.
+          // Admin Center is reached only when the login was explicitly opened with
+          // ?redirect=admin-center.html, or by typing admin-center.html directly.
+          const destination = safeRedirects.has(redirectTarget) ? redirectTarget : "arena.html";
           window.location.href = destination;
         } catch (error) {
           console.error(error);

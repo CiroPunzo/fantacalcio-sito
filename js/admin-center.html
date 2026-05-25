@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <title>Admin Center — ProFantasy World Cup Arena</title>
+  <link rel="stylesheet" href="css/arena.css?v=security-production-step14" />
+</head>
+<body>
+  <div class="arena-page admin-page">
+    <div class="arena-bg"></div>
+    <div class="arena-overlay"></div>
+
+    <header class="arena-header">
+      <a href="arena.html" class="arena-logo" aria-label="Torna alla lobby ProFantasy">
+        <span class="arena-logo-main">PROFANTASY</span>
+        <span class="arena-logo-sub">Admin Center</span>
+      </a>
+
+      <nav class="arena-nav" aria-label="Navigazione Arena">
+        <a href="arena.html" class="arena-nav-link">Lobby</a>
+        <a href="daily-prediction.html" class="arena-nav-link">Daily Prediction</a>
+        <a href="missions.html" class="arena-nav-link">Missioni</a>
+        <a href="bracket.html" class="arena-nav-link">Bracket</a>
+        <a href="leaderboard.html" class="arena-nav-link">Leaderboard</a>
+        <a href="referral.html" class="arena-nav-link">Referral</a>
+      </nav>
+
+      <div class="arena-header-actions">
+        <a href="arena.html" class="arena-btn arena-btn-secondary">Torna lobby</a>
+      </div>
+    </header>
+
+    <main class="game-page-main admin-console-main" data-admin-console>
+      <section class="game-hero admin-hero">
+        <div>
+          <span class="game-kicker">Centro comandi protetto</span>
+          <h1>Admin Arena</h1>
+          <p>
+            Da qui gestisci il flusso operativo: inserisci l'esito di una partita,
+            risolvi le prediction pending e verifica l'accredito automatico dei reward.
+          </p>
+        </div>
+
+        <aside class="admin-control-card admin-control-card-clean">
+          <span>Regole reward</span>
+          <strong>+125 token</strong>
+          <p>La dashboard admin non mostra più i token del player: qui gestisci esiti, reward e classifiche reali del torneo.</p>
+        </aside>
+      </section>
+
+      <section class="admin-stats-grid" aria-label="Statistiche admin">
+        <article>
+          <span>Esiti inseriti</span>
+          <strong data-admin-result-count>0</strong>
+        </article>
+        <article>
+          <span>Prediction pending</span>
+          <strong data-admin-pending-count>0</strong>
+        </article>
+        <article>
+          <span>Reward prediction</span>
+          <strong>+125</strong>
+        </article>
+      </section>
+
+      <section class="admin-groups-panel" aria-label="Gestione classifiche gironi">
+        <div class="board-head">
+          <div>
+            <span class="game-kicker small">Bracket database</span>
+            <h2>Gestione classifiche gironi</h2>
+          </div>
+          <p class="board-note">
+            Inserisci manualmente la classifica finale di ogni girone. Per ora il pannello mostra solo gli accoppiamenti sicuri tra prime e seconde: la Knockout Prediction completa verrà creata più avanti.
+          </p>
+        </div>
+
+        <div class="admin-actions-row admin-actions-row-groups">
+          <button type="button" class="arena-btn arena-btn-primary" data-admin-save-groups>Salva classifiche gironi</button>
+          <button type="button" class="arena-btn arena-btn-secondary" data-admin-autofill-groups>Compila rapido</button>
+          <button type="button" class="arena-btn arena-btn-secondary" data-admin-clear-groups>Cancella classifiche</button>
+        </div>
+
+        <div class="admin-groups-grid" data-admin-groups-grid>
+          <article class="admin-empty-log">Caricamento gironi...</article>
+        </div>
+
+        <div class="admin-knockout-preview" data-admin-knockout-preview>
+          <article class="admin-empty-log">Salva le classifiche per vedere gli accoppiamenti sicuri già calcolabili.</article>
+        </div>
+      </section>
+
+      <section class="admin-console-layout">
+        <div class="admin-match-panel">
+          <div class="board-head">
+            <div>
+              <span class="game-kicker small">Match database reale</span>
+              <h2>Inserisci esito partita</h2>
+            </div>
+            <p class="board-note">
+              In modalità Supabase gli esiti vengono salvati nel database, risolvono tutte le prediction pending e generano uno storico transazioni reale.
+            </p>
+          </div>
+
+          <div class="admin-actions-row">
+            <button type="button" class="arena-btn arena-btn-primary" data-admin-resolve-all>Sincronizza pending</button>
+            <button type="button" class="arena-btn arena-btn-secondary" data-admin-clear-results>Aggiorna esiti</button>
+          </div>
+
+          <div class="admin-match-list" data-admin-match-list>
+            <article class="admin-empty-log">Caricamento calendario...</article>
+          </div>
+        </div>
+
+        <aside class="admin-log-panel">
+          <div class="board-head compact">
+            <div>
+              <span class="game-kicker small">Reward log</span>
+              <h2>Accrediti</h2>
+            </div>
+          </div>
+
+          <div class="admin-verifica-flow">
+            <strong>Flusso reward</strong>
+            <ol>
+              <li>Il player invia una prediction da Daily Prediction.</li>
+              <li>L'admin imposta l’esito 1 / X / 2.</li>
+              <li>Supabase risolve la giocata e aggiorna token, XP e storico.</li>
+            </ol>
+          </div>
+
+          <div class="admin-transactions" data-admin-transactions>
+            <article class="admin-empty-log">Nessun reward accreditato.</article>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js?v=security-production-step14"></script>
+  <script src="js/world-cup-fixtures.js?v=security-production-step14"></script>
+  <script src="js/arena-game.js?v=admin-login-flow-final"></script>
+</body>
+</html>

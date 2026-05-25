@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProFantasy World Cup Arena | Bracket</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/arena.css?v=security-production-step14" />
+</head>
+
+<body class="bracket-body bracket-split-body">
+  <div class="bracket-page">
+    <div class="bracket-bg" aria-hidden="true"></div>
+
+    <header class="arena-header">
+      <a href="arena.html" class="arena-logo" aria-label="Torna alla lobby">
+        <span class="arena-logo-main">PROFANTASY</span>
+        <span class="arena-logo-sub">World Cup Arena</span>
+      </a>
+      <nav class="arena-nav" aria-label="Navigazione Arena">
+        <a href="arena.html" class="arena-nav-link">Lobby</a>
+        <a href="daily-prediction.html" class="arena-nav-link">Daily Prediction</a>
+        <a href="missions.html" class="arena-nav-link">Missioni</a>
+        <a href="bracket.html" class="arena-nav-link is-active">Bracket</a>
+        <a href="leaderboard.html" class="arena-nav-link">Leaderboard</a>
+        <a href="referral.html" class="arena-nav-link">Referral</a>
+      </nav>
+      <div class="arena-header-actions bracket-auth-actions">
+        <a href="login.html" class="arena-btn arena-btn-secondary bracket-guest-only">Accedi</a>
+        <a href="register.html" class="arena-btn arena-btn-primary bracket-guest-only">Registrati</a>
+        <a href="referral.html" class="arena-btn arena-btn-primary bracket-user-only">Referral</a>
+        <button type="button" class="arena-btn arena-btn-secondary bracket-user-only" data-logout-button>Esci</button>
+      </div>
+    </header>
+
+    <main class="bracket-wrap bracket-split-wrap">
+      <section class="bracket-hero bracket-split-hero">
+        <div>
+          <span class="kicker">Bracket Prediction</span>
+          <h1 class="bracket-title">Metti alla prova le tue <strong>conoscenze calcistiche</strong></h1>
+          <p class="bracket-desc">Pronostica l’ordine finale dei 12 gironi ufficiali. Quando il torneo entrerà nella fase decisiva, si sbloccherà la Knockout Prediction con gli accoppiamenti reali.</p>
+        </div>
+
+        <aside class="player-hud" data-profile-hud>
+          <div class="player-avatar" data-profile-avatar><span>P</span></div>
+          <div>
+            <h3 data-profile-name>Guest Player</h3>
+            <p>Profilo Arena</p>
+            <div class="player-stats">
+              <div class="player-stat">Token <strong data-profile-tokens>0</strong></div>
+              <div class="player-stat">XP <strong data-profile-xp>0</strong></div>
+              <div class="player-stat">Referral <strong data-profile-ref>---</strong></div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="lock-screen hidden" data-lock-screen>
+        <div class="lock-content">
+          <span class="intro-badge">Accesso bloccato</span>
+          <h2>Registrati per creare il tuo bracket</h2>
+          <p>Il bracket è collegato al profilo: solo così possiamo salvare le tue scelte, bloccarle e usarle poi per reward, XP e classifica.</p>
+          <a href="register.html" class="primary-cta">Crea profilo <span>›</span></a>
+        </div>
+      </section>
+
+      <section class="intro-screen hidden" data-intro-screen>
+        <div class="intro-content">
+          <span class="intro-badge">Modalità a step</span>
+          <h2>Benvenuto nel <strong>Group Stage Bracket</strong></h2>
+          <p>Per ora si gioca solo sui gironi: ordina le 4 squadre di ogni gruppo dalla 1ª alla 4ª posizione. La fase a eliminazione diretta verrà sbloccata dopo i gironi reali.</p>
+          <button class="primary-cta" type="button" data-start-bracket>Iniziamo <span>›</span></button>
+        </div>
+      </section>
+
+      <section class="saved-screen hidden" data-saved-screen>
+        <div class="saved-content saved-groups-content">
+          <span class="intro-badge">Gironi salvati</span>
+          <h2>La tua Group Stage Prediction è bloccata</h2>
+          <p>Hai salvato l’ordine finale dei 12 gironi. La Knockout Prediction si sbloccherà quando saranno disponibili le classifiche reali impostate dal Centro Comandi Admin.</p>
+          <div class="saved-bracket-overview" data-saved-overview></div>
+          <button class="primary-cta" type="button" data-review-saved>Apri riepilogo completo <span>›</span></button>
+        </div>
+      </section>
+
+      <section class="game-shell bracket-split-shell" data-game-shell>
+        <div class="bracket-mode-grid">
+          <article class="bracket-mode-card is-open">
+            <span>Fase 1</span>
+            <h3>Group Stage Prediction</h3>
+            <p>Ordina i 12 gironi ufficiali. Questa è la prediction disponibile ora.</p>
+            <strong data-group-mode-status>Aperta</strong>
+          </article>
+          <article class="bracket-mode-card is-locked" data-knockout-mode-card>
+            <span>Fase 2</span>
+            <h3>Knockout Prediction</h3>
+            <p>Si sbloccherà dopo i gironi reali, con accoppiamenti confermati dall’admin.</p>
+            <strong data-knockout-status>Bloccata</strong>
+          </article>
+        </div>
+
+        <div class="bracket-flow bracket-split-flow">
+          <aside class="flow-panel">
+            <h3>Roadmap bracket</h3>
+            <p>Questo step salva solo i gironi. Niente sedicesimi fittizi: il tabellone verrà generato più avanti con dati reali.</p>
+            <div class="flow-progress bracket-split-progress">
+              <div class="flow-step is-active" data-flow-step="groups"><i>1</i><span>Gironi</span></div>
+              <div class="flow-step is-locked" data-flow-step="knockout"><i>2</i><span>Knockout</span></div>
+              <div class="flow-step is-locked" data-flow-step="rewards"><i>3</i><span>Reward</span></div>
+            </div>
+            <div style="margin-top:16px;display:grid;gap:10px">
+              <button class="ghost-cta" type="button" data-open-tutorial>Apri tutorial</button>
+              <button class="primary-cta" type="button" data-save-groups>Salva prediction gironi</button>
+            </div>
+          </aside>
+
+          <div>
+            <section class="stage is-active" data-stage="groups">
+              <div class="stage-head">
+                <div>
+                  <h2>Fase a gironi</h2>
+                  <p>Ordina le 4 squadre di ogni gruppo. Questa prediction verrà bloccata nel tuo profilo.</p>
+                </div>
+                <div class="stage-actions">
+                  <button class="ghost-cta" type="button" data-autofill>Compila rapido</button>
+                  <button class="primary-cta" type="button" data-save-groups-top>Salva gironi</button>
+                </div>
+              </div>
+              <div class="groups-carousel" data-groups-carousel></div>
+            </section>
+
+            <section class="bracket-knockout-lock" data-knockout-lock>
+              <div>
+                <span class="intro-badge">Fase 2 bloccata</span>
+                <h2>Knockout Prediction in arrivo</h2>
+                <p>Quando la fase a gironi reale sarà terminata, l’admin inserirà le classifiche ufficiali. A quel punto si sbloccherà il tabellone a eliminazione diretta.</p>
+              </div>
+              <div class="safe-pairings-panel" data-safe-pairings-panel></div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="tutorial-layer" data-tutorial>
+      <div class="tutorial-box">
+        <h3 data-tutorial-title>Tutorial bracket</h3>
+        <p data-tutorial-text>Inizia dai gironi: scegli la posizione finale di ogni squadra usando i menu 1°, 2°, 3°, 4°.</p>
+        <div class="tutorial-controls">
+          <button class="ghost-cta" type="button" data-close-tutorial>Chiudi tutorial</button>
+          <button class="primary-cta" type="button" data-next-tutorial>Avanti <span>›</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js?v=security-production-step14"></script>
+  <script src="js/world-cup-fixtures.js?v=security-production-step14"></script>
+  <script src="js/arena-game.js?v=admin-login-flow-final"></script>
+  <script src="js/bracket-game.js?v=css-final-step9b"></script>
+</body>
+</html>

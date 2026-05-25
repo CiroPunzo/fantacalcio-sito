@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <title>ProFantasy World Cup Arena</title>
+
+  <link rel="stylesheet" href="css/arena.css?v=security-production-step14" />
+</head>
+
+<body>
+  <div class="arena-page">
+
+    <!-- BACKGROUND -->
+    <div class="arena-bg"></div>
+    <div class="arena-overlay"></div>
+
+    <!-- NAVBAR -->
+    <header class="arena-header">
+      <a href="index.html" class="arena-logo" aria-label="Torna alla home ProFantasy">
+        <span class="arena-logo-main">PROFANTASY</span>
+        <span class="arena-logo-sub">World Cup Arena</span>
+      </a>
+
+      <nav class="arena-nav" aria-label="Navigazione Arena">
+        <a href="arena.html" class="arena-nav-link is-active">Lobby</a>
+        <a href="daily-prediction.html" class="arena-nav-link">Daily Prediction</a>
+        <a href="missions.html" class="arena-nav-link">Missioni</a>
+        <a href="bracket.html" class="arena-nav-link">Bracket</a>
+        <a href="leaderboard.html" class="arena-nav-link">Leaderboard</a>
+        <a href="referral.html" class="arena-nav-link">Referral</a>
+      </nav>
+
+      <div class="arena-header-actions" data-guest-only>
+        <a href="login.html" class="arena-btn arena-btn-secondary" data-auth-action="login">Accedi</a>
+        <a href="register.html" class="arena-btn arena-btn-primary" data-auth-action="register">
+          Registrati
+          <span aria-hidden="true">›</span>
+        </a>
+      </div>
+      <div class="arena-header-user" data-user-only>
+        <span>Token</span>
+        <strong data-user-tokens>...</strong>
+        <a href="daily-prediction.html">Gioca</a>
+        <button type="button" class="arena-header-logout" data-logout-button>Esci</button>
+      </div>
+    </header>
+
+    <!-- MAIN LOBBY -->
+    <main id="lobby" class="arena-main">
+
+      <!-- LEFT COLUMN -->
+      <section class="arena-left">
+        <div class="arena-kicker">World Cup Arena</div>
+
+        <h1 class="arena-hero-title">
+  <span>ENTRA NELL’ARENA.</span>
+  <strong>VIVI OGNI PARTITA.</strong>
+</h1>
+
+        <p class="arena-description">
+          Registrati, ottieni 1000 token iniziali e gioca ogni giorno:
+          pronostici 1/X/2, streak, missioni, classifica globale e bracket
+          prediction per diventare una leggenda.
+        </p>
+
+        <aside class="arena-bonus-card" data-guest-only>
+  <div class="arena-bonus-bg"></div>
+
+  <div class="arena-bonus-content">
+    <span class="arena-bonus-kicker">INIZIA SUBITO</span>
+
+    <h2>
+      REGISTRATI E RICEVI
+      <strong>...</strong>
+      <span>TOKEN INIZIALI</span>
+    </h2>
+
+    <p>
+      Entra nell’Arena, ricevi il bonus di benvenuto e inizia subito la tua scalata.
+    </p>
+
+    <a href="register.html" class="arena-bonus-btn" data-auth-action="register">
+      REGISTRATI ORA
+      <span>›</span>
+    </a>
+  </div>
+</aside>
+
+        <aside class="arena-user-ready-card arena-referral-ready-card" data-user-only>
+          <div class="ready-card-bg" aria-hidden="true"></div>
+          <div class="ready-card-content">
+            <span class="arena-bonus-kicker">REFERRAL BONUS</span>
+            <h2>INVITA UN AMICO</h2>
+            <p>Ottieni <strong>500 token</strong> quando un amico registrato dal tuo link completa almeno <strong>3 pronostici</strong>.</p>
+            <div class="ready-card-stats">
+              <div><span>Il tuo codice</span><strong data-user-referral-code>PF-ARENA</strong></div>
+              <div><span>Reward</span><strong>+500</strong></div>
+            </div>
+            <div class="ready-card-progress">
+              <span><b data-referral-qualified>0</b> amici qualificati</span>
+              <strong><b data-user-referral-earned>0</b> token vinti</strong>
+              <i data-referral-card-bar style="width:0%;"></i>
+            </div>
+            <a href="referral.html" class="arena-bonus-btn">VAI AL REFERRAL <span>›</span></a>
+          </div>
+        </aside>
+      </section>
+
+      <!-- CENTER COLUMN -->
+      <section class="arena-prediction-card arena-nextmatch-card" data-nextmatch-card>
+        <div class="prediction-frame-line top"></div>
+
+        <div class="prediction-header nextmatch-header">
+          <div class="prediction-header-title">
+            <span>PREVISIONE GIORNALIERA</span>
+          </div>
+
+          <div class="prediction-countdown nextmatch-wallet">
+            <span>Token</span>
+            <strong data-user-tokens>...</strong>
+          </div>
+        </div>
+
+        <div class="prediction-body nextmatch-body">
+          <span class="prediction-label">NEXT MATCH</span>
+          <p class="prediction-time" data-nextmatch-kickoff>Oggi • --:--</p>
+
+          <div class="nextmatch-countdown-box">
+            <span>Inizia tra</span>
+            <strong data-nextmatch-countdown>--h --m --s</strong>
+          </div>
+
+          <div class="prediction-teams nextmatch-teams">
+            <div class="prediction-team nextmatch-team-home">
+              <div class="team-flag nextmatch-flag">
+                <img data-nextmatch-home-flag src="img/flags/mex.png" alt="MEX" loading="lazy">
+              </div>
+              <strong data-nextmatch-home>MEX</strong>
+            </div>
+
+            <span class="prediction-vs nextmatch-vs">VS</span>
+
+            <div class="prediction-team prediction-team-right nextmatch-team-away">
+              <strong data-nextmatch-away>USA</strong>
+              <div class="team-flag nextmatch-flag">
+                <img data-nextmatch-away-flag src="img/flags/usa.png" alt="USA" loading="lazy">
+              </div>
+            </div>
+          </div>
+
+          <div class="lobby-daily-preview lobby-daily-preview-clean" aria-label="Partite Daily Prediction di oggi">
+            <div class="lobby-preview-top">
+              <span>PARTITE DI OGGI</span>
+              <strong><b data-user-prediction-count>0</b> / <b data-daily-match-total>3</b> giocate</strong>
+            </div>
+            <div class="lobby-preview-list" data-lobby-prediction-list>
+              <article><span>MEX vs USA</span><b>15:00</b><em>Da giocare</em></article>
+              <article><span>BRA vs URU</span><b>18:00</b><em>Da giocare</em></article>
+              <article><span>FRA vs GER</span><b>21:00</b><em>Da giocare</em></article>
+            </div>
+          </div>
+
+          <a class="prediction-play prediction-play-next nextmatch-main-cta" href="daily-prediction.html">
+            VAI ALLE DAILY PREDICTION
+          </a>
+
+          <div class="prediction-footer prediction-footer-ref nextmatch-status-pill">
+            <span class="prediction-footer-dot"></span>
+            <span data-nextmatch-status>Prediction disponibili oggi</span>
+          </div>
+        </div>
+
+        <div class="prediction-frame-line bottom"></div>
+      </section>
+
+      <!-- RIGHT COLUMN -->
+      <aside class="arena-right">
+        <article class="profile-card" id="profile-card">
+
+          <div class="profile-head">
+            <div class="profile-avatar">
+              <span class="avatar-fallback" aria-label="Avatar ProFantasy" data-user-avatar-fallback hidden>P</span><img src="img/avatars/avatar-01.png" alt="Avatar utente" data-user-avatar>
+            </div>
+
+            <div class="profile-user">
+              <div class="profile-name-row">
+                <h2 data-user-name>ProFantasy</h2>
+                <span class="live-badge">Live</span>
+              </div>
+
+              <p>Season 1 • Pre-season</p>
+            </div>
+          </div>
+
+          <div class="profile-level">
+            <span>LVL <b data-user-level>1</b></span>
+
+            <div class="xp-block">
+              <div class="xp-text">
+                <span>XP</span>
+                <strong><span data-user-xp>0</span> / 5.000</strong>
+              </div>
+
+              <div class="xp-bar">
+                <span data-user-xp-bar style="width: 0%;"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-stats">
+
+            <a class="profile-stat profile-stat-action" href="daily-prediction.html" data-profile-stat="token">
+              <div class="stat-icon stat-icon-img stat-token" aria-hidden="true"></div>
+              <div>
+                <span>Token disponibili</span>
+                <strong data-user-tokens>...</strong>
+                <small>Saldo reale del profilo</small>
+              </div>
+              <b class="stat-arrow">›</b>
+            </a>
+
+            <a class="profile-stat profile-stat-action" href="daily-prediction.html" data-profile-stat="streak">
+              <div class="stat-icon stat-icon-img stat-streak" aria-hidden="true"></div>
+              <div>
+                <span>Daily streak</span>
+                <strong><span data-user-streak>0</span> giorni</strong>
+                <div class="mini-progress"><i data-user-streak-bar style="width:0%;"></i></div>
+              </div>
+              <b class="stat-arrow">›</b>
+            </a>
+
+            <a class="profile-stat profile-stat-action" href="missions.html" data-profile-stat="xp">
+              <div class="stat-icon stat-icon-img stat-xp" aria-hidden="true"></div>
+              <div>
+                <span>XP totale</span>
+                <strong><span data-user-xp>0</span> XP</strong>
+                <small>Prossimo livello: <b data-user-xp-next>250</b> XP</small>
+              </div>
+              <b class="stat-arrow">›</b>
+            </a>
+
+            <a class="profile-stat profile-stat-action" href="leaderboard.html" data-profile-stat="rank">
+              <div class="stat-icon stat-icon-img stat-rank" aria-hidden="true"></div>
+              <div>
+                <span>Posizione globale</span>
+                <strong data-leaderboard-user-rank>#--</strong>
+                <small>Classifica token globale</small>
+              </div>
+              <b class="stat-arrow">›</b>
+            </a>
+
+            <a class="profile-stat profile-stat-action" href="referral.html" data-profile-stat="referral">
+              <div class="stat-icon stat-icon-img stat-referral" aria-hidden="true"></div>
+              <div>
+                <span>Referral bonus</span>
+                <strong><span data-user-referral-earned>0</span></strong>
+                <small><b data-referral-qualified>0</b> amici qualificati</small>
+              </div>
+              <b class="stat-arrow">›</b>
+            </a>
+
+          </div>
+
+        </article>
+      </aside>
+
+    </main>
+
+    <!-- LOWER FEATURE CARDS -->
+    <section class="arena-feature-strip" aria-label="Modalità Arena">
+      <div class="arena-feature-track">
+
+        <article id="missions" class="arena-feature-card feature-missions">
+          <div class="feature-visual feature-visual-missions" aria-hidden="true"></div>
+          <div class="feature-copy">
+            <span>Missioni giornaliere</span>
+            <p>Completa le missioni ogni giorno e guadagna token e XP extra.</p>
+            <a href="missions.html">Scopri le missioni <b>›</b></a>
+          </div>
+        </article>
+
+        <article id="bracket" class="arena-feature-card feature-bracket">
+          <div class="feature-visual feature-visual-bracket" aria-hidden="true"></div>
+          <div class="feature-copy">
+            <span>Bracket Prediction</span>
+            <p>Prevedi il cammino delle nazionali e vinci premi esclusivi.</p>
+            <a href="bracket.html">Gioca il bracket <b>›</b></a>
+          </div>
+        </article>
+
+        <article id="leaderboard" class="arena-feature-card feature-leaderboard">
+          <div class="feature-visual feature-visual-leaderboard" aria-hidden="true"></div>
+          <div class="feature-copy">
+            <span>Classifica globale</span>
+            <p>Scala le posizioni e dimostra di essere il migliore al mondo.</p>
+            <a href="leaderboard.html">Vedi classifica <b>›</b></a>
+          </div>
+        </article>
+
+        <article id="referral" class="arena-feature-card feature-referral">
+          <div class="feature-visual feature-visual-referral" aria-hidden="true"></div>
+          <div class="feature-copy">
+            <span>Referral Bonus</span>
+            <p>Invita i tuoi amici e guadagna token illimitati.</p>
+            <a href="referral.html">Invita ora <b>›</b></a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ARENA PROGRESSION SECTION -->
+    <section class="arena-progression" aria-label="Arena Progressione">
+      <div class="progression-head">
+        <div class="progression-intro">
+          <span class="progression-kicker"><i aria-hidden="true">✦</i> Arena Progressione</span>
+          <h2>Scegli la tua <strong>prossima mossa</strong></h2>
+          <p>
+            Esplora tutte le modalità dell’Arena e accumula token, XP e premi esclusivi.
+            Competi, scala la classifica e diventa una leggenda.
+          </p>
+        </div>
+
+        <aside class="daily-rewards daily-missions-preview" aria-label="Anteprima missioni del giorno">
+          <div class="daily-rewards-top">
+            <h3>Missioni del giorno</h3>
+            <span>Reward riscattabili in <a href="missions.html">Missioni</a></span>
+          </div>
+
+          <div class="daily-rewards-grid" data-lobby-mission-preview>
+            <a class="daily-reward reward-token" href="missions.html" data-lobby-mission-card="first_prediction">
+              <div class="reward-visual reward-visual-token" aria-hidden="true"></div>
+              <div>
+                <span>Fai 1 pronostico</span>
+                <strong data-lobby-mission-status="first_prediction">0 / 1</strong>
+              </div>
+              <i aria-hidden="true"></i>
+            </a>
+
+            <a class="daily-reward reward-xp" href="missions.html" data-lobby-mission-card="group_bracket">
+              <div class="reward-visual reward-visual-xp" aria-hidden="true"></div>
+              <div>
+                <span>Completa i gironi</span>
+                <strong data-lobby-mission-status="group_bracket">0 / 12</strong>
+              </div>
+              <i aria-hidden="true"></i>
+            </a>
+
+            <a class="daily-reward reward-bonus" href="missions.html" data-lobby-mission-card="top_1000">
+              <div class="reward-visual reward-visual-bonus" aria-hidden="true"></div>
+              <div>
+                <span>Scala la leaderboard</span>
+                <strong data-lobby-mission-status="top_1000">Rank --</strong>
+              </div>
+              <i aria-hidden="true"></i>
+            </a>
+          </div>
+        </aside>
+      </div>
+
+      <div class="progression-grid">
+        <article class="progression-card progression-missions">
+          <div class="progression-card-bg progression-bg-missions" aria-hidden="true"></div>
+          <div class="progression-card-copy">
+            <span class="progression-card-icon progression-icon-missions" aria-hidden="true"></span>
+            <h3>Missioni giornaliere</h3>
+            <p>Completa le missioni di oggi e guadagna token e XP extra.</p>
+            <div class="progression-meta">
+              <span>Progresso</span>
+              <strong><span data-progression-missions-count>0</span> / 5</strong>
+            </div>
+            <div class="progression-bar"><i data-progression-missions-bar style="width: 0%;"></i></div>
+            <a href="missions.html">Scopri le missioni <b>›</b></a>
+          </div>
+        </article>
+
+        <article class="progression-card progression-streak is-wide">
+          <div class="progression-card-bg progression-bg-streak" aria-hidden="true"></div>
+          <div class="progression-card-copy">
+            <span class="progression-card-icon progression-icon-streak" aria-hidden="true"></span>
+            <h3>Daily Streak</h3>
+            <p>Mantieni la tua serie attiva e moltiplica i tuoi premi.</p>
+            <div class="progression-meta">
+              <span>Streak attuale</span>
+              <strong><span data-progression-streak-label>0 giorni</span></strong>
+            </div>
+            <div class="streak-line" aria-hidden="true" data-progression-streak-dots><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <a href="daily-prediction.html">Visualizza streak <b>›</b></a>
+          </div>
+        </article>
+
+        <article class="progression-card progression-bracket">
+          <div class="progression-card-bg progression-bg-bracket" aria-hidden="true"></div>
+          <div class="progression-card-copy">
+            <span class="progression-card-icon progression-icon-bracket" aria-hidden="true"></span>
+            <h3>Bracket Prediction</h3>
+            <p>Completa le previsioni del bracket e vinci premi esclusivi.</p>
+            <div class="progression-meta">
+              <span>Previsioni fatte</span>
+              <strong><span data-progression-bracket-count>0</span> / 12</strong>
+            </div>
+            <div class="progression-bar"><i data-progression-bracket-bar style="width: 0%;"></i></div>
+            <a href="bracket.html">Gioca il bracket <b>›</b></a>
+          </div>
+        </article>
+
+        <article class="progression-card progression-leaderboard">
+          <div class="progression-card-bg progression-bg-leaderboard" aria-hidden="true"></div>
+          <div class="progression-card-copy">
+            <span class="progression-card-icon progression-icon-leaderboard" aria-hidden="true"></span>
+            <h3>Classifica globale</h3>
+            <p>Scala le posizioni e dimostra di essere il migliore al mondo.</p>
+            <div class="progression-meta">
+              <span>La tua posizione</span>
+              <strong data-leaderboard-user-rank>#--</strong>
+            </div>
+            <a href="leaderboard.html">Vedi classifica <b>›</b></a>
+          </div>
+        </article>
+
+        <article class="progression-card progression-referral is-wide">
+          <div class="progression-card-bg progression-bg-referral" aria-hidden="true"></div>
+          <div class="progression-card-copy">
+            <span class="progression-card-icon progression-icon-referral" aria-hidden="true"></span>
+            <h3>Referral Bonus</h3>
+            <p>Invita i tuoi amici e guadagna token illimitati.</p>
+            <div class="progression-meta progression-referral-meta">
+              <span>Amici invitati</span>
+              <strong><span data-progression-referral-count>0</span> / 5</strong>
+            </div>
+            <div class="friend-dots" aria-hidden="true" data-progression-referral-dots><i></i><i></i><i></i><i></i><i></i></div>
+            <a href="referral.html">Invita ora <b>›</b></a>
+          </div>
+        </article>
+
+        <article class="progression-card progression-pass">
+          <div class="progression-card-bg progression-bg-pass" aria-hidden="true"></div>
+          <div class="progression-card-copy">
+            <span class="progression-card-icon progression-icon-pass" aria-hidden="true"></span>
+            <h3>Arena Pass</h3>
+            <p>Guadagna XP, sblocca ricompense e ottieni premi esclusivi.</p>
+            <div class="progression-meta">
+              <span>Livello attuale</span>
+              <strong>Lvl <span data-user-level>1</span> <small><span data-user-xp>0</span> / <span data-user-xp-next>250</span> XP</small></strong>
+            </div>
+            <div class="progression-bar"><i data-arena-pass-bar style="width: 0%;"></i></div>
+            <a href="#profile-card">Vai al profilo <b>›</b></a>
+          </div>
+        </article>
+      </div>
+
+      <div class="progression-footer">
+        <span aria-hidden="true">››››</span>
+        <p>Competi. Progredisci. Vinci. Ogni mossa ti avvicina alla <strong>leggenda.</strong></p>
+        <span aria-hidden="true">‹‹‹‹</span>
+      </div>
+    </section>
+
+    <!-- LIVE ARENA FEED -->
+    <section class="arena-live-feed" aria-label="Live Arena Feed">
+      <div class="live-feed-shell">
+        <div class="live-feed-item live-feed-status">
+          <span class="live-pill"><i aria-hidden="true"></i> Arena live</span>
+          <strong data-live-status-label>Calendario sincronizzato</strong>
+        </div>
+
+        <div class="live-feed-divider" aria-hidden="true"></div>
+
+        <div class="live-feed-item live-feed-match">
+          <span>Prossimi match</span>
+          <div class="live-match-list" data-live-match-list>
+            <b>Caricamento <small>--:--</small></b>
+          </div>
+        </div>
+
+        <div class="live-feed-divider" aria-hidden="true"></div>
+
+        <div class="live-feed-item live-feed-prize">
+          <span>Saldo profilo</span>
+          <strong><span data-live-user-tokens>--</span> token</strong>
+        </div>
+
+        <div class="live-feed-divider" aria-hidden="true"></div>
+
+        <div class="live-feed-item live-feed-winner">
+          <span>Obiettivo Arena</span>
+          <strong data-live-player-goal>Diventa il primo campione</strong>
+        </div>
+
+        <div class="live-feed-tagline">
+          <p>La tua leggenda <strong>inizia qui.</strong></p>
+        </div>
+      </div>
+    </section>
+
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js?v=security-production-step14"></script>
+  <script src="js/world-cup-fixtures.js?v=security-production-step14"></script>
+  <script src="js/arena-game.js?v=admin-login-flow-final"></script>
+</body>
+</html>
