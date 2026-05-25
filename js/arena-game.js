@@ -54,6 +54,7 @@
   const SUPABASE_ENABLED = Boolean(window.PFA_SUPABASE);
   let SUPABASE_LEADERBOARD_CACHE = null;
   let SUPABASE_ADMIN_CACHE_READY = false;
+  window.PFA_AUTH_READY = false;
 
   function getSupabase() {
     return window.PFA_SUPABASE || null;
@@ -598,7 +599,7 @@
     { key: "daily_streak", progressKey: "dailyStreak", target: 1, tokens: 0, xp: 20 },
     { key: "group_bracket", progressKey: "bracket", target: 12, tokens: 0, xp: 200 },
     { key: "invite_friend", progressKey: "referral", target: 1, tokens: 250, xp: 100 },
-    { key: "top_1000", progressKey: "rank", target: 1000, tokens: 0, xp: 150 }
+    { key: "top_50", progressKey: "rank", target: 50, tokens: 0, xp: 150 }
   ];
 
   function getMissionByKey(key) {
@@ -625,7 +626,19 @@
       }
       case "group_bracket": return { value: Math.min(12, bracketGroups), target: 12, complete: bracketGroups >= 12 };
       case "invite_friend": return { value: Math.min(1, qualifiedReferrals), target: 1, complete: qualifiedReferrals >= 1 };
-      case "top_1000": return { value: rank <= 1000 ? 1000 : Math.max(0, 1000 - rank), target: 1000, complete: rank <= 1000, rank };
+      case "top_50": {
+        const played = Number(user.predictionPlayed || Object.keys(user.predictions || {}).length || 0);
+        const rankOk = rank <= 50;
+        const playedOk = played >= 5;
+        return {
+          value: Math.min(50, rankOk && playedOk ? 50 : Math.max(0, 50 - Math.min(rank || 999999, 50))),
+          target: 50,
+          complete: rankOk && playedOk,
+          rank,
+          played,
+          playedTarget: 5
+        };
+      }
       default: return { value: 0, target: 1, complete: false };
     }
   }
@@ -675,8 +688,8 @@
       if (!status) return;
       if (claimed) {
         status.textContent = "Riscattata";
-      } else if (key === "top_1000") {
-        status.textContent = progress.complete ? "Pronta" : `Rank #${progress.rank || "--"}`;
+      } else if (key === "top_50") {
+        status.textContent = progress.complete ? "Pronta" : `Rank #${progress.rank || "--"} · ${progress.played || 0}/5`;
       } else {
         status.textContent = `${progress.value} / ${progress.target}`;
       }
@@ -939,7 +952,7 @@
 
       if (bar) bar.style.width = percent + "%";
       if (count) {
-        if (key === "top_1000") count.textContent = progress.complete ? "Top 1000" : `Rank #${progress.rank || "--"}`;
+        if (key === "top_50") count.textContent = progress.complete ? "Top 50" : `Rank #${progress.rank || "--"} · ${progress.played || 0}/5 pron.`;
         else count.textContent = `${progress.value} / ${progress.target}`;
       }
 
@@ -964,7 +977,7 @@
     if (error) {
       const message = String(error.message || "");
       if (message.includes("Could not find the function") || message.includes("schema cache") || message.includes("mission_claims")) {
-        throw new Error("Funzione missioni Supabase non trovata. Esegui SUPABASE_MISSIONS_STEP3_SQL.sql nel SQL Editor e ricarica.");
+        throw new Error("Funzione missioni Supabase non trovata. Esegui SUPABASE_MISSIONS_STEP3_SQL.sql e SUPABASE_MISSION_TOP50_LIVE_FIX_SQL.sql nel SQL Editor e ricarica.");
       }
       throw error;
     }
@@ -1413,6 +1426,16 @@
     }).join("");
   }
 
+  function updateFixtureCountdowns() {
+    const now = getNow();
+    document.querySelectorAll("[data-match-countdown][data-kickoff]").forEach((el) => {
+      const kickoff = new Date(el.dataset.kickoff);
+      if (Number.isNaN(kickoff.getTime())) return;
+      const diff = kickoff - now;
+      el.textContent = diff <= 0 ? "Live / chiusa" : formatCountdown(diff);
+    });
+  }
+
   function matchCardTemplate(match, user, activeDay, lockedByDay = false) {
     const now = getNow();
     const saved = user.predictions && user.predictions[match.id];
@@ -1434,6 +1457,7 @@
         <div class="daily-match-bg match-bg-fixture" aria-hidden="true"></div>
         ${locked && !saved ? `<div class="lock-badge">LOCK</div>` : ""}
         <div class="daily-match-top"><span>${match.dateLabel} • ${match.timeLabel}</span><b data-match-status>${status}</b></div>
+        <div class="daily-match-countdown"><span>${hasStarted ? "Stato match" : "Inizia tra"}</span><strong data-match-countdown data-kickoff="${match.kickoff.toISOString()}">${hasStarted ? "Live / chiusa" : formatCountdown(match.kickoff - now)}</strong></div>
         <div class="daily-teams daily-teams-flags">
           <strong><img src="${match.homeFlag}" alt="${match.homeName || match.home}" loading="lazy">${match.home}</strong>
           <span>VS</span>
@@ -1457,7 +1481,7 @@
     const todayPlayable = activeDay.isToday ? activeDay.matches.filter((match) => match.kickoff > now || (user.predictions && user.predictions[match.id])) : [];
     const nextDay = activeDay;
     const futureMatches = activeDay.isToday
-      ? fixtures.filter((match) => match.kickoff > now && match.dayKey !== activeDay.key).slice(0, 6)
+      ? fixtures.filter((match) => match.kickoff > now && match.dayKey !== activeDay.key).slice(0, 12)
       : nextDay.matches;
 
     if (openGrid) {
@@ -1762,6 +1786,19 @@
   }
 
   function getLeaderboardRows(user = getUser()) {
+    if (SUPABASE_ENABLED && !SUPABASE_LEADERBOARD_CACHE) {
+      return hasRegisteredUser() ? [{
+        id: user.id || "current-user",
+        username: user.username || "Tu",
+        tokens: Number(user.tokens || 0),
+        xp: Number(user.xp || 0),
+        streak: Number(user.streak || 0),
+        avatar: user.avatar || DEFAULT_USER.avatar,
+        rank: "--",
+        current: true,
+        loading: true
+      }] : [];
+    }
     if (SUPABASE_LEADERBOARD_CACHE && SUPABASE_LEADERBOARD_CACHE.length) {
       const currentId = user.id;
       const rows = SUPABASE_LEADERBOARD_CACHE.map((row) => {
@@ -1811,6 +1848,12 @@
     if (!podium && !list && !rankEls.length) return;
 
     const rows = getLeaderboardRows(user);
+    if (!rows.length) {
+      rankEls.forEach((el) => { el.textContent = "#--"; });
+      if (podium) podium.innerHTML = `<article class="leaderboard-loading"><strong>Classifica in caricamento</strong><span>Stiamo leggendo i profili reali da Supabase.</span></article>`;
+      if (list) list.innerHTML = `<div class="leader-row current-user"><span>--</span><strong>Classifica in caricamento</strong><b>--</b><em>--</em></div>`;
+      return;
+    }
     const current = rows.find((item) => item.current) || rows[rows.length - 1];
 
     rankEls.forEach((el) => {
@@ -2426,7 +2469,11 @@
     if (SUPABASE_ENABLED && getUser().id) {
       await refreshSupabaseAdminCache();
       await refreshSupabaseLeaderboard();
+    } else if (SUPABASE_ENABLED) {
+      await refreshSupabaseLeaderboard();
     }
+    window.PFA_AUTH_READY = true;
+    window.dispatchEvent(new CustomEvent("pfa:auth-ready", { detail: { user: getUser() } }));
     resolveUserPredictionsForResults();
     renderUser();
     setupRegistration();
@@ -2447,7 +2494,9 @@
       const currentUser = getUser();
       renderLobbyNextMatch(currentUser);
       renderArenaLiveFeed(currentUser);
+      updateFixtureCountdowns();
     }, 1000);
+    updateFixtureCountdowns();
   });
   window.PFA_AUTH_HELPERS = { syncSupabaseSessionToLocal, refreshSupabaseProfileCache, refreshSupabaseLeaderboard, refreshSupabaseAdminCache, signOutSupabaseAndLocal, getUser, hasRegisteredUser, isAdminUser, updateAdminEntryPoints };
 })();
