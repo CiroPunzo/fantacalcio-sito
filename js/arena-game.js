@@ -431,8 +431,21 @@
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   }
 
+  function parseFixtureDayKey(fixture, kickoff) {
+    // Il calendario ufficiale della World Cup raggruppa i match per data FIFA/venue.
+    // Questo evita che le partite serali in America finiscano nel giorno dopo per gli utenti italiani.
+    return fixture.localDate || fixture.dayKey || toLocalDayKey(kickoff);
+  }
+
+  function formatOfficialDate(dayKey, fallbackDate) {
+    const date = dayKey ? new Date(`${dayKey}T12:00:00Z`) : new Date(fallbackDate);
+    if (Number.isNaN(date.getTime())) return "--";
+    return date.toLocaleDateString("it-IT", { weekday: "short", day: "2-digit", month: "short" });
+  }
+
   function normalizeFixture(fixture) {
     const kickoff = new Date(fixture.kickoffUtc || fixture.kickoff || fixture.date);
+    const dayKey = parseFixtureDayKey(fixture, kickoff);
     return {
       ...fixture,
       id: fixture.id,
@@ -441,9 +454,11 @@
       homeFlag: fixture.homeFlag || `img/flags/${String(fixture.home || "").toLowerCase()}.png`,
       awayFlag: fixture.awayFlag || `img/flags/${String(fixture.away || "").toLowerCase()}.png`,
       kickoff,
-      dayKey: toLocalDayKey(kickoff),
+      dayKey,
+      officialDateLabel: formatOfficialDate(dayKey, kickoff),
+      // Orario mostrato all'utente in base al suo fuso locale; il countdown resta basato su kickoffUtc.
       timeLabel: kickoff.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" }),
-      dateLabel: kickoff.toLocaleDateString("it-IT", { weekday: "short", day: "2-digit", month: "short" })
+      dateLabel: formatOfficialDate(dayKey, kickoff)
     };
   }
 
@@ -470,23 +485,67 @@
     return fixtures.find((match) => match.kickoff > now) || fixtures[fixtures.length - 1] || null;
   }
 
+  function groupFixturesByDay(fixtures = getFixturePool()) {
+    const map = new Map();
+    fixtures.forEach((match) => {
+      if (!map.has(match.dayKey)) map.set(match.dayKey, []);
+      map.get(match.dayKey).push(match);
+    });
+    return Array.from(map.entries())
+      .map(([key, matches]) => {
+        const sorted = matches.slice().sort((a, b) => a.kickoff - b.kickoff);
+        return {
+          key,
+          matches: sorted,
+          firstKickoff: sorted[0]?.kickoff || null,
+          lastKickoff: sorted[sorted.length - 1]?.kickoff || null
+        };
+      })
+      .sort((a, b) => (a.firstKickoff || 0) - (b.firstKickoff || 0));
+  }
+
+  function getPredictionUnlockAt(day) {
+    if (!day || !day.firstKickoff) return null;
+    const first = new Date(day.firstKickoff);
+    // Sblocco coerente con il concetto di "matchday": dalla mezzanotte italiana del giorno FIFA.
+    // In fallback, se la data ufficiale non è parsabile, apriamo 18h prima del primo kickoff.
+    if (day.key && /^\d{4}-\d{2}-\d{2}$/.test(day.key)) {
+      const unlock = new Date(`${day.key}T00:01:00+02:00`);
+      if (!Number.isNaN(unlock.getTime())) return unlock;
+    }
+    return new Date(first.getTime() - 18 * 60 * 60 * 1000);
+  }
+
+  function isPredictionDayUnlocked(day, now = getNow()) {
+    const unlockAt = getPredictionUnlockAt(day);
+    if (!unlockAt) return true;
+    return now >= unlockAt;
+  }
+
   function getActivePredictionDay(now = getNow()) {
     const fixtures = getFixturePool();
     const todayKey = toLocalDayKey(now);
-    const todayMatches = fixtures.filter((match) => match.dayKey === todayKey);
-    if (todayMatches.length) {
-      return { key: todayKey, matches: todayMatches, isToday: true, isFuture: false };
+    const days = groupFixturesByDay(fixtures);
+    if (!days.length) return { key: todayKey, matches: [], isToday: true, isFuture: false, unlockAt: null };
+
+    // 1) Se esiste un matchday già sbloccato con almeno una partita futura, resta quello giocabile.
+    const playableDay = days.find((day) => day.matches.some((match) => match.kickoff > now) && isPredictionDayUnlocked(day, now));
+    if (playableDay) {
+      return {
+        ...playableDay,
+        isToday: true,
+        isFuture: false,
+        unlockAt: getPredictionUnlockAt(playableDay)
+      };
     }
 
-    const next = fixtures.find((match) => match.kickoff > now) || fixtures[0];
-    if (!next) return { key: todayKey, matches: [], isToday: true, isFuture: false };
-
-    const nextKey = next.dayKey;
+    // 2) Altrimenti mostriamo il prossimo matchday ufficiale bloccato, con countdown di sblocco.
+    const nextDay = days.find((day) => day.matches.some((match) => match.kickoff > now)) || days[days.length - 1];
     return {
-      key: nextKey,
-      matches: fixtures.filter((match) => match.dayKey === nextKey),
-      isToday: nextKey === todayKey,
-      isFuture: nextKey !== todayKey
+      ...nextDay,
+      isToday: isPredictionDayUnlocked(nextDay, now),
+      isFuture: !isPredictionDayUnlocked(nextDay, now),
+      unlockAt: getPredictionUnlockAt(nextDay)
     };
   }
 
@@ -1452,16 +1511,27 @@
       const diff = kickoff - now;
       el.textContent = diff <= 0 ? "Live / chiusa" : formatCountdown(diff);
     });
+    document.querySelectorAll("[data-unlock-countdown][data-unlock]").forEach((el) => {
+      const unlockAt = new Date(el.dataset.unlock);
+      if (Number.isNaN(unlockAt.getTime())) return;
+      const diff = unlockAt - now;
+      el.textContent = diff <= 0 ? "Disponibile" : formatCountdown(diff);
+    });
   }
 
   function matchCardTemplate(match, user, activeDay, lockedByDay = false) {
     const now = getNow();
     const saved = user.predictions && user.predictions[match.id];
     const hasStarted = match.kickoff <= now;
-    const locked = lockedByDay || !activeDay.isToday || hasStarted;
+    const unlockAt = activeDay?.unlockAt || null;
+    const dayLocked = lockedByDay || !activeDay.isToday;
+    const locked = dayLocked || hasStarted;
     const status = saved ? getMatchAdminStatus(match, user, now) : (getAdminResult(match.id) ? getMatchAdminStatus(match, user, now) : (locked ? "LOCK" : "Disponibile"));
     const classes = ["daily-match-card", saved ? "is-played" : "", locked && !saved ? "is-locked" : "is-open"].join(" ");
-    const choices = locked && !saved ? `<p class="locked-copy">Disponibile nel giorno partita</p>` : `
+    const lockCopy = dayLocked && unlockAt
+      ? `Si sblocca tra <strong data-unlock-countdown data-unlock="${unlockAt.toISOString()}">${formatCountdown(unlockAt - now)}</strong>`
+      : "Prediction chiusa o match già iniziato";
+    const choices = locked && !saved ? `<p class="locked-copy">${lockCopy}</p>` : `
       <div class="daily-choice-row">
         <button type="button" data-choice="1">1<small>Casa</small></button>
         <button type="button" data-choice="X">X<small>Pari</small></button>
@@ -1494,28 +1564,36 @@
 
     const user = getUser();
     const activeDay = getActivePredictionDay();
-    const fixtures = getFixturePool();
+    const fixtureDays = groupFixturesByDay(getFixturePool());
     const now = getNow();
-    const todayPlayable = activeDay.isToday ? activeDay.matches.filter((match) => match.kickoff > now || (user.predictions && user.predictions[match.id])) : [];
-    const nextDay = activeDay;
+    const todayPlayable = activeDay.isToday
+      ? activeDay.matches.filter((match) => match.kickoff > now || (user.predictions && user.predictions[match.id]))
+      : [];
+    const nextVisibleDays = fixtureDays
+      .filter((day) => day.matches.some((match) => match.kickoff > now) && day.key !== activeDay.key)
+      .slice(0, 3);
     const futureMatches = activeDay.isToday
-      ? fixtures.filter((match) => match.kickoff > now && match.dayKey !== activeDay.key).slice(0, 12)
-      : nextDay.matches;
+      ? nextVisibleDays.flatMap((day) => day.matches.slice(0, 4).map((match) => ({ match, day }))).slice(0, 12)
+      : activeDay.matches.map((match) => ({ match, day: activeDay }));
 
     if (openGrid) {
       if (!todayPlayable.length) {
-        const nextMatch = nextDay.matches[0];
-        openGrid.innerHTML = `<article class="daily-empty-state"><strong>Nessuna prediction giocabile adesso</strong><span>${nextMatch ? `Il prossimo matchday è ${formatDateShort(nextMatch.kickoff)} · inizia tra <b data-match-countdown data-kickoff="${nextMatch.kickoff.toISOString()}">${formatCountdown(nextMatch.kickoff - now)}</b>` : "Il prossimo matchday è in arrivo."}</span></article>`;
+        const nextMatch = activeDay.matches[0];
+        const unlockAt = activeDay.unlockAt;
+        const countdownLabel = unlockAt && unlockAt > now
+          ? `Si sblocca tra <b data-unlock-countdown data-unlock="${unlockAt.toISOString()}">${formatCountdown(unlockAt - now)}</b>`
+          : (nextMatch ? `Inizia tra <b data-match-countdown data-kickoff="${nextMatch.kickoff.toISOString()}">${formatCountdown(nextMatch.kickoff - now)}</b>` : "Il prossimo matchday è in arrivo.");
+        openGrid.innerHTML = `<article class="daily-empty-state"><strong>Prossimo matchday: ${nextMatch ? activeDay.matches[0].dateLabel : "--"}</strong><span>${countdownLabel}</span></article>`;
       } else {
         openGrid.innerHTML = todayPlayable.map((match) => matchCardTemplate(match, user, activeDay, false)).join("");
       }
     }
     if (lockedGrid) {
-      lockedGrid.innerHTML = futureMatches.slice(0, 6).map((match) => matchCardTemplate(match, user, { ...activeDay, isToday: false }, true)).join("");
+      lockedGrid.innerHTML = futureMatches.map(({ match, day }) => matchCardTemplate(match, user, { ...day, isToday: false, unlockAt: getPredictionUnlockAt(day) }, true)).join("");
     }
 
     document.querySelectorAll("[data-active-matchday-label]").forEach((el) => {
-      el.textContent = activeDay.matches[0] ? formatDateShort(activeDay.matches[0].kickoff) : "--";
+      el.textContent = activeDay.matches[0] ? activeDay.matches[0].dateLabel : "--";
     });
   }
 
@@ -2509,11 +2587,22 @@
     document.body.classList.add("pfa-ready");
     countdownToMidnight();
     setInterval(countdownToMidnight, 1000);
+    let lastDailyRenderMinute = "";
     setInterval(() => {
       const currentUser = getUser();
       renderLobbyNextMatch(currentUser);
       renderArenaLiveFeed(currentUser);
       updateFixtureCountdowns();
+
+      // La pagina Daily deve cambiare stato quando un match scatta da disponibile a live/chiuso.
+      // Non la ridisegniamo ogni secondo per non perdere fluidità/mobile performance.
+      const minuteKey = String(Math.floor(Date.now() / 60000));
+      if (minuteKey !== lastDailyRenderMinute && document.querySelector("[data-daily-match-grid]")) {
+        lastDailyRenderMinute = minuteKey;
+        renderDailyPredictionPage();
+        setupPredictions();
+        updateFixtureCountdowns();
+      }
     }, 1000);
     updateFixtureCountdowns();
   });

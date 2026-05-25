@@ -7942,3 +7942,18 @@ body.pfa-ready main {
     grid-template-columns: 1fr;
   }
 }
+
+/* Countdown reali matchday — produzione */
+.locked-copy strong,
+.daily-empty-state b[data-unlock-countdown],
+.daily-empty-state b[data-match-countdown] {
+  color: #66f2ff;
+  font-family: Orbitron, system-ui, sans-serif;
+  font-weight: 900;
+  text-shadow: 0 0 14px rgba(72, 228, 255, .35);
+}
+
+.daily-match-card.is-locked .daily-match-countdown strong {
+  color: #ffc84d;
+  text-shadow: 0 0 14px rgba(255, 193, 58, .35);
+}
