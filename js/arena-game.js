@@ -49,7 +49,9 @@
   };
 
   const FIXTURE_SOURCE = Array.isArray(window.WORLD_CUP_FIXTURES) ? window.WORLD_CUP_FIXTURES : [];
-
+  // Produzione: countdown reali sul calendario World Cup.
+  // Per test: aggiungi ?arenaDate=2026-06-11T18:30:00Z oppure imposta localStorage.pfa_arena_preview_now.
+  const FORCE_REAL_WORLD_CUP_TIME = window.PFA_FORCE_REAL_WORLD_CUP_TIME !== false;
 
   const SUPABASE_ENABLED = Boolean(window.PFA_SUPABASE);
   let SUPABASE_LEADERBOARD_CACHE = null;
@@ -62,14 +64,19 @@
 
   function getAuthRedirectUrl() {
     const configured = window.PFA_AUTH_REDIRECT_URL || "";
-    if (configured) return configured;
+    if (configured && /^https?:\/\//i.test(configured)) return configured;
 
-    const path = window.location.pathname.replace(/[^/]*$/, "login.html");
-    if (window.location.protocol === "http:" || window.location.protocol === "https:") {
-      return `${window.location.origin}${path}`;
+    const fallback = "https://ciropunzo.github.io/fantacalcio-sito/login.html";
+    try {
+      const path = window.location.pathname.replace(/\/[^/]*$/, "/login.html");
+      if (window.location.protocol === "http:" || window.location.protocol === "https:") {
+        return `${window.location.origin}${path}`;
+      }
+    } catch (error) {
+      console.warn("Auth redirect URL fallback", error);
     }
 
-    return "https://ciropunzo.github.io/fantacalcio-sito/login.html";
+    return fallback;
   }
 
   function mapProfileFromSupabase(profile, authUser, predictionMap = null, missionRewardsMap = null, referralStats = null) {
@@ -370,7 +377,7 @@
     if (error) throw error;
 
     if (data.user && !data.session) {
-      return { pendingEmail: true, email };
+      return { pendingEmail: true, email, redirectUrl: getAuthRedirectUrl() };
     }
 
     if (data.user) {
@@ -407,11 +414,9 @@
       ? new Date(window.WORLD_CUP_FIXTURES[0].kickoffUtc || window.WORLD_CUP_FIXTURES[0].kickoff || window.WORLD_CUP_FIXTURES[0].date)
       : null;
 
-    // PREVIEW MODE: prima dell'inizio reale del torneo, apriamo il sito
-    // direttamente nel primo matchday, così la Daily Prediction è giocabile.
-    // Per verificaare altri momenti usa ?arenaDate=2026-06-11T18:30:00Z
-    // oppure imposta localStorage.pfa_arena_preview_now.
-    if (firstFixture && !Number.isNaN(firstFixture.getTime()) && realNow < firstFixture) {
+    // Produzione: usiamo sempre l'orario reale del browser.
+    // La preview resta disponibile solo con ?arenaDate=... o localStorage.pfa_arena_preview_now.
+    if (!FORCE_REAL_WORLD_CUP_TIME && firstFixture && !Number.isNaN(firstFixture.getTime()) && realNow < firstFixture) {
       return new Date("2026-06-11T12:00:00Z");
     }
 
@@ -466,10 +471,20 @@
     const fixtures = getFixturePool();
     const todayKey = toLocalDayKey(now);
     const todayMatches = fixtures.filter((match) => match.dayKey === todayKey);
-    if (todayMatches.length) return { key: todayKey, matches: todayMatches, isToday: true };
+    if (todayMatches.length) {
+      return { key: todayKey, matches: todayMatches, isToday: true, isFuture: false };
+    }
+
     const next = fixtures.find((match) => match.kickoff > now) || fixtures[0];
-    if (!next) return { key: todayKey, matches: [], isToday: true };
-    return { key: next.dayKey, matches: fixtures.filter((match) => match.dayKey === next.dayKey), isToday: false };
+    if (!next) return { key: todayKey, matches: [], isToday: true, isFuture: false };
+
+    const nextKey = next.dayKey;
+    return {
+      key: nextKey,
+      matches: fixtures.filter((match) => match.dayKey === nextKey),
+      isToday: nextKey === todayKey,
+      isFuture: nextKey !== todayKey
+    };
   }
 
   function getMatchLabels() {
@@ -1486,7 +1501,8 @@
 
     if (openGrid) {
       if (!todayPlayable.length) {
-        openGrid.innerHTML = `<article class="daily-empty-state"><strong>Nessuna prediction giocabile adesso</strong><span>Il prossimo matchday disponibile è ${nextDay.matches[0] ? formatDateShort(nextDay.matches[0].kickoff) : "in arrivo"}.</span></article>`;
+        const nextMatch = nextDay.matches[0];
+        openGrid.innerHTML = `<article class="daily-empty-state"><strong>Nessuna prediction giocabile adesso</strong><span>${nextMatch ? `Il prossimo matchday è ${formatDateShort(nextMatch.kickoff)} · inizia tra <b data-match-countdown data-kickoff="${nextMatch.kickoff.toISOString()}">${formatCountdown(nextMatch.kickoff - now)}</b>` : "Il prossimo matchday è in arrivo."}</span></article>`;
       } else {
         openGrid.innerHTML = todayPlayable.map((match) => matchCardTemplate(match, user, activeDay, false)).join("");
       }
