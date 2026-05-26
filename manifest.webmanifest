@@ -1,0 +1,26 @@
+{
+  "name": "ProFantasy World Cup Arena",
+  "short_name": "PF Arena",
+  "description": "La lobby fantasy ProFantasy per prediction, missioni, bracket e leaderboard World Cup.",
+  "start_url": "arena.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#05001f",
+  "theme_color": "#7c3cff",
+  "orientation": "portrait-primary",
+  "categories": ["games", "sports", "entertainment"],
+  "icons": [
+    {
+      "src": "img/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "img/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

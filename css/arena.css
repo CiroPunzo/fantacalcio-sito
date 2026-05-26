@@ -8173,3 +8173,144 @@ body.pfa-ready main {
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================================
+   PFA Arena — Soft Push Notifications + Mobile App Shortcut
+   ========================================================= */
+.pfa-notification-toast,
+.pfa-install-card {
+  position: fixed;
+  right: 18px;
+  top: 88px;
+  z-index: 9999;
+  width: min(360px, calc(100vw - 28px));
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.16);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255,204,104,.16), transparent 30%),
+    radial-gradient(circle at 100% 20%, rgba(43,230,255,.16), transparent 30%),
+    linear-gradient(135deg, rgba(18,10,52,.96), rgba(7,8,28,.96));
+  color: #fff;
+  box-shadow: 0 22px 70px rgba(0,0,0,.42), 0 0 34px rgba(124,60,255,.18);
+  backdrop-filter: blur(18px);
+  transform: translateY(-12px) scale(.98);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .24s ease, transform .24s ease;
+}
+
+.pfa-install-card {
+  top: auto;
+  bottom: 18px;
+}
+
+.pfa-notification-toast.is-visible,
+.pfa-install-card.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.pfa-toast-close,
+.pfa-install-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px;
+  background: rgba(255,255,255,.07);
+  color: rgba(255,255,255,.82);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.pfa-toast-kicker,
+.pfa-install-kicker {
+  display: inline-flex;
+  margin-bottom: 8px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(43,230,255,.10);
+  border: 1px solid rgba(43,230,255,.22);
+  color: #2be6ff;
+  font-family: Orbitron, Rajdhani, sans-serif;
+  font-size: .66rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.pfa-notification-toast strong,
+.pfa-install-card strong {
+  display: block;
+  padding-right: 30px;
+  font-family: Orbitron, Rajdhani, sans-serif;
+  font-size: 1.02rem;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.pfa-notification-toast p,
+.pfa-install-card p {
+  margin: 8px 0 14px;
+  color: rgba(255,255,255,.72);
+  font-size: .92rem;
+  line-height: 1.45;
+}
+
+.pfa-toast-actions,
+.pfa-install-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pfa-toast-primary,
+.pfa-install-primary,
+.pfa-toast-secondary,
+.pfa-install-secondary {
+  min-height: 40px;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-family: Orbitron, Rajdhani, sans-serif;
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.pfa-toast-primary,
+.pfa-install-primary {
+  border: 0;
+  color: #080719;
+  background: linear-gradient(135deg, #ffd76e, #2be6ff);
+  box-shadow: 0 0 22px rgba(43,230,255,.16);
+}
+
+.pfa-toast-secondary,
+.pfa-install-secondary {
+  color: rgba(255,255,255,.82);
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+}
+
+@media (max-width: 720px) {
+  .pfa-notification-toast {
+    top: 76px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+  }
+
+  .pfa-install-card {
+    right: 12px;
+    left: 12px;
+    bottom: 14px;
+    width: auto;
+  }
+}
