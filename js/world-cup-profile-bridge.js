@@ -28,6 +28,22 @@
     return data;
   }
 
+  function getCurrentPage() {
+    const path = window.location.pathname || "/";
+    const file = path.split("/").pop() || "index.html";
+    return file || "index.html";
+  }
+
+  function buildLoginHref(targetPage) {
+    const target = targetPage || getCurrentPage();
+    return `login.html?redirect=${encodeURIComponent(target)}`;
+  }
+
+  function buildRegisterHref(targetPage) {
+    const target = targetPage || getCurrentPage();
+    return `register.html?redirect=${encodeURIComponent(target)}`;
+  }
+
   function findClient() {
     if (window.PFA_SUPABASE_CLIENT) return window.PFA_SUPABASE_CLIENT;
     if (window.pfaSupabase) return window.pfaSupabase;
@@ -101,9 +117,10 @@
   function renderNavGuest(container) {
     if (!container) return;
 
+    const currentPage = getCurrentPage();
     container.innerHTML = `
-      <a href="login.html" class="wc-btn wc-btn-login wc-auth-guest">Accedi</a>
-      <a href="register.html" class="wc-btn wc-btn-register wc-auth-guest">Registrati</a>
+      <a href="${buildLoginHref(currentPage)}" class="wc-btn wc-btn-login wc-auth-guest">Accedi</a>
+      <a href="${buildRegisterHref(currentPage)}" class="wc-btn wc-btn-register wc-auth-guest">Registrati</a>
     `;
     container.removeAttribute("data-loading");
   }
@@ -127,6 +144,7 @@
         </div>
       </div>
       <a href="arena.html" class="wc-btn wc-btn-register">Apri Arena</a>
+      <button type="button" class="wc-btn wc-btn-logout" data-wc-logout>Esci</button>
     `;
     container.removeAttribute("data-loading");
   }
@@ -180,6 +198,31 @@
     }
   }
 
+  async function handleLogout(event) {
+    const button = event.target.closest("[data-wc-logout]");
+    if (!button) return;
+
+    event.preventDefault();
+    const client = findClient();
+    button.disabled = true;
+    button.textContent = "Esco...";
+
+    try {
+      if (client && client.auth && typeof client.auth.signOut === "function") {
+        await client.auth.signOut();
+      }
+    } catch (error) {
+      console.warn("Logout sito principale non completato", error);
+    }
+
+    try {
+      localStorage.removeItem("profantasy_arena_session_cache_v1");
+    } catch (_) {}
+
+    renderHubGuest();
+    document.querySelectorAll("[data-wc-auth-actions], .wc-nav-actions").forEach(renderNavGuest);
+  }
+
   async function init() {
     const navActions = document.querySelectorAll("[data-wc-auth-actions], .wc-nav-actions");
     const client = findClient();
@@ -214,5 +257,6 @@
     renderHubUser(profile, rank);
   }
 
+  document.addEventListener("click", handleLogout);
   document.addEventListener("DOMContentLoaded", init);
 })();

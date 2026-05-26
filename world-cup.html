@@ -7,7 +7,7 @@
   <title>ProFantasy | World Cup Arena</title>
 
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/world-cup.css?v=profile-bridge-v1" />
+  <link rel="stylesheet" href="css/world-cup.css?v=auth-return-flow-v1" />
 </head>
 
 <body class="wc-page">
@@ -36,8 +36,8 @@
       </nav>
 
       <div class="wc-nav-actions" data-wc-auth-actions data-loading="true">
-        <a href="login.html" class="wc-btn wc-btn-login wc-auth-guest">Accedi</a>
-        <a href="register.html" class="wc-btn wc-btn-register wc-auth-guest">Registrati</a>
+        <a href="login.html?redirect=world-cup.html" class="wc-btn wc-btn-login wc-auth-guest">Accedi</a>
+        <a href="register.html?redirect=world-cup.html" class="wc-btn wc-btn-register wc-auth-guest">Registrati</a>
       </div>
 
     </div>
@@ -620,10 +620,10 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js?v=profile-bridge-v1"></script>
-  <script src="js/world-cup-profile-bridge.js?v=profile-bridge-v1"></script>
+  <script src="js/supabase-config.js?v=auth-return-flow-v1"></script>
+  <script src="js/world-cup-profile-bridge.js?v=auth-return-flow-v1"></script>
   <script src="js/main.js"></script>
-  <script src="js/world-cup.js?v=profile-bridge-v1"></script>
+  <script src="js/world-cup.js?v=auth-return-flow-v1"></script>
 
 </body>
 </html>

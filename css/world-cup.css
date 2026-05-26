@@ -4543,3 +4543,41 @@ body.wc-page {
   }
 }
 
+
+
+/* ===== AUTH RETURN FLOW V1 ===== */
+.wc-navbar a,
+.wc-navbar a:visited,
+.wc-navbar a:hover,
+.wc-navbar a:focus {
+  text-decoration: none;
+}
+
+.wc-btn-logout {
+  min-width: auto;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  background: rgba(255, 255, 255, .055);
+  color: rgba(255, 255, 255, .86);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.wc-btn-logout:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 79, 216, .42);
+  box-shadow: 0 0 22px rgba(255, 79, 216, .18);
+  color: #fff;
+}
+
+.wc-btn-logout:disabled {
+  opacity: .6;
+  cursor: wait;
+  transform: none;
+}
+
+@media (max-width: 980px) {
+  .wc-btn-logout {
+    width: 100%;
+  }
+}

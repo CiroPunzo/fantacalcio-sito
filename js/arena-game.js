@@ -1280,17 +1280,20 @@
           renderUser(user);
           const redirectTarget = new URLSearchParams(window.location.search).get("redirect");
           const safeRedirects = new Set([
+            "index.html",
+            "world-cup.html",
             "arena.html",
             "admin-center.html",
             "daily-prediction.html",
             "missions.html",
             "bracket.html",
             "leaderboard.html",
-            "referral.html"
+            "referral.html",
+            "legal.html"
           ]);
-          // Production flow: even admin accounts land in the Arena after a normal login.
-          // Admin Center is reached only when the login was explicitly opened with
-          // ?redirect=admin-center.html, or by typing admin-center.html directly.
+          // Production flow: a normal login returns to the page that opened login.html
+          // when the redirect is explicitly allowed. Admin Center remains reachable
+          // only through direct URL / explicit redirect=admin-center.html.
           const destination = safeRedirects.has(redirectTarget) ? redirectTarget : "arena.html";
           window.location.href = destination;
         } catch (error) {
