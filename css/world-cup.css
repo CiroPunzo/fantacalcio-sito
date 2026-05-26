@@ -4380,3 +4380,166 @@ body.wc-page {
 .wc-nav-inner {
   transform: none !important;
 }
+
+
+/* =========================================================
+   WORLD CUP PROFILE BRIDGE V1
+   Fix navbar link styling + Supabase account bridge
+   ========================================================= */
+
+.wc-navbar a,
+.wc-navbar a:visited,
+.wc-navbar a:hover,
+.wc-navbar a:active {
+  text-decoration: none !important;
+}
+
+.wc-navbar .wc-logo,
+.wc-navbar .wc-logo:visited {
+  color: var(--wc-purple) !important;
+}
+
+.wc-navbar .wc-nav-links a,
+.wc-navbar .wc-nav-links a:visited {
+  color: rgba(241, 237, 255, 0.78) !important;
+}
+
+.wc-navbar .wc-nav-links a:hover,
+.wc-navbar .wc-nav-links a.active {
+  color: #fff !important;
+}
+
+.wc-navbar .wc-btn,
+.wc-navbar .wc-btn:visited {
+  text-decoration: none !important;
+}
+
+.wc-navbar .wc-btn-login,
+.wc-navbar .wc-btn-login:visited {
+  color: #fff !important;
+}
+
+.wc-navbar .wc-btn-register,
+.wc-navbar .wc-btn-register:visited {
+  color: #130d03 !important;
+}
+
+.wc-nav-actions[data-loading="true"] {
+  opacity: .72;
+}
+
+.wc-auth-user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 8px 14px 8px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 240, 255, .28);
+  background:
+    linear-gradient(135deg, rgba(0, 240, 255, .08), rgba(184, 76, 255, .08)),
+    rgba(5, 8, 28, .78);
+  box-shadow:
+    0 0 18px rgba(0, 240, 255, .10),
+    inset 0 0 18px rgba(255, 255, 255, .04);
+  color: #fff;
+  max-width: 260px;
+}
+
+.wc-auth-avatar {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(247, 191, 79, .45);
+  background: radial-gradient(circle, rgba(247,191,79,.28), rgba(184,76,255,.18));
+  box-shadow: 0 0 14px rgba(247,191,79,.18);
+  color: #fff;
+  font-weight: 950;
+  font-size: .85rem;
+  text-transform: uppercase;
+}
+
+.wc-auth-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+.wc-auth-user-meta {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.wc-auth-user-meta strong {
+  max-width: 132px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: .82rem;
+  color: #fff;
+}
+
+.wc-auth-user-meta small {
+  margin-top: 4px;
+  font-size: .68rem;
+  font-weight: 850;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--wc-gold-light);
+}
+
+.wc-player-hub.is-logged {
+  border-color: rgba(0, 240, 255, .34);
+  box-shadow:
+    0 0 34px rgba(0, 240, 255, .10),
+    0 0 70px rgba(184, 76, 255, .12),
+    inset 0 0 22px rgba(255, 255, 255, .04);
+}
+
+.wc-player-hub.is-logged .wc-hub-action {
+  border-color: rgba(0, 240, 255, .50);
+  box-shadow: 0 0 24px rgba(0, 240, 255, .20);
+}
+
+.wc-hub-stat strong.is-loading,
+.wc-hub-action.is-loading {
+  opacity: .62;
+}
+
+.wc-profile-bridge-note {
+  margin-top: 10px;
+  color: rgba(255,255,255,.62);
+  font-size: .82rem;
+}
+
+@media (max-width: 980px) {
+  .wc-auth-user-chip {
+    width: 100%;
+    max-width: none;
+    justify-content: flex-start;
+  }
+
+  .wc-nav-actions {
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 620px) {
+  .wc-auth-user-chip {
+    min-height: 44px;
+    padding-right: 12px;
+  }
+
+  .wc-auth-user-meta strong {
+    max-width: 180px;
+  }
+}
+

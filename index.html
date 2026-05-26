@@ -43,7 +43,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css?v=1000">
-  <link rel="stylesheet" href="css/world-cup.css">
+  <link rel="stylesheet" href="css/world-cup.css?v=profile-bridge-v1">
   <link rel="stylesheet" href="css/roadmap.css?v=1">
   <link rel="stylesheet" href="css/community-footer.css">
 
@@ -130,9 +130,9 @@
         <a href="about.html">About</a>
       </nav>
 
-      <div class="wc-nav-actions">
-        <a href="#" class="wc-btn wc-btn-login">Accedi</a>
-        <a href="#" class="wc-btn wc-btn-register">Registrati</a>
+      <div class="wc-nav-actions" data-wc-auth-actions data-loading="true">
+        <a href="login.html" class="wc-btn wc-btn-login wc-auth-guest">Accedi</a>
+        <a href="register.html" class="wc-btn wc-btn-register wc-auth-guest">Registrati</a>
       </div>
 
     </div>
@@ -1079,6 +1079,9 @@
     })();
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js?v=profile-bridge-v1"></script>
+  <script src="js/world-cup-profile-bridge.js?v=profile-bridge-v1"></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

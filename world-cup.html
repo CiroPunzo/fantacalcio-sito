@@ -7,7 +7,7 @@
   <title>ProFantasy | World Cup Arena</title>
 
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/world-cup.css" />
+  <link rel="stylesheet" href="css/world-cup.css?v=profile-bridge-v1" />
 </head>
 
 <body class="wc-page">
@@ -29,15 +29,15 @@
       <nav class="wc-nav-links">
         <a href="index.html">Home</a>
         <a href="world-cup.html" class="active">World Cup</a>
-        <a href="#">Transfers</a>
-        <a href="#">Tools</a>
-        <a href="#">Community</a>
-        <a href="#">About</a>
+        <a href="transfers.html">Transfers</a>
+        <a href="tools.html">Tools</a>
+        <a href="community.html">Community</a>
+        <a href="about.html">About</a>
       </nav>
 
-      <div class="wc-nav-actions">
-        <a href="login.html" class="wc-btn wc-btn-login">Accedi</a>
-        <a href="register.html" class="wc-btn wc-btn-register">Registrati</a>
+      <div class="wc-nav-actions" data-wc-auth-actions data-loading="true">
+        <a href="login.html" class="wc-btn wc-btn-login wc-auth-guest">Accedi</a>
+        <a href="register.html" class="wc-btn wc-btn-register wc-auth-guest">Registrati</a>
       </div>
 
     </div>
@@ -190,8 +190,8 @@
 
       <div>
         <span>World Cup Arena</span>
-        <h2>Il tuo profilo evento</h2>
-        <p>Accedi, controlla i tuoi dati e continua la scalata nella classifica globale.</p>
+        <h2 id="wc-hub-title">Il tuo profilo evento</h2>
+        <p id="wc-hub-copy">Accedi, controlla i tuoi dati e continua la scalata nella classifica globale.</p>
       </div>
     </div>
 
@@ -201,7 +201,7 @@
         <img src="img/wc-token-icon.png" alt="Token ProFantasy" />
         <div>
           <span>Token disponibili</span>
-          <strong>1.000</strong>
+          <strong id="wc-hub-token">1.000</strong>
         </div>
       </div>
 
@@ -209,7 +209,7 @@
         <img src="img/wc-streak-icon.png" alt="Daily Streak" />
         <div>
           <span>Daily streak</span>
-          <strong>0 giorni</strong>
+          <strong id="wc-hub-streak">0 giorni</strong>
         </div>
       </div>
 
@@ -217,7 +217,7 @@
         <img src="img/wc-xp-icon.png" alt="XP" />
         <div>
           <span>XP</span>
-          <strong>0 / 5.000</strong>
+          <strong id="wc-hub-xp">0 XP</strong>
         </div>
       </div>
 
@@ -225,13 +225,13 @@
         <img src="img/wc-ranking-icon.png" alt="Ranking Globale" />
         <div>
           <span>Ranking globale</span>
-          <strong>#---</strong>
+          <strong id="wc-hub-rank">#---</strong>
         </div>
       </div>
 
     </div>
 
-    <a href="arena.html" class="wc-hub-action">
+    <a href="arena.html" class="wc-hub-action" id="wc-hub-action">
       Apri Arena
       <span>›</span>
     </a>
@@ -330,7 +330,7 @@
         </div>
       </div>
 
-      <a href="arena.html" class="wc-card-action">
+      <a href="daily-prediction.html" class="wc-card-action">
         Gioca prediction
         <span>›</span>
       </a>
@@ -363,7 +363,7 @@
         </div>
       </div>
 
-      <a href="arena.html" class="wc-card-action wc-card-action-main">
+      <a href="bracket.html" class="wc-card-action wc-card-action-main">
         Prepara il bracket
         <span>›</span>
       </a>
@@ -406,7 +406,7 @@
         </div>
       </div>
 
-      <a href="arena.html" class="wc-card-action">
+      <a href="missions.html" class="wc-card-action">
         Vedi missioni
         <span>›</span>
       </a>
@@ -619,8 +619,11 @@
 </section>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js?v=profile-bridge-v1"></script>
+  <script src="js/world-cup-profile-bridge.js?v=profile-bridge-v1"></script>
   <script src="js/main.js"></script>
-  <script src="js/world-cup.js"></script>
+  <script src="js/world-cup.js?v=profile-bridge-v1"></script>
 
 </body>
 </html>
