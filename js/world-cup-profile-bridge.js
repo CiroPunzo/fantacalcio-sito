@@ -117,6 +117,9 @@
   function renderNavGuest(container) {
     if (!container) return;
 
+    document.body.classList.remove("wc-site-authenticated");
+    container.classList.remove("wc-auth-logged");
+
     const currentPage = getCurrentPage();
     container.innerHTML = `
       <a href="${buildLoginHref(currentPage)}" class="wc-btn wc-btn-login wc-auth-guest">Accedi</a>
@@ -127,6 +130,9 @@
 
   function renderNavUser(container, profile, session) {
     if (!container || !profile) return;
+
+    document.body.classList.add("wc-site-authenticated");
+    container.classList.add("wc-auth-logged");
 
     const username = profile.username || session?.user?.email || "Player";
     const tokens = formatTokens(profile.tokens);
@@ -143,8 +149,8 @@
           <small>${tokens} token</small>
         </div>
       </div>
-      <a href="arena.html" class="wc-btn wc-btn-register">Apri Arena</a>
-      <button type="button" class="wc-btn wc-btn-logout" data-wc-logout>Esci</button>
+      <a href="arena.html" class="wc-btn wc-btn-register wc-auth-arena-link">Apri Arena</a>
+      <button type="button" class="wc-btn wc-btn-logout" data-wc-logout aria-label="Esci dall’account" title="Esci dall’account"><span>Esci</span></button>
     `;
     container.removeAttribute("data-loading");
   }
@@ -220,6 +226,7 @@
     } catch (_) {}
 
     renderHubGuest();
+    document.body.classList.remove("wc-site-authenticated");
     document.querySelectorAll("[data-wc-auth-actions], .wc-nav-actions").forEach(renderNavGuest);
   }
 
