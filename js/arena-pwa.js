@@ -1,11 +1,13 @@
 (function () {
   'use strict';
 
-  const PFA_PWA_VERSION = 'pwa-v1';
+  const PFA_PWA_VERSION = 'pwa-install-nudge-v2';
   const STORAGE = {
     notifications: 'pfa_arena_notifications_pref',
     installDismissed: 'pfa_arena_install_dismissed',
-    lastReminder: 'pfa_arena_last_reminder_key'
+    lastReminder: 'pfa_arena_last_reminder_key',
+    installHelpDismissed: 'pfa_arena_install_help_dismissed',
+    installCompleted: 'pfa_arena_install_completed'
   };
 
   const page = (location.pathname.split('/').pop() || 'arena.html').toLowerCase();
@@ -169,16 +171,113 @@
     setInterval(check, 60000);
   }
 
-  function setupInstallPrompt() {
-    if (isAuthPage || !isArenaPage) return;
+  function isStandaloneMode() {
+    return Boolean(window.navigator.standalone) || window.matchMedia('(display-mode: standalone)').matches;
+  }
 
-    let deferredPrompt = null;
+  function getPlatformMode() {
+    const ua = navigator.userAgent || '';
+    const isIos = /iphone|ipad|ipod/i.test(ua);
+    const isAndroid = /android/i.test(ua);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+    if (isIos) return 'ios';
+    if (isAndroid) return 'android';
+    if (isSafari) return 'safari';
+    return 'desktop';
+  }
+
+  function showInstallGuide(mode, deferredPrompt) {
+    if (document.querySelector('.pfa-install-modal')) return;
+
+    const steps = mode === 'ios'
+      ? ['Tocca il pulsante Condividi di Safari.', 'Scegli “Aggiungi alla schermata Home”.', 'Conferma: l’Arena comparirà come app.']
+      : mode === 'android'
+        ? ['Tocca “Installa” se compare il popup.', 'Oppure apri il menu ⋮ di Chrome.', 'Scegli “Installa app” o “Aggiungi a schermata Home”.']
+        : ['Apri il menu del browser o l’icona installa nella barra URL.', 'Scegli “Installa app” / “Aggiungi collegamento”.', 'Rientra nella World Cup Arena con un click.'];
+
+    const modal = createEl('div', 'pfa-install-modal', `
+      <div class="pfa-install-modal-backdrop" data-install-close></div>
+      <section class="pfa-install-modal-panel" role="dialog" aria-modal="true" aria-label="Aggiungi Arena alla schermata Home">
+        <button type="button" class="pfa-install-modal-close" data-install-close aria-label="Chiudi">×</button>
+        <div class="pfa-install-modal-icon">⚡</div>
+        <span class="pfa-install-kicker">Arena in un tap</span>
+        <h2>Aggiungi ProFantasy Arena alla Home</h2>
+        <p>Entra più velocemente, non perdere prediction e streak, e vivi il gioco come una vera app.</p>
+        <div class="pfa-install-steps">
+          ${steps.map((step, index) => `<div class="pfa-install-step"><strong>${index + 1}</strong><span>${step}</span></div>`).join('')}
+        </div>
+        <div class="pfa-install-modal-actions">
+          ${deferredPrompt ? '<button type="button" class="pfa-install-primary" data-native-install>Installa ora</button>' : ''}
+          <button type="button" class="pfa-install-secondary" data-install-close>Ok, ho capito</button>
+        </div>
+      </section>
+    `);
+
+    document.body.appendChild(modal);
+    requestAnimationFrame(() => modal.classList.add('is-visible'));
+
+    const close = () => {
+      modal.classList.remove('is-visible');
+      setTimeout(() => modal.remove(), 260);
+    };
+
+    modal.querySelectorAll('[data-install-close]').forEach((btn) => {
+      btn.addEventListener('click', () => close());
+    });
+
+    modal.querySelector('[data-native-install]')?.addEventListener('click', async () => {
+      try {
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice.catch(() => null);
+        storageSet(STORAGE.installCompleted, 'requested');
+      } catch (_) {}
+      close();
+    });
+  }
+
+  function showInstallChip(deferredPromptRef) {
+    if (isAuthPage || !isArenaPage || isStandaloneMode()) return;
+    if (document.querySelector('.pfa-install-chip')) return;
+    if (storageGet(STORAGE.installCompleted) === 'installed') return;
+
+    const dismissedAt = Number(storageGet(STORAGE.installHelpDismissed) || 0);
+    const twoDays = 2 * 24 * 60 * 60 * 1000;
+    if (dismissedAt && Date.now() - dismissedAt < twoDays) return;
+
+    const chip = createEl('button', 'pfa-install-chip', `
+      <span class="pfa-install-chip-icon">📲</span>
+      <span><strong>Salva l’Arena</strong><small>Aggiungi alla Home</small></span>
+    `);
+    chip.type = 'button';
+    chip.setAttribute('aria-label', 'Aggiungi ProFantasy Arena alla schermata Home');
+
+    const close = createEl('button', 'pfa-install-chip-x', '×');
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Nascondi suggerimento installazione');
+
+    const wrapper = createEl('div', 'pfa-install-chip-wrap');
+    wrapper.appendChild(chip);
+    wrapper.appendChild(close);
+    document.body.appendChild(wrapper);
+    requestAnimationFrame(() => wrapper.classList.add('is-visible'));
+
+    chip.addEventListener('click', () => showInstallGuide(getPlatformMode(), deferredPromptRef && deferredPromptRef.current));
+    close.addEventListener('click', () => {
+      storageSet(STORAGE.installHelpDismissed, String(Date.now()));
+      wrapper.classList.remove('is-visible');
+      setTimeout(() => wrapper.remove(), 220);
+    });
+  }
+
+  function setupInstallPrompt() {
+    if (isAuthPage || !isArenaPage || isStandaloneMode()) return;
+
+    const deferredPromptRef = { current: null };
     const dismissedAt = Number(storageGet(STORAGE.installDismissed) || 0);
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
-    if (dismissedAt && Date.now() - dismissedAt < sevenDays) return;
 
     function showInstallCard(mode) {
-      if (document.querySelector('.pfa-install-card')) return;
+      if (document.querySelector('.pfa-install-card') || isStandaloneMode()) return;
       const isIos = mode === 'ios';
       const card = createEl('div', 'pfa-install-card', `
         <button type="button" class="pfa-install-close" aria-label="Chiudi">×</button>
@@ -186,7 +285,7 @@
         <strong>${isIos ? 'Aggiungi l’Arena alla Home' : 'Scarica l’App Arena'}</strong>
         <p>${isIos ? 'Su iPhone: Condividi → Aggiungi alla schermata Home.' : 'Installa il collegamento rapido e rientra nel gioco in un tap.'}</p>
         <div class="pfa-install-actions">
-          ${isIos ? '<button type="button" class="pfa-install-secondary">Ho capito</button>' : '<button type="button" class="pfa-install-primary">Installa</button><button type="button" class="pfa-install-secondary">Più tardi</button>'}
+          ${isIos ? '<button type="button" class="pfa-install-primary" data-guide>Mostrami come</button><button type="button" class="pfa-install-secondary">Più tardi</button>' : '<button type="button" class="pfa-install-primary">Installa</button><button type="button" class="pfa-install-secondary">Più tardi</button>'}
         </div>
       `);
       document.body.appendChild(card);
@@ -200,16 +299,26 @@
       card.querySelector('.pfa-install-close')?.addEventListener('click', () => {
         storageSet(STORAGE.installDismissed, String(Date.now()));
         close();
+        setTimeout(() => showInstallChip(deferredPromptRef), 900);
       });
       card.querySelector('.pfa-install-secondary')?.addEventListener('click', () => {
         storageSet(STORAGE.installDismissed, String(Date.now()));
         close();
+        setTimeout(() => showInstallChip(deferredPromptRef), 900);
+      });
+      card.querySelector('[data-guide]')?.addEventListener('click', () => {
+        close();
+        showInstallGuide('ios', null);
       });
       card.querySelector('.pfa-install-primary')?.addEventListener('click', async () => {
-        if (!deferredPrompt) return close();
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice.catch(() => null);
-        deferredPrompt = null;
+        if (isIos || !deferredPromptRef.current) {
+          close();
+          showInstallGuide(getPlatformMode(), null);
+          return;
+        }
+        deferredPromptRef.current.prompt();
+        await deferredPromptRef.current.userChoice.catch(() => null);
+        deferredPromptRef.current = null;
         storageSet(STORAGE.installDismissed, String(Date.now()));
         close();
       });
@@ -217,15 +326,27 @@
 
     window.addEventListener('beforeinstallprompt', (event) => {
       event.preventDefault();
-      deferredPrompt = event;
-      setTimeout(() => showInstallCard('native'), 4600);
+      deferredPromptRef.current = event;
+      if (!dismissedAt || Date.now() - dismissedAt >= sevenDays) {
+        setTimeout(() => showInstallCard('native'), 4200);
+      }
+      setTimeout(() => showInstallChip(deferredPromptRef), 9000);
     });
 
-    const ua = navigator.userAgent || '';
-    const isIos = /iphone|ipad|ipod/i.test(ua);
-    const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
-    if (isIos && !isStandalone) {
-      setTimeout(() => showInstallCard('ios'), 5200);
+    window.addEventListener('appinstalled', () => {
+      storageSet(STORAGE.installCompleted, 'installed');
+      document.querySelector('.pfa-install-chip-wrap')?.remove();
+      document.querySelector('.pfa-install-card')?.remove();
+    });
+
+    const platform = getPlatformMode();
+    if (platform === 'ios') {
+      if (!dismissedAt || Date.now() - dismissedAt >= sevenDays) {
+        setTimeout(() => showInstallCard('ios'), 5000);
+      }
+      setTimeout(() => showInstallChip(deferredPromptRef), 11000);
+    } else {
+      setTimeout(() => showInstallChip(deferredPromptRef), 12000);
     }
   }
 
