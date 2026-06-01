@@ -8543,3 +8543,159 @@ body.pfa-ready main {
     border-radius: 24px;
   }
 }
+
+/* =========================================================
+   MOBILE FINAL FIX — LEADERBOARD OVERFLOW + DAILY LOCK BADGE
+   ========================================================= */
+.leaderboard-table,
+.leader-row,
+.leader-row strong,
+.leader-row b,
+.leader-row em {
+  min-width: 0;
+}
+
+.leader-row strong {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.leader-row b,
+.leader-row em {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.leader-mini-avatar {
+  flex: 0 0 34px;
+}
+
+@media (max-width: 760px) {
+  .leaderboard-live-shell {
+    overflow: hidden;
+  }
+
+  .leaderboard-table {
+    width: 100%;
+    overflow: hidden;
+    gap: 8px;
+  }
+
+  .leader-row {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: 46px minmax(0, 1fr) minmax(64px, auto) !important;
+    gap: 8px !important;
+    padding: 0 10px !important;
+    min-height: 64px;
+    overflow: hidden;
+  }
+
+  .leader-row span:first-child {
+    min-width: 0;
+    font-size: 16px;
+  }
+
+  .leader-row strong {
+    min-width: 0;
+    max-width: 100%;
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: clamp(15px, 4.4vw, 20px) !important;
+    line-height: 1.05;
+  }
+
+  .leader-row strong .leader-mini-avatar {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+
+  .leader-row b {
+    min-width: 0;
+    max-width: 72px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: clamp(15px, 4.2vw, 20px);
+    justify-self: end;
+  }
+
+  .leader-row em,
+  .leader-row span:nth-child(4),
+  .leader-row.head span:nth-child(4) {
+    display: none !important;
+  }
+
+  .leader-row.head {
+    grid-template-columns: 46px minmax(0, 1fr) minmax(64px, auto) !important;
+    font-size: 9px;
+  }
+
+  .leader-row.head span:nth-child(3) {
+    justify-self: end;
+  }
+
+  .leaderboard-podium strong {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .daily-match-card.is-locked .lock-badge {
+    display: none !important;
+  }
+
+  .daily-match-card .daily-match-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .daily-match-card .daily-match-top span {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .daily-match-card .daily-match-top b {
+    justify-self: end;
+    white-space: nowrap;
+    position: static !important;
+  }
+
+  .locked-grid .daily-match-card {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 390px) {
+  .leader-row {
+    grid-template-columns: 38px minmax(0, 1fr) 58px !important;
+    padding: 0 8px !important;
+    gap: 6px !important;
+  }
+
+  .leader-row strong {
+    font-size: 15px !important;
+  }
+
+  .leader-row strong .leader-mini-avatar {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+  }
+
+  .leader-row b {
+    max-width: 58px;
+    font-size: 15px;
+  }
+}
