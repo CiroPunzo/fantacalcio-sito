@@ -1,0 +1,12 @@
+file,added_ga_head,added_tracker,has_ga_id,ga_id_count,gtag_script_count,cookieyes_count
+world-cup.html,True,True,True,3,1,1
+arena.html,True,True,True,3,1,1
+bracket.html,True,True,True,3,1,1
+daily-prediction.html,True,True,True,3,1,1
+leaderboard.html,True,True,True,3,1,1
+legal.html,False,True,True,3,1,1
+login.html,True,True,True,3,1,1
+missions.html,True,True,True,3,1,1
+predictions.html,False,True,True,3,1,1
+referral.html,True,True,True,3,1,1
+register.html,True,True,True,3,1,1

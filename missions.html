@@ -8,6 +8,69 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#7c3cff" />
   <link rel="stylesheet" href="css/arena.css?v=install-nudge-v2" />
+
+  <!-- ProFantasy GA4 + Consent Mode v2 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'granted',
+      personalization_storage: 'denied',
+      security_storage: 'granted',
+      wait_for_update: 2000
+    });
+
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CY7LK0E6M4"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-CY7LK0E6M4', { anonymize_ip: true });
+  </script>
+
+  <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/632f288ce1ebe1b7d38335aa7a3ff5ff/script.js"></script>
+  <script>
+    document.addEventListener('cookieyes_consent_update', function (event) {
+      if (!event || !event.detail) return;
+
+      const accepted = event.detail.accepted || [];
+      const rejected = event.detail.rejected || [];
+
+      const consent = {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        functionality_storage: 'granted'
+      };
+
+      if (accepted.includes('analytics')) consent.analytics_storage = 'granted';
+      if (rejected.includes('analytics')) consent.analytics_storage = 'denied';
+
+      if (accepted.includes('advertisement')) {
+        consent.ad_storage = 'granted';
+        consent.ad_user_data = 'granted';
+        consent.ad_personalization = 'granted';
+      }
+
+      if (rejected.includes('advertisement')) {
+        consent.ad_storage = 'denied';
+        consent.ad_user_data = 'denied';
+        consent.ad_personalization = 'denied';
+      }
+
+      if (accepted.includes('functional')) consent.functionality_storage = 'granted';
+      if (rejected.includes('functional')) consent.functionality_storage = 'denied';
+
+      if (typeof gtag === 'function') gtag('consent', 'update', consent);
+    });
+  </script>
 </head>
 <body>
   <div class="arena-page game-page">
@@ -129,5 +192,124 @@
   <script src="js/world-cup-fixtures.js?v=supabase-missions-step3"></script>
   <script src="js/arena-game.js?v=bracket-rewards-v1"></script>
   <script src="js/arena-pwa.js?v=install-nudge-v2"></script>
+
+  <!-- ProFantasy GA4 interaction tracking -->
+  <script>
+    (function () {
+      if (window.ProFantasyGA4Events) return;
+
+      const GA_ID = 'G-CY7LK0E6M4';
+      const scrollMarks = [25, 50, 75, 90, 100];
+      const firedScrollMarks = new Set();
+
+      function normalize(value, fallback) {
+        const text = String(value || fallback || '').replace(/\s+/g, ' ').trim();
+        return text.length > 120 ? text.slice(0, 117) + '...' : text;
+      }
+
+      function pageName() {
+        const file = (window.location.pathname.split('/').pop() || 'index.html').replace('.html', '') || 'home';
+        return file.replace(/[^a-zA-Z0-9_]+/g, '_').replace(/^_+|_+$/g, '').toLowerCase();
+      }
+
+      function safeHref(element) {
+        const href = element && element.getAttribute && element.getAttribute('href');
+        if (!href) return '';
+        if (/^javascript:/i.test(href)) return '';
+        return normalize(href, '');
+      }
+
+      function getClickLabel(element) {
+        if (!element) return 'unknown';
+        return normalize(
+          element.getAttribute('data-analytics-label') ||
+          element.getAttribute('aria-label') ||
+          element.getAttribute('title') ||
+          element.textContent ||
+          element.getAttribute('href') ||
+          element.id ||
+          'unknown'
+        );
+      }
+
+      function getFormName(form) {
+        if (!form) return 'unknown_form';
+        if (form.matches('[data-login-form]')) return 'login_form';
+        if (form.matches('[data-register-form]')) return 'register_form';
+        return normalize(form.getAttribute('name') || form.id || form.className || 'form').toLowerCase().replace(/[^a-z0-9_]+/g, '_');
+      }
+
+      function track(eventName, params) {
+        if (typeof window.gtag !== 'function') return;
+        window.gtag('event', eventName, Object.assign({
+          page_name: pageName(),
+          page_path: window.location.pathname,
+          page_title: document.title,
+          measurement_id: GA_ID
+        }, params || {}));
+      }
+
+      window.ProFantasyGA4Events = { track };
+
+      function classifyClick(element) {
+        if (!element || !element.matches) return 'pf_click';
+        if (element.matches('[data-copy-referral]')) return 'pf_referral_copy_click';
+        if (element.matches('[data-mission-claim]')) return 'pf_mission_claim_click';
+        if (element.matches('[data-start-bracket]')) return 'pf_bracket_start_click';
+        if (element.matches('[data-review-saved]')) return 'pf_bracket_review_click';
+        if (element.matches('[data-auth-action], .wc-btn-login, .wc-btn-register')) return 'pf_auth_click';
+        if (element.closest('nav, .arena-nav, .wc-nav-links, .legal-main-nav, .neo-nav')) return 'pf_nav_click';
+        if (element.matches('a[href*="arena.html"], a[href*="daily-prediction.html"], a[href*="missions.html"], a[href*="bracket.html"], a[href*="leaderboard.html"], a[href*="referral.html"]')) return 'pf_arena_cta_click';
+        if (element.matches('a, button')) return 'pf_cta_click';
+        return 'pf_click';
+      }
+
+      function initTracking() {
+        track('pf_page_ready', {
+          referrer_host: document.referrer ? new URL(document.referrer, window.location.href).hostname : ''
+        });
+
+        document.addEventListener('click', function (event) {
+          const element = event.target.closest('a, button, [role="button"], [data-copy-referral], [data-mission-claim], [data-start-bracket], [data-review-saved], [data-auth-action]');
+          if (!element) return;
+
+          track(classifyClick(element), {
+            click_label: getClickLabel(element),
+            click_url: safeHref(element),
+            click_id: normalize(element.id, ''),
+            click_classes: normalize(element.className, '')
+          });
+        }, true);
+
+        document.addEventListener('submit', function (event) {
+          track('pf_form_submit', {
+            form_name: getFormName(event.target)
+          });
+        }, true);
+
+        const onScroll = function () {
+          const doc = document.documentElement;
+          const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+          const percent = Math.min(100, Math.round((window.scrollY / maxScroll) * 100));
+
+          scrollMarks.forEach(function (mark) {
+            if (percent >= mark && !firedScrollMarks.has(mark)) {
+              firedScrollMarks.add(mark);
+              track('pf_scroll_depth', { scroll_percent: mark });
+            }
+          });
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTracking, { once: true });
+      } else {
+        initTracking();
+      }
+    })();
+  </script>
 </body>
 </html>
