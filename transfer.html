@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transfers | ProFantasy</title>
+  <meta name="description" content="Mercato Serie A visto con occhi da fantallenatore: acquisti, cessioni, rumors, prestiti, rosa e FantaIndex." />
+  <link rel="icon" href="img/profantasy-mark.png" />
+  <link rel="preload" as="image" href="img/transfer-bg.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/transfers-style.css" />
+
+  <!-- ProFantasy GA4: sostituisci il valore con il Measurement ID reale, es. G-ABC123XYZ.
+       Finché resta G-INSERISCI_ID_GA4, Analytics non viene caricato. -->
+  <script>
+    window.PROFANTASY_GA_MEASUREMENT_ID = "G-INSERISCI_ID_GA4";
+    window.PROFANTASY_GA_DEBUG = false;
+  </script>
+  <script>
+    (function () {
+      var measurementId = String(window.PROFANTASY_GA_MEASUREMENT_ID || '').trim();
+      var isPlaceholder = !measurementId || measurementId === 'G-INSERISCI_ID_GA4' || /^G-XX+/i.test(measurementId);
+
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+
+      if (isPlaceholder) {
+        window.PROFANTASY_GA_READY = false;
+        return;
+      }
+
+      window.gtag('js', new Date());
+      window.gtag('config', measurementId, {
+        page_title: document.title,
+        page_path: window.location.pathname + window.location.search,
+        send_page_view: true
+      });
+
+      var gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(measurementId);
+      document.head.appendChild(gaScript);
+      window.PROFANTASY_GA_READY = true;
+    })();
+  </script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="wc-navbar">
+      <div class="wc-nav-inner">
+        <a href="index.html" class="wc-logo" aria-label="Vai alla homepage ProFantasy">PROFANTASY</a>
+
+        <input type="checkbox" id="wc-menu-toggle" class="wc-menu-toggle" />
+
+        <label for="wc-menu-toggle" class="wc-menu-btn" aria-label="Apri menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+
+        <nav class="wc-nav-links" aria-label="Navigazione principale">
+          <a href="index.html">Home</a>
+          <a href="world-cup.html">World Cup</a>
+          <a href="transfer.html" class="active">Transfers</a>
+          <a href="tools.html">Tools</a>
+          <a href="community.html">Community</a>
+          <a href="about.html">About</a>
+        </nav>
+
+        <div class="wc-nav-actions" data-wc-auth-actions data-loading="true">
+          <a href="login.html?redirect=transfer.html" class="wc-btn wc-btn-login wc-auth-guest">Accedi</a>
+          <a href="register.html?redirect=transfer.html" class="wc-btn wc-btn-register wc-auth-guest">Registrati</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero-section" id="top">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-content">
+          <div class="hero-copy reveal-on-scroll">
+            <p class="eyebrow">Serie A Fantasy Market</p>
+            <h1>Mercato Serie A.<br />Il tuo vantaggio all’asta.</h1>
+            <p class="hero-lead">Ufficialità, rumors e rose tradotti in impatto fantacalcio. Non segui il mercato: lo usi per preparare la tua lega.</p>
+            <div class="trust-row" aria-label="Punti di affidabilità">
+              <span>Dati ordinati</span>
+              <span>FantaIndex</span>
+              <span>Update manuali</span>
+            </div>
+          </div>
+
+          <div class="hero-roster reveal-on-scroll" aria-label="Carousel sezioni principali mercato" data-hero-carousel>
+            <div class="hero-roster-stage">
+              <article class="roster-card" data-roster-card data-card-index="0" tabindex="0" aria-label="FantaIndex aggiornato">
+                <img src="img/hero-card-index.png" alt="Card FantaIndex aggiornato" />
+                <div>
+                  <span>FantaIndex</span>
+                  <strong>Valori aggiornati</strong>
+                  <p>Capisci chi sale e chi scende prima dell’asta.</p>
+                </div>
+              </article>
+
+              <article class="roster-card" data-roster-card data-card-index="1" tabindex="0" aria-label="Mercato Serie A Fantasy Hub">
+                <img src="img/hero-card-main.png" alt="Card Mercato Serie A Fantasy Hub" />
+                <div>
+                  <span>Fantasy Hub</span>
+                  <strong>Mercato Serie A</strong>
+                  <p>Ufficialità, analisi e impatto per ogni squadra.</p>
+                  <a href="#teams">Entra nel hub</a>
+                </div>
+              </article>
+
+              <article class="roster-card" data-roster-card data-card-index="2" tabindex="0" aria-label="Rumors con impatto fantasy">
+                <img src="img/hero-card-rumors.png" alt="Card Rumors con impatto fantasy" />
+                <div>
+                  <span>Rumors</span>
+                  <strong>Impatto fantasy</strong>
+                  <p>Monitora le trattative che cambiano minuti e bonus.</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="hero-roster-controls" aria-label="Controlli carousel hero">
+              <button type="button" class="hero-roster-arrow" data-hero-prev aria-label="Card precedente">‹</button>
+              <div class="hero-roster-dots" role="tablist" aria-label="Seleziona card hero">
+                <button type="button" data-hero-dot="0" aria-label="Mostra FantaIndex"></button>
+                <button type="button" data-hero-dot="1" aria-label="Mostra Fantasy Hub"></button>
+                <button type="button" data-hero-dot="2" aria-label="Mostra Rumors"></button>
+              </div>
+              <button type="button" class="hero-roster-arrow" data-hero-next aria-label="Card successiva">›</button>
+            </div>
+          </div>
+
+          <aside class="deadline-panel deadline-panel-compact reveal-on-scroll" aria-label="Countdown fine calciomercato" data-transfer-deadline="2026-09-01T20:00:00+02:00">
+            <div class="panel-title"><span>Fine calciomercato</span><b>Live</b></div>
+            <div class="deadline-countdown" aria-label="Tempo alla chiusura del mercato">
+              <div><strong data-deadline-days>00</strong><small>Giorni</small></div>
+              <div><strong data-deadline-hours>00</strong><small>Ore</small></div>
+              <div><strong data-deadline-minutes>00</strong><small>Min</small></div>
+              <div><strong data-deadline-seconds>00</strong><small>Sec</small></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="market-hud" id="teams" aria-labelledby="market-title">
+        <div class="market-hud-frame" aria-hidden="true"></div>
+
+        <div class="market-hud-head reveal-on-scroll">
+          <div class="market-brand-block">
+            <span class="pf-mini-mark">PF</span>
+            <div>
+              <strong>ProFantasy</strong>
+              <small>Football Intelligence</small>
+            </div>
+          </div>
+
+          <div class="market-title-block">
+            <p class="eyebrow">Serie A Fantasy Market</p>
+            <h2 id="market-title">Mercato <span>Serie A</span></h2>
+            <p>Scegli una squadra per visualizzare acquisti, cessioni, rumors, prestiti e impatto fantasy.</p>
+          </div>
+
+          <div class="market-season-badge" aria-label="Stagione corrente">
+            <span>Stagione</span>
+            <strong>2026/27</strong>
+          </div>
+        </div>
+
+        <div class="clubs-panel reveal-on-scroll">
+          <div class="clubs-panel-top">
+            <span>Scegli squadra</span>
+          </div>
+          <div class="teams-grid clubs-grid" data-team-list></div>
+        </div>
+
+        <section class="graal-dashboard" id="team-dashboard">
+          <section class="graal-center hud-panel reveal-on-scroll" aria-live="polite">
+            <div class="team-hero-card">
+              <div class="team-hero-bg" data-selected-team-bg></div>
+              <div class="team-hero-scanlines"></div>
+
+              <div class="team-crest-wrap team-crest-main">
+                <img data-selected-team-logo src="img/clubs/napoli.png" alt="Logo squadra selezionata" />
+                <span data-selected-team-badge>NAP</span>
+              </div>
+
+              <div class="team-hero-copy">
+                <p>Transfer Center</p>
+                <h3 data-selected-team-name>Napoli Transfer Center</h3>
+                <span data-selected-team-summary>Analisi completa del mercato e impatto sulla rosa fantasy.</span>
+                <button class="secondary-button hud-team-button" type="button" data-roster-scroll>Vedi rosa attuale</button>
+              </div>
+
+            </div>
+
+            <div class="tabs graal-tabs" role="tablist" aria-label="Categorie trasferimenti">
+              <button class="active" type="button" data-tab="official-in">Acquisti</button>
+              <button type="button" data-tab="official-out">Cessioni</button>
+              <button type="button" data-tab="rumor">Rumors</button>
+              <button type="button" data-tab="roster">Rosa</button>
+            </div>
+
+            <div class="market-list graal-market-list" data-market-list></div>
+            <div class="method-note hud-method-note">Powered by ProFantasy AI Engine.</div>
+          </section>
+
+        </section>
+      </section>
+
+    </main>
+
+    <footer class="pf-site-footer">
+      <div class="pf-site-footer-container">
+        <div class="pf-site-footer-top">
+          <div class="pf-site-footer-brand">
+            <span class="pf-site-footer-kicker">ProFantasy</span>
+            <h3 class="pf-site-footer-logo">ProFantasy</h3>
+            <p class="pf-site-footer-description">
+              Fantasy football, World Cup, mercato, tools e community:
+              un ecosistema pensato per chi vuole vivere il gioco con più visione,
+              più strategia e più coinvolgimento.
+            </p>
+          </div>
+
+          <div class="pf-site-footer-nav-wrap">
+            <div class="pf-site-footer-nav">
+              <h4>Navigazione</h4>
+              <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="world-cup.html">World Cup</a></li>
+                <li><a href="transfer.html">Transfers</a></li>
+                <li><a href="tools.html">Tools</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="legal.html">Legal</a></li>
+              </ul>
+            </div>
+
+            <div class="pf-site-footer-nav">
+              <h4>Aree chiave</h4>
+              <ul>
+                <li><a href="world-cup.html">World Cup Arena</a></li>
+                <li><a href="transfer.html">Serie A Transfers Hub</a></li>
+                <li><a href="tools.html">Tools Hub</a></li>
+                <li><a href="community.html">ProFantasy Community</a></li>
+              </ul>
+            </div>
+
+            <div class="pf-site-footer-nav">
+              <h4>Social</h4>
+              <ul>
+                <li><a href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+                <li><a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="pf-site-footer-bottom">
+          <p>© 2026 ProFantasy. Tutti i diritti riservati.</p>
+          <div class="pf-site-footer-bottom-links">
+            <a href="index.html">Home</a>
+            <a href="community.html">Community</a>
+            <a href="legal.html">Legal</a>
+            <a href="https://t.me/+hpq210YBS18yN2E8" target="_blank" rel="noopener noreferrer">Telegram</a>
+            <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer">TikTok</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    /* Google Sheets: usa lo stesso workbook ProFantasy Sheet già usato dal sito.
+       Per cambiare nomi foglio, modifica solo questa mappa. */
+    window.PROFANTASY_SHEET_ID = "1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48";
+    window.PROFANTASY_TRANSFERS_DATA_URL = "";
+    window.PROFANTASY_USE_TRANSFER_PLACEHOLDERS = false;
+    window.PROFANTASY_TRANSFER_SHEETS = {
+      teams: "Teams",
+      playersMaster: "PlayersMaster",
+      movements: "Movements",
+      ratings: "FantasyRatings",
+      rosters: "Rosters",
+      players: "Database2027",
+      trends: "TransfersTrends",
+      topIndex: "TransfersTopIndex",
+      composition: "TransfersComposition",
+      meta: "TransfersMeta"
+    };
+  </script>
+  <script src="js/transfers-main.js"></script>
+</body>
+</html>
