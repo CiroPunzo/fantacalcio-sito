@@ -27,6 +27,8 @@
   const COST = 50;
   const EXACT_SCORE_COST = 50;
   const EXACT_SCORE_REWARD = 500;
+  const VERSION_BONUS_KEY = "world_cup_arena_v2_bonus";
+  const VERSION_BONUS_REWARD = 250;
   const XP_PER_PREDICTION = 10;
   const DEFAULT_USER = {
     id: null,
@@ -62,6 +64,7 @@
   const SUPABASE_ENABLED = Boolean(window.PFA_SUPABASE);
   let SUPABASE_LEADERBOARD_CACHE = null;
   let SUPABASE_ADMIN_CACHE_READY = false;
+  let VERSION_BONUS_CACHE = null;
   window.PFA_AUTH_READY = false;
 
   function getSupabase() {
@@ -126,6 +129,188 @@
     if (prediction.exactScoreStatus === "pending_score") return "Exact in attesa score";
     return "Exact pending";
   }
+
+  async function fetchSupabaseVersionBonus(authUser = null) {
+    const supabase = getSupabase();
+    if (!supabase) return null;
+    let user = authUser;
+    try {
+      if (!user) {
+        const { data: { session } } = await supabase.auth.getSession();
+        user = session?.user || null;
+      }
+      if (!user) {
+        VERSION_BONUS_CACHE = null;
+        renderVersionBonusNudge();
+        return null;
+      }
+      const { data, error } = await supabase.rpc("pfa_get_version_bonus", { p_campaign_key: VERSION_BONUS_KEY });
+      if (error) throw error;
+      const row = Array.isArray(data) ? data[0] : data;
+      VERSION_BONUS_CACHE = row ? {
+        campaignKey: row.campaign_key || VERSION_BONUS_KEY,
+        tokenReward: Number(row.token_reward || VERSION_BONUS_REWARD),
+        status: row.status || "available",
+        claimedAt: row.claimed_at || "",
+        title: row.title || "Bonus nuova versione",
+        body: row.body || "Riscatta il bonus inaugurale della nuova World Cup Arena.",
+        cta: row.cta || "Riscatta"
+      } : null;
+      renderVersionBonusNudge();
+      return VERSION_BONUS_CACHE;
+    } catch (error) {
+      // Se la funzione non è ancora installata, non blocchiamo l'Arena.
+      console.warn("Version bonus unavailable", error);
+      VERSION_BONUS_CACHE = null;
+      renderVersionBonusNudge();
+      return null;
+    }
+  }
+
+  async function claimSupabaseVersionBonus() {
+    const supabase = getSupabase();
+    if (!supabase) return null;
+    const { data, error } = await supabase.rpc("pfa_claim_version_bonus", { p_campaign_key: VERSION_BONUS_KEY });
+    if (error) throw error;
+    VERSION_BONUS_CACHE = { ...(VERSION_BONUS_CACHE || {}), status: "claimed", claimedAt: new Date().toISOString() };
+    renderVersionBonusNudge();
+    await refreshSupabaseProfileCache();
+    await refreshSupabaseLeaderboard();
+    await fetchSupabaseVersionBonus();
+    return data;
+  }
+
+  function renderVersionBonusNudge() {
+    const existing = document.querySelector("[data-version-bonus-nudge]");
+    const user = getUser();
+    const bonus = VERSION_BONUS_CACHE;
+
+    if (!hasRegisteredUser() || !bonus || bonus.status === "claimed") {
+      if (existing) existing.remove();
+      return;
+    }
+
+    const reward = Number(bonus.tokenReward || VERSION_BONUS_REWARD);
+    const html = `
+      <div class="pfa-version-bonus-icon" aria-hidden="true">⚡</div>
+      <div class="pfa-version-bonus-copy">
+        <span>${escapeHtml(bonus.title || "Bonus nuova versione")}</span>
+        <strong>+${reward.toLocaleString("it-IT")} token pronti</strong>
+        <p>${escapeHtml(bonus.body || "Riscatta il bonus inaugurale della nuova World Cup Arena.")}</p>
+      </div>
+      <button type="button" data-version-bonus-claim>${escapeHtml(bonus.cta || "Riscatta")}</button>
+    `;
+
+    const node = existing || document.createElement("aside");
+    node.className = "pfa-version-bonus-nudge";
+    node.setAttribute("data-version-bonus-nudge", "");
+    node.setAttribute("role", "status");
+    node.innerHTML = html;
+
+    if (!existing) document.body.appendChild(node);
+
+    const btn = node.querySelector("[data-version-bonus-claim]");
+    if (btn) {
+      btn.addEventListener("click", async () => {
+        btn.disabled = true;
+        btn.textContent = "Accredito...";
+        try {
+          const result = await claimSupabaseVersionBonus();
+          const tokens = Number(result?.tokens || getUser().tokens || 0);
+          btn.textContent = "Riscattato";
+          node.classList.add("is-claimed");
+          const copy = node.querySelector(".pfa-version-bonus-copy p");
+          if (copy) copy.textContent = `Bonus accreditato. Nuovo saldo: ${tokens.toLocaleString("it-IT")} token.`;
+          setTimeout(() => node.remove(), 2600);
+        } catch (error) {
+          console.error(error);
+          btn.disabled = false;
+          btn.textContent = "Riprova";
+          const copy = node.querySelector(".pfa-version-bonus-copy p");
+          if (copy) copy.textContent = error.message || "Bonus non riscattabile in questo momento.";
+        }
+      });
+    }
+  }
+
+  function getAuthRedirectUrl() {
+    const configured = window.PFA_AUTH_REDIRECT_URL || "";
+    if (configured && /^https?:\/\//i.test(configured)) return configured;
+
+    const fallback = "https://ciropunzo.github.io/fantacalcio-sito/login.html";
+    try {
+      const path = window.location.pathname.replace(/\/[^/]*$/, "/login.html");
+      if (window.location.protocol === "http:" || window.location.protocol === "https:") {
+        return `${window.location.origin}${path}`;
+      }
+    } catch (error) {
+      console.warn("Auth redirect URL fallback", error);
+    }
+
+    return fallback;
+  }
+
+  function mapProfileFromSupabase(profile, authUser, predictionMap = null, missionRewardsMap = null, referralStats = null) {
+    if (!profile && !authUser) return null;
+    const cached = getUser();
+    const username = profile?.username || authUser?.user_metadata?.username || (authUser?.email ? authUser.email.split("@")[0] : "Player");
+    return {
+      ...DEFAULT_USER,
+      id: authUser?.id || profile?.id || null,
+      username,
+      email: authUser?.email || profile?.email || "",
+      isSupabase: true,
+      isAdmin: Boolean(profile?.is_admin),
+      avatar: normalizeAvatarPath(profile?.avatar_url || authUser?.user_metadata?.avatar_url || DEFAULT_USER.avatar),
+      registered: true,
+      tokens: Number(profile?.tokens ?? 1000),
+      xp: Number(profile?.xp ?? 0),
+      level: Number(profile?.level ?? 1),
+      streak: Number(profile?.daily_streak ?? 0),
+      predictionPlayed: Number(profile?.prediction_played ?? 0),
+      predictionWon: Number(profile?.prediction_won ?? 0),
+      predictionLost: Number(profile?.prediction_lost ?? 0),
+      referralCode: profile?.referral_code || "PF-ARENA",
+      referredBy: profile?.referred_by || "",
+      referralFriends: Number(referralStats?.friends ?? profile?.referral_count ?? 0),
+      referralEarned: Number(referralStats?.earned ?? profile?.referral_tokens_earned ?? 0),
+      bracketSaved: Boolean(profile?.bracket_group_saved) || Boolean(cached.bracketSaved),
+      bracketKnockoutSaved: Boolean(profile?.bracket_knockout_saved) || Boolean(cached.bracketKnockoutSaved),
+      predictions: predictionMap || {},
+      missionRewards: missionRewardsMap || cached.missionRewards || {},
+      referralQualified: Number(referralStats?.qualified ?? cached.referralQualified ?? 0),
+      referralRewardsClaimed: Number(referralStats?.claimed ?? cached.referralRewardsClaimed ?? 0),
+      referralInvites: Array.isArray(referralStats?.invites) ? referralStats.invites : (Array.isArray(cached.referralInvites) ? cached.referralInvites : [])
+    };
+  }
+
+  async function fetchSupabaseProfile(authUser) {
+    const supabase = getSupabase();
+    if (!supabase || !authUser) return null;
+
+    // Production security: read the full private profile only through RPC.
+    // The public profiles table no longer exposes email/is_admin directly via REST.
+    try {
+      const { data, error } = await supabase.rpc("pfa_get_my_profile");
+      if (!error && data) return data;
+      if (error) console.warn("Supabase pfa_get_my_profile error", error);
+    } catch (rpcError) {
+      console.warn("Supabase pfa_get_my_profile unavailable", rpcError);
+    }
+
+    // Fallback for older SQL while migrating: only request non-sensitive columns.
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, username, avatar_url, tokens, xp, level, daily_streak, prediction_played, prediction_won, prediction_lost, referral_code, referral_count, referral_tokens_earned, bracket_group_saved, bracket_knockout_saved, last_prediction_date")
+      .eq("id", authUser.id)
+      .maybeSingle();
+    if (error) {
+      console.warn("Supabase profile fetch error", error);
+      return null;
+    }
+    return { ...data, email: authUser.email || "", is_admin: false };
+  }
+
 
   async function fetchSupabasePredictions(authUser) {
     const supabase = getSupabase();
@@ -258,6 +443,7 @@
     if (mapped) {
       localStorage.setItem(STORE_KEY, JSON.stringify(mapped));
       renderUser(mapped);
+      fetchSupabaseVersionBonus(user).catch((error) => console.warn("Version bonus refresh failed", error));
     }
     return mapped;
   }
@@ -293,7 +479,7 @@
       if (error) {
         const message = String(error.message || "");
         if (message.includes("Could not find the function") || message.includes("schema cache")) {
-          throw new Error("Funzione risultato esatto non trovata. Esegui SQL_01_EXACT_SCORE_LOGIC_ONLY.sql nel SQL Editor e ricarica la pagina.");
+          throw new Error("Funzione risultato esatto non trovata. Esegui SUPABASE_EXACT_SCORE_V1.sql nel SQL Editor e ricarica la pagina.");
         }
         throw error;
       }
@@ -351,7 +537,7 @@
     if (error) {
       const message = String(error.message || "");
       if (message.includes("Could not find the function") || message.includes("schema cache")) {
-        throw new Error("Funzione admin Supabase non trovata/aggiornata. Esegui SQL_01_EXACT_SCORE_LOGIC_ONLY.sql nel SQL Editor e ricarica.");
+        throw new Error("Funzione admin Supabase non trovata/aggiornata. Esegui SUPABASE_EXACT_SCORE_V1.sql nel SQL Editor e ricarica.");
       }
       throw error;
     }
@@ -519,17 +705,7 @@
   }
 
   function getFixturePool() {
-    // Definitive mode: non mostriamo più le 3 partite preview se il file calendario non viene caricato.
-    // In questo modo Daily Prediction e Admin Center non lavorano mai su dati finti.
     return getAllFixtures();
-  }
-
-  function renderCalendarMissingState(container, context = "daily") {
-    if (!container) return;
-    const copy = context === "admin"
-      ? "Admin Center non può caricare i match: assicurati di aver pubblicato js/world-cup-fixtures.js prima di arena-game.js."
-      : "Calendario non caricato: ricarica la pagina dopo aver pubblicato js/world-cup-fixtures.js.";
-    container.innerHTML = `<article class="daily-empty-state calendar-missing-state"><strong>Calendario World Cup non disponibile</strong><span>${copy}</span></article>`;
   }
 
   function getNextFixture(now = getNow()) {
@@ -1399,14 +1575,36 @@
     scope.querySelectorAll("[data-exact-score-panel]").forEach((panel) => {
       const toggle = panel.querySelector("[data-exact-score-toggle]");
       const fields = panel.querySelector("[data-exact-fields]");
+      const hint = panel.querySelector("[data-exact-score-hint]");
+      const card = panel.closest("[data-match-card]");
       if (!toggle || !fields || panel.dataset.exactPanelReady === "1") return;
       panel.dataset.exactPanelReady = "1";
       const sync = () => {
         panel.classList.toggle("is-enabled", toggle.checked);
         fields.setAttribute("aria-hidden", toggle.checked ? "false" : "true");
         fields.querySelectorAll("input").forEach((input) => { input.disabled = !toggle.checked; });
+        if (card) card.querySelectorAll("button[data-choice]").forEach((btn) => btn.classList.remove("is-suggested-choice"));
+        if (!hint) return;
+        if (!toggle.checked) {
+          hint.textContent = "Attiva questa opzione prima di cliccare 1/X/2: il click sull’esito invia la giocata.";
+          return;
+        }
+        const home = normalizeScoreNumber(panel.querySelector("[data-exact-home-score]")?.value);
+        const away = normalizeScoreNumber(panel.querySelector("[data-exact-away-score]")?.value);
+        const choice = deriveChoiceFromScores(home, away);
+        if (!choice) {
+          hint.textContent = "Inserisci i gol, poi clicca l’esito coerente: 1, X o 2.";
+          return;
+        }
+        const choiceLabel = choice === "1" ? "1 · Casa" : choice === "2" ? "2 · Ospite" : "X · Pareggio";
+        hint.textContent = `Score ${home}-${away}: ora devi cliccare ${choiceLabel} per inviare.`;
+        if (card) {
+          const suggested = card.querySelector(`button[data-choice="${choice}"]`);
+          if (suggested) suggested.classList.add("is-suggested-choice");
+        }
       };
       toggle.addEventListener("change", sync);
+      fields.querySelectorAll("input").forEach((input) => input.addEventListener("input", sync));
       sync();
     });
   }
@@ -1745,11 +1943,6 @@
     const exactAwayValue = saved && saved.exactAwayScore !== null && saved.exactAwayScore !== undefined ? saved.exactAwayScore : "";
     const exactChecked = saved && saved.exactScoreEnabled ? "checked" : "";
     const choices = locked && !saved ? `<p class="locked-copy">${lockCopy}</p>` : `
-      <div class="daily-choice-row">
-        <button type="button" data-choice="1">1<small>Casa</small></button>
-        <button type="button" data-choice="X">X<small>Pari</small></button>
-        <button type="button" data-choice="2">2<small>Ospite</small></button>
-      </div>
       <div class="daily-economy"><span>Costo base 50 token</span><strong>Reward +125</strong></div>
       <div class="daily-exact-score" data-exact-score-panel>
         <label class="daily-exact-toggle">
@@ -1761,8 +1954,14 @@
           <label><span>${escapeHtml(match.home)}</span><input type="number" min="0" max="20" inputmode="numeric" data-exact-home-score value="${escapeHtml(exactHomeValue)}" placeholder="0"></label>
           <i>-</i>
           <label><span>${escapeHtml(match.away)}</span><input type="number" min="0" max="20" inputmode="numeric" data-exact-away-score value="${escapeHtml(exactAwayValue)}" placeholder="0"></label>
-          <small>Il risultato deve essere coerente con la scelta 1 / X / 2.</small>
+          <small data-exact-score-hint>Attiva questa opzione prima di cliccare 1/X/2: il click sull’esito invia la giocata.</small>
         </div>
+      </div>
+      <div class="daily-choice-helper"><span>Step finale</span><strong>Clicca 1 / X / 2 solo quando sei sicuro: invia subito la prediction.</strong></div>
+      <div class="daily-choice-row">
+        <button type="button" data-choice="1">1<small>Casa</small></button>
+        <button type="button" data-choice="X">X<small>Pari</small></button>
+        <button type="button" data-choice="2">2<small>Ospite</small></button>
       </div>
       <div class="daily-played-message" data-played-message></div>
     `;
@@ -1789,15 +1988,8 @@
     if (!openGrid && !lockedGrid) return;
 
     const user = getUser();
-    const fixtures = getFixturePool();
-    if (!fixtures.length) {
-      renderCalendarMissingState(openGrid, "daily");
-      renderCalendarMissingState(lockedGrid, "daily");
-      document.querySelectorAll("[data-active-matchday-label]").forEach((el) => { el.textContent = "--"; });
-      return;
-    }
     const activeDay = getActivePredictionDay();
-    const fixtureDays = groupFixturesByDay(fixtures);
+    const fixtureDays = groupFixturesByDay(getFixturePool());
     const now = getNow();
     const todayPlayable = activeDay.isToday
       ? activeDay.matches.filter((match) => match.kickoff > now || (user.predictions && user.predictions[match.id]))
@@ -2570,26 +2762,16 @@
     const pendingCount = root.querySelector("[data-admin-pending-count]");
     const txList = root.querySelector("[data-admin-transactions]");
 
-    if (!fixtures.length) {
-      renderCalendarMissingState(rowsWrap, "admin");
-      if (resultCount) resultCount.textContent = "0";
-      if (pendingCount) pendingCount.textContent = "0";
-      if (txList) txList.innerHTML = `<article class="admin-empty-log">Calendario non caricato.</article>`;
-      return;
-    }
-
     const predictions = user.predictions || {};
     const pendingPredictions = Object.values(predictions).filter((item) => !item.status || item.status === "pending" || (item.exactScoreEnabled && !["won", "lost"].includes(item.exactScoreStatus || ""))).length;
     if (resultCount) resultCount.textContent = Object.keys(results).length;
     if (pendingCount) pendingCount.textContent = pendingPredictions;
 
     if (rowsWrap) {
-      const relevant = fixtures;
+      const relevant = fixtures.slice(0, 72);
       rowsWrap.innerHTML = relevant.map((match) => {
         const current = results[match.id];
         const pred = predictions[match.id];
-        const kickoffDiff = match.kickoff - getNow();
-        const countdownCopy = kickoffDiff <= 0 ? "Live / chiusa" : formatCountdown(kickoffDiff);
         const scoreParts = current && current.score ? parseScoreString(current.score) : null;
         const exactLabel = pred ? getExactScoreLabel(pred) : "";
         const exactStatus = pred ? getExactScoreStatusLabel(pred) : "";
@@ -2601,7 +2783,6 @@
             <div class="admin-match-main">
               <span>${match.group || "Group"} · ${match.dateLabel} · ${match.timeLabel}${current && current.score ? ` · Score ${current.score}` : ""}</span>
               <strong><img src="${match.homeFlag}" alt=""> ${match.home} <i>vs</i> ${match.away} <img src="${match.awayFlag}" alt=""></strong>
-              <small class="admin-match-countdown">${kickoffDiff <= 0 ? "Stato" : "Countdown"}: <b data-match-countdown data-kickoff="${match.kickoff.toISOString()}">${countdownCopy}</b></small>
               <em>${predLabel}</em>
             </div>
             <div class="admin-result-tools">
@@ -2775,12 +2956,6 @@
     const groups = getAdminGroupTeams();
     const saved = getAdminGroupStandings();
     const standings = saved && saved.standings ? saved.standings : {};
-
-    if (!groups.length) {
-      grid.innerHTML = `<article class="admin-empty-log">Calendario non caricato: impossibile generare i 12 gironi.</article>`;
-      if (preview) preview.innerHTML = `<article class="admin-empty-log">Carica js/world-cup-fixtures.js per vedere l’anteprima knockout.</article>`;
-      return;
-    }
 
     grid.innerHTML = groups.map((group) => `
       <article class="admin-group-card" data-admin-group-card="${group.key}">
@@ -2965,6 +3140,36 @@
 
 
 
+  function setupDailyPredictionTutorial() {
+    const layer = document.querySelector("[data-daily-tutorial]");
+    const openButtons = document.querySelectorAll("[data-open-daily-tutorial]");
+    if (!layer || !openButtons.length || layer.dataset.dailyTutorialReady === "1") return;
+    layer.dataset.dailyTutorialReady = "1";
+    const closeButtons = layer.querySelectorAll("[data-close-daily-tutorial]");
+    const open = () => {
+      layer.classList.add("is-visible");
+      layer.setAttribute("aria-hidden", "false");
+      document.body.classList.add("daily-tutorial-open");
+    };
+    const close = () => {
+      layer.classList.remove("is-visible");
+      layer.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("daily-tutorial-open");
+      localStorage.setItem("pfa_daily_prediction_tutorial_v1", "done");
+    };
+    openButtons.forEach((btn) => btn.addEventListener("click", open));
+    closeButtons.forEach((btn) => btn.addEventListener("click", close));
+    layer.addEventListener("click", (event) => {
+      if (event.target === layer) close();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && layer.classList.contains("is-visible")) close();
+    });
+    if (!localStorage.getItem("pfa_daily_prediction_tutorial_v1") && document.querySelector(".daily-game-page")) {
+      setTimeout(open, 900);
+    }
+  }
+
   function setupMobileNavigation() {
     const header = document.querySelector(".arena-header");
     const nav = header ? header.querySelector(".arena-nav") : null;
@@ -3021,8 +3226,10 @@
     if (SUPABASE_ENABLED && getUser().id) {
       await refreshSupabaseAdminCache();
       await refreshSupabaseLeaderboard();
+      await fetchSupabaseVersionBonus();
     } else if (SUPABASE_ENABLED) {
       await refreshSupabaseLeaderboard();
+      renderVersionBonusNudge();
     }
     window.PFA_AUTH_READY = true;
     window.dispatchEvent(new CustomEvent("pfa:auth-ready", { detail: { user: getUser() } }));
@@ -3030,6 +3237,7 @@
     renderUser();
     setupRegistration();
     setupPredictions();
+    setupDailyPredictionTutorial();
     setupMissions();
     setupBracket();
     await setupReferral();
@@ -3061,5 +3269,5 @@
     }, 1000);
     updateFixtureCountdowns();
   });
-  window.PFA_AUTH_HELPERS = { syncSupabaseSessionToLocal, refreshSupabaseProfileCache, refreshSupabaseLeaderboard, refreshSupabaseAdminCache, signOutSupabaseAndLocal, getUser, hasRegisteredUser, isAdminUser, updateAdminEntryPoints };
+  window.PFA_AUTH_HELPERS = { syncSupabaseSessionToLocal, refreshSupabaseProfileCache, refreshSupabaseLeaderboard, refreshSupabaseAdminCache, fetchSupabaseVersionBonus, claimSupabaseVersionBonus, signOutSupabaseAndLocal, getUser, hasRegisteredUser, isAdminUser, updateAdminEntryPoints };
 })();
