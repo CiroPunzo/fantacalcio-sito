@@ -3233,6 +3233,21 @@
     }
     window.PFA_AUTH_READY = true;
     window.dispatchEvent(new CustomEvent("pfa:auth-ready", { detail: { user: getUser() } }));
+
+    // Hotfix V3.1: la lobby può arrivare da cache con sessione Supabase già valida.
+    // Facciamo due controlli ritardati così la notifica +250 appare al primo accesso
+    // anche se il profilo viene sincronizzato qualche istante dopo il DOMContentLoaded.
+    if (SUPABASE_ENABLED) {
+      window.setTimeout(() => {
+        if (getUser().id) fetchSupabaseVersionBonus().catch((error) => console.warn("Version bonus delayed check failed", error));
+      }, 700);
+      window.setTimeout(() => {
+        if (getUser().id && !document.querySelector("[data-version-bonus-nudge]")) {
+          fetchSupabaseVersionBonus().catch((error) => console.warn("Version bonus final check failed", error));
+        }
+      }, 2200);
+    }
+
     resolveUserPredictionsForResults();
     renderUser();
     setupRegistration();
