@@ -8,7 +8,7 @@
   <title>Admin Center — ProFantasy World Cup Arena</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#7c3cff" />
-  <link rel="stylesheet" href="css/arena.css?v=install-nudge-v2" />
+  <link rel="stylesheet" href="css/arena.css?v=exact-score-calendar-v2" />
 </head>
 <body>
   <div class="arena-page admin-page">
@@ -42,14 +42,14 @@
           <h1>Admin Arena</h1>
           <p>
             Da qui gestisci il flusso operativo: inserisci l'esito di una partita,
-            risolvi le prediction pending e verifica l'accredito automatico dei reward.
+            risolvi le prediction pending, inserisci lo score esatto e verifica l'accredito automatico dei reward.
           </p>
         </div>
 
         <aside class="admin-control-card admin-control-card-clean">
           <span>Regole reward</span>
-          <strong>+125 token</strong>
-          <p>La dashboard admin non mostra più i token del player: qui gestisci esiti, reward e classifiche reali del torneo.</p>
+          <strong>+125 / +500</strong>
+          <p>La dashboard admin ora gestisce esito 1/X/2 e score esatto: il Perfect Score assegna 500 token extra.</p>
         </aside>
       </section>
 
@@ -65,6 +65,10 @@
         <article>
           <span>Reward prediction</span>
           <strong>+125</strong>
+        </article>
+        <article>
+          <span>Perfect Score</span>
+          <strong>+500</strong>
         </article>
       </section>
 
@@ -110,7 +114,7 @@
               <h2>Inserisci esito partita</h2>
             </div>
             <p class="board-note">
-              In modalità Supabase gli esiti vengono salvati nel database, risolvono tutte le prediction pending e generano uno storico transazioni reale.
+              In modalità Supabase inserisci il risultato esatto del match: il sistema ricava automaticamente 1/X/2, risolve le prediction pending e accredita anche i Perfect Score.
             </p>
           </div>
 
@@ -136,8 +140,8 @@
             <strong>Flusso reward</strong>
             <ol>
               <li>Il player invia una prediction da Daily Prediction.</li>
-              <li>L'admin imposta l’esito 1 / X / 2.</li>
-              <li>Supabase risolve la giocata e aggiorna token, XP e storico.</li>
+              <li>L'admin imposta lo score esatto, oppure solo l’esito 1 / X / 2.</li>
+              <li>Supabase risolve la giocata, assegna +125 per l’esito corretto e +500 per il Perfect Score.</li>
             </ol>
           </div>
 
@@ -150,9 +154,9 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js?v=bracket-rewards-v1"></script>
-  <script src="js/world-cup-fixtures.js?v=bracket-rewards-v1"></script>
-  <script src="js/arena-game.js?v=bracket-rewards-v1"></script>
-  <script src="js/arena-pwa.js?v=install-nudge-v2"></script>
+  <script src="js/supabase-config.js?v=exact-score-calendar-v2"></script>
+  <script src="js/world-cup-fixtures.js?v=exact-score-calendar-v2"></script>
+  <script src="js/arena-game.js?v=exact-score-calendar-v2"></script>
+  <script src="js/arena-pwa.js?v=exact-score-calendar-v2"></script>
 </body>
 </html>

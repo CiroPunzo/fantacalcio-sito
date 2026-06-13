@@ -25,6 +25,8 @@
 
   resetLegacyLocaleDataOnce();
   const COST = 50;
+  const EXACT_SCORE_COST = 50;
+  const EXACT_SCORE_REWARD = 500;
   const XP_PER_PREDICTION = 10;
   const DEFAULT_USER = {
     id: null,
@@ -49,6 +51,10 @@
   };
 
   const FIXTURE_SOURCE = Array.isArray(window.WORLD_CUP_FIXTURES) ? window.WORLD_CUP_FIXTURES : [];
+  const HAS_COMPLETE_WORLD_CUP_CALENDAR = FIXTURE_SOURCE.length >= 72;
+  if (!HAS_COMPLETE_WORLD_CUP_CALENDAR) {
+    console.warn("[ProFantasy Arena] Calendario World Cup non caricato o incompleto. Controlla js/world-cup-fixtures.js.", { fixtures: FIXTURE_SOURCE.length });
+  }
   // Produzione: countdown reali sul calendario World Cup.
   // Per test: aggiungi ?arenaDate=2026-06-11T18:30:00Z oppure imposta localStorage.pfa_arena_preview_now.
   const FORCE_REAL_WORLD_CUP_TIME = window.PFA_FORCE_REAL_WORLD_CUP_TIME !== false;
@@ -62,98 +68,97 @@
     return window.PFA_SUPABASE || null;
   }
 
-  function getAuthRedirectUrl() {
-    const configured = window.PFA_AUTH_REDIRECT_URL || "";
-    if (configured && /^https?:\/\//i.test(configured)) return configured;
-
-    const fallback = "https://ciropunzo.github.io/fantacalcio-sito/login.html";
-    try {
-      const path = window.location.pathname.replace(/\/[^/]*$/, "/login.html");
-      if (window.location.protocol === "http:" || window.location.protocol === "https:") {
-        return `${window.location.origin}${path}`;
-      }
-    } catch (error) {
-      console.warn("Auth redirect URL fallback", error);
-    }
-
-    return fallback;
+  function normalizeScoreNumber(value) {
+    if (value === null || value === undefined || value === "") return null;
+    const raw = String(value).trim();
+    if (!/^\d+$/.test(raw)) return null;
+    const normalized = Number.parseInt(raw, 10);
+    if (Number.isNaN(normalized) || normalized < 0 || normalized > 20) return null;
+    return normalized;
   }
 
-  function mapProfileFromSupabase(profile, authUser, predictionMap = null, missionRewardsMap = null, referralStats = null) {
-    if (!profile && !authUser) return null;
-    const cached = getUser();
-    const username = profile?.username || authUser?.user_metadata?.username || (authUser?.email ? authUser.email.split("@")[0] : "Player");
-    return {
-      ...DEFAULT_USER,
-      id: authUser?.id || profile?.id || null,
-      username,
-      email: authUser?.email || profile?.email || "",
-      isSupabase: true,
-      isAdmin: Boolean(profile?.is_admin),
-      avatar: normalizeAvatarPath(profile?.avatar_url || authUser?.user_metadata?.avatar_url || DEFAULT_USER.avatar),
-      registered: true,
-      tokens: Number(profile?.tokens ?? 1000),
-      xp: Number(profile?.xp ?? 0),
-      level: Number(profile?.level ?? 1),
-      streak: Number(profile?.daily_streak ?? 0),
-      predictionPlayed: Number(profile?.prediction_played ?? 0),
-      predictionWon: Number(profile?.prediction_won ?? 0),
-      predictionLost: Number(profile?.prediction_lost ?? 0),
-      referralCode: profile?.referral_code || "PF-ARENA",
-      referredBy: profile?.referred_by || "",
-      referralFriends: Number(referralStats?.friends ?? profile?.referral_count ?? 0),
-      referralEarned: Number(referralStats?.earned ?? profile?.referral_tokens_earned ?? 0),
-      bracketSaved: Boolean(profile?.bracket_group_saved) || Boolean(cached.bracketSaved),
-      bracketKnockoutSaved: Boolean(profile?.bracket_knockout_saved) || Boolean(cached.bracketKnockoutSaved),
-      predictions: predictionMap || {},
-      missionRewards: missionRewardsMap || cached.missionRewards || {},
-      referralQualified: Number(referralStats?.qualified ?? cached.referralQualified ?? 0),
-      referralRewardsClaimed: Number(referralStats?.claimed ?? cached.referralRewardsClaimed ?? 0),
-      referralInvites: Array.isArray(referralStats?.invites) ? referralStats.invites : (Array.isArray(cached.referralInvites) ? cached.referralInvites : [])
-    };
+  function buildScoreString(homeScore, awayScore) {
+    const home = normalizeScoreNumber(homeScore);
+    const away = normalizeScoreNumber(awayScore);
+    if (home === null || away === null) return "";
+    return `${home}-${away}`;
   }
 
-  async function fetchSupabaseProfile(authUser) {
-    const supabase = getSupabase();
-    if (!supabase || !authUser) return null;
-
-    // Production security: read the full private profile only through RPC.
-    // The public profiles table no longer exposes email/is_admin directly via REST.
-    try {
-      const { data, error } = await supabase.rpc("pfa_get_my_profile");
-      if (!error && data) return data;
-      if (error) console.warn("Supabase pfa_get_my_profile error", error);
-    } catch (rpcError) {
-      console.warn("Supabase pfa_get_my_profile unavailable", rpcError);
-    }
-
-    // Fallback for older SQL while migrating: only request non-sensitive columns.
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("id, username, avatar_url, tokens, xp, level, daily_streak, prediction_played, prediction_won, prediction_lost, referral_code, referral_count, referral_tokens_earned, bracket_group_saved, bracket_knockout_saved, last_prediction_date")
-      .eq("id", authUser.id)
-      .maybeSingle();
-    if (error) {
-      console.warn("Supabase profile fetch error", error);
-      return null;
-    }
-    return { ...data, email: authUser.email || "", is_admin: false };
+  function parseScoreString(score) {
+    const parts = String(score || "").match(/(\d+)\s*[-:]\s*(\d+)/);
+    if (!parts) return null;
+    const home = normalizeScoreNumber(parts[1]);
+    const away = normalizeScoreNumber(parts[2]);
+    if (home === null || away === null) return null;
+    return { home, away, score: `${home}-${away}` };
   }
 
+  function deriveChoiceFromScores(homeScore, awayScore) {
+    const home = normalizeScoreNumber(homeScore);
+    const away = normalizeScoreNumber(awayScore);
+    if (home === null || away === null) return "";
+    if (home > away) return "1";
+    if (home < away) return "2";
+    return "X";
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function getExactScoreLabel(prediction) {
+    if (!prediction || !prediction.exactScoreEnabled) return "";
+    const home = normalizeScoreNumber(prediction.exactHomeScore);
+    const away = normalizeScoreNumber(prediction.exactAwayScore);
+    if (home === null || away === null) return "";
+    return `${home}-${away}`;
+  }
+
+  function getExactScoreStatusLabel(prediction) {
+    if (!prediction || !prediction.exactScoreEnabled) return "";
+    if (prediction.exactScoreStatus === "won") return "Perfect Score +500";
+    if (prediction.exactScoreStatus === "lost") return "Exact non preso";
+    if (prediction.exactScoreStatus === "pending_score") return "Exact in attesa score";
+    return "Exact pending";
+  }
 
   async function fetchSupabasePredictions(authUser) {
     const supabase = getSupabase();
     if (!supabase || !authUser) return {};
-    const { data, error } = await supabase
+
+    const baseSelect = "match_id, choice, home, away, match_time, cost, reward, status, final_result, score, created_at, resolved_at";
+    const exactSelect = baseSelect + ", exact_score_enabled, exact_home_score, exact_away_score, exact_score_cost, exact_score_reward, exact_score_status, exact_score_resolved_at";
+
+    let { data, error } = await supabase
       .from("predictions")
-      .select("match_id, choice, home, away, match_time, cost, reward, status, final_result, score, created_at, resolved_at")
+      .select(exactSelect)
       .eq("user_id", authUser.id)
       .order("created_at", { ascending: false });
+
+    if (error) {
+      const message = String(error.message || "").toLowerCase();
+      if (message.includes("exact_") || message.includes("column")) {
+        const fallback = await supabase
+          .from("predictions")
+          .select(baseSelect)
+          .eq("user_id", authUser.id)
+          .order("created_at", { ascending: false });
+        data = fallback.data;
+        error = fallback.error;
+      }
+    }
+
     if (error) {
       // Se non hai ancora eseguito lo script SQL dello Step Token Sync, la tabella non esiste: manteniamo fallback pulito.
       console.warn("Supabase predictions fetch error", error);
       return {};
     }
+
     return Object.fromEntries((data || []).map((row) => [
       row.match_id,
       {
@@ -167,7 +172,14 @@
         playedAt: row.created_at,
         finalResult: row.final_result || "",
         score: row.score || "",
-        resolvedAt: row.resolved_at || ""
+        resolvedAt: row.resolved_at || "",
+        exactScoreEnabled: Boolean(row.exact_score_enabled),
+        exactHomeScore: row.exact_home_score ?? null,
+        exactAwayScore: row.exact_away_score ?? null,
+        exactScoreCost: Number(row.exact_score_cost || EXACT_SCORE_COST),
+        exactScoreReward: Number(row.exact_score_reward || EXACT_SCORE_REWARD),
+        exactScoreStatus: row.exact_score_status || (row.exact_score_enabled ? "pending" : ""),
+        exactScoreResolvedAt: row.exact_score_resolved_at || ""
       }
     ]));
   }
@@ -250,9 +262,46 @@
     return mapped;
   }
 
-  async function submitSupabasePrediction({ matchId, choice, home, away, time }) {
+  async function submitSupabasePrediction({
+    matchId,
+    choice,
+    home,
+    away,
+    time,
+    exactScoreEnabled = false,
+    exactHomeScore = null,
+    exactAwayScore = null
+  }) {
     const supabase = getSupabase();
     if (!supabase) return null;
+
+    if (exactScoreEnabled) {
+      const { data, error } = await supabase.rpc("pfa_submit_prediction_exact", {
+        p_match_id: matchId,
+        p_choice: choice,
+        p_home: home || "HOME",
+        p_away: away || "AWAY",
+        p_match_time: time || "",
+        p_base_cost: COST,
+        p_base_reward: 125,
+        p_exact_score_enabled: true,
+        p_exact_home_score: normalizeScoreNumber(exactHomeScore),
+        p_exact_away_score: normalizeScoreNumber(exactAwayScore),
+        p_exact_score_cost: EXACT_SCORE_COST,
+        p_exact_score_reward: EXACT_SCORE_REWARD
+      });
+      if (error) {
+        const message = String(error.message || "");
+        if (message.includes("Could not find the function") || message.includes("schema cache")) {
+          throw new Error("Funzione risultato esatto non trovata. Esegui SQL_01_EXACT_SCORE_LOGIC_ONLY.sql nel SQL Editor e ricarica la pagina.");
+        }
+        throw error;
+      }
+      await refreshSupabaseProfileCache();
+      await refreshSupabaseLeaderboard();
+      return data;
+    }
+
     const { data, error } = await supabase.rpc("pfa_submit_prediction", {
       p_match_id: matchId,
       p_choice: choice,
@@ -302,7 +351,7 @@
     if (error) {
       const message = String(error.message || "");
       if (message.includes("Could not find the function") || message.includes("schema cache")) {
-        throw new Error("Funzione admin Supabase non trovata. Esegui SUPABASE_SECURITY_ADMIN_STEP8_SQL.sql nel SQL Editor e ricarica.");
+        throw new Error("Funzione admin Supabase non trovata/aggiornata. Esegui SQL_01_EXACT_SCORE_LOGIC_ONLY.sql nel SQL Editor e ricarica.");
       }
       throw error;
     }
@@ -469,15 +518,18 @@
       .sort((a, b) => a.kickoff - b.kickoff || (a.matchNumber || 0) - (b.matchNumber || 0));
   }
 
-  const FALLBACK_DAILY_MATCHES = [
-    { id: "preview-mex-usa", home: "MEX", away: "USA", homeFlag: "img/flags/mex.png", awayFlag: "img/flags/usa.png", kickoffUtc: new Date(new Date().setHours(15, 0, 0, 0)).toISOString(), group: "Preview" },
-    { id: "preview-bra-uru", home: "BRA", away: "URU", homeFlag: "img/flags/bra.png", awayFlag: "img/flags/uru.png", kickoffUtc: new Date(new Date().setHours(18, 0, 0, 0)).toISOString(), group: "Preview" },
-    { id: "preview-fra-ger", home: "FRA", away: "GER", homeFlag: "img/flags/fra.png", awayFlag: "img/flags/ger.png", kickoffUtc: new Date(new Date().setHours(21, 0, 0, 0)).toISOString(), group: "Preview" }
-  ];
-
   function getFixturePool() {
-    const fixtures = getAllFixtures();
-    return fixtures.length ? fixtures : FALLBACK_DAILY_MATCHES.map(normalizeFixture);
+    // Definitive mode: non mostriamo più le 3 partite preview se il file calendario non viene caricato.
+    // In questo modo Daily Prediction e Admin Center non lavorano mai su dati finti.
+    return getAllFixtures();
+  }
+
+  function renderCalendarMissingState(container, context = "daily") {
+    if (!container) return;
+    const copy = context === "admin"
+      ? "Admin Center non può caricare i match: assicurati di aver pubblicato js/world-cup-fixtures.js prima di arena-game.js."
+      : "Calendario non caricato: ricarica la pagina dopo aver pubblicato js/world-cup-fixtures.js.";
+    container.innerHTML = `<article class="daily-empty-state calendar-missing-state"><strong>Calendario World Cup non disponibile</strong><span>${copy}</span></article>`;
   }
 
   function getNextFixture(now = getNow()) {
@@ -1305,8 +1357,63 @@
     }
   }
 
+  function readExactScoreSelection(card, choice) {
+    const toggle = card.querySelector("[data-exact-score-toggle]");
+    const enabled = Boolean(toggle && toggle.checked);
+    if (!enabled) {
+      return {
+        enabled: false,
+        homeScore: null,
+        awayScore: null,
+        score: "",
+        cost: 0,
+        reward: 0
+      };
+    }
+
+    const homeInput = card.querySelector("[data-exact-home-score]");
+    const awayInput = card.querySelector("[data-exact-away-score]");
+    const homeScore = normalizeScoreNumber(homeInput && homeInput.value);
+    const awayScore = normalizeScoreNumber(awayInput && awayInput.value);
+
+    if (homeScore === null || awayScore === null) {
+      throw new Error("Inserisci entrambi i gol del risultato esatto.");
+    }
+
+    const scoreChoice = deriveChoiceFromScores(homeScore, awayScore);
+    if (choice && scoreChoice && choice !== scoreChoice) {
+      throw new Error(`Il risultato esatto ${homeScore}-${awayScore} non è coerente con la scelta ${choice}.`);
+    }
+
+    return {
+      enabled: true,
+      homeScore,
+      awayScore,
+      score: `${homeScore}-${awayScore}`,
+      cost: EXACT_SCORE_COST,
+      reward: EXACT_SCORE_REWARD
+    };
+  }
+
+  function setupExactScorePanels(scope = document) {
+    scope.querySelectorAll("[data-exact-score-panel]").forEach((panel) => {
+      const toggle = panel.querySelector("[data-exact-score-toggle]");
+      const fields = panel.querySelector("[data-exact-fields]");
+      if (!toggle || !fields || panel.dataset.exactPanelReady === "1") return;
+      panel.dataset.exactPanelReady = "1";
+      const sync = () => {
+        panel.classList.toggle("is-enabled", toggle.checked);
+        fields.setAttribute("aria-hidden", toggle.checked ? "false" : "true");
+        fields.querySelectorAll("input").forEach((input) => { input.disabled = !toggle.checked; });
+      };
+      toggle.addEventListener("change", sync);
+      sync();
+    });
+  }
+
   function setupPredictions() {
     renderDailyPredictionPage();
+    setupExactScorePanels(document);
     const cards = document.querySelectorAll("[data-match-card]");
     if (!cards.length) return;
 
@@ -1324,8 +1431,18 @@
           }
           user = getUser();
           if (user.predictions && user.predictions[id]) return;
-          if ((user.tokens || 0) < COST) {
-            alert("Token insufficienti per questa giocata.");
+
+          let exactSelection;
+          try {
+            exactSelection = readExactScoreSelection(card, btn.dataset.choice);
+          } catch (error) {
+            alert(error.message || "Controlla il risultato esatto inserito.");
+            return;
+          }
+
+          const totalCost = COST + Number(exactSelection.cost || 0);
+          if ((user.tokens || 0) < totalCost) {
+            alert(`Token insufficienti per questa giocata. Servono ${totalCost} token.`);
             return;
           }
 
@@ -1336,12 +1453,16 @@
           };
 
           card.querySelectorAll("button[data-choice]").forEach((choiceBtn) => choiceBtn.disabled = true);
+          card.querySelectorAll("[data-exact-score-toggle], [data-exact-home-score], [data-exact-away-score]").forEach((input) => input.disabled = true);
 
           try {
             if (SUPABASE_ENABLED && user.id) {
               await submitSupabasePrediction({
                 matchId: id,
                 choice: btn.dataset.choice,
+                exactScoreEnabled: exactSelection.enabled,
+                exactHomeScore: exactSelection.homeScore,
+                exactAwayScore: exactSelection.awayScore,
                 ...matchInfo
               });
               user = getUser();
@@ -1350,15 +1471,21 @@
               return;
             }
 
-            user.tokens -= COST;
+            user.tokens -= totalCost;
             user.xp = Number(user.xp || 0) + XP_PER_PREDICTION;
             user.level = getLevelFromXp(user.xp);
             user.predictions = user.predictions || {};
             user.predictions[id] = {
               choice: btn.dataset.choice,
               status: "pending",
-              cost: COST,
+              cost: totalCost,
               reward: 125,
+              exactScoreEnabled: exactSelection.enabled,
+              exactHomeScore: exactSelection.homeScore,
+              exactAwayScore: exactSelection.awayScore,
+              exactScoreCost: exactSelection.enabled ? EXACT_SCORE_COST : 0,
+              exactScoreReward: exactSelection.enabled ? EXACT_SCORE_REWARD : 0,
+              exactScoreStatus: exactSelection.enabled ? "pending" : "",
               playedAt: new Date().toISOString(),
               ...matchInfo
             };
@@ -1370,6 +1497,7 @@
             console.error(error);
             alert(error.message || "Prediction non salvata. Controlla di aver eseguito lo script SQL Token Sync su Supabase.");
             card.querySelectorAll("button[data-choice]").forEach((choiceBtn) => choiceBtn.disabled = false);
+            setupExactScorePanels(card);
           }
         });
       });
@@ -1381,15 +1509,40 @@
     card.classList.add("is-played");
     if (saved.status === "won") card.classList.add("is-won");
     if (saved.status === "lost") card.classList.add("is-lost");
+
+    const exactLabel = getExactScoreLabel(saved);
+    const exactStatus = getExactScoreStatusLabel(saved);
     const status = card.querySelector("[data-match-status]") || card.querySelector(".daily-match-top b");
-    const statusLabel = saved.status === "won" ? `Vinta · esito ${saved.finalResult || ""}` : saved.status === "lost" ? `Persa · esito ${saved.finalResult || ""}` : `Giocata: ${saved.choice}`;
+    const statusLabel = saved.status === "won"
+      ? `Vinta${saved.exactScoreStatus === "won" ? " · Perfect Score" : ""}`
+      : saved.status === "lost"
+        ? `Persa · esito ${saved.finalResult || ""}`
+        : `Giocata: ${saved.choice}${exactLabel ? ` · ${exactLabel}` : ""}`;
     if (status) status.textContent = statusLabel;
+
+    const toggle = card.querySelector("[data-exact-score-toggle]");
+    const homeInput = card.querySelector("[data-exact-home-score]");
+    const awayInput = card.querySelector("[data-exact-away-score]");
+    if (toggle && saved.exactScoreEnabled) toggle.checked = true;
+    if (homeInput && saved.exactHomeScore !== null && saved.exactHomeScore !== undefined) homeInput.value = saved.exactHomeScore;
+    if (awayInput && saved.exactAwayScore !== null && saved.exactAwayScore !== undefined) awayInput.value = saved.exactAwayScore;
+    card.querySelectorAll("[data-exact-score-toggle], [data-exact-home-score], [data-exact-away-score]").forEach((input) => { input.disabled = true; });
+    if (saved.exactScoreEnabled) card.classList.add("has-exact-score");
+
     const msg = card.querySelector("[data-played-message]");
     if (msg) {
-      if (saved.status === "won") msg.innerHTML = `<strong>Prediction vinta</strong><span>Scelta ${saved.choice} corretta. Reward accreditato.</span>`;
-      else if (saved.status === "lost") msg.innerHTML = `<strong>Prediction persa</strong><span>Scelta ${saved.choice}. Esito finale ${saved.finalResult || "-"}.</span>`;
-      else msg.innerHTML = `<strong>Pronostico inviato</strong><span>Scelta ${saved.choice} salvata. In attesa risultato.</span>`;
+      const exactCopy = exactLabel
+        ? `<span class="daily-exact-result-copy">Risultato esatto: <b>${exactLabel}</b>${exactStatus ? ` · ${exactStatus}` : ""}</span>`
+        : "";
+      if (saved.status === "won") {
+        msg.innerHTML = `<strong>${saved.exactScoreStatus === "won" ? "Perfect Score" : "Prediction vinta"}</strong><span>Scelta ${saved.choice} corretta. Reward base accreditato.</span>${exactCopy}`;
+      } else if (saved.status === "lost") {
+        msg.innerHTML = `<strong>Prediction persa</strong><span>Scelta ${saved.choice}. Esito finale ${saved.finalResult || "-"}.</span>${exactCopy}`;
+      } else {
+        msg.innerHTML = `<strong>Pronostico inviato</strong><span>Scelta ${saved.choice} salvata. In attesa risultato.</span>${exactCopy}`;
+      }
     }
+
     card.querySelectorAll("button[data-choice]").forEach((btn) => {
       btn.disabled = true;
       if (btn.dataset.choice === saved.choice) btn.classList.add("is-selected");
@@ -1408,13 +1561,19 @@
     list.innerHTML = entries.map(([id, item]) => {
       const home = item.home || getMatchLabels()[id]?.home || "HOME";
       const away = item.away || getMatchLabels()[id]?.away || "AWAY";
-      const status = item.status === "won" ? "Vinta" : item.status === "lost" ? "Persa" : "In attesa risultato";
+      const exactLabel = getExactScoreLabel(item);
+      const exactStatus = getExactScoreStatusLabel(item);
+      const status = item.status === "won"
+        ? (item.exactScoreStatus === "won" ? "Vinta · Perfect Score" : "Vinta")
+        : item.status === "lost"
+          ? "Persa"
+          : "In attesa risultato";
       return `
-        <article class="history-row">
+        <article class="history-row ${item.exactScoreStatus === "won" ? "is-perfect" : ""}">
           <span>${home} vs ${away}</span>
-          <strong>Scelta ${item.choice}</strong>
-          <b>- ${item.cost || COST} token</b>
-          <em>${status}</em>
+          <strong>Scelta ${item.choice}${exactLabel ? ` · ${exactLabel}` : ""}</strong>
+          <b>- ${Number(item.cost || COST).toLocaleString("it-IT")} token</b>
+          <em>${status}${exactStatus && item.status !== "won" ? ` · ${exactStatus}` : ""}</em>
         </article>
       `;
     }).join("");
@@ -1582,13 +1741,29 @@
     const lockCopy = dayLocked && unlockAt
       ? `Si sblocca tra <strong data-unlock-countdown data-unlock="${unlockAt.toISOString()}">${formatCountdown(unlockAt - now)}</strong>`
       : "Prediction chiusa o match già iniziato";
+    const exactHomeValue = saved && saved.exactHomeScore !== null && saved.exactHomeScore !== undefined ? saved.exactHomeScore : "";
+    const exactAwayValue = saved && saved.exactAwayScore !== null && saved.exactAwayScore !== undefined ? saved.exactAwayScore : "";
+    const exactChecked = saved && saved.exactScoreEnabled ? "checked" : "";
     const choices = locked && !saved ? `<p class="locked-copy">${lockCopy}</p>` : `
       <div class="daily-choice-row">
         <button type="button" data-choice="1">1<small>Casa</small></button>
         <button type="button" data-choice="X">X<small>Pari</small></button>
         <button type="button" data-choice="2">2<small>Ospite</small></button>
       </div>
-      <div class="daily-economy"><span>Costo 50 token</span><strong>Reward +125</strong></div>
+      <div class="daily-economy"><span>Costo base 50 token</span><strong>Reward +125</strong></div>
+      <div class="daily-exact-score" data-exact-score-panel>
+        <label class="daily-exact-toggle">
+          <input type="checkbox" data-exact-score-toggle ${exactChecked} ${saved ? "disabled" : ""}>
+          <span>🎯 Risultato esatto</span>
+          <strong>+50 token · premio +500</strong>
+        </label>
+        <div class="daily-exact-fields" data-exact-fields aria-hidden="true">
+          <label><span>${escapeHtml(match.home)}</span><input type="number" min="0" max="20" inputmode="numeric" data-exact-home-score value="${escapeHtml(exactHomeValue)}" placeholder="0"></label>
+          <i>-</i>
+          <label><span>${escapeHtml(match.away)}</span><input type="number" min="0" max="20" inputmode="numeric" data-exact-away-score value="${escapeHtml(exactAwayValue)}" placeholder="0"></label>
+          <small>Il risultato deve essere coerente con la scelta 1 / X / 2.</small>
+        </div>
+      </div>
       <div class="daily-played-message" data-played-message></div>
     `;
     return `
@@ -1614,8 +1789,15 @@
     if (!openGrid && !lockedGrid) return;
 
     const user = getUser();
+    const fixtures = getFixturePool();
+    if (!fixtures.length) {
+      renderCalendarMissingState(openGrid, "daily");
+      renderCalendarMissingState(lockedGrid, "daily");
+      document.querySelectorAll("[data-active-matchday-label]").forEach((el) => { el.textContent = "--"; });
+      return;
+    }
     const activeDay = getActivePredictionDay();
-    const fixtureDays = groupFixturesByDay(getFixturePool());
+    const fixtureDays = groupFixturesByDay(fixtures);
     const now = getNow();
     const todayPlayable = activeDay.isToday
       ? activeDay.matches.filter((match) => match.kickoff > now || (user.predictions && user.predictions[match.id]))
@@ -2266,30 +2448,63 @@
     Object.entries(user.predictions || {}).forEach(([matchId, prediction]) => {
       const adminResult = results[matchId];
       if (!adminResult || adminResult.status !== "finished") return;
-      if (prediction.status && prediction.status !== "pending") return;
 
+      const basePending = !prediction.status || prediction.status === "pending";
+      const exactPending = Boolean(prediction.exactScoreEnabled) && (!["won", "lost"].includes(prediction.exactScoreStatus || ""));
+      if (!basePending && !exactPending) return;
+
+      const scoreParts = parseScoreString(adminResult.score || "");
       const won = prediction.choice === adminResult.result;
-      prediction.status = won ? "won" : "lost";
-      prediction.finalResult = adminResult.result;
-      prediction.resolvedAt = new Date().toISOString();
-      prediction.score = adminResult.score || "";
 
-      if (won) {
-        const reward = Number(prediction.reward || 125);
-        user.tokens = Number(user.tokens || 0) + reward;
-        user.xp = Number(user.xp || 0) + 25;
-        transactions.unshift({
-          id: "tx_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
-          type: "prediction_reward",
-          matchId,
-          label: `${prediction.home || "HOME"} vs ${prediction.away || "AWAY"}`,
-          amount: reward,
-          xp: 25,
-          createdAt: new Date().toISOString()
-        });
+      if (basePending) {
+        prediction.status = won ? "won" : "lost";
+        prediction.finalResult = adminResult.result;
+        prediction.resolvedAt = new Date().toISOString();
+        prediction.score = adminResult.score || "";
+
+        if (won) {
+          const reward = Number(prediction.reward || 125);
+          user.tokens = Number(user.tokens || 0) + reward;
+          user.xp = Number(user.xp || 0) + 25;
+          transactions.unshift({
+            id: "tx_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+            type: "prediction_reward",
+            matchId,
+            label: `${prediction.home || "HOME"} vs ${prediction.away || "AWAY"}`,
+            amount: reward,
+            xp: 25,
+            createdAt: new Date().toISOString()
+          });
+        }
+        resolved += 1;
+        changed = true;
       }
-      changed = true;
-      resolved += 1;
+
+      if (exactPending && prediction.exactScoreEnabled) {
+        prediction.score = adminResult.score || prediction.score || "";
+        if (!scoreParts) {
+          prediction.exactScoreStatus = "pending_score";
+          changed = true;
+        } else {
+          const exactWon = normalizeScoreNumber(prediction.exactHomeScore) === scoreParts.home && normalizeScoreNumber(prediction.exactAwayScore) === scoreParts.away;
+          prediction.exactScoreStatus = exactWon ? "won" : "lost";
+          prediction.exactScoreResolvedAt = new Date().toISOString();
+          if (exactWon) {
+            const exactReward = Number(prediction.exactScoreReward || EXACT_SCORE_REWARD);
+            user.tokens = Number(user.tokens || 0) + exactReward;
+            transactions.unshift({
+              id: "tx_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+              type: "exact_score_reward",
+              matchId,
+              label: `Perfect Score · ${prediction.home || "HOME"} vs ${prediction.away || "AWAY"} ${scoreParts.score}`,
+              amount: exactReward,
+              xp: 0,
+              createdAt: new Date().toISOString()
+            });
+          }
+          changed = true;
+        }
+      }
     });
 
     if (changed) {
@@ -2304,13 +2519,44 @@
     const result = getAdminResult(match.id);
     const saved = user.predictions && user.predictions[match.id];
     if (result && result.status === "finished") {
-      if (saved && saved.status === "won") return `Vinta · esito ${result.result}`;
-      if (saved && saved.status === "lost") return `Persa · esito ${result.result}`;
-      return `Finita · esito ${result.result}`;
+      const scoreLabel = result.score ? ` · ${result.score}` : "";
+      if (saved && saved.exactScoreStatus === "won") return `Perfect Score · ${result.result}${scoreLabel}`;
+      if (saved && saved.status === "won") return `Vinta · esito ${result.result}${scoreLabel}`;
+      if (saved && saved.status === "lost") return `Persa · esito ${result.result}${scoreLabel}`;
+      return `Finita · esito ${result.result}${scoreLabel}`;
     }
-    if (saved) return `Giocata: ${saved.choice}`;
+    if (saved) {
+      const exactLabel = getExactScoreLabel(saved);
+      return `Giocata: ${saved.choice}${exactLabel ? ` · ${exactLabel}` : ""}`;
+    }
     if (match.kickoff <= now) return "Live / Chiusa";
     return "Disponibile";
+  }
+
+  function getAdminScoreInputs(row) {
+    if (!row) return { home: null, away: null };
+    return {
+      home: row.querySelector("[data-admin-home-score]"),
+      away: row.querySelector("[data-admin-away-score]")
+    };
+  }
+
+  function readAdminScoreFromRow(row) {
+    const inputs = getAdminScoreInputs(row);
+    const home = normalizeScoreNumber(inputs.home && inputs.home.value);
+    const away = normalizeScoreNumber(inputs.away && inputs.away.value);
+    if (home === null && away === null) return null;
+    if (home === null || away === null) throw new Error("Inserisci sia i gol della squadra di casa sia quelli della squadra ospite.");
+    return { home, away, score: `${home}-${away}`, result: deriveChoiceFromScores(home, away) };
+  }
+
+  async function setAdminResultFromScore(matchId, row) {
+    const score = readAdminScoreFromRow(row);
+    if (!score) {
+      alert("Inserisci il risultato esatto prima di salvare lo score.");
+      return null;
+    }
+    return setAdminResult(matchId, score.result, { score: score.score });
   }
 
   function renderAdminConsole() {
@@ -2324,36 +2570,83 @@
     const pendingCount = root.querySelector("[data-admin-pending-count]");
     const txList = root.querySelector("[data-admin-transactions]");
 
+    if (!fixtures.length) {
+      renderCalendarMissingState(rowsWrap, "admin");
+      if (resultCount) resultCount.textContent = "0";
+      if (pendingCount) pendingCount.textContent = "0";
+      if (txList) txList.innerHTML = `<article class="admin-empty-log">Calendario non caricato.</article>`;
+      return;
+    }
+
     const predictions = user.predictions || {};
-    const pendingPredictions = Object.values(predictions).filter((item) => !item.status || item.status === "pending").length;
+    const pendingPredictions = Object.values(predictions).filter((item) => !item.status || item.status === "pending" || (item.exactScoreEnabled && !["won", "lost"].includes(item.exactScoreStatus || ""))).length;
     if (resultCount) resultCount.textContent = Object.keys(results).length;
     if (pendingCount) pendingCount.textContent = pendingPredictions;
 
     if (rowsWrap) {
-      const relevant = fixtures.slice(0, 72);
+      const relevant = fixtures;
       rowsWrap.innerHTML = relevant.map((match) => {
         const current = results[match.id];
         const pred = predictions[match.id];
-        const predLabel = pred ? `Scelta ${pred.choice} · ${pred.status === "won" ? "Vinta" : pred.status === "lost" ? "Persa" : "Pending"}` : "Nessuna giocata";
+        const kickoffDiff = match.kickoff - getNow();
+        const countdownCopy = kickoffDiff <= 0 ? "Live / chiusa" : formatCountdown(kickoffDiff);
+        const scoreParts = current && current.score ? parseScoreString(current.score) : null;
+        const exactLabel = pred ? getExactScoreLabel(pred) : "";
+        const exactStatus = pred ? getExactScoreStatusLabel(pred) : "";
+        const predLabel = pred
+          ? `Scelta ${pred.choice}${exactLabel ? ` · Exact ${exactLabel}` : ""} · ${pred.status === "won" ? "Vinta" : pred.status === "lost" ? "Persa" : "Pending"}${exactStatus ? ` · ${exactStatus}` : ""}`
+          : "Nessuna giocata";
         return `
           <article class="admin-match-row ${current ? "is-finished" : ""} ${pred ? "has-prediction" : ""}" data-admin-row="${match.id}">
             <div class="admin-match-main">
-              <span>${match.group || "Group"} · ${match.dateLabel} · ${match.timeLabel}</span>
+              <span>${match.group || "Group"} · ${match.dateLabel} · ${match.timeLabel}${current && current.score ? ` · Score ${current.score}` : ""}</span>
               <strong><img src="${match.homeFlag}" alt=""> ${match.home} <i>vs</i> ${match.away} <img src="${match.awayFlag}" alt=""></strong>
+              <small class="admin-match-countdown">${kickoffDiff <= 0 ? "Stato" : "Countdown"}: <b data-match-countdown data-kickoff="${match.kickoff.toISOString()}">${countdownCopy}</b></small>
               <em>${predLabel}</em>
             </div>
-            <div class="admin-result-buttons" data-admin-result-buttons="${match.id}">
-              <button type="button" data-admin-set-result="${match.id}" data-result="1" class="${current && current.result === "1" ? "is-selected" : ""}">1</button>
-              <button type="button" data-admin-set-result="${match.id}" data-result="X" class="${current && current.result === "X" ? "is-selected" : ""}">X</button>
-              <button type="button" data-admin-set-result="${match.id}" data-result="2" class="${current && current.result === "2" ? "is-selected" : ""}">2</button>
-              <button type="button" data-admin-clear-result="${match.id}">Reset</button>
+            <div class="admin-result-tools">
+              <div class="admin-score-editor" data-admin-score-editor="${match.id}">
+                <label><span>${escapeHtml(match.home)}</span><input type="number" min="0" max="20" inputmode="numeric" data-admin-home-score value="${scoreParts ? scoreParts.home : ""}" placeholder="0"></label>
+                <i>-</i>
+                <label><span>${escapeHtml(match.away)}</span><input type="number" min="0" max="20" inputmode="numeric" data-admin-away-score value="${scoreParts ? scoreParts.away : ""}" placeholder="0"></label>
+                <button type="button" data-admin-set-score-result="${match.id}">Salva score</button>
+              </div>
+              <div class="admin-result-buttons" data-admin-result-buttons="${match.id}">
+                <button type="button" data-admin-set-result="${match.id}" data-result="1" class="${current && current.result === "1" ? "is-selected" : ""}">1</button>
+                <button type="button" data-admin-set-result="${match.id}" data-result="X" class="${current && current.result === "X" ? "is-selected" : ""}">X</button>
+                <button type="button" data-admin-set-result="${match.id}" data-result="2" class="${current && current.result === "2" ? "is-selected" : ""}">2</button>
+                <button type="button" data-admin-clear-result="${match.id}">Reset</button>
+              </div>
             </div>
           </article>
         `;
       }).join("");
 
+      rowsWrap.querySelectorAll("[data-admin-set-score-result]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const row = btn.closest("[data-admin-row]");
+          try { await setAdminResultFromScore(btn.dataset.adminSetScoreResult, row); }
+          catch (error) { alert(error.message || "Score non valido."); }
+        });
+      });
       rowsWrap.querySelectorAll("[data-admin-set-result]").forEach((btn) => {
-        btn.addEventListener("click", async () => { await setAdminResult(btn.dataset.adminSetResult, btn.dataset.result); });
+        btn.addEventListener("click", async () => {
+          const row = btn.closest("[data-admin-row]");
+          let options = {};
+          try {
+            const score = readAdminScoreFromRow(row);
+            if (score) {
+              if (score.result !== btn.dataset.result) {
+                alert(`Lo score inserito produce ${score.result}, non ${btn.dataset.result}. Usa “Salva score” oppure correggi i gol.`);
+                return;
+              }
+              options.score = score.score;
+            }
+            await setAdminResult(btn.dataset.adminSetResult, btn.dataset.result, options);
+          } catch (error) {
+            alert(error.message || "Esito non valido.");
+          }
+        });
       });
       rowsWrap.querySelectorAll("[data-admin-clear-result]").forEach((btn) => {
         btn.addEventListener("click", async () => { await clearAdminResult(btn.dataset.adminClearResult); });
@@ -2482,6 +2775,12 @@
     const groups = getAdminGroupTeams();
     const saved = getAdminGroupStandings();
     const standings = saved && saved.standings ? saved.standings : {};
+
+    if (!groups.length) {
+      grid.innerHTML = `<article class="admin-empty-log">Calendario non caricato: impossibile generare i 12 gironi.</article>`;
+      if (preview) preview.innerHTML = `<article class="admin-empty-log">Carica js/world-cup-fixtures.js per vedere l’anteprima knockout.</article>`;
+      return;
+    }
 
     grid.innerHTML = groups.map((group) => `
       <article class="admin-group-card" data-admin-group-card="${group.key}">
