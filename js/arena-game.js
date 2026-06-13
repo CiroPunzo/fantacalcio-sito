@@ -29,6 +29,7 @@
   const EXACT_SCORE_REWARD = 500;
   const VERSION_BONUS_KEY = "world_cup_arena_v2_bonus";
   const VERSION_BONUS_REWARD = 250;
+  const VERSION_BONUS_NOTICE_PREFIX = "pfa_worldcup_match_result_bonus_seen_";
   const XP_PER_PREDICTION = 10;
   const DEFAULT_USER = {
     id: null,
@@ -152,9 +153,9 @@
         tokenReward: Number(row.token_reward || VERSION_BONUS_REWARD),
         status: row.status || "available",
         claimedAt: row.claimed_at || "",
-        title: row.title || "Bonus nuova versione",
-        body: row.body || "Riscatta il bonus inaugurale della nuova World Cup Arena.",
-        cta: row.cta || "Riscatta"
+        title: row.title || "Nuova versione: Match Result",
+        body: row.body || "Benvenuto nella nuova versione ProFantasy World Cup Arena: Match Result. Per l’occasione ti sono stati regalati 250 token. Buon divertimento.",
+        cta: row.cta || "Ho capito"
       } : null;
       renderVersionBonusNudge();
       return VERSION_BONUS_CACHE;
@@ -167,25 +168,33 @@
     }
   }
 
-  async function claimSupabaseVersionBonus() {
+  async function ackSupabaseVersionBonusNotice() {
     const supabase = getSupabase();
     if (!supabase) return null;
-    const { data, error } = await supabase.rpc("pfa_claim_version_bonus", { p_campaign_key: VERSION_BONUS_KEY });
+    const { data, error } = await supabase.rpc("pfa_ack_version_bonus", { p_campaign_key: VERSION_BONUS_KEY });
     if (error) throw error;
-    VERSION_BONUS_CACHE = { ...(VERSION_BONUS_CACHE || {}), status: "claimed", claimedAt: new Date().toISOString() };
-    renderVersionBonusNudge();
-    await refreshSupabaseProfileCache();
-    await refreshSupabaseLeaderboard();
-    await fetchSupabaseVersionBonus();
+    VERSION_BONUS_CACHE = { ...(VERSION_BONUS_CACHE || {}), status: "seen" };
     return data;
+  }
+
+  function getVersionBonusNoticeStorageKey(bonus = VERSION_BONUS_CACHE) {
+    const user = getUser();
+    const userKey = user?.id || user?.email || user?.username || "guest";
+    const campaign = bonus?.campaignKey || VERSION_BONUS_KEY;
+    return `${VERSION_BONUS_NOTICE_PREFIX}${campaign}_${userKey}`;
   }
 
   function renderVersionBonusNudge() {
     const existing = document.querySelector("[data-version-bonus-nudge]");
-    const user = getUser();
     const bonus = VERSION_BONUS_CACHE;
 
-    if (!hasRegisteredUser() || !bonus || bonus.status === "claimed") {
+    if (!hasRegisteredUser() || !bonus || bonus.status === "available" || bonus.status === "seen") {
+      if (existing) existing.remove();
+      return;
+    }
+
+    const storageKey = getVersionBonusNoticeStorageKey(bonus);
+    if (localStorage.getItem(storageKey) === "1") {
       if (existing) existing.remove();
       return;
     }
@@ -194,41 +203,33 @@
     const html = `
       <div class="pfa-version-bonus-icon" aria-hidden="true">⚡</div>
       <div class="pfa-version-bonus-copy">
-        <span>${escapeHtml(bonus.title || "Bonus nuova versione")}</span>
-        <strong>+${reward.toLocaleString("it-IT")} token pronti</strong>
-        <p>${escapeHtml(bonus.body || "Riscatta il bonus inaugurale della nuova World Cup Arena.")}</p>
+        <span>${escapeHtml(bonus.title || "Nuova versione")}</span>
+        <strong>+${reward.toLocaleString("it-IT")} token accreditati</strong>
+        <p>${escapeHtml(bonus.body || "Benvenuto nella nuova versione ProFantasy World Cup Arena: Match Result. Per l’occasione ti sono stati regalati 250 token. Buon divertimento.")}</p>
       </div>
-      <button type="button" data-version-bonus-claim>${escapeHtml(bonus.cta || "Riscatta")}</button>
+      <button type="button" data-version-bonus-dismiss>${escapeHtml(bonus.cta || "Ho capito")}</button>
     `;
 
     const node = existing || document.createElement("aside");
-    node.className = "pfa-version-bonus-nudge";
+    node.className = "pfa-version-bonus-nudge is-claimed";
     node.setAttribute("data-version-bonus-nudge", "");
     node.setAttribute("role", "status");
     node.innerHTML = html;
 
     if (!existing) document.body.appendChild(node);
 
-    const btn = node.querySelector("[data-version-bonus-claim]");
+    const btn = node.querySelector("[data-version-bonus-dismiss]");
     if (btn) {
       btn.addEventListener("click", async () => {
         btn.disabled = true;
-        btn.textContent = "Accredito...";
+        btn.textContent = "Ok";
+        localStorage.setItem(storageKey, "1");
         try {
-          const result = await claimSupabaseVersionBonus();
-          const tokens = Number(result?.tokens || getUser().tokens || 0);
-          btn.textContent = "Riscattato";
-          node.classList.add("is-claimed");
-          const copy = node.querySelector(".pfa-version-bonus-copy p");
-          if (copy) copy.textContent = `Bonus accreditato. Nuovo saldo: ${tokens.toLocaleString("it-IT")} token.`;
-          setTimeout(() => node.remove(), 2600);
+          await ackSupabaseVersionBonusNotice();
         } catch (error) {
-          console.error(error);
-          btn.disabled = false;
-          btn.textContent = "Riprova";
-          const copy = node.querySelector(".pfa-version-bonus-copy p");
-          if (copy) copy.textContent = error.message || "Bonus non riscattabile in questo momento.";
+          console.warn("Version bonus ack unavailable", error);
         }
+        setTimeout(() => node.remove(), 160);
       });
     }
   }
@@ -3284,5 +3285,5 @@
     }, 1000);
     updateFixtureCountdowns();
   });
-  window.PFA_AUTH_HELPERS = { syncSupabaseSessionToLocal, refreshSupabaseProfileCache, refreshSupabaseLeaderboard, refreshSupabaseAdminCache, fetchSupabaseVersionBonus, claimSupabaseVersionBonus, signOutSupabaseAndLocal, getUser, hasRegisteredUser, isAdminUser, updateAdminEntryPoints };
+  window.PFA_AUTH_HELPERS = { syncSupabaseSessionToLocal, refreshSupabaseProfileCache, refreshSupabaseLeaderboard, refreshSupabaseAdminCache, fetchSupabaseVersionBonus, ackSupabaseVersionBonusNotice, signOutSupabaseAndLocal, getUser, hasRegisteredUser, isAdminUser, updateAdminEntryPoints };
 })();
