@@ -9572,3 +9572,166 @@ body.pfa-ready main {
   .ko-team-pick { min-height: 68px; }
   .ko-team-pick span { font-size: 12px; }
 }
+
+/* =========================================================
+   PROFANTASY WORLD CUP ARENA — KNOCKOUT SAVE/BANNER V4
+   ========================================================= */
+.ko-compile-banner {
+  position: fixed;
+  top: calc(var(--header-h, 78px) + 14px);
+  left: 50%;
+  z-index: 90;
+  width: min(1120px, calc(100% - 28px));
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.ko-compile-banner-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 18px 16px 22px;
+  border: 1px solid rgba(255, 191, 61, 0.46);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255, 191, 61, 0.20), transparent 30%),
+    radial-gradient(circle at 92% 40%, rgba(183, 57, 255, 0.22), transparent 34%),
+    linear-gradient(135deg, rgba(10, 11, 33, 0.96), rgba(6, 10, 28, 0.92));
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.45), 0 0 32px rgba(255, 191, 61, 0.16), inset 0 0 24px rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(18px);
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.ko-compile-banner-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255, 191, 61, 0.14), transparent 28%, rgba(40, 220, 255, 0.12));
+  pointer-events: none;
+}
+
+.ko-compile-banner-inner > * { position: relative; z-index: 1; }
+.ko-compile-banner span {
+  display: block;
+  margin-bottom: 4px;
+  color: rgba(255,255,255,0.62);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.ko-compile-banner strong {
+  display: block;
+  color: var(--gold, #ffbf3d);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: clamp(20px, 2.1vw, 34px);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 0 16px rgba(255, 191, 61, 0.46);
+}
+.ko-compile-banner p {
+  margin-top: 6px;
+  color: rgba(255,255,255,0.72);
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+.ko-compile-banner-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.ko-compile-banner-btn {
+  min-width: 168px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: #17100a;
+  background: linear-gradient(135deg, #ffe48b, #ffb13d 48%, #ff7b2d);
+  box-shadow: 0 0 24px rgba(255, 191, 61, 0.30), inset 0 0 14px rgba(255, 255, 255, 0.20);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.ko-compile-banner-close {
+  width: 42px;
+  height: 42px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.88);
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.ko-rules-card {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 18px;
+}
+.ko-rules-card article {
+  padding: 14px;
+  border: 1px solid rgba(40, 220, 255, 0.18);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(6, 16, 42, 0.86), rgba(4, 8, 26, 0.92));
+  box-shadow: inset 0 0 20px rgba(40, 220, 255, 0.04);
+}
+.ko-rules-card span {
+  display: block;
+  margin-bottom: 6px;
+  color: rgba(255,255,255,0.58);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.ko-rules-card strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--gold, #ffbf3d);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.ko-rules-card p {
+  margin: 0;
+  color: rgba(255,255,255,0.68);
+  font-size: 13px;
+  line-height: 1.28;
+  font-weight: 700;
+}
+.ko-prediction-board { scroll-behavior: auto; overscroll-behavior-inline: contain; }
+
+@media (max-width: 760px) {
+  .ko-compile-banner {
+    top: 12px;
+    width: calc(100% - 20px);
+  }
+  .ko-compile-banner-inner {
+    grid-template-columns: 1fr;
+    padding: 14px;
+    border-radius: 18px;
+  }
+  .ko-compile-banner-actions {
+    justify-content: stretch;
+  }
+  .ko-compile-banner-btn { flex: 1; min-width: 0; }
+  .ko-rules-card { grid-template-columns: 1fr; }
+}
