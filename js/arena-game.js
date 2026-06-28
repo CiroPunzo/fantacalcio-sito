@@ -66,6 +66,8 @@
   let SUPABASE_LEADERBOARD_CACHE = null;
   let SUPABASE_ADMIN_CACHE_READY = false;
   let VERSION_BONUS_CACHE = null;
+  const ADMIN_KO_RESULTS_KEY = "profantasy_arena_admin_knockout_results_v1";
+  let KNOCKOUT_RESULTS_CACHE = null;
   window.PFA_AUTH_READY = false;
 
   function getSupabase() {
@@ -698,6 +700,126 @@
     };
   }
 
+
+  const KO_TEAM_NAMES = {
+    ZAF: "Sudafrica", CAN: "Canada", BRA: "Brasile", JPN: "Giappone",
+    GER: "Germania", PRY: "Paraguay", NED: "Paesi Bassi", MAR: "Marocco",
+    CIV: "Costa d’Avorio", NOR: "Norvegia", FRA: "Francia", SWE: "Svezia",
+    MEX: "Messico", ECU: "Ecuador", ENG: "Inghilterra", COD: "RD Congo",
+    BEL: "Belgio", SEN: "Senegal", USA: "Stati Uniti", BIH: "Bosnia-Erzegovina",
+    ESP: "Spagna", AUT: "Austria", POR: "Portogallo", CRO: "Croazia",
+    SUI: "Svizzera", ALG: "Algeria", AUS: "Australia", EGY: "Egitto",
+    ARG: "Argentina", CPV: "Capo Verde", COL: "Colombia", GHA: "Ghana"
+  };
+
+  function getKoTeamName(code) {
+    const raw = String(code || "").trim();
+    if (!raw) return "---";
+    if (raw.startsWith("W")) return `Vincente M${raw.slice(1)}`;
+    if (raw.startsWith("L")) return `Perdente M${raw.slice(1)}`;
+    return KO_TEAM_NAMES[raw] || raw;
+  }
+
+  function getKoFlag(code) {
+    const raw = String(code || "tbd").trim().toLowerCase();
+    if (!raw || raw.startsWith("w") || raw.startsWith("l") || raw === "tbd") return "img/flags/tbd.png";
+    return `img/flags/${raw}.png`;
+  }
+
+  function getStoredKnockoutResults() {
+    try { return JSON.parse(localStorage.getItem(ADMIN_KO_RESULTS_KEY)) || {}; }
+    catch (e) { return {}; }
+  }
+
+  function getAdminKnockoutResults() {
+    return KNOCKOUT_RESULTS_CACHE || getStoredKnockoutResults();
+  }
+
+  function saveAdminKnockoutResults(results) {
+    KNOCKOUT_RESULTS_CACHE = results || {};
+    localStorage.setItem(ADMIN_KO_RESULTS_KEY, JSON.stringify(KNOCKOUT_RESULTS_CACHE));
+  }
+
+  function getKoPathMatch(matchNumber) {
+    const path = window.PFA_KNOCKOUT_PATH || {};
+    const all = []
+      .concat(path.round16 || [])
+      .concat(path.quarterFinals || [])
+      .concat(path.semiFinals || [])
+      .concat(path.finals || []);
+    return all.find((match) => Number(match.matchNumber) === Number(matchNumber)) || null;
+  }
+
+  function getKoBaseFixture(matchNumber) {
+    const fixtures = Array.isArray(window.PFA_KNOCKOUT_FIXTURES) ? window.PFA_KNOCKOUT_FIXTURES : [];
+    return fixtures.find((match) => Number(match.matchNumber) === Number(matchNumber)) || null;
+  }
+
+  function resolveKoActualSource(source, results = getAdminKnockoutResults()) {
+    const raw = String(source || "").trim();
+    if (!raw || raw === "TBD") return null;
+    if (raw.startsWith("W")) {
+      const result = results[String(raw.slice(1))];
+      return result && result.winner ? result.winner : null;
+    }
+    if (raw.startsWith("L")) {
+      const matchNumber = raw.slice(1);
+      const participants = getKoActualParticipants(matchNumber, results).filter(Boolean).filter((item) => !item.placeholder);
+      const result = results[String(matchNumber)];
+      const winner = result && result.winner;
+      const loser = participants.find((team) => team.code && team.code !== winner);
+      return loser ? loser.code : null;
+    }
+    return raw;
+  }
+
+  function getKoActualParticipants(matchNumber, results = getAdminKnockoutResults()) {
+    const base = getKoBaseFixture(matchNumber);
+    if (base) {
+      return [base.home, base.away].map((code) => ({ code, name: getKoTeamName(code), flag: getKoFlag(code) }));
+    }
+    const match = getKoPathMatch(matchNumber);
+    if (!match) return [];
+    return [match.home, match.away].map((source) => {
+      const code = resolveKoActualSource(source, results);
+      return code
+        ? { code, name: getKoTeamName(code), flag: getKoFlag(code) }
+        : { code: source || "TBD", name: getKoTeamName(source || "TBD"), flag: getKoFlag("tbd"), placeholder: true };
+    });
+  }
+
+  function buildDynamicKnockoutFixtures() {
+    const results = getAdminKnockoutResults();
+    const path = window.PFA_KNOCKOUT_PATH || {};
+    const futureMatches = []
+      .concat(path.round16 || [])
+      .concat(path.quarterFinals || [])
+      .concat(path.semiFinals || [])
+      .concat(path.finals || []);
+    return futureMatches.map((match) => {
+      const participants = getKoActualParticipants(match.matchNumber, results);
+      if (participants.length !== 2 || participants.some((team) => !team || team.placeholder)) return null;
+      const [home, away] = participants;
+      return {
+        id: `wc26-m${match.matchNumber}`,
+        matchNumber: Number(match.matchNumber),
+        matchday: Number(match.matchNumber),
+        phase: Number(match.matchNumber) <= 96 ? "round16" : Number(match.matchNumber) <= 100 ? "quarterFinals" : Number(match.matchNumber) <= 102 ? "semiFinals" : "finals",
+        group: match.title || (Number(match.matchNumber) <= 96 ? "Ottavi" : Number(match.matchNumber) <= 100 ? "Quarti" : Number(match.matchNumber) <= 102 ? "Semifinali" : "Finali"),
+        home: home.code,
+        away: away.code,
+        homeName: home.name,
+        awayName: away.name,
+        homeFlag: home.flag,
+        awayFlag: away.flag,
+        kickoffUtc: match.kickoffUtc || match.date,
+        localDate: match.date,
+        stadium: match.stadium || "Stadium",
+        city: match.city || ""
+      };
+    }).filter(Boolean);
+  }
+
   function getAllFixtures() {
     return FIXTURE_SOURCE
       .map(normalizeFixture)
@@ -706,7 +828,12 @@
   }
 
   function getFixturePool() {
-    return getAllFixtures();
+    const base = getAllFixtures();
+    const byId = new Map(base.map((fixture) => [fixture.id, fixture]));
+    buildDynamicKnockoutFixtures().forEach((fixture) => {
+      if (!byId.has(fixture.id)) byId.set(fixture.id, normalizeFixture(fixture));
+    });
+    return Array.from(byId.values()).sort((a, b) => a.kickoff - b.kickoff || (a.matchNumber || 0) - (b.matchNumber || 0));
   }
 
   function getNextFixture(now = getNow()) {
@@ -2512,6 +2639,70 @@
     return payload;
   }
 
+
+  async function fetchSupabaseKnockoutResults() {
+    const supabase = getSupabase();
+    if (!supabase) return getAdminKnockoutResults();
+    const { data, error } = await supabase
+      .from("knockout_match_results")
+      .select("match_number, winner, home, away, stage, match_label, status, updated_at")
+      .order("match_number", { ascending: true });
+    if (error) {
+      console.warn("Supabase knockout_match_results fetch error", error);
+      return getAdminKnockoutResults();
+    }
+    const mapped = {};
+    (data || []).forEach((row) => {
+      mapped[String(row.match_number)] = {
+        matchNumber: Number(row.match_number),
+        winner: row.winner,
+        home: row.home,
+        away: row.away,
+        stage: row.stage || "Knockout",
+        label: row.match_label || `M${row.match_number}`,
+        status: row.status || "finished",
+        updatedAt: row.updated_at
+      };
+    });
+    saveAdminKnockoutResults(mapped);
+    return mapped;
+  }
+
+  async function setSupabaseAdminKnockoutResult(matchNumber, winner, participants, stageTitle) {
+    const supabase = getSupabase();
+    if (!supabase) return null;
+    const [home, away] = participants || [];
+    const { data, error } = await supabase.rpc("pfa_admin_set_knockout_result", {
+      p_match_number: Number(matchNumber),
+      p_winner: winner,
+      p_home: home ? home.code : "",
+      p_away: away ? away.code : "",
+      p_stage: stageTitle || "Knockout",
+      p_match_label: `M${Number(matchNumber)} · ${(home && home.name) || "TBD"} vs ${(away && away.name) || "TBD"}`
+    });
+    if (error) {
+      const message = String(error.message || "");
+      if (message.includes("Could not find the function") || message.includes("schema cache")) {
+        throw new Error("Funzione knockout admin non trovata. Esegui SUPABASE_KNOCKOUT_ADMIN_V5.sql nel SQL Editor e ricarica Admin Center.");
+      }
+      throw error;
+    }
+    await fetchSupabaseKnockoutResults();
+    await fetchSupabaseTransactions();
+    await refreshSupabaseProfileCache();
+    await refreshSupabaseLeaderboard();
+    return Array.isArray(data) ? data[0] : data;
+  }
+
+  async function clearSupabaseAdminKnockoutResult(matchNumber) {
+    const supabase = getSupabase();
+    if (!supabase) return null;
+    const { data, error } = await supabase.rpc("pfa_admin_clear_knockout_result", { p_match_number: Number(matchNumber) });
+    if (error) throw error;
+    await fetchSupabaseKnockoutResults();
+    return data;
+  }
+
   async function setSupabaseAdminGroupStandings(standings) {
     const supabase = getSupabase();
     if (!supabase) return null;
@@ -2553,6 +2744,7 @@
       await fetchSupabaseMatchResults();
       await fetchSupabaseTransactions();
       await fetchSupabaseGroupStandings();
+      await fetchSupabaseKnockoutResults();
       SUPABASE_ADMIN_CACHE_READY = true;
     } catch (error) {
       console.warn("Supabase admin cache refresh failed", error);
@@ -2769,7 +2961,7 @@
     if (pendingCount) pendingCount.textContent = pendingPredictions;
 
     if (rowsWrap) {
-      const relevant = fixtures.slice(0, 72);
+      const relevant = fixtures;
       rowsWrap.innerHTML = relevant.map((match) => {
         const current = results[match.id];
         const pred = predictions[match.id];
@@ -2782,7 +2974,7 @@
         return `
           <article class="admin-match-row ${current ? "is-finished" : ""} ${pred ? "has-prediction" : ""}" data-admin-row="${match.id}">
             <div class="admin-match-main">
-              <span>${match.group || "Group"} · ${match.dateLabel} · ${match.timeLabel}${current && current.score ? ` · Score ${current.score}` : ""}</span>
+              <span>${match.group || "Group"} · M${match.matchNumber || "--"} · ${match.dateLabel} · ${match.timeLabel}${current && current.score ? ` · Score ${current.score}` : ""}</span>
               <strong><img src="${match.homeFlag}" alt=""> ${match.home} <i>vs</i> ${match.away} <img src="${match.awayFlag}" alt=""></strong>
               <em>${predLabel}</em>
             </div>
@@ -3043,6 +3235,180 @@
     }
   }
 
+
+  function getAdminKoStages() {
+    const path = window.PFA_KNOCKOUT_PATH || {};
+    return [
+      { key: "round32", title: "Sedicesimi", matches: (window.PFA_KNOCKOUT_FIXTURES || []).slice().sort((a, b) => Number(a.matchNumber || 0) - Number(b.matchNumber || 0)) },
+      { key: "round16", title: "Ottavi", matches: path.round16 || [] },
+      { key: "quarterFinals", title: "Quarti", matches: path.quarterFinals || [] },
+      { key: "semiFinals", title: "Semifinali", matches: path.semiFinals || [] },
+      { key: "finals", title: "Finali", matches: path.finals || [] }
+    ];
+  }
+
+  function getKoMatchTitle(match, stageTitle) {
+    return match.title || stageTitle || match.group || "Knockout";
+  }
+
+  function renderAdminKoTeamButton(matchNumber, team, savedWinner, stageTitle) {
+    if (!team || team.placeholder) {
+      return `<button type="button" class="admin-ko-team-btn is-placeholder" disabled><span>${escapeHtml(team?.name || "Da definire")}</span></button>`;
+    }
+    const selected = savedWinner && savedWinner === team.code;
+    return `
+      <button type="button" class="admin-ko-team-btn ${selected ? "is-selected" : ""}" data-admin-ko-winner="${matchNumber}:${team.code}" data-stage-title="${escapeHtml(stageTitle || "Knockout")}">
+        <img src="${team.flag}" alt="">
+        <span>${escapeHtml(team.name)}</span>
+        <small>${selected ? "Qualificata" : "Passa turno"}</small>
+      </button>`;
+  }
+
+  function renderAdminKnockoutRealPanel() {
+    const root = document.querySelector("[data-admin-console]");
+    if (!root || root.classList.contains("admin-locked-shell")) return;
+    const panel = root.querySelector("[data-admin-knockout-real]");
+    if (!panel) return;
+    const results = getAdminKnockoutResults();
+    const stages = getAdminKoStages();
+    const finishedCount = Object.keys(results).length;
+    panel.innerHTML = `
+      <div class="admin-ko-real-head">
+        <div>
+          <span class="game-kicker small">Knockout reale</span>
+          <h2>Compila passaggio turno</h2>
+          <p>Qui inserisci chi passa realmente il turno. Il sistema assegna i reward della Knockout Prediction: +50 per vincente nel turno corretto e +100 per accoppiamento futuro previsto.</p>
+        </div>
+        <aside>
+          <span>Match risolti</span>
+          <strong>${finishedCount}/32</strong>
+          <small>Reward idempotenti: una volta assegnati non vengono duplicati.</small>
+        </aside>
+      </div>
+      <div class="admin-ko-real-rules">
+        <article><span>Winner reward</span><strong>+50</strong><p>Per ogni squadra qualificata prevista nel match giusto.</p></article>
+        <article><span>Matchup bonus</span><strong>+100</strong><p>Da ottavi in poi, se l'utente aveva previsto le due squadre di quella partita.</p></article>
+        <article><span>Daily Prediction</span><strong>1/X/2 + Score</strong><p>Per esito e risultato esatto usa l'elenco partite sotto.</p></article>
+      </div>
+      <div class="admin-ko-real-board">
+        ${stages.map((stage) => `
+          <section class="admin-ko-real-round">
+            <h3>${stage.title}</h3>
+            ${(stage.matches || []).map((match) => {
+              const matchNumber = Number(match.matchNumber);
+              const participants = getKoActualParticipants(matchNumber, results);
+              const saved = results[String(matchNumber)] || null;
+              const playable = participants.length === 2 && participants.every((team) => team && !team.placeholder);
+              return `
+                <article class="admin-ko-real-match ${saved ? "is-finished" : ""} ${!playable ? "is-waiting" : ""}" data-admin-ko-match="${matchNumber}">
+                  <div class="admin-ko-real-match-head">
+                    <span>M${matchNumber}</span>
+                    <strong>${escapeHtml(getKoMatchTitle(match, stage.title))}</strong>
+                    <small>${saved ? `Qualificata: ${escapeHtml(getKoTeamName(saved.winner))}` : (playable ? "Da risolvere" : "Aspetta turno precedente")}</small>
+                  </div>
+                  <div class="admin-ko-real-picks">
+                    ${renderAdminKoTeamButton(matchNumber, participants[0], saved?.winner, stage.title)}
+                    <em>VS</em>
+                    ${renderAdminKoTeamButton(matchNumber, participants[1], saved?.winner, stage.title)}
+                  </div>
+                </article>`;
+            }).join("")}
+          </section>`).join("")}
+      </div>`;
+
+    panel.querySelectorAll("[data-admin-ko-winner]").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const [matchNumber, winner] = btn.dataset.adminKoWinner.split(":");
+        await setAdminKnockoutWinner(matchNumber, winner, btn.dataset.stageTitle || "Knockout");
+      });
+    });
+  }
+
+  function getLocalKnockoutPredictionKey(user = getUser()) {
+    const playerId = user ? (user.id || user.email || user.username || "locale") : "guest";
+    return `pfa_knockout_prediction_${playerId}`;
+  }
+
+  function readLocalKnockoutPrediction(user = getUser()) {
+    try { return JSON.parse(localStorage.getItem(getLocalKnockoutPredictionKey(user))) || null; }
+    catch (e) { return null; }
+  }
+
+  function resolveLocalKnockoutReward(matchNumber, winner, participants) {
+    if (SUPABASE_ENABLED) return { total_tokens: 0, winner_hits: 0, matchup_hits: 0 };
+    const user = getUser();
+    const prediction = readLocalKnockoutPrediction(user);
+    if (!prediction || prediction.status !== "saved" || !prediction.picks) return { total_tokens: 0, winner_hits: 0, matchup_hits: 0 };
+    const rewardKey = `pfa_local_ko_reward_${user.id || user.username || "local"}_${matchNumber}`;
+    if (localStorage.getItem(rewardKey) === "1") return { total_tokens: 0, winner_hits: 0, matchup_hits: 0 };
+    let amount = 0;
+    let winnerHits = 0;
+    let matchupHits = 0;
+    if (prediction.picks[String(matchNumber)] === winner) { amount += 50; winnerHits += 1; }
+    if (Number(matchNumber) >= 89) {
+      const predictedParticipants = getKoActualParticipants(matchNumber, Object.fromEntries(Object.entries(prediction.picks).map(([k, v]) => [k, { winner: v }]))).filter(Boolean).filter((team) => !team.placeholder).map((team) => team.code).sort().join("|");
+      const actualParticipants = (participants || []).filter(Boolean).filter((team) => !team.placeholder).map((team) => team.code).sort().join("|");
+      if (predictedParticipants && predictedParticipants === actualParticipants) { amount += 100; matchupHits += 1; }
+    }
+    if (amount > 0) {
+      user.tokens = Number(user.tokens || 0) + amount;
+      saveUser(user);
+      const transactions = getAdminTransactions();
+      transactions.unshift({
+        id: "tx_ko_" + Date.now().toString(36),
+        type: "knockout_reward",
+        matchId: `M${matchNumber}`,
+        label: `Knockout Reward · M${matchNumber}`,
+        amount,
+        xp: 0,
+        createdAt: new Date().toISOString()
+      });
+      saveAdminTransactions(transactions.slice(0, 40));
+    }
+    localStorage.setItem(rewardKey, "1");
+    return { total_tokens: amount, winner_hits: winnerHits, matchup_hits: matchupHits };
+  }
+
+  async function setAdminKnockoutWinner(matchNumber, winner, stageTitle) {
+    const results = getAdminKnockoutResults();
+    const participants = getKoActualParticipants(matchNumber, results);
+    if (participants.length !== 2 || participants.some((team) => !team || team.placeholder)) {
+      alert("Questo match non è ancora compilabile: prima devi risolvere il turno precedente.");
+      return;
+    }
+    const selectedTeam = participants.find((team) => team.code === winner);
+    if (!selectedTeam) return;
+    if (!confirm(`Confermi ${selectedTeam.name} qualificata in M${Number(matchNumber)}?\n\nQuesto può assegnare reward automatici ai bracket salvati.`)) return;
+    let outcome = null;
+    try {
+      if (SUPABASE_ENABLED && isAdminUser()) {
+        outcome = await setSupabaseAdminKnockoutResult(matchNumber, winner, participants, stageTitle);
+      } else {
+        results[String(matchNumber)] = {
+          matchNumber: Number(matchNumber),
+          winner,
+          home: participants[0].code,
+          away: participants[1].code,
+          stage: stageTitle || "Knockout",
+          label: `M${Number(matchNumber)} · ${participants[0].name} vs ${participants[1].name}`,
+          status: "finished",
+          updatedAt: new Date().toISOString()
+        };
+        saveAdminKnockoutResults(results);
+        outcome = resolveLocalKnockoutReward(matchNumber, winner, participants);
+      }
+      renderAdminKnockoutRealPanel();
+      renderAdminConsole();
+      renderLeaderboard();
+      const tokens = Number(outcome?.total_tokens || outcome?.totalTokens || 0);
+      const users = Number(outcome?.resolved_predictions || outcome?.users_rewarded || 0);
+      alert(`Knockout aggiornato. Token assegnati: +${tokens.toLocaleString("it-IT")}${users ? ` · Utenti premiati: ${users}` : ""}.`);
+    } catch (error) {
+      console.error(error);
+      alert(error.message || "Errore durante il salvataggio del risultato knockout.");
+    }
+  }
+
   function setupAdminGroupsPanel() {
     const root = document.querySelector("[data-admin-console]");
     if (!root || root.classList.contains("admin-locked-shell")) return;
@@ -3136,6 +3502,7 @@
       await refreshSupabaseAdminCache();
     }
     renderAdminConsole();
+    renderAdminKnockoutRealPanel();
     const resolveBtn = root.querySelector("[data-admin-resolve-all]");
     if (resolveBtn) {
       resolveBtn.addEventListener("click", () => {
@@ -3241,6 +3608,9 @@
     setupMobileNavigation();
 
     await syncSupabaseSessionToLocal();
+    if (SUPABASE_ENABLED) {
+      await fetchSupabaseKnockoutResults().catch((error) => console.warn("Public knockout results fetch failed", error));
+    }
     if (SUPABASE_ENABLED && getUser().id) {
       await refreshSupabaseAdminCache();
       await refreshSupabaseLeaderboard();
@@ -3276,6 +3646,7 @@
     await setupReferral();
     await setupAdminConsole();
     setupAdminGroupsPanel();
+    renderAdminKnockoutRealPanel();
     setupAuthUi();
     setupMobileNavigation();
     renderLeaderboard();

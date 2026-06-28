@@ -1,6 +1,6 @@
 
 (function(){
-  const BUILD_VERSION = "knockout-save-banner-v4";
+  const BUILD_VERSION = "admin-knockout-v5";
   console.info("[PFA] bracket-game loaded", BUILD_VERSION);
   const PROFILE_KEYS = ["profantasy_arena_session_cache_v1","pfa_profile_v2","pfa_profile","arenaProfile","profantasyArenaProfile"];
   const MAIN_PROFILE_KEY = "profantasy_arena_session_cache_v1";

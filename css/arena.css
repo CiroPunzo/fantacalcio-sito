@@ -9574,7 +9574,7 @@ body.pfa-ready main {
 }
 
 /* =========================================================
-   PROFANTASY WORLD CUP ARENA — KNOCKOUT SAVE/BANNER V4
+   PROFANTASY WORLD CUP ARENA — ADMIN KNOCKOUT V5
    ========================================================= */
 .ko-compile-banner {
   position: fixed;
@@ -9734,4 +9734,236 @@ body.pfa-ready main {
   }
   .ko-compile-banner-btn { flex: 1; min-width: 0; }
   .ko-rules-card { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   ADMIN KNOCKOUT V5 — Real bracket resolver
+   ========================================================= */
+.admin-knockout-real-panel {
+  position: relative;
+  margin: 34px 0;
+  padding: clamp(18px, 2vw, 28px);
+  border: 1px solid rgba(255, 191, 61, 0.32);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255, 191, 61, 0.14), transparent 30%),
+    radial-gradient(circle at 90% 12%, rgba(40, 220, 255, 0.12), transparent 32%),
+    linear-gradient(180deg, rgba(9, 12, 35, 0.94), rgba(5, 7, 22, 0.96));
+  box-shadow: 0 0 34px rgba(255, 191, 61, 0.10), inset 0 0 28px rgba(40, 220, 255, 0.04);
+}
+.admin-ko-real-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 300px);
+  align-items: stretch;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.admin-ko-real-head h2 {
+  margin: 6px 0 8px;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: clamp(26px, 3vw, 42px);
+  line-height: 0.98;
+  text-transform: uppercase;
+  color: #fff;
+}
+.admin-ko-real-head p {
+  max-width: 850px;
+  color: rgba(255,255,255,0.72);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.38;
+}
+.admin-ko-real-head aside {
+  padding: 18px;
+  border: 1px solid rgba(40, 220, 255, 0.24);
+  border-radius: 18px;
+  background: rgba(2, 8, 28, 0.72);
+}
+.admin-ko-real-head aside span,
+.admin-ko-real-head aside small {
+  display: block;
+  color: rgba(255,255,255,0.62);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.admin-ko-real-head aside strong {
+  display: block;
+  margin: 8px 0;
+  color: var(--gold);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 34px;
+  font-weight: 900;
+}
+.admin-ko-real-rules {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.admin-ko-real-rules article {
+  min-height: 108px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.018));
+}
+.admin-ko-real-rules span {
+  display: block;
+  color: rgba(255,255,255,0.58);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.admin-ko-real-rules strong {
+  display: block;
+  margin: 5px 0;
+  color: var(--cyan-2);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 24px;
+}
+.admin-ko-real-rules p {
+  color: rgba(255,255,255,0.68);
+  font-size: 14px;
+  line-height: 1.28;
+  font-weight: 600;
+}
+.admin-ko-real-board {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(320px, 380px);
+  gap: 14px;
+  overflow-x: auto;
+  padding: 4px 4px 14px;
+  scroll-snap-type: x proximity;
+}
+.admin-ko-real-round {
+  scroll-snap-align: start;
+  padding: 14px;
+  border: 1px solid rgba(40, 220, 255, 0.17);
+  border-radius: 20px;
+  background: rgba(3, 8, 27, 0.62);
+}
+.admin-ko-real-round h3 {
+  margin: 0 0 12px;
+  color: #fff;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.admin-ko-real-match {
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(10, 14, 43, 0.9), rgba(3, 7, 23, 0.96));
+}
+.admin-ko-real-match.is-finished {
+  border-color: rgba(255, 191, 61, 0.38);
+  box-shadow: 0 0 18px rgba(255, 191, 61, 0.10);
+}
+.admin-ko-real-match.is-waiting { opacity: 0.62; }
+.admin-ko-real-match-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.admin-ko-real-match-head span {
+  grid-row: span 2;
+  min-width: 44px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  color: var(--gold);
+  background: rgba(255,191,61,0.08);
+  border: 1px solid rgba(255,191,61,0.18);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+}
+.admin-ko-real-match-head strong {
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.05;
+}
+.admin-ko-real-match-head small {
+  color: rgba(255,255,255,0.55);
+  font-size: 12px;
+  font-weight: 700;
+}
+.admin-ko-real-picks {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 8px;
+}
+.admin-ko-real-picks em {
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,0.45);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 900;
+}
+.admin-ko-team-btn {
+  min-height: 72px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  place-items: center;
+  gap: 4px;
+  padding: 10px 8px;
+  border-radius: 14px;
+  border: 1px solid rgba(40,220,255,0.16);
+  background: rgba(255,255,255,0.045);
+  color: #fff;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
+.admin-ko-team-btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,191,61,0.55);
+  box-shadow: 0 0 16px rgba(255,191,61,0.12);
+}
+.admin-ko-team-btn.is-selected {
+  border-color: rgba(255,191,61,0.75);
+  background: linear-gradient(180deg, rgba(255,191,61,0.18), rgba(255,255,255,0.04));
+}
+.admin-ko-team-btn.is-placeholder {
+  opacity: .55;
+  cursor: not-allowed;
+}
+.admin-ko-team-btn img {
+  width: 34px;
+  height: 23px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.08);
+}
+.admin-ko-team-btn span {
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.05;
+  font-weight: 800;
+}
+.admin-ko-team-btn small {
+  color: rgba(255,255,255,0.55);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+@media (max-width: 760px) {
+  .admin-ko-real-head,
+  .admin-ko-real-rules { grid-template-columns: 1fr; }
+  .admin-ko-real-board { grid-auto-columns: minmax(290px, 92vw); }
 }

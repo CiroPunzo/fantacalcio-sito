@@ -8,7 +8,7 @@
   <title>Admin Center — ProFantasy World Cup Arena</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#7c3cff" />
-  <link rel="stylesheet" href="css/arena.css?v=knockout-save-banner-v4" />
+  <link rel="stylesheet" href="css/arena.css?v=admin-knockout-v5" />
 </head>
 <body>
   <div class="arena-page admin-page">
@@ -106,6 +106,10 @@
         </div>
       </section>
 
+      <section class="admin-knockout-real-panel" data-admin-knockout-real aria-label="Gestione knockout reale">
+        <article class="admin-empty-log">Caricamento bracket knockout reale...</article>
+      </section>
+
       <section class="admin-console-layout">
         <div class="admin-match-panel">
           <div class="board-head">
@@ -114,7 +118,7 @@
               <h2>Inserisci esito partita</h2>
             </div>
             <p class="board-note">
-              In modalità Supabase inserisci il risultato esatto del match: il sistema ricava automaticamente 1/X/2, risolve le prediction pending e accredita anche i Perfect Score.
+              Qui gestisci Daily Prediction: 1/X/2 e risultato esatto. Per il passaggio turno del bracket usa il pannello Knockout Reale qui sopra.
             </p>
           </div>
 
@@ -142,6 +146,7 @@
               <li>Il player invia una prediction da Daily Prediction.</li>
               <li>L'admin imposta lo score esatto, oppure solo l’esito 1 / X / 2.</li>
               <li>Supabase risolve la giocata, assegna +125 per l’esito corretto e +500 per il Perfect Score.</li>
+              <li>Nel pannello Knockout Reale l'admin indica chi passa il turno e il sistema assegna i reward bracket.</li>
             </ol>
           </div>
 
@@ -154,10 +159,10 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js?v=knockout-save-banner-v4"></script>
-  <script src="js/world-cup-fixtures.js?v=knockout-save-banner-v4"></script>
-  <script src="js/world-cup-knockout-fixtures.js?v=knockout-save-banner-v4"></script>
-  <script src="js/arena-game.js?v=knockout-save-banner-v4"></script>
-  <script src="js/arena-pwa.js?v=knockout-save-banner-v4"></script>
+  <script src="js/supabase-config.js?v=admin-knockout-v5"></script>
+  <script src="js/world-cup-fixtures.js?v=admin-knockout-v5"></script>
+  <script src="js/world-cup-knockout-fixtures.js?v=admin-knockout-v5"></script>
+  <script src="js/arena-game.js?v=admin-knockout-v5"></script>
+  <script src="js/arena-pwa.js?v=admin-knockout-v5"></script>
 </body>
 </html>
