@@ -1,19 +1,22 @@
 
 (function(){
-  const BUILD_VERSION = "knockout-r32-v2";
+  const BUILD_VERSION = "knockout-prediction-v3";
   console.info("[PFA] bracket-game loaded", BUILD_VERSION);
   const PROFILE_KEYS = ["profantasy_arena_session_cache_v1","pfa_profile_v2","pfa_profile","arenaProfile","profantasyArenaProfile"];
   const MAIN_PROFILE_KEY = "profantasy_arena_session_cache_v1";
   const ADMIN_GROUP_STANDINGS_KEY = "profantasy_arena_admin_group_standings_v1";
+  const GROUP_STAGE_CLOSED = true;
   let profile = readProfile();
   let playerId = profile ? (profile.id || profile.email || profile.username || "locale") : "guest";
   let GROUP_BRACKET_KEY = "pfa_group_stage_prediction_" + playerId;
+  let KNOCKOUT_BRACKET_KEY = "pfa_knockout_prediction_" + playerId;
   let TUTORIAL_KEY = "pfa_bracket_tutorial_split_v6_" + playerId;
 
   function refreshProfileContext(){
     profile = readProfile();
     playerId = profile ? (profile.id || profile.email || profile.username || "locale") : "guest";
     GROUP_BRACKET_KEY = "pfa_group_stage_prediction_" + playerId;
+    KNOCKOUT_BRACKET_KEY = "pfa_knockout_prediction_" + playerId;
     TUTORIAL_KEY = "pfa_bracket_tutorial_split_v6_" + playerId;
   }
 
@@ -37,7 +40,7 @@
     ["Tutorial bracket", "Inizia dai gironi: assegna 1°, 2°, 3° e 4° posizione a ogni nazionale."],
     ["Carousel gironi", "Scorri orizzontalmente i 12 gironi. La logica è la stessa su desktop e mobile."],
     ["Salvataggio definitivo", "Quando salvi la Group Stage Prediction, non potrai più modificarla."],
-    ["Knockout più avanti", "La fase a eliminazione diretta verrà sbloccata solo dopo le classifiche reali dei gironi."],
+    ["Knockout live", "Ora scegli i vincenti dai sedicesimi alla finale. Il tabellone successivo si aggiorna in automatico."],
   ];
   let tutorialIndex = 0;
 
@@ -209,6 +212,7 @@
   function init(){
     refreshProfileContext();
     renderProfile();
+    bindEvents();
     if(!profile){
       show("[data-lock-screen]");
       hide("[data-intro-screen]");
@@ -218,24 +222,18 @@
     }
 
     const saved = getSaved();
-    if(saved){
-      state.readOnly = true;
-      state.groupRanking = saved.groupRanking || {};
-      hide("[data-lock-screen]"); hide("[data-intro-screen]"); hide("[data-game-shell]"); show("[data-saved-screen]");
-      renderSavedOverview(saved);
-      return;
-    }
-
+    state.readOnly = true;
     hide("[data-lock-screen]");
-    if(localStorage.getItem(TUTORIAL_KEY)){
-      hide("[data-intro-screen]");
-      show("[data-game-shell]");
-      renderGroups(); renderSafePairings();
+    hide("[data-intro-screen]");
+    hide("[data-game-shell]");
+    show("[data-saved-screen]");
+
+    if(saved){
+      state.groupRanking = saved.groupRanking || {};
+      renderSavedOverview(saved);
     } else {
-      show("[data-intro-screen]");
-      hide("[data-game-shell]");
+      renderClosedGroupStageOverview();
     }
-    bindEvents();
   }
 
   function clearBracketAuthForVerifica(){
@@ -266,9 +264,8 @@
     const nextT = $("[data-next-tutorial]");
     if(nextT) nextT.addEventListener("click", nextTutorial);
     const review = $("[data-review-saved]");
-    if(review) review.addEventListener("click", () => {
-      hide("[data-saved-screen]"); show("[data-game-shell]"); state.readOnly = true; renderGroups(); renderSafePairings(); window.scrollTo({top:0, behavior:"smooth"});
-    });
+    if(review) review.addEventListener("click", openKnockoutPrediction);
+    document.addEventListener("click", handleKoPanelClick);
   }
 
   function renderGroups(){
@@ -328,6 +325,7 @@
   }
 
   async function saveGroups(){
+    if(GROUP_STAGE_CLOSED){ alert("La Group Stage Prediction è chiusa: ora puoi giocare il Bracket Knockout dai sedicesimi in poi."); return; }
     if(getSaved()){ alert("Group Stage Prediction già salvata: non puoi modificarla."); return; }
     if(!allGroupsComplete()){ alert("Completa tutte le posizioni dei 12 gironi prima di salvare."); return; }
     const payload = { savedAt: new Date().toISOString(), phase: "groups", groupRanking: state.groupRanking, knockoutLocked: true, status: "saved" };
@@ -354,6 +352,8 @@
   }
 
   function renderSavedOverview(saved){
+    const btn = $("[data-review-saved]");
+    if(btn) btn.innerHTML = "Vai al Bracket Knockout <span>›</span>";
     const box = $("[data-saved-overview]");
     if(!box || !saved) return;
     const groupsHtml = groups.map(([g,...list]) => {
@@ -384,6 +384,30 @@
       </div>
       ${rewardSummary}
       <div class="saved-groups-strip">${groupsHtml}</div>
+    `;
+  }
+
+  function renderClosedGroupStageOverview(){
+    const box = $("[data-saved-overview]");
+    const title = document.querySelector("[data-saved-screen] h2");
+    const copy = document.querySelector("[data-saved-screen] p");
+    const badge = document.querySelector("[data-saved-screen] .intro-badge");
+    if(badge) badge.textContent = "Gironi chiusi";
+    if(title) title.textContent = "La Group Stage Prediction è terminata";
+    if(copy) copy.textContent = "Il tempo per compilare i gironi è scaduto. Puoi comunque entrare nella Knockout Prediction e compilare il tabellone dai sedicesimi fino alla finale.";
+    const btn = $("[data-review-saved]");
+    if(btn) btn.innerHTML = "Vai al Bracket Knockout <span>›</span>";
+    if(!box) return;
+    box.innerHTML = `
+      <div class="saved-champion-hero saved-group-stage-hero">
+        <span>Fase chiusa</span>
+        <strong>Group Stage terminata</strong>
+        <p>Non hai una prediction gironi salvata su questo profilo/browser, quindi non ci sono token bracket gironi da mostrare qui.</p>
+      </div>
+      <div class="bracket-reward-summary is-complete">
+        <article><span>Reward gironi</span><strong>Non disponibile</strong><p>La nuova fase disponibile è il tabellone knockout.</p></article>
+        <article><span>Prossimo step</span><strong>Sedicesimi live</strong><p>Scegli i vincenti e completa il percorso fino alla finale.</p></article>
+      </div>
     `;
   }
 
@@ -502,6 +526,255 @@
           </article>`).join("")}
       </div>
     `;
+  }
+
+  function getSavedKnockout(){
+    try { return JSON.parse(localStorage.getItem(KNOCKOUT_BRACKET_KEY)); } catch(e) { return null; }
+  }
+
+  function setSavedKnockout(payload){
+    localStorage.setItem(KNOCKOUT_BRACKET_KEY, JSON.stringify(payload));
+  }
+
+  function getKnockoutPicks(){
+    const saved = getSavedKnockout();
+    return saved && saved.picks ? saved.picks : {};
+  }
+
+  function normalizeKoStage(){
+    const path = window.PFA_KNOCKOUT_PATH || {};
+    const fixtures = Array.isArray(window.PFA_KNOCKOUT_FIXTURES) ? window.PFA_KNOCKOUT_FIXTURES : [];
+    const r32 = fixtures.slice().sort((a,b)=>Number(a.matchNumber||0)-Number(b.matchNumber||0)).map((m)=>({
+      stage: "Sedicesimi", matchNumber: Number(m.matchNumber), home: m.home, away: m.away,
+      label: `${getTeamInfo(m.home).name} vs ${getTeamInfo(m.away).name}`,
+      date: m.kickoffUtc || m.localDate, stadium: m.stadium || "Stadium"
+    }));
+    const mk = (stage, list) => (list || []).map((m)=>({
+      stage,
+      matchNumber: Number(m.matchNumber),
+      home: m.home || sourceFromLabel(m.label, 0, m.matchNumber),
+      away: m.away || sourceFromLabel(m.label, 1, m.matchNumber),
+      label: m.title || m.label || `Match ${m.matchNumber}`,
+      date: m.kickoffUtc || m.date || m.localDate,
+      stadium: m.stadium || "Stadium",
+      title: m.title || ""
+    }));
+    return [
+      { key:"round32", title:"Sedicesimi", matches:r32 },
+      { key:"round16", title:"Ottavi", matches:mk("Ottavi", path.round16) },
+      { key:"quarterFinals", title:"Quarti", matches:mk("Quarti", path.quarterFinals) },
+      { key:"semiFinals", title:"Semifinali", matches:mk("Semifinali", path.semiFinals) },
+      { key:"finals", title:"Finali", matches:mk("Finali", path.finals) }
+    ];
+  }
+
+  function sourceFromLabel(label, index, matchNumber){
+    const nums = String(label || "").match(/M(\d+)/g) || [];
+    if(!nums[index]) return matchNumber === 103 ? (index === 0 ? "L101" : "L102") : "TBD";
+    return `W${nums[index].replace("M", "")}`;
+  }
+
+  function getAllKoMatches(){
+    return normalizeKoStage().flatMap(stage => stage.matches);
+  }
+
+  function getKoMatch(matchNumber){
+    return getAllKoMatches().find(m => Number(m.matchNumber) === Number(matchNumber));
+  }
+
+  function resolveSlot(slot, picks){
+    if(!slot) return null;
+    const raw = String(slot);
+    if(raw === "TBD") return null;
+    if(raw.startsWith("W")){
+      const winner = picks[raw.slice(1)];
+      return winner ? getTeamInfo(winner) : { code: raw, name: `Vincente M${raw.slice(1)}`, placeholder: true };
+    }
+    if(raw.startsWith("L")){
+      const match = getKoMatch(raw.slice(1));
+      const participants = getParticipants(match, picks).filter(Boolean).filter(p => !p.placeholder);
+      const winner = picks[raw.slice(1)];
+      const loser = participants.find(p => p.code !== winner);
+      return loser || { code: raw, name: `Perdente M${raw.slice(1)}`, placeholder: true };
+    }
+    return getTeamInfo(raw);
+  }
+
+  function getParticipants(match, picks){
+    if(!match) return [];
+    return [resolveSlot(match.home, picks), resolveSlot(match.away, picks)];
+  }
+
+  function isMatchPlayable(match, picks){
+    const participants = getParticipants(match, picks);
+    return participants.length === 2 && participants.every(p => p && !p.placeholder && p.code && p.code !== "TBD");
+  }
+
+  function pruneInvalidPicks(picks){
+    const next = { ...picks };
+    let changed = true;
+    while(changed){
+      changed = false;
+      getAllKoMatches().forEach(match => {
+        const key = String(match.matchNumber);
+        if(!next[key]) return;
+        const participants = getParticipants(match, next).filter(Boolean).map(p => p.code);
+        if(!participants.includes(next[key])){ delete next[key]; changed = true; }
+      });
+    }
+    return next;
+  }
+
+  function renderTeamButton(match, team, picked, locked){
+    if(!team) return `<button type="button" class="ko-team-pick is-placeholder" disabled>Da definire</button>`;
+    const isPlaceholder = team.placeholder;
+    const isPicked = picked && picked === team.code;
+    return `
+      <button type="button" class="ko-team-pick ${isPicked ? "is-picked" : ""} ${isPlaceholder ? "is-placeholder" : ""}" data-ko-pick="${match.matchNumber}:${team.code}" ${locked || isPlaceholder ? "disabled" : ""}>
+        <i class="flag" style="background-image:url('img/flags/${flagFile(team.code)}.png')"></i>
+        <span>${team.name}</span>
+      </button>`;
+  }
+
+  function renderKnockoutMatch(match, picks, savedLocked){
+    const participants = getParticipants(match, picks);
+    const picked = picks[String(match.matchNumber)] || "";
+    const playable = isMatchPlayable(match, picks);
+    const locked = Boolean(savedLocked);
+    const winnerName = picked ? getTeamInfo(picked).name : (playable ? "Scegli vincente" : "Completa il turno precedente");
+    return `
+      <article class="ko-prediction-card ${picked ? "is-complete" : ""} ${!playable ? "is-waiting" : ""}" data-ko-match="${match.matchNumber}">
+        <div class="ko-prediction-head"><span>M${match.matchNumber}</span><strong>${match.title || match.stage}</strong></div>
+        <small>${formatKoDate(match.date)} · ${match.stadium || "Stadium"}</small>
+        <div class="ko-pick-row">
+          ${renderTeamButton(match, participants[0], picked, locked)}
+          <em>VS</em>
+          ${renderTeamButton(match, participants[1], picked, locked)}
+        </div>
+        <p>Prediction: <b>${winnerName}</b></p>
+      </article>`;
+  }
+
+  function renderKnockoutPrediction(){
+    const panel = $("[data-safe-pairings-panel]");
+    if(!panel) return;
+    const savedKo = getSavedKnockout();
+    const savedLocked = Boolean(savedKo && savedKo.status === "saved");
+    const picks = pruneInvalidPicks(savedKo?.picks || window.__PFA_KO_DRAFT__ || {});
+    window.__PFA_KO_DRAFT__ = picks;
+    const stages = normalizeKoStage();
+    const champion = picks["104"] ? getTeamInfo(picks["104"]) : null;
+    const complete = Boolean(champion);
+    panel.innerHTML = `
+      <div class="ko-prediction-shell">
+        <div class="ko-prediction-hero">
+          <div>
+            <span class="intro-badge">Knockout Prediction</span>
+            <h2>Compila il tabellone dai sedicesimi alla finale</h2>
+            <p>Scegli il vincente di ogni match. Gli ottavi, i quarti, le semifinali e la finale si popolano in automatico in base alle tue scelte.</p>
+          </div>
+          <aside>
+            <span>Campione scelto</span>
+            <strong>${champion ? champion.name : "---"}</strong>
+            <small>${savedLocked ? "Prediction salvata e bloccata" : (complete ? "Pronta da salvare" : "Completa tutti i turni")}</small>
+          </aside>
+        </div>
+        <div class="ko-prediction-actions">
+          <button class="primary-cta" type="button" data-save-knockout ${!complete || savedLocked ? "disabled" : ""}>${savedLocked ? "Knockout salvato" : "Salva Knockout Prediction"}</button>
+          <button class="ghost-cta" type="button" data-reset-knockout ${savedLocked ? "disabled" : ""}>Reset scelte</button>
+        </div>
+        <div class="ko-prediction-board">
+          ${stages.map(stage => `<section class="ko-prediction-round"><h3>${stage.title}</h3>${stage.matches.map(match => renderKnockoutMatch(match, picks, savedLocked)).join("")}</section>`).join("")}
+        </div>
+      </div>`;
+  }
+
+  function openKnockoutPrediction(){
+    const page = document.querySelector(".bracket-page");
+    if(page) page.classList.add("is-ko-mode");
+    hide("[data-saved-screen]");
+    hide("[data-intro-screen]");
+    hide("[data-lock-screen]");
+    show("[data-game-shell]");
+    state.readOnly = true;
+    const groupStatus = $("[data-group-mode-status]");
+    if(groupStatus) groupStatus.textContent = "Chiusa";
+    const koStatus = $("[data-knockout-status]");
+    if(koStatus) koStatus.textContent = getSavedKnockout()?.status === "saved" ? "Salvata" : "Live";
+    const mode = $("[data-knockout-mode-card]");
+    if(mode){ mode.classList.remove("is-locked"); mode.classList.add("is-partial"); }
+    renderKnockoutPrediction();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function handleKoPanelClick(event){
+    const pickBtn = event.target.closest("[data-ko-pick]");
+    if(pickBtn){
+      if(getSavedKnockout()?.status === "saved") return;
+      const [matchNumber, code] = pickBtn.dataset.koPick.split(":");
+      const picks = { ...(window.__PFA_KO_DRAFT__ || {}) };
+      picks[String(matchNumber)] = code;
+      window.__PFA_KO_DRAFT__ = pruneInvalidPicks(picks);
+      renderKnockoutPrediction();
+      return;
+    }
+    const reset = event.target.closest("[data-reset-knockout]");
+    if(reset){
+      if(getSavedKnockout()?.status === "saved") return;
+      if(confirm("Vuoi cancellare le scelte knockout non salvate?")){
+        window.__PFA_KO_DRAFT__ = {};
+        renderKnockoutPrediction();
+      }
+      return;
+    }
+    const save = event.target.closest("[data-save-knockout]");
+    if(save){
+      saveKnockoutPrediction();
+    }
+  }
+
+  async function saveKnockoutPrediction(){
+    const picks = pruneInvalidPicks(window.__PFA_KO_DRAFT__ || {});
+    if(!picks["104"]){ alert("Completa il tabellone fino alla finale prima di salvare."); return; }
+    const payload = {
+      savedAt: new Date().toISOString(),
+      phase: "knockout",
+      status: "saved",
+      picks,
+      champion: picks["104"],
+      championName: getTeamInfo(picks["104"]).name
+    };
+    setSavedKnockout(payload);
+    try { await saveKnockoutPredictionToSupabase(payload); } catch(e) { console.warn("Knockout Supabase save skipped", e); }
+    alert(`Knockout Prediction salvata. Campione scelto: ${payload.championName}.`);
+    renderKnockoutPrediction();
+  }
+
+  async function saveKnockoutPredictionToSupabase(payload){
+    const supabase = getSupabase();
+    if(!supabase || !profile || !profile.isSupabase) return null;
+    try{
+      await supabase.from("profiles").update({ bracket_knockout_saved: true }).eq("id", profile.id);
+    }catch(e){ console.warn("profiles bracket_knockout_saved update skipped", e); }
+    try{
+      const { error } = await supabase.from("knockout_predictions").upsert({
+        user_id: profile.id,
+        bracket: payload,
+        picks: payload.picks,
+        champion: payload.champion,
+        status: "saved",
+        updated_at: new Date().toISOString()
+      }, { onConflict: "user_id" });
+      if(error) throw error;
+    }catch(e){
+      // Tabella opzionale: se non esiste, il salvataggio locale resta valido e non blocca l'utente.
+      console.warn("knockout_predictions table unavailable", e);
+    }
+    if (window.PFA_AUTH_HELPERS && typeof window.PFA_AUTH_HELPERS.syncSupabaseSessionToLocal === "function") {
+      await window.PFA_AUTH_HELPERS.syncSupabaseSessionToLocal();
+      refreshProfileContext();
+      renderProfile();
+    }
   }
 
   function openTutorial(){ tutorialIndex = 0; updateTutorial(); const layer=$("[data-tutorial]"); if(layer) layer.classList.add("is-visible"); }

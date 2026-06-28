@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#7c3cff" />
-  <link rel="stylesheet" href="css/arena.css?v=knockout-r32-v2" />
+  <link rel="stylesheet" href="css/arena.css?v=knockout-prediction-v3" />
 
   <!-- ProFantasy GA4 + Consent Mode v2 -->
   <script>
@@ -140,11 +140,11 @@
 
       <section class="saved-screen hidden" data-saved-screen>
         <div class="saved-content saved-groups-content">
-          <span class="intro-badge">Gironi salvati</span>
-          <h2>La tua Group Stage Prediction è bloccata</h2>
-          <p>Hai salvato l’ordine finale dei 12 gironi. I sedicesimi sono stati collegati al calendario Daily Prediction e il tabellone mostra il percorso reale fino alla finale.</p>
+          <span class="intro-badge">Risultati bracket gironi</span>
+          <h2>La tua Group Stage Prediction è stata calcolata</h2>
+          <p>Qui vedi il riepilogo della fase a gironi e il reward ottenuto. Poi puoi passare alla Knockout Prediction: sedicesimi, ottavi, quarti, semifinali e finale.</p>
           <div class="saved-bracket-overview" data-saved-overview></div>
-          <button class="primary-cta" type="button" data-review-saved>Apri riepilogo completo <span>›</span></button>
+          <button class="primary-cta" type="button" data-review-saved>Vai al Bracket Knockout <span>›</span></button>
         </div>
       </section>
 
@@ -153,8 +153,8 @@
           <article class="bracket-mode-card is-open">
             <span>Fase 1</span>
             <h3>Group Stage Prediction</h3>
-            <p>Ordina i 12 gironi ufficiali. Questa è la prediction disponibile ora.</p>
-            <strong data-group-mode-status>Aperta</strong>
+            <p>La compilazione dei gironi è chiusa. Resta disponibile solo il riepilogo/reward.</p>
+            <strong data-group-mode-status>Chiusa</strong>
           </article>
           <article class="bracket-mode-card is-locked" data-knockout-mode-card>
             <span>Fase 2</span>
@@ -167,7 +167,7 @@
         <div class="bracket-flow bracket-split-flow">
           <aside class="flow-panel">
             <h3>Roadmap bracket</h3>
-            <p>Il bracket gironi resta salvato e bloccato. Sotto trovi sedicesimi reali e accoppiamenti successivi per numero match.</p>
+            <p>Ora la modalità attiva è il Bracket Knockout: scegli i vincenti dai sedicesimi fino alla finale.</p>
             <div class="flow-progress bracket-split-progress">
               <div class="flow-step is-active" data-flow-step="groups"><i>1</i><span>Gironi</span></div>
               <div class="flow-step is-active" data-flow-step="knockout"><i>2</i><span>Knockout</span></div>
@@ -175,7 +175,7 @@
             </div>
             <div style="margin-top:16px;display:grid;gap:10px">
               <button class="ghost-cta" type="button" data-open-tutorial>Apri tutorial</button>
-              <button class="primary-cta" type="button" data-save-groups>Salva prediction gironi</button>
+              <button class="primary-cta" type="button" data-save-groups>Gironi chiusi</button>
             </div>
           </aside>
 
@@ -183,11 +183,11 @@
             <section class="stage is-active" data-stage="groups">
               <div class="stage-head">
                 <div>
-                  <h2>Fase a gironi</h2>
-                  <p>Ordina le 4 squadre di ogni gruppo. Questa prediction verrà bloccata nel tuo profilo.</p>
+                  <h2>Fase a gironi chiusa</h2>
+                  <p>La prediction dei gironi non è più modificabile. Puoi solo vedere il riepilogo e giocare il tabellone knockout.</p>
                 </div>
                 <div class="stage-actions">
-                  <button class="primary-cta" type="button" data-save-groups-top>Salva gironi</button>
+                  <button class="primary-cta" type="button" data-save-groups-top>Gironi chiusi</button>
                 </div>
               </div>
               <div class="groups-carousel" data-groups-carousel></div>
@@ -195,9 +195,9 @@
 
             <section class="bracket-knockout-lock" data-knockout-lock>
               <div>
-                <span class="intro-badge">Fase 2 bloccata</span>
-                <h2>Tabellone knockout attivo</h2>
-                <p>Sedicesimi caricati nel calendario Arena. I vincitori comporranno automaticamente il percorso verso ottavi, quarti, semifinali e finale.</p>
+                <span class="intro-badge">Fase 2 live</span>
+                <h2>Bracket Knockout Prediction</h2>
+                <p>Sedicesimi caricati nel calendario Arena. Scegli i vincenti e completa il percorso verso ottavi, quarti, semifinali e finale.</p>
               </div>
               <div class="safe-pairings-panel" data-safe-pairings-panel></div>
             </section>
@@ -218,11 +218,11 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js?v=bracket-rewards-v1"></script>
-  <script src="js/world-cup-fixtures.js?v=bracket-rewards-v1"></script>
-  <script src="js/world-cup-knockout-fixtures.js?v=knockout-r32-v2"></script>
-  <script src="js/arena-game.js?v=knockout-r32-v2"></script>
-  <script src="js/bracket-game.js?v=knockout-r32-v2"></script>
+  <script src="js/supabase-config.js?v=knockout-prediction-v3"></script>
+  <script src="js/world-cup-fixtures.js?v=knockout-prediction-v3"></script>
+  <script src="js/world-cup-knockout-fixtures.js?v=knockout-prediction-v3"></script>
+  <script src="js/arena-game.js?v=knockout-prediction-v3"></script>
+  <script src="js/bracket-game.js?v=knockout-prediction-v3"></script>
   <script src="js/arena-pwa.js?v=install-nudge-v2"></script>
 
   <!-- ProFantasy GA4 interaction tracking -->
