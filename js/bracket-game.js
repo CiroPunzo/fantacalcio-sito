@@ -1,5 +1,7 @@
 
 (function(){
+  const BUILD_VERSION = "knockout-r32-v2";
+  console.info("[PFA] bracket-game loaded", BUILD_VERSION);
   const PROFILE_KEYS = ["profantasy_arena_session_cache_v1","pfa_profile_v2","pfa_profile","arenaProfile","profantasyArenaProfile"];
   const MAIN_PROFILE_KEY = "profantasy_arena_session_cache_v1";
   const ADMIN_GROUP_STANDINGS_KEY = "profantasy_arena_admin_group_standings_v1";
@@ -138,7 +140,7 @@
 
   async function hydrateGroupPredictionFromSupabase(){
     const supabase = getSupabase();
-    if(!supabase || !profile || !profile.isSupabase || getSaved()) return;
+    if(!supabase || !profile || !profile.isSupabase) return;
     try{
       let data = null;
       let error = null;
@@ -152,24 +154,31 @@
       if(error || !data) {
         const fallback = await supabase
           .from("group_predictions")
-          .select("group_ranking, created_at, status, resolved_at, exact_positions, perfect_groups, tokens_reward, result_details")
+          .select("group_ranking, created_at, updated_at, status, resolved_at, exact_positions, perfect_groups, tokens_reward, xp_reward, result_details")
           .eq("user_id", profile.id)
           .maybeSingle();
         if(fallback.error || !fallback.data) return;
         data = { ...fallback.data, xp_reward: 0 };
       }
+      const exactPositions = Number(data.exact_positions ?? data.exactPositions ?? 0);
+      const perfectGroups = Number(data.perfect_groups ?? data.perfectGroups ?? 0);
+      const tokensReward = Number(data.tokens_reward ?? data.tokensReward ?? 0);
+      const xpReward = Number(data.xp_reward ?? data.xpReward ?? 0);
+      const resultDetails = data.result_details ?? data.resultDetails ?? null;
+      const rawStatus = String(data.status || "").toLowerCase();
+      const isResolved = ["resolved", "completed", "complete", "rewarded", "paid"].includes(rawStatus) || Boolean(data.resolved_at || data.resolvedAt) || tokensReward > 0 || exactPositions > 0 || perfectGroups > 0 || Boolean(resultDetails);
       const payload = {
-        savedAt: data.created_at || new Date().toISOString(),
+        savedAt: data.created_at || data.createdAt || new Date().toISOString(),
         phase: "groups",
-        groupRanking: data.group_ranking || {},
-        knockoutLocked: true,
-        status: data.status || "saved",
-        resolvedAt: data.resolved_at || "",
-        exactPositions: Number(data.exact_positions || 0),
-        perfectGroups: Number(data.perfect_groups || 0),
-        tokensReward: Number(data.tokens_reward || 0),
-        xpReward: Number(data.xp_reward || 0),
-        resultDetails: data.result_details || null
+        groupRanking: data.group_ranking || data.groupRanking || {},
+        knockoutLocked: false,
+        status: isResolved ? "resolved" : (data.status || "saved"),
+        resolvedAt: data.resolved_at || data.resolvedAt || (isResolved ? (data.updated_at || data.updatedAt || new Date().toISOString()) : ""),
+        exactPositions,
+        perfectGroups,
+        tokensReward,
+        xpReward,
+        resultDetails
       };
       localStorage.setItem(GROUP_BRACKET_KEY, JSON.stringify(payload));
     }catch(e){
@@ -321,7 +330,7 @@
   async function saveGroups(){
     if(getSaved()){ alert("Group Stage Prediction già salvata: non puoi modificarla."); return; }
     if(!allGroupsComplete()){ alert("Completa tutte le posizioni dei 12 gironi prima di salvare."); return; }
-    const payload = { savedAt: new Date().toISOString(), phase: "groups", groupRanking: state.groupRanking, knockoutLocked: true };
+    const payload = { savedAt: new Date().toISOString(), phase: "groups", groupRanking: state.groupRanking, knockoutLocked: true, status: "saved" };
 
     try {
       await saveGroupPredictionToSupabase(payload);
@@ -354,7 +363,7 @@
       const rewardTag = details ? `<small class="saved-group-score ${details.perfect ? "is-perfect" : ""}">${Number(details.exact_positions || 0)}/4 esatte${details.perfect ? " · Perfetto" : ""}</small>` : "";
       return `<article class="saved-group-mini"><h4>Girone ${g}${rewardTag}</h4>${ordered.map(team => `<span><i class="flag" style="background-image:url('img/flags/${flagFile(team.code)}.png')"></i><b>${team.name}</b><em>${ranks[team.code] || "-"}°</em></span>`).join("")}</article>`;
     }).join("");
-    const resolved = saved.status === "resolved" || saved.resolvedAt;
+    const resolved = saved.status === "resolved" || saved.resolvedAt || Number(saved.tokensReward || 0) > 0 || Number(saved.exactPositions || 0) > 0 || Number(saved.perfectGroups || 0) > 0;
     const rewardSummary = resolved ? `
       <div class="bracket-reward-summary">
         <article><span>Posizioni esatte</span><strong>${Number(saved.exactPositions || 0)}/48</strong></article>
@@ -363,15 +372,15 @@
         <article><span>Reward XP</span><strong>+${Number(saved.xpReward || 0).toLocaleString("it-IT")}</strong></article>
       </div>
     ` : `
-      <div class="bracket-reward-summary is-pending">
-        <article><span>Reward gironi</span><strong>In attesa</strong><p>Verrà calcolato quando l'admin confermerà le classifiche reali.</p></article>
+      <div class="bracket-reward-summary is-complete">
+        <article><span>Reward gironi</span><strong>Bracket salvato</strong><p>La prediction è registrata sul profilo. Se il saldo token è già stato aggiornato, il reward admin è passato: i dettagli numerici appariranno appena Supabase restituisce i campi reward.</p></article>
       </div>
     `;
     box.innerHTML = `
       <div class="saved-champion-hero saved-group-stage-hero">
         <span>Modalità salvata</span>
         <strong>Group Stage Prediction</strong>
-        <p>Knockout Prediction bloccata fino alla fine dei gironi reali.</p>
+        <p>Bracket sincronizzato. I sedicesimi sono live e collegati a Daily Prediction, Home e Admin Center.</p>
       </div>
       ${rewardSummary}
       <div class="saved-groups-strip">${groupsHtml}</div>
@@ -390,6 +399,27 @@
     return code ? { code, label } : { code:"TBD", label };
   }
 
+  function getTeamInfo(code){
+    for(const [, ...list] of groups){
+      const found = list.find(t => t.code === code);
+      if(found) return found;
+    }
+    const names = {
+      ZAF:"Sudafrica", CAN:"Canada", BRA:"Brasile", JPN:"Giappone", GER:"Germania", PRY:"Paraguay", NED:"Paesi Bassi", MAR:"Marocco",
+      CIV:"Costa d’Avorio", NOR:"Norvegia", FRA:"Francia", SWE:"Svezia", MEX:"Messico", ECU:"Ecuador", ENG:"Inghilterra", COD:"RD Congo",
+      BEL:"Belgio", SEN:"Senegal", USA:"Stati Uniti", BIH:"Bosnia-Erzegovina", ESP:"Spagna", AUT:"Austria", POR:"Portogallo", CRO:"Croazia",
+      SUI:"Svizzera", ALG:"Algeria", AUS:"Australia", EGY:"Egitto", ARG:"Argentina", CPV:"Capo Verde", COL:"Colombia", GHA:"Ghana"
+    };
+    return { code, name: names[code] || code };
+  }
+
+  function formatKoDate(value){
+    if(!value) return "--";
+    const date = new Date(`${value}T12:00:00Z`);
+    if(Number.isNaN(date.getTime())) return value;
+    return date.toLocaleDateString("it-IT", { weekday:"short", day:"2-digit", month:"short" });
+  }
+
   function buildSafePairings(standings){
     if(!standings) return [];
     const pairLabels = [
@@ -399,11 +429,55 @@
     return pairLabels.map((pair, index) => ({ id:`safe-${index+1}`, a: pickByLabel(standings, pair[0]), b: pickByLabel(standings, pair[1]) }));
   }
 
+  function renderKoMatchCard(match){
+    const home = getTeamInfo(match.home);
+    const away = getTeamInfo(match.away);
+    return `
+      <article class="safe-pairing-card ko-fixture-card">
+        <small>M${match.matchNumber} · ${formatKoDate(match.localDate)} · ${match.stadium || "Stadium"}</small>
+        <span><i class="flag" style="background-image:url('img/flags/${flagFile(home.code)}.png')"></i><b>${home.name}</b></span>
+        <em>VS</em>
+        <span><i class="flag" style="background-image:url('img/flags/${flagFile(away.code)}.png')"></i><b>${away.name}</b></span>
+      </article>`;
+  }
+
+  function renderKoPathCard(match){
+    return `
+      <article class="ko-path-card">
+        <small>M${match.matchNumber} · ${formatKoDate(match.date)}</small>
+        <strong>${match.title || match.label}</strong>
+        <span>${match.title ? match.label : (match.stadium || "Stadium")}</span>
+      </article>`;
+  }
+
+  function renderOfficialKnockout(panel, mode, status){
+    const path = window.PFA_KNOCKOUT_PATH || null;
+    const fixtures = Array.isArray(window.PFA_KNOCKOUT_FIXTURES) ? window.PFA_KNOCKOUT_FIXTURES : [];
+    if(!path || !fixtures.length) return false;
+    if(status) status.textContent = "Live";
+    if(mode){ mode.classList.remove("is-locked"); mode.classList.add("is-partial"); }
+    panel.innerHTML = `
+      <h3>Sedicesimi ufficiali collegati alle Daily Prediction</h3>
+      <p>Le 16 partite sotto sono nello stesso calendario usato da Home, Daily Prediction e Admin Center. Gli step successivi sono mostrati per numero match.</p>
+      <div class="safe-pairings-scroll ko-fixtures-scroll">
+        ${fixtures.map(renderKoMatchCard).join("")}
+      </div>
+      <div class="ko-path-board">
+        <section><h4>Ottavi</h4>${(path.round16 || []).map(renderKoPathCard).join("")}</section>
+        <section><h4>Quarti</h4>${(path.quarterFinals || []).map(renderKoPathCard).join("")}</section>
+        <section><h4>Semifinali</h4>${(path.semiFinals || []).map(renderKoPathCard).join("")}</section>
+        <section><h4>Finali</h4>${(path.finals || []).map(renderKoPathCard).join("")}</section>
+      </div>
+    `;
+    return true;
+  }
+
   function renderSafePairings(){
     const panel = $("[data-safe-pairings-panel]");
     const mode = $("[data-knockout-mode-card]");
     const status = $("[data-knockout-status]");
     if(!panel) return;
+    if(renderOfficialKnockout(panel, mode, status)) return;
     const admin = getAdminStandings();
     const standings = admin?.standings;
     const pairs = buildSafePairings(standings);

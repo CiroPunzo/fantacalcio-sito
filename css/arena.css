@@ -9203,3 +9203,98 @@ body.pfa-ready main {
   .daily-choice-helper strong { text-align: left; }
   .daily-tutorial-arrow { top: 26%; right: 22px; }
 }
+
+
+/* =========================================================
+   KNOCKOUT R32 UPDATE — bracket path + official fixtures
+   ========================================================= */
+.bracket-mode-card.is-partial,
+.bracket-mode-card:not(.is-locked)[data-knockout-mode-card] {
+  border-color: rgba(255, 191, 61, 0.48) !important;
+  box-shadow: 0 0 26px rgba(255, 191, 61, 0.16), inset 0 0 24px rgba(255, 191, 61, 0.06);
+}
+
+.ko-fixtures-scroll {
+  grid-template-columns: repeat(4, minmax(230px, 1fr));
+  gap: 14px;
+}
+
+.ko-fixture-card small {
+  color: var(--gold) !important;
+}
+
+.ko-path-board {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ko-path-board section {
+  min-width: 0;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(40, 220, 255, 0.18);
+  background: linear-gradient(180deg, rgba(8, 14, 38, 0.84), rgba(5, 8, 24, 0.92));
+}
+
+.ko-path-board h4 {
+  margin: 0 0 12px;
+  color: var(--cyan-2) !important;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ko-path-card {
+  display: grid;
+  gap: 6px;
+  padding: 11px 12px;
+  margin-bottom: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.ko-path-card small {
+  color: rgba(255, 255, 255, 0.50) !important;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ko-path-card strong {
+  color: #fff !important;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.ko-path-card span {
+  color: rgba(255, 255, 255, 0.62) !important;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+  .ko-fixtures-scroll { grid-template-columns: repeat(2, minmax(230px, 1fr)); }
+  .ko-path-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .ko-fixtures-scroll { display: flex; overflow-x: auto; scroll-snap-type: x proximity; }
+  .ko-fixture-card { flex: 0 0 min(82vw, 340px); scroll-snap-align: start; }
+  .ko-path-board { grid-template-columns: 1fr; }
+}
+
+
+/* HOTFIX KNOCKOUT R32 V2 */
+.bracket-reward-summary.is-complete article {
+  border-color: rgba(255,191,61,.35);
+  background: linear-gradient(135deg, rgba(255,191,61,.10), rgba(40,220,255,.06));
+}
+.bracket-reward-summary.is-complete strong { color: var(--gold, #ffbf3d) !important; }

@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#7c3cff" />
-  <link rel="stylesheet" href="css/arena.css?v=install-nudge-v2" />
+  <link rel="stylesheet" href="css/arena.css?v=knockout-r32-v2" />
 
   <!-- ProFantasy GA4 + Consent Mode v2 -->
   <script>
@@ -103,7 +103,7 @@
         <div>
           <span class="kicker">Bracket Prediction</span>
           <h1 class="bracket-title">Metti alla prova le tue <strong>conoscenze calcistiche</strong></h1>
-          <p class="bracket-desc">Pronostica l’ordine finale dei 12 gironi ufficiali. Quando il torneo entrerà nella fase decisiva, si sbloccherà la Knockout Prediction con gli accoppiamenti reali.</p>
+          <p class="bracket-desc">Pronostica l’ordine finale dei 12 gironi ufficiali. I sedicesimi sono ora collegati alle Daily Prediction: qui trovi anche il percorso completo fino alla finale.</p>
         </div>
 
         <aside class="player-hud" data-profile-hud>
@@ -142,7 +142,7 @@
         <div class="saved-content saved-groups-content">
           <span class="intro-badge">Gironi salvati</span>
           <h2>La tua Group Stage Prediction è bloccata</h2>
-          <p>Hai salvato l’ordine finale dei 12 gironi. La Knockout Prediction si sbloccherà quando saranno disponibili le classifiche reali impostate dal Centro Comandi Admin.</p>
+          <p>Hai salvato l’ordine finale dei 12 gironi. I sedicesimi sono stati collegati al calendario Daily Prediction e il tabellone mostra il percorso reale fino alla finale.</p>
           <div class="saved-bracket-overview" data-saved-overview></div>
           <button class="primary-cta" type="button" data-review-saved>Apri riepilogo completo <span>›</span></button>
         </div>
@@ -159,18 +159,18 @@
           <article class="bracket-mode-card is-locked" data-knockout-mode-card>
             <span>Fase 2</span>
             <h3>Knockout Prediction</h3>
-            <p>Si sbloccherà dopo i gironi reali, con accoppiamenti confermati dall’admin.</p>
-            <strong data-knockout-status>Bloccata</strong>
+            <p>Sedicesimi collegati al calendario reale. Il percorso successivo si aggiorna per numero match.</p>
+            <strong data-knockout-status>Live</strong>
           </article>
         </div>
 
         <div class="bracket-flow bracket-split-flow">
           <aside class="flow-panel">
             <h3>Roadmap bracket</h3>
-            <p>Questo step salva solo i gironi. Niente sedicesimi fittizi: il tabellone verrà generato più avanti con dati reali.</p>
+            <p>Il bracket gironi resta salvato e bloccato. Sotto trovi sedicesimi reali e accoppiamenti successivi per numero match.</p>
             <div class="flow-progress bracket-split-progress">
               <div class="flow-step is-active" data-flow-step="groups"><i>1</i><span>Gironi</span></div>
-              <div class="flow-step is-locked" data-flow-step="knockout"><i>2</i><span>Knockout</span></div>
+              <div class="flow-step is-active" data-flow-step="knockout"><i>2</i><span>Knockout</span></div>
               <div class="flow-step is-locked" data-flow-step="rewards"><i>3</i><span>Reward</span></div>
             </div>
             <div style="margin-top:16px;display:grid;gap:10px">
@@ -196,8 +196,8 @@
             <section class="bracket-knockout-lock" data-knockout-lock>
               <div>
                 <span class="intro-badge">Fase 2 bloccata</span>
-                <h2>Knockout Prediction in arrivo</h2>
-                <p>Quando la fase a gironi reale sarà terminata, l’admin inserirà le classifiche ufficiali. A quel punto si sbloccherà il tabellone a eliminazione diretta.</p>
+                <h2>Tabellone knockout attivo</h2>
+                <p>Sedicesimi caricati nel calendario Arena. I vincitori comporranno automaticamente il percorso verso ottavi, quarti, semifinali e finale.</p>
               </div>
               <div class="safe-pairings-panel" data-safe-pairings-panel></div>
             </section>
@@ -220,8 +220,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js?v=bracket-rewards-v1"></script>
   <script src="js/world-cup-fixtures.js?v=bracket-rewards-v1"></script>
-  <script src="js/arena-game.js?v=bracket-rewards-v1"></script>
-  <script src="js/bracket-game.js?v=bracket-rewards-v1"></script>
+  <script src="js/world-cup-knockout-fixtures.js?v=knockout-r32-v2"></script>
+  <script src="js/arena-game.js?v=knockout-r32-v2"></script>
+  <script src="js/bracket-game.js?v=knockout-r32-v2"></script>
   <script src="js/arena-pwa.js?v=install-nudge-v2"></script>
 
   <!-- ProFantasy GA4 interaction tracking -->

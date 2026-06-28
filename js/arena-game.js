@@ -2859,9 +2859,11 @@
     const fixtures = getFixturePool();
     const groups = {};
     fixtures.forEach((match) => {
+      if (match.phase && match.phase !== "group") return;
       const groupName = match.group || "Group";
       const keyMatch = String(groupName).match(/[A-L]$/i);
-      const groupKey = keyMatch ? keyMatch[0].toUpperCase() : groupName.replace(/\s+/g, "-");
+      if (!keyMatch) return;
+      const groupKey = keyMatch[0].toUpperCase();
       groups[groupKey] ||= { key: groupKey, name: groupName.replace("Group", "Girone"), teams: [] };
       [
         { code: match.home, name: match.homeName || match.home, flag: match.homeFlag },
@@ -2921,7 +2923,22 @@
     return standings;
   }
 
+  function getStaticKnockoutPreview() {
+    const fixtures = Array.isArray(window.PFA_KNOCKOUT_FIXTURES) ? window.PFA_KNOCKOUT_FIXTURES : [];
+    if (!fixtures.length) return null;
+    return fixtures.map((fixture) => ({
+      id: `m-${fixture.matchNumber}`,
+      fixture: true,
+      a: { code: fixture.home, name: fixture.homeName || fixture.home, flag: fixture.homeFlag || `img/flags/${String(fixture.home || "tbd").toLowerCase()}.png`, label: `M${fixture.matchNumber}` },
+      b: { code: fixture.away, name: fixture.awayName || fixture.away, flag: fixture.awayFlag || `img/flags/${String(fixture.away || "tbd").toLowerCase()}.png`, label: fixture.localDate || "Sedicesimi" },
+      stadium: fixture.stadium || "Stadium",
+      kickoffUtc: fixture.kickoffUtc || ""
+    }));
+  }
+
   function buildAdminKnockoutPreview(standings, groups = getAdminGroupTeams()) {
+    const staticPreview = getStaticKnockoutPreview();
+    if (staticPreview) return staticPreview;
     if (!areAdminGroupsComplete(standings, groups)) return null;
     const byKey = {};
     groups.forEach((group) => { byKey[group.key] = group; });
@@ -2991,7 +3008,7 @@
       const liveStandings = buildAdminStandingsFromForm(root);
       const knockout = buildAdminKnockoutPreview(saved && saved.standings ? saved.standings : liveStandings, groups);
       if (!knockout) {
-        preview.innerHTML = `<article class="admin-empty-log">Completa e salva tutte le posizioni dei 12 gironi per vedere gli accoppiamenti sicuri.</article>`;
+        preview.innerHTML = `<article class="admin-empty-log">Sedicesimi in caricamento: controlla che js/world-cup-knockout-fixtures.js sia incluso prima di arena-game.js.</article>`;
       } else {
         const savedPayload = saved && saved.standings ? saved : null;
         const rewardAudit = savedPayload && savedPayload.resolvedAt ? `
@@ -3008,7 +3025,7 @@
         preview.innerHTML = `
           <div class="admin-knockout-head">
             <span>Anteprima tabellone</span>
-            <strong>Accoppiamenti sicuri</strong>
+            <strong>Sedicesimi collegati</strong>
           </div>
           ${rewardAudit}
           <div class="admin-knockout-scroll">
