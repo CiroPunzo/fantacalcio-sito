@@ -160,16 +160,16 @@
       if(error || !data) {
         const fallback = await supabase
           .from("group_predictions")
-          .select("group_ranking, created_at, updated_at, status, resolved_at, exact_positions, perfect_groups, tokens_reward, xp_reward, result_details")
+          .select("group_ranking, created_at, status, resolved_at, exact_positions, perfect_groups, tokens_reward, xp_reward, xp_reward_total, result_details")
           .eq("user_id", profile.id)
           .maybeSingle();
         if(fallback.error || !fallback.data) return;
-        data = { ...fallback.data, xp_reward: 0 };
+        data = { ...fallback.data, updated_at: fallback.data.resolved_at || fallback.data.created_at, xp_reward: fallback.data.xp_reward_total ?? fallback.data.xp_reward ?? 0 };
       }
       const exactPositions = Number(data.exact_positions ?? data.exactPositions ?? 0);
       const perfectGroups = Number(data.perfect_groups ?? data.perfectGroups ?? 0);
       const tokensReward = Number(data.tokens_reward ?? data.tokensReward ?? 0);
-      const xpReward = Number(data.xp_reward ?? data.xpReward ?? 0);
+      const xpReward = Number(data.xp_reward_total ?? data.xpRewardTotal ?? data.xp_reward ?? data.xpReward ?? 0);
       const resultDetails = data.result_details ?? data.resultDetails ?? null;
       const rawStatus = String(data.status || "").toLowerCase();
       const isResolved = ["resolved", "completed", "complete", "rewarded", "paid"].includes(rawStatus) || Boolean(data.resolved_at || data.resolvedAt) || tokensReward > 0 || exactPositions > 0 || perfectGroups > 0 || Boolean(resultDetails);

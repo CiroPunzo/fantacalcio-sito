@@ -2727,7 +2727,7 @@
     if (error) {
       const message = String(error.message || "");
       if (message.includes("Could not find the function") || message.includes("schema cache")) {
-        throw new Error("Funzione reward bracket non trovata. Esegui SUPABASE_BRACKET_REWARDS_V1_SQL.sql e ricarica Admin Center.");
+        throw new Error("Funzione reward bracket non trovata. Esegui PFA_GROUP_REWARDS_REPAIR_V2.sql nel SQL Editor e ricarica Admin Center.");
       }
       throw error;
     }
@@ -2735,7 +2735,7 @@
     await fetchSupabaseTransactions();
     await refreshSupabaseLeaderboard();
     await refreshSupabaseProfileCache();
-    return data;
+    return Array.isArray(data) ? (data[0] || null) : data;
   }
 
   async function refreshSupabaseAdminCache() {
@@ -3457,7 +3457,9 @@
             const result = await resolveSupabaseAdminGroupRewards();
             renderAdminGroupsPanel();
             renderAdminConsole();
-            alert(`Reward bracket calcolati. Prediction risolte: ${Number(result?.resolved_predictions || 0)} · Token accreditati: ${Number(result?.total_tokens || 0).toLocaleString("it-IT")}`);
+            const paidNow = Number(result?.paid_now_tokens ?? result?.repaired_tokens_paid ?? result?.total_tokens ?? 0);
+            const usersRewarded = Number(result?.users_rewarded || 0);
+            alert(`Reward gironi sincronizzati. Prediction risolte: ${Number(result?.resolved_predictions || 0)} · Utenti corretti ora: ${usersRewarded} · Token accreditati ora: ${paidNow.toLocaleString("it-IT")}`);
             return;
           }
           alert("Il calcolo reward reale richiede Supabase attivo e account admin.");
