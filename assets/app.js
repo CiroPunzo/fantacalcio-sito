@@ -105,27 +105,25 @@
     }
 
     const payload = buildPayload(new FormData(form));
-    const hasSupabaseConfig = isSupabaseConfigured(config);
+
+    if (!isSupabaseConfigured(config)) {
+      showMessage("Prima di andare online devi inserire URL e anon key Supabase nel file assets/config.js.", "info");
+      return;
+    }
 
     setLoading(true);
 
     try {
-      if (!hasSupabaseConfig) {
-        showMessage("Prima di andare online devi inserire URL e anon key Supabase nel file assets/config.js.", "info");
+      const result = await submitViaSupabaseRpc(payload);
+
+      if (result?.ok === false && result?.code === "duplicate_email") {
+        showMessage("Questa email risulta già registrata. Se vuoi modificare i dati, contatta il team ProFantasy.", "info");
         return;
       }
 
-      const client = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
-      const { error } = await client.from("league_signups").insert(payload);
-
-      if (error) {
-        if (isDuplicateEmailError(error)) {
-          showMessage("Questa email risulta già registrata. Se vuoi modificare i dati, contatta il team ProFantasy.", "info");
-          return;
-        }
-
-        console.error("Supabase insert error:", error);
-        showMessage("Qualcosa è andato storto durante l'invio. Riprova tra qualche secondo.", "error");
+      if (result?.ok === false) {
+        console.error("Supabase RPC returned error:", result);
+        showMessage("Qualcosa è andato storto durante l'invio. Controlla Supabase e riprova.", "error");
         return;
       }
 
@@ -134,31 +132,71 @@
       openModal();
     } catch (error) {
       console.error("Unexpected signup error:", error);
-      showMessage("Errore di connessione. Controlla la configurazione Supabase o riprova più tardi.", "error");
+      showMessage("Connessione a Supabase non riuscita. Controlla URL/anon key, progetto Supabase attivo e prova anche da Chrome.", "error");
     } finally {
       setLoading(false);
     }
+  }
+
+  async function submitViaSupabaseRpc(payload) {
+    const baseUrl = String(config.SUPABASE_URL || "").replace(/\/+$/, "");
+    const endpoint = `${baseUrl}/rest/v1/rpc/pf_create_league_signup`;
+    const anonKey = config.SUPABASE_ANON_KEY;
+
+    const response = await fetch(endpoint, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": anonKey,
+        "Authorization": `Bearer ${anonKey}`,
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const text = await response.text();
+    let data = null;
+
+    try {
+      data = text ? JSON.parse(text) : null;
+    } catch (_) {
+      data = { raw: text };
+    }
+
+    if (!response.ok) {
+      console.error("Supabase HTTP error:", response.status, data);
+      return {
+        ok: false,
+        code: data?.code || `http_${response.status}`,
+        message: data?.message || data?.raw || "Errore HTTP Supabase",
+        details: data
+      };
+    }
+
+    return data || { ok: true };
   }
 
   function buildPayload(formData) {
     const params = new URLSearchParams(window.location.search);
 
     return {
-      first_name: clean(formData.get("first_name")),
-      last_name: clean(formData.get("last_name")),
-      email: clean(formData.get("email")).toLowerCase(),
-      phone: clean(formData.get("phone")) || null,
-      nickname: clean(formData.get("nickname")) || null,
-      team_name: clean(formData.get("team_name")) || null,
-      province: clean(formData.get("province")) || null,
-      tournament_interest: formData.get("tournament_interest"),
-      fantasy_level: formData.get("fantasy_level") || null,
-      age_confirmed: formData.get("age_confirmed") === "on",
-      privacy_accepted: formData.get("privacy_accepted") === "on",
-      marketing_accepted: formData.get("marketing_accepted") === "on",
-      source: params.get("source") || params.get("utm_source") || "direct",
-      utm_campaign: params.get("utm_campaign") || null,
-      utm_medium: params.get("utm_medium") || null
+      p_first_name: clean(formData.get("first_name")),
+      p_last_name: clean(formData.get("last_name")),
+      p_email: clean(formData.get("email")).toLowerCase(),
+      p_phone: clean(formData.get("phone")) || null,
+      p_nickname: clean(formData.get("nickname")) || null,
+      p_team_name: clean(formData.get("team_name")) || null,
+      p_province: clean(formData.get("province")) || null,
+      p_tournament_interest: formData.get("tournament_interest"),
+      p_fantasy_level: formData.get("fantasy_level") || null,
+      p_age_confirmed: formData.get("age_confirmed") === "on",
+      p_privacy_accepted: formData.get("privacy_accepted") === "on",
+      p_marketing_accepted: formData.get("marketing_accepted") === "on",
+      p_source: params.get("source") || params.get("utm_source") || "direct",
+      p_utm_campaign: params.get("utm_campaign") || null,
+      p_utm_medium: params.get("utm_medium") || null
     };
   }
 
@@ -194,11 +232,6 @@
       !settings.SUPABASE_URL.includes("INSERISCI") &&
       !settings.SUPABASE_ANON_KEY.includes("INSERISCI")
     );
-  }
-
-  function isDuplicateEmailError(error) {
-    const message = `${error?.message || ""} ${error?.details || ""}`.toLowerCase();
-    return error?.code === "23505" || message.includes("duplicate") || message.includes("unique");
   }
 
   function clean(value) {
