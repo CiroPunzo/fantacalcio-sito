@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050914" />
+  <meta name="description" content="Candidatura ProFantasy League 26/27: scegli Torneo Open o Torneo Exclusive ed entra nella nuova arena del fantacalcio competitivo." />
+  <title>ProFantasy League 26/27 | Iscrizione</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/pf-mark.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/styles.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="assets/config.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+  <div class="bg-image" aria-hidden="true"></div>
+  <div class="bg-vignette" aria-hidden="true"></div>
+  <div class="grid-noise" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Vai alla home ProFantasy">
+      <img src="img/profantasy-logo.png" onerror="this.onerror=null; this.src='assets/pf-mark.svg'; this.classList.add('logo-fallback');" alt="ProFantasy" />
+    </a>
+
+    <nav class="nav-links" aria-label="Navigazione ProFantasy League">
+      <a href="#tornei">Tornei</a>
+      <a href="#signup">Iscrizione</a>
+      <a href="/transfer.html">Transfer</a>
+      <a href="/tools.html">Tools+</a>
+    </nav>
+
+    <a class="top-cta" href="#signup">
+      <span>Entra nell'arena</span>
+      <b>League 26/27</b>
+    </a>
+  </header>
+
+  <main class="page-shell">
+    <section class="countdown-panel" aria-label="Countdown ProFantasy League">
+      <div class="countdown-copy">
+        <p data-countdown-label>Countdown League</p>
+        <h2>La tua stagione inizia qui.</h2>
+      </div>
+
+      <div class="countdown-grid" data-countdown>
+        <div class="countdown-cell">
+          <strong data-days>00</strong>
+          <span>Giorni</span>
+        </div>
+        <div class="countdown-cell">
+          <strong data-hours>00</strong>
+          <span>Ore</span>
+        </div>
+        <div class="countdown-cell">
+          <strong data-minutes>00</strong>
+          <span>Min</span>
+        </div>
+        <div class="countdown-cell">
+          <strong data-seconds>00</strong>
+          <span>Sec</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="signup-stage" id="signup">
+      <div class="stage-glow" aria-hidden="true"></div>
+
+      <section class="signup-card" aria-labelledby="form-title">
+        <div class="card-hud-line" aria-hidden="true"></div>
+
+        <div class="intro-block">
+          <p class="kicker">ProFantasy League 26/27</p>
+          <h1 id="form-title">Iscriviti alla <span>ProFantasy League</span></h1>
+          <p class="subtitle">
+            Scegli il tuo torneo, lascia i tuoi dati e preparati a entrare nella nuova arena del fantacalcio competitivo italiano.
+          </p>
+          <div class="quick-badges" aria-label="Dettagli principali">
+            <span>Zero pagamenti ora</span>
+            <span>Premi fisici e buoni</span>
+            <span>Regolamento in arrivo</span>
+          </div>
+        </div>
+
+        <form id="leagueSignupForm" novalidate>
+          <div class="field-grid two">
+            <label class="field">
+              <span>Nome</span>
+              <input type="text" name="first_name" autocomplete="given-name" placeholder="Es. Ciro" required />
+            </label>
+
+            <label class="field">
+              <span>Cognome</span>
+              <input type="text" name="last_name" autocomplete="family-name" placeholder="Es. Punzo" required />
+            </label>
+          </div>
+
+          <div class="field-grid two">
+            <label class="field">
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" placeholder="nome@email.com" required />
+            </label>
+
+            <label class="field">
+              <span>WhatsApp</span>
+              <input type="tel" name="phone" autocomplete="tel" placeholder="+39..." />
+            </label>
+          </div>
+
+          <div class="field-grid two">
+            <label class="field">
+              <span>Username / nickname</span>
+              <input type="text" name="nickname" autocomplete="nickname" placeholder="Es. Fantabomber" />
+            </label>
+
+            <label class="field">
+              <span>Nome squadra</span>
+              <input type="text" name="team_name" placeholder="Es. Real Vesuvio" />
+            </label>
+          </div>
+
+          <div class="field-grid two">
+            <label class="field">
+              <span>Provincia</span>
+              <input type="text" name="province" placeholder="Es. Napoli" />
+            </label>
+
+            <label class="field">
+              <span>Livello fantacalcio</span>
+              <select name="fantasy_level">
+                <option value="">Seleziona</option>
+                <option value="principiante">Principiante</option>
+                <option value="intermedio">Intermedio</option>
+                <option value="esperto">Esperto</option>
+              </select>
+            </label>
+          </div>
+
+          <fieldset class="tournament-fieldset" id="tornei">
+            <legend>Scegli il tuo torneo</legend>
+
+            <div class="tournament-options">
+              <label class="tournament-card selected" data-tournament-card>
+                <input type="radio" name="tournament_interest" value="open" checked required />
+                <span class="tournament-icon" aria-hidden="true">🏆</span>
+                <strong>Torneo <b>Open</b></strong>
+                <em>Accesso libero</em>
+                <small>Quota prevista <b>25€</b></small>
+              </label>
+
+              <label class="tournament-card exclusive" data-tournament-card>
+                <input type="radio" name="tournament_interest" value="exclusive" required />
+                <span class="tournament-icon" aria-hidden="true">👑</span>
+                <strong>Torneo <b>Exclusive</b></strong>
+                <em>Max 500 posti</em>
+                <small>Quota prevista <b>100€</b></small>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="legal-box">
+            <label class="checkline">
+              <input type="checkbox" name="age_confirmed" required />
+              <span>Confermo di avere almeno 18 anni.</span>
+            </label>
+
+            <label class="checkline">
+              <input type="checkbox" name="privacy_accepted" required />
+              <span>Accetto il trattamento dei dati per ricevere informazioni sulla ProFantasy League.</span>
+            </label>
+
+            <label class="checkline">
+              <input type="checkbox" name="marketing_accepted" />
+              <span>Voglio ricevere aggiornamenti, contenuti e notifiche da ProFantasy.</span>
+            </label>
+          </div>
+
+          <p id="formMessage" class="form-message" role="alert"></p>
+
+          <button class="submit-btn" id="submitBtn" type="submit">
+            <span>Invia iscrizione</span>
+            <i aria-hidden="true">›</i>
+          </button>
+
+          <p class="microcopy">
+            In questa fase stai inviando una candidatura gratuita e non vincolante. Pagamenti, premi fisici, buoni e modalità definitive saranno comunicati solo con regolamento ufficiale.
+          </p>
+        </form>
+      </section>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="successModal" aria-hidden="true">
+    <div class="success-modal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+      <button class="modal-close" type="button" data-close-modal aria-label="Chiudi">×</button>
+      <div class="success-icon">✓</div>
+      <p class="kicker">Richiesta inviata</p>
+      <h2 id="successTitle">Sei dentro l'arena ProFantasy.</h2>
+      <p>
+        Complimenti, hai inviato correttamente la tua richiesta di iscrizione. Verrai presto contattato dal team con regolamento, dettagli ufficiali e prossimi step.
+      </p>
+      <div class="modal-actions">
+        <a class="modal-primary" data-home-link href="/">Esplora il sito web</a>
+        <a class="modal-secondary" data-transfer-link href="/transfer.html">Vai al Transfer Center</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
