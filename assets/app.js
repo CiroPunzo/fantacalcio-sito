@@ -123,7 +123,7 @@
 
       if (result?.ok === false) {
         console.error("Supabase RPC returned error:", result);
-        showMessage("Qualcosa è andato storto durante l'invio. Controlla Supabase e riprova.", "error");
+        showMessage(`Errore Supabase: ${result.code || "unknown"}. Controlla SQL setup e riprova.`, "error");
         return;
       }
 
@@ -132,16 +132,18 @@
       openModal();
     } catch (error) {
       console.error("Unexpected signup error:", error);
-      showMessage("Connessione a Supabase non riuscita. Controlla URL/anon key, progetto Supabase attivo e prova anche da Chrome.", "error");
+      showMessage("Connessione a Supabase non riuscita. Controlla che SUPABASE_URL sia solo https://PROJECT_ID.supabase.co e che la anon key sia corretta.", "error");
     } finally {
       setLoading(false);
     }
   }
 
   async function submitViaSupabaseRpc(payload) {
-    const baseUrl = String(config.SUPABASE_URL || "").replace(/\/+$/, "");
+    const baseUrl = normalizeSupabaseUrl(config.SUPABASE_URL);
     const endpoint = `${baseUrl}/rest/v1/rpc/pf_create_league_signup`;
-    const anonKey = config.SUPABASE_ANON_KEY;
+    const anonKey = String(config.SUPABASE_ANON_KEY || "").trim();
+
+    console.log("ProFantasy signup endpoint:", endpoint);
 
     const response = await fetch(endpoint, {
       method: "POST",
@@ -226,12 +228,30 @@
   }
 
   function isSupabaseConfigured(settings) {
+    const url = normalizeSupabaseUrl(settings.SUPABASE_URL);
+    const key = String(settings.SUPABASE_ANON_KEY || "").trim();
+
     return Boolean(
-      settings.SUPABASE_URL &&
-      settings.SUPABASE_ANON_KEY &&
-      !settings.SUPABASE_URL.includes("INSERISCI") &&
-      !settings.SUPABASE_ANON_KEY.includes("INSERISCI")
+      url &&
+      key &&
+      !url.includes("INSERISCI") &&
+      !key.includes("INSERISCI") &&
+      /^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)
     );
+  }
+
+  function normalizeSupabaseUrl(value) {
+    let url = String(value || "").trim();
+
+    // La SUPABASE_URL corretta deve essere solo: https://PROJECT_ID.supabase.co
+    // Se per errore viene incollato l'endpoint REST, lo ripuliamo automaticamente.
+    url = url.replace(/\/+$/, "");
+    url = url.replace(/\/rest\/v1.*$/i, "");
+    url = url.replace(/\/auth\/v1.*$/i, "");
+    url = url.replace(/\/storage\/v1.*$/i, "");
+    url = url.replace(/\/functions\/v1.*$/i, "");
+
+    return url;
   }
 
   function clean(value) {
