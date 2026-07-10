@@ -42,6 +42,10 @@
     card.classList.add("selected");
     const input = card.querySelector("input[type='radio']");
     if (input) input.checked = true;
+
+    track("pf_tournament_select", {
+      tournament_interest: input?.value || "unknown"
+    });
   }
 
   function initModal() {
@@ -100,13 +104,23 @@
 
     const validationError = getValidationError(form);
     if (validationError) {
+      track("pf_signup_validation_error", {
+        reason: validationError
+      });
       showMessage(validationError, "error");
       return;
     }
 
     const payload = buildPayload(new FormData(form));
+    const analyticsMeta = getAnalyticsMeta(payload);
+
+    track("pf_signup_submit_attempt", analyticsMeta);
 
     if (!isSupabaseConfigured(config)) {
+      track("pf_signup_error", {
+        ...analyticsMeta,
+        error_code: "supabase_not_configured"
+      });
       showMessage("Prima di andare online devi inserire URL e anon key Supabase nel file assets/config.js.", "info");
       return;
     }
@@ -117,21 +131,36 @@
       const result = await submitViaSupabaseRpc(payload);
 
       if (result?.ok === false && result?.code === "duplicate_email") {
+        track("pf_signup_error", {
+          ...analyticsMeta,
+          error_code: "duplicate_email"
+        });
         showMessage("Questa email risulta già registrata. Se vuoi modificare i dati, contatta il team ProFantasy.", "info");
         return;
       }
 
       if (result?.ok === false) {
         console.error("Supabase RPC returned error:", result);
+        track("pf_signup_error", {
+          ...analyticsMeta,
+          error_code: result.code || "unknown"
+        });
         showMessage(`Errore Supabase: ${result.code || "unknown"}. Controlla SQL setup e riprova.`, "error");
         return;
       }
+
+      window.PFAnalytics?.markSignupSuccess?.();
+      track("pf_signup_success", analyticsMeta);
 
       form.reset();
       resetTournamentCards();
       openModal();
     } catch (error) {
       console.error("Unexpected signup error:", error);
+      track("pf_signup_error", {
+        ...analyticsMeta,
+        error_code: "network_or_unexpected"
+      });
       showMessage("Connessione a Supabase non riuscita. Controlla che SUPABASE_URL sia solo https://PROJECT_ID.supabase.co e che la anon key sia corretta.", "error");
     } finally {
       setLoading(false);
@@ -143,6 +172,8 @@
     const endpoint = `${baseUrl}/rest/v1/rpc/pf_create_league_signup`;
     const anonKey = String(config.SUPABASE_ANON_KEY || "").trim();
 
+    console.log("ProFantasy raw SUPABASE_URL:", config.SUPABASE_URL);
+    console.log("ProFantasy normalized SUPABASE_URL:", baseUrl);
     console.log("ProFantasy signup endpoint:", endpoint);
 
     const response = await fetch(endpoint, {
@@ -241,17 +272,44 @@
   }
 
   function normalizeSupabaseUrl(value) {
-    let url = String(value || "").trim();
+    const raw = String(value || "").trim();
 
-    // La SUPABASE_URL corretta deve essere solo: https://PROJECT_ID.supabase.co
-    // Se per errore viene incollato l'endpoint REST, lo ripuliamo automaticamente.
-    url = url.replace(/\/+$/, "");
-    url = url.replace(/\/rest\/v1.*$/i, "");
-    url = url.replace(/\/auth\/v1.*$/i, "");
-    url = url.replace(/\/storage\/v1.*$/i, "");
-    url = url.replace(/\/functions\/v1.*$/i, "");
+    if (!raw) return "";
 
-    return url;
+    // V2.3: prendiamo SEMPRE solo origin/progetto.
+    // Così funziona anche se in config.js hai incollato per errore:
+    // https://PROJECT.supabase.co/rest/v1
+    // https://PROJECT.supabase.co/rest/v1/rest/v1
+    // https://PROJECT.supabase.co/auth/v1
+    try {
+      const parsed = new URL(raw);
+      return parsed.origin.replace(/\/+$/, "");
+    } catch (_) {
+      let url = raw.replace(/\/+$/, "");
+      url = url.replace(/\/rest\/v1.*$/i, "");
+      url = url.replace(/\/auth\/v1.*$/i, "");
+      url = url.replace(/\/storage\/v1.*$/i, "");
+      url = url.replace(/\/functions\/v1.*$/i, "");
+      return url;
+    }
+  }
+
+  function getAnalyticsMeta(payload) {
+    return {
+      tournament_interest: payload?.p_tournament_interest || "unknown",
+      fantasy_level: payload?.p_fantasy_level || "not_set",
+      source: payload?.p_source || "direct",
+      utm_campaign: payload?.p_utm_campaign || "none",
+      utm_medium: payload?.p_utm_medium || "none",
+      phone_present: Boolean(payload?.p_phone),
+      team_name_present: Boolean(payload?.p_team_name),
+      province_present: Boolean(payload?.p_province),
+      marketing_accepted: Boolean(payload?.p_marketing_accepted)
+    };
+  }
+
+  function track(eventName, params = {}) {
+    window.PFAnalytics?.track?.(eventName, params);
   }
 
   function clean(value) {
