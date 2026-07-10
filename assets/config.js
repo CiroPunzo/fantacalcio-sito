@@ -7,5 +7,7 @@ window.PF_CONFIG = {
   TRANSFER_URL: "/transfer.html",
   SIGNUP_DEADLINE: "2026-09-02T00:00:00+02:00",
   COUNTDOWN_LABEL: "Countdown alla ProFantasy League",
-  GA4_MEASUREMENT_ID: "G-CY7LK0E6M4"
+  GA4_MEASUREMENT_ID: "G-CY7LK0E6M4",
+  GA4_ENABLED: true,
+  GA4_DEBUG_MODE: false
 };
