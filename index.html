@@ -1,1090 +1,547 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Ciro ProFantasy - Fantacalcio, Community e World Cup 2026</title>
-
-  <meta name="description" content="ProFantasy è l'hub di Ciro per fantacalcio, community, live e World Cup 2026: strumenti, analisi, iscrizioni e contenuti esclusivi.">
-  <meta name="keywords" content="fantacalcio, profantasy, world cup 2026, community fantacalcio, comparatore scambi, live calcio, ciro profantasy">
-
-  <link rel="canonical" href="https://www.ciroprofantasy.it/">
-
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Ciro ProFantasy">
-  <meta property="og:title" content="Ciro ProFantasy - Fantacalcio, Community e World Cup 2026">
-  <meta property="og:description" content="L'hub ProFantasy per World Cup 2026, community, live, strumenti e nuovi format fantasy.">
-  <meta property="og:url" content="https://www.ciroprofantasy.it/">
-  <meta property="og:image" content="https://www.ciroprofantasy.it/img/og-cover.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Ciro ProFantasy - Fantacalcio, Community e World Cup 2026">
-  <meta name="twitter:description" content="World Cup 2026, community, live, strumenti e format esclusivi firmati ProFantasy.">
-  <meta name="twitter:image" content="https://www.ciroprofantasy.it/img/og-cover.jpg">
-
-  <meta name="theme-color" content="#070A2A">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Ciro ProFantasy">
-
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="48x48" href="/img/favicon-48x48.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
-  <link rel="manifest" href="/img/site.webmanifest">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="css/style.css?v=1000">
-  <link rel="stylesheet" href="css/world-cup.css?v=auth-return-flow-v1">
-  <link rel="stylesheet" href="css/roadmap.css?v=1">
-  <link rel="stylesheet" href="css/community-footer.css">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ProFantasy | Fantacalcio Premium Hub</title>
+  <meta name="description" content="ProFantasy: League, Transfer Center, Tools+, comparatore giocatori e community Telegram in una home premium dedicata al fantacalcio." />
+  <link rel="stylesheet" href="assets/hero.css" />
+  <link rel="icon" href="img/profantasy-logo.jpg" />
+  <!-- GA4: sostituisci G-XXXXXXXXXX con il tuo Measurement ID -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('consent', 'default', {
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied',
-      functionality_storage: 'granted',
-      personalization_storage: 'denied',
-      security_storage: 'granted',
-      wait_for_update: 2000
-    });
-    gtag('set', 'ads_data_redaction', true);
-    gtag('set', 'url_passthrough', true);
+    window.PF_GA4_ID = "G-XXXXXXXXXX";
   </script>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CY7LK0E6M4"></script>
-  <script>
-    gtag('js', new Date());
-    gtag('config', 'G-CY7LK0E6M4', {
-      anonymize_ip: true
-    });
-  </script>
-
-  <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/632f288ce1ebe1b7d38335aa7a3ff5ff/script.js"></script>
-
-  <script>
-    document.addEventListener('cookieyes_consent_update', function (event) {
-      if (!event || !event.detail) return;
-
-      const accepted = event.detail.accepted || [];
-      const rejected = event.detail.rejected || [];
-      const consent = {};
-
-      if (accepted.includes('analytics')) consent.analytics_storage = 'granted';
-      if (rejected.includes('analytics')) consent.analytics_storage = 'denied';
-
-      if (accepted.includes('advertisement')) {
-        consent.ad_storage = 'granted';
-        consent.ad_user_data = 'granted';
-        consent.ad_personalization = 'granted';
-      }
-      if (rejected.includes('advertisement')) {
-        consent.ad_storage = 'denied';
-        consent.ad_user_data = 'denied';
-        consent.ad_personalization = 'denied';
-      }
-
-      if (accepted.includes('functional')) consent.functionality_storage = 'granted';
-      if (rejected.includes('functional')) consent.functionality_storage = 'denied';
-
-      gtag('consent', 'update', consent);
-    });
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="assets/analytics.js" defer></script>
 </head>
+<body>
+  <div class="page-shell">
+    <div class="bg-layer" aria-hidden="true"></div>
+    <div class="bg-vignette" aria-hidden="true"></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
 
-<body class="neo-page">
+    <header class="site-header" data-reveal>
+      <a class="brand" href="index.html" aria-label="ProFantasy Home">
+        <span class="brand-logo-wrap">
+          <img src="img/profantasy-logo.jpg" alt="ProFantasy" class="brand-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';" />
+          <span class="brand-fallback">PF</span>
+        </span>
+        <span class="brand-text">
+          <strong>ProFantasy</strong>
+          <small>Fantacalcio HQ</small>
+        </span>
+      </a>
 
-  <header class="wc-navbar">
-    <div class="wc-nav-inner">
-
-      <a href="index.html" class="wc-logo">PROFANTASY</a>
-
-      <input type="checkbox" id="wc-menu-toggle" class="wc-menu-toggle" />
-
-      <label for="wc-menu-toggle" class="wc-menu-btn" aria-label="Apri menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-
-      <nav class="wc-nav-links">
-        <a href="index.html" class="active">Home</a>
-        <a href="world-cup.html">World Cup</a>
-        <a href="transfer.html">Transfers</a>
-        <a href="tools.html">Tools</a>
-        <a href="community.html">Community</a>
-        <a href="about.html">About</a>
+      <nav class="desktop-nav" aria-label="Navigazione principale">
+        <a href="index.html" class="active">Fantacalcio</a>
+        <a href="iscriviti.html" data-analytics="cta_league">League</a>
+        <a href="transfer.html" data-analytics="cta_transfer">Transfer</a>
+        <a href="tools.html" data-analytics="cta_tools">Tools+</a>
+        <a href="world-cup.html" data-analytics="cta_worldcup">World Cup</a>
       </nav>
 
-      <div class="wc-nav-actions" data-wc-auth-actions data-loading="true">
-        <a href="login.html?redirect=index.html" class="wc-btn wc-btn-login wc-auth-guest">Accedi</a>
-        <a href="register.html?redirect=index.html" class="wc-btn wc-btn-register wc-auth-guest">Registrati</a>
-      </div>
-
-    </div>
-  </header>
-
-
-  <main>
-
-<section class="pf-wc-hero-v3">
-  <div class="pf-wc-hero-v3-media">
-    <img
-      class="pf-wc-hero-v3-bg"
-      src="img/world-cup/world-cup-hero-custom.jpg"
-      alt="World Cup hero background"
-    >
-    <div class="pf-wc-hero-v3-overlay"></div>
-    <div class="pf-wc-hero-v3-vignette"></div>
-    <div class="pf-wc-hero-v3-lines pf-wc-hero-v3-lines-a"></div>
-    <div class="pf-wc-hero-v3-lines pf-wc-hero-v3-lines-b"></div>
-    <div class="pf-wc-hero-v3-floor-glow"></div>
-    <div class="pf-wc-hero-v3-floating">
-  <div class="pf-wc-float-card pf-wc-float-topman">
-    <span>Top Manager</span>
-    <ul>
-      <li><b>1</b> The G.O.A.T <strong>2.456</strong></li>
-      <li><b>2</b> MagicAlly <strong>2.210</strong></li>
-      <li><b>3</b> Fantasmaster <strong>1.985</strong></li>
-    </ul>
-  </div>
-
-  <div class="pf-wc-float-card pf-wc-float-matches">
-    <span>Live Matches</span>
-    <ul>
-      <li><b>BRA</b> 2-1 <b>ARG</b></li>
-      <li><b>FRA</b> 1-1 <b>ESP</b></li>
-    </ul>
-  </div>
-
-  <div class="pf-wc-float-card pf-wc-float-ranking">
-    <span>Live Ranking</span>
-    <div class="pf-wc-mini-chart">
-      <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-    </div>
-    <strong>+12.4%</strong>
-  </div>
-
-  <div class="pf-wc-float-card pf-wc-float-market">
-    <span>Market Moves</span>
-    <ul>
-      <li>Mbappé <strong class="up">+12.5M</strong></li>
-      <li>Bellingham <strong class="up">+8.3M</strong></li>
-      <li>Vini Jr. <strong class="down">-2.1M</strong></li>
-    </ul>
-  </div>
-</div>
-  </div>
-
-  <div class="container">
-    <div class="pf-wc-hero-v3-shell">
-      <div class="pf-wc-hero-v3-copy">
-        <div class="pf-wc-hero-v3-kicker">World Cup Edition</div>
-
-        <h1 class="pf-wc-hero-v3-title">
-          Fantasy
-          <span>World Cup</span>
-        </h1>
-
-        <p class="pf-wc-hero-v3-text">
-          Vivi il torneo con sfide globali, mercato live, premi esclusivi e
-          aggiornamenti continui in pieno stile ProFantasy.
-        </p>
-
-        <div class="pf-wc-hero-v3-actions">
-          <a href="#world-cup-access" class="pf-wc-hero-v3-cta">
-            Scopri ora
-            <i>→</i>
-          </a>
-        </div>
-      </div>
-
-      <div class="pf-wc-hero-v3-side">
-        <div class="pf-wc-hero-v3-countdown">
-          <div class="pf-wc-hero-v3-countdown-top">
-            <span class="pf-wc-hero-v3-countdown-kicker">Road to World Cup</span>
-            <span class="pf-wc-hero-v3-countdown-date">Giugno 2026</span>
-          </div>
-
-          <div class="pf-wc-hero-v3-countdown-main" id="pfWcCountdown">
-            <div class="pf-wc-hero-v3-count-col">
-              <strong id="pf-wc-days">00</strong>
-              <small>Giorni</small>
-            </div>
-
-            <div class="pf-wc-hero-v3-count-sep">:</div>
-
-            <div class="pf-wc-hero-v3-count-col">
-              <strong id="pf-wc-hours">00</strong>
-              <small>Ore</small>
-            </div>
-
-            <div class="pf-wc-hero-v3-count-sep">:</div>
-
-            <div class="pf-wc-hero-v3-count-col">
-              <strong id="pf-wc-minutes">00</strong>
-              <small>Minuti</small>
-            </div>
-
-            <div class="pf-wc-hero-v3-count-sep">:</div>
-
-            <div class="pf-wc-hero-v3-count-col">
-              <strong id="pf-wc-seconds">00</strong>
-              <small>Secondi</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pf-wc-hero-v3-bottom-wrap">
-      <div class="pf-wc-hero-v3-bottom">
-        <a
-          href="/world-cup/games"
-          class="pf-wc-hero-v3-bottom-card pf-wc-card-pink"
-          style="background-image: url('img/world-cup/card-games-bg.jpg');"
-        >
-          <div class="pf-wc-hero-v3-bottom-inner">
-            <div class="pf-wc-hero-v3-bottom-icon-wrap">
-              <img
-                src="img/world-cup/icon-games.png"
-                alt="Sfide globali"
-                class="pf-wc-hero-v3-bottom-icon-img"
-              >
-            </div>
-
-            <div class="pf-wc-hero-v3-bottom-copy">
-              <h3>Sfide Globali</h3>
-              <p>Tornei, leghe e modalità speciali ogni settimana.</p>
-              <span>Scopri le sfide <i>→</i></span>
-            </div>
-          </div>
-        </a>
-
-        <a
-          href="/world-cup/mercato"
-          class="pf-wc-hero-v3-bottom-card pf-wc-card-cyan"
-          style="background-image: url('img/world-cup/card-market-bg.jpg');"
-        >
-          <div class="pf-wc-hero-v3-bottom-inner">
-            <div class="pf-wc-hero-v3-bottom-icon-wrap">
-              <img
-                src="img/world-cup/icon-market.png"
-                alt="Mercato live"
-                class="pf-wc-hero-v3-bottom-icon-img"
-              >
-            </div>
-
-            <div class="pf-wc-hero-v3-bottom-copy">
-              <h3>Mercato Live</h3>
-              <p>Trasferimenti, quotazioni e strategie sempre aggiornate.</p>
-              <span>Vai al mercato <i>→</i></span>
-            </div>
-          </div>
-        </a>
-
-        <a
-          href="/world-cup/premi"
-          class="pf-wc-hero-v3-bottom-card pf-wc-card-purple"
-          style="background-image: url('img/world-cup/card-prizes-bg.jpg');"
-        >
-          <div class="pf-wc-hero-v3-bottom-inner">
-            <div class="pf-wc-hero-v3-bottom-icon-wrap">
-              <img
-                src="img/world-cup/icon-prizes.png"
-                alt="Premi esclusivi"
-                class="pf-wc-hero-v3-bottom-icon-img"
-              >
-            </div>
-
-            <div class="pf-wc-hero-v3-bottom-copy">
-              <h3>Premi Esclusivi</h3>
-              <p>Montepremi reale, premi unici e riconoscimenti speciali.</p>
-              <span>Scopri i premi <i>→</i></span>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-   <section class="pf-access-experience" id="pf-picks">
-  <div class="pf-access-media">
-    <img
-      src="img/world-cup/world-cup-access-bg.jpg"
-      alt="World Cup trophy visual"
-      class="pf-access-bg-image"
-    >
-    <div class="pf-access-overlay"></div>
-    <div class="pf-access-vignette"></div>
-  </div>
-
-  <div class="container pf-access-shell">
-    <div class="pf-access-hero">
-      <div class="pf-access-copy">
-        <span class="pf-access-kicker">World Cup Edition</span>
-
-        <h2 class="pf-access-title">
-          Scegli il tuo
-          <span>accesso</span>
-        </h2>
-
-        <p class="pf-access-text">
-          Tre aree chiave per seguire l’evento con più profondità:
-          giochi dedicati, aggiornamenti live e strumenti utili
-          per leggere tutto meglio.
-        </p>
-      </div>
-    </div>
-
-    <div class="pf-picks-shell">
-      <button class="pf-picks-arrow pf-picks-prev" type="button" aria-label="Card precedente">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+      <a class="header-cta" href="iscriviti.html" data-analytics="cta_league">Entra nella League</a>
+      <button class="menu-toggle" type="button" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span><span></span>
       </button>
+    </header>
 
-      <div class="pf-picks-viewport" id="pf-picks-viewport">
-        <div class="pf-picks-track" id="pf-picks-track">
-
-  <a href="/world-cup-games.html" class="pf-pick-card pf-pick-card-games is-active" data-pick-card>
-    <span class="pf-pick-noise"></span>
-    <span class="pf-pick-beam"></span>
-
-    <div class="pf-pick-frame">
-      <div class="pf-pick-top">
-        <span class="pf-pick-serial">01</span>
-
-        <span class="pf-pick-icon">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 3L16.5 5.5L18 10.5L15 15L9 15L6 10.5L7.5 5.5L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="M9 15L7.5 19L12 21L16.5 19L15 15" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </div>
-
-      <div class="pf-pick-body">
-        <h3 class="pf-pick-name">World Cup Games</h3>
-        <p class="pf-pick-text">
-          Sfide, format speciali e contenuti dedicati per vivere la competizione con più coinvolgimento.
-        </p>
-      </div>
-
-      <div class="pf-pick-meta">
-        <span>Special format</span>
-        <span>Exclusive area</span>
-      </div>
-
-      <div class="pf-pick-footer">
-        <span class="pf-pick-link">
-          Apri area
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </div>
-
-      <div class="pf-pick-scene">
-        <img src="img/world-cup/card-games-player.png" alt="" class="pf-pick-scene-image">
-      </div>
-    </div>
-  </a>
-
-  <a href="/transfer.html" class="pf-pick-card pf-pick-card-transfers" data-pick-card>
-    <span class="pf-pick-noise"></span>
-    <span class="pf-pick-beam"></span>
-
-    <div class="pf-pick-frame">
-      <div class="pf-pick-top">
-        <span class="pf-pick-serial">02</span>
-
-        <span class="pf-pick-icon">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M4 14C6 10 8 9 10.5 9C13 9 14 11 16.5 11C18.5 11 20 10 21 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M4 18C6 14 8 13 10.5 13C13 13 14 15 16.5 15C18.5 15 20 14 21 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </span>
-      </div>
-
-      <div class="pf-pick-body">
-        <h3 class="pf-pick-name">Transfers Live</h3>
-        <p class="pf-pick-text">
-          Segui movimenti, aggiornamenti e focus mercato in una pagina sempre pronta da consultare.
-        </p>
-      </div>
-
-      <div class="pf-pick-meta">
-        <span>Market watch</span>
-        <span>Live updates</span>
-      </div>
-
-      <div class="pf-pick-footer">
-        <span class="pf-pick-link">
-          Vai ai transfer
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </div>
-
-      <div class="pf-pick-scene">
-        <img src="img/world-cup/card-transfers-live.png" alt="" class="pf-pick-scene-image">
-      </div>
-    </div>
-  </a>
-
-  <a href="/tools.html" class="pf-pick-card pf-pick-card-tools" data-pick-card>
-    <span class="pf-pick-noise"></span>
-    <span class="pf-pick-beam"></span>
-
-    <div class="pf-pick-frame">
-      <div class="pf-pick-top">
-        <span class="pf-pick-serial">03</span>
-
-        <span class="pf-pick-icon">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M5 16L9 12L12 14L18 8L19 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M16 8H19V11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </div>
-
-      <div class="pf-pick-body">
-        <h3 class="pf-pick-name">Tools Hub</h3>
-        <p class="pf-pick-text">
-          Comparatori, dati e strumenti per leggere meglio giocatori, scambi e scenari dell’evento.
-        </p>
-      </div>
-
-      <div class="pf-pick-meta">
-        <span>Tools & data</span>
-        <span>Smart analysis</span>
-      </div>
-
-      <div class="pf-pick-footer">
-        <span class="pf-pick-link">
-          Apri tools
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </div>
-
-      <div class="pf-pick-scene">
-        <img src="img/world-cup/card-tools-hub.png" alt="" class="pf-pick-scene-image">
-      </div>
-    </div>
-  </a>
-
-</div>
-      </div>
-
-      <button class="pf-picks-arrow pf-picks-next" type="button" aria-label="Card successiva">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
+    <div class="mobile-panel" aria-hidden="true">
+      <a href="index.html">Fantacalcio</a>
+      <a href="iscriviti.html" data-analytics="cta_league">League</a>
+      <a href="transfer.html" data-analytics="cta_transfer">Transfer</a>
+      <a href="tools.html" data-analytics="cta_tools">Tools+</a>
+      <a href="world-cup.html" data-analytics="cta_worldcup">World Cup</a>
     </div>
 
-    <div class="pf-picks-dots" id="pf-picks-dots">
-      <button type="button" class="pf-picks-dot is-active" data-pick-dot="0" aria-label="Vai alla card 1"></button>
-      <button type="button" class="pf-picks-dot" data-pick-dot="1" aria-label="Vai alla card 2"></button>
-      <button type="button" class="pf-picks-dot" data-pick-dot="2" aria-label="Vai alla card 3"></button>
-    </div>
-  </div>
-</section>
-    
-   <!-- =========================
-     PROFANTASY PIT STOP ROADMAP
-     Sostituisce il vecchio Command Center
-========================= -->
-<section class="pf-roadmap" id="profantasy-roadmap">
-
-  <!-- BACKGROUND UNICO -->
-  <div class="pf-roadmap-background" aria-hidden="true">
-    <img src="img/roadmap-bg.jpg" alt="" class="pf-roadmap-background-img">
-  </div>
-
-  <div class="pf-roadmap-overlay" aria-hidden="true"></div>
-
-  <div class="pf-roadmap-container">
-
-    <!-- HERO TESTUALE -->
-    <div class="pf-roadmap-hero">
-
-      <div class="pf-roadmap-copy">
-        <div class="pf-roadmap-kicker">
-          <span class="pf-roadmap-kicker-icon">🏁</span>
-          <span>ProFantasy Race Flow</span>
-        </div>
-
-        <h2 class="pf-roadmap-title">
-          Pit Stop<br>
-          <span>Roadmap</span>
-        </h2>
-
-        <p class="pf-roadmap-subtitle">
-          Il percorso più veloce per capire dove andare su ProFantasy durante la fase più calda della stagione.
-          Scegli il tuo momento, segui il flusso e resta sempre un giro avanti.
-        </p>
-      </div>
-
-      <aside class="pf-roadmap-phase-card">
-        <div class="pf-roadmap-phase-head">
-          <span class="pf-roadmap-live-dot"></span>
-          <span>Current Phase</span>
-        </div>
-
-        <p class="pf-roadmap-phase-text">
-          Road to World Cup · <strong>Pre-season</strong>
-        </p>
-
-        <div class="pf-roadmap-phase-stats">
-          <div class="pf-roadmap-phase-stat">
-            <span class="pf-roadmap-phase-icon">🏆</span>
-            <small>Obiettivo</small>
-            <strong>World Cup</strong>
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero-copy" data-reveal>
+          <div class="status-pill">
+            <span class="live-dot"></span>
+            <span>Season 26/27 interface online</span>
           </div>
 
-          <div class="pf-roadmap-phase-stat">
-            <span class="pf-roadmap-phase-icon">⏱</span>
-            <small>Tempo</small>
-            <strong>Ora</strong>
-          </div>
+          <h1>
+            <span class="title-small">PROFANTASY</span>
+            <span class="title-main">Scegli la tua</span>
+            <span class="title-gradient">prossima mossa.</span>
+          </h1>
 
-          <div class="pf-roadmap-phase-stat">
-            <span class="pf-roadmap-phase-icon">🏁</span>
-            <small>Posizione</small>
-            <strong>In pista</strong>
-          </div>
-        </div>
-      </aside>
-
-    </div>
-
-    <!-- ROADMAP PRINCIPALE -->
-    <div class="pf-roadmap-layout">
-
-      <div class="pf-roadmap-board">
-
-        <div class="pf-roadmap-board-head">
-          <span>Season Route</span>
-
-          <div class="pf-roadmap-arrows" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-
-        <div class="pf-roadmap-track" aria-hidden="true">
-          <span class="pf-roadmap-track-line"></span>
-          <span class="pf-roadmap-step-dot pf-roadmap-step-dot-1">01</span>
-          <span class="pf-roadmap-step-dot pf-roadmap-step-dot-2">02</span>
-          <span class="pf-roadmap-step-dot pf-roadmap-step-dot-3">03</span>
-          <span class="pf-roadmap-step-dot pf-roadmap-step-dot-4">04</span>
-          <span class="pf-roadmap-flag">🏁</span>
-        </div>
-
-        <div class="pf-roadmap-cards">
-
-          <!-- CARD 01 -->
-          <article class="pf-roadmap-card pf-roadmap-card-market">
-            <a href="transfer.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione Transfers Live">
-
-              <div class="pf-roadmap-card-media">
-                <img src="img/card-market-radar.jpg" alt="Market Radar ProFantasy" class="pf-roadmap-card-img">
-              </div>
-
-              <div class="pf-roadmap-card-body">
-                <span class="pf-roadmap-card-number">01</span>
-
-                <h3>Market Radar</h3>
-
-                <p>
-                  Rumors, gerarchie e mosse da seguire prima che diventino ovvie.
-                </p>
-
-                <div class="pf-roadmap-card-status">
-                  <span></span>
-                  <small>Scansione in corso</small>
-                </div>
-              </div>
-
-            </a>
-          </article>
-
-          <!-- CARD 02 -->
-          <article class="pf-roadmap-card pf-roadmap-card-tools">
-            <a href="tools.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione Tools Hub">
-
-              <div class="pf-roadmap-card-media">
-                <img src="img//card-tool-check.jpg" alt="Tool Check ProFantasy" class="pf-roadmap-card-img">
-              </div>
-
-              <div class="pf-roadmap-card-body">
-                <span class="pf-roadmap-card-number">02</span>
-
-                <h3>Tool Check</h3>
-
-                <p>
-                  Comparatori, analisi e strumenti per migliorare asta, scambi e strategia.
-                </p>
-
-                <div class="pf-roadmap-card-status">
-                  <span></span>
-                  <small>Dati aggiornati</small>
-                </div>
-              </div>
-
-            </a>
-          </article>
-
-          <!-- CARD 03 -->
-          <article class="pf-roadmap-card pf-roadmap-card-worldcup">
-            <a href="world-cup.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione World Cup">
-
-              <div class="pf-roadmap-card-media">
-                <img src="img/card-world-cup.jpg" alt="World Cup Mode ProFantasy" class="pf-roadmap-card-img">
-              </div>
-
-              <div class="pf-roadmap-card-body">
-                <span class="pf-roadmap-card-number">03</span>
-
-                <h3>World Cup Mode</h3>
-
-                <p>
-                  Format, premi, giochi speciali e sfide globali verso il Mondiale.
-                </p>
-
-                <div class="pf-roadmap-card-status">
-                  <span></span>
-                  <small>Modalità attiva</small>
-                </div>
-              </div>
-
-            </a>
-          </article>
-
-          <!-- CARD 04 -->
-          <article class="pf-roadmap-card pf-roadmap-card-community">
-            <a href="community.html" class="pf-roadmap-card-link" aria-label="Vai alla sezione Community">
-
-              <div class="pf-roadmap-card-media">
-                <img src="img/card-community-boost.jpg" alt="Community Boost ProFantasy" class="pf-roadmap-card-img">
-              </div>
-
-              <div class="pf-roadmap-card-body">
-                <span class="pf-roadmap-card-number">04</span>
-
-                <h3>Community Boost</h3>
-
-                <p>
-                  Telegram, sondaggi, update live e iniziative per entrare nel progetto.
-                </p>
-
-                <div class="pf-roadmap-card-status">
-                  <span></span>
-                  <small>Sempre connessi</small>
-                </div>
-              </div>
-
-            </a>
-          </article>
-
-        </div>
-
-        <div class="pf-roadmap-bottom">
-          <a href="community.html" class="pf-roadmap-main-cta">
-            <span>Scopri il percorso</span>
-            <span aria-hidden="true">→</span>
-          </a>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-    <!-- =========================================
-     PROFANTASY COMMUNITY CTA
-========================================= -->
-<section class="pf-community-cta" id="community-cta">
-  <div class="pf-community-cta-container">
-
-    <div class="pf-community-cta-panel">
-      <div class="pf-community-cta-copy">
-        <span class="pf-community-cta-kicker">ProFantasy Community Access</span>
-
-        <h2 class="pf-community-cta-title">
-          Entra nel flusso<br>
-          <span>prima degli altri</span>
-        </h2>
-
-        <p class="pf-community-cta-text">
-          ProFantasy non è solo un sito: è una community in movimento.
-          Seguici su Telegram per aggiornamenti, iniziative e contenuti dedicati,
-          e su TikTok per analisi, format e numeri che stanno già spingendo il progetto.
-        </p>
-
-        <div class="pf-community-cta-actions">
-          <a
-            href="https://t.me/+hpq210YBS18yN2E8"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="pf-community-cta-btn pf-community-cta-btn-primary"
-          >
-            <span>Entra su Telegram</span>
-            <span aria-hidden="true">→</span>
-          </a>
-
-          <a
-            href="https://www.tiktok.com/@ciro_profantasy"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="pf-community-cta-btn pf-community-cta-btn-secondary"
-          >
-            <span>Segui su TikTok</span>
-            <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="pf-community-cta-side">
-        <div class="pf-community-cta-card pf-community-cta-card-telegram">
-          <div class="pf-community-cta-card-top">
-            <span class="pf-community-cta-icon">✈</span>
-            <span class="pf-community-cta-label">Telegram</span>
-          </div>
-
-          <h3>Accesso diretto alla community</h3>
-
-          <p>
-            Aggiornamenti, iniziative, connessione diretta e primi segnali del progetto.
+          <p class="hero-lead">
+            Entra nella lobby del fantacalcio: prepara la League, controlla il mercato,
+            apri i tools e vivi la community come in una vera modalità carriera.
           </p>
 
-          <a
-            href="https://t.me/+hpq210YBS18yN2E8"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="pf-community-cta-mini-link"
-          >
-            Apri Telegram →
-          </a>
+          <div class="countdown-mini" data-countdown="2026-09-02T00:00:00+02:00" aria-label="Countdown inizio ProFantasy League">
+            <span>Kick-off League</span>
+            <strong><b data-days>00</b>g <b data-hours>00</b>h <b data-minutes>00</b>m</strong>
+          </div>
         </div>
 
-        <div class="pf-community-cta-card pf-community-cta-card-tiktok">
-          <div class="pf-community-cta-card-top">
-            <span class="pf-community-cta-icon">♪</span>
-            <span class="pf-community-cta-label">TikTok</span>
+        <div class="game-interface" data-reveal>
+          <div class="interface-top">
+            <div>
+              <span class="micro-label">Main Menu</span>
+              <strong>ProFantasy Hub</strong>
+            </div>
+            <span class="season-tag">26/27</span>
           </div>
 
-          <h3>12,2K follower · 20M+ views</h3>
+          <div class="mission-grid" role="list" aria-label="Azioni principali ProFantasy">
+            <button class="mission-card is-active" type="button" data-target="iscriviti.html" data-title="League" data-action="Pre-iscriviti" role="listitem">
+              <span class="mission-number">01</span>
+              <span class="mission-icon">♛</span>
+              <strong>League</strong>
+              <small>Open ed Exclusive Mode</small>
+              <i class="mission-state">Start here</i>
+            </button>
 
+            <button class="mission-card" type="button" data-target="transfer.html" data-title="Transfer Center" data-action="Apri il mercato" role="listitem">
+              <span class="mission-number">02</span>
+              <span class="mission-icon">⇄</span>
+              <strong>Transfer</strong>
+              <small>Movimenti Serie A</small>
+              <i class="mission-state">Live board</i>
+            </button>
+
+            <button class="mission-card" type="button" data-target="tools.html" data-title="Tools+" data-action="Scopri i tools" role="listitem">
+              <span class="mission-number">03</span>
+              <span class="mission-icon">⬢</span>
+              <strong>Tools+</strong>
+              <small>Comparatore e dati</small>
+              <i class="mission-state locked">Preview</i>
+            </button>
+
+            <button class="mission-card" type="button" data-target="#telegram" data-title="Community" data-action="Entra nel canale" role="listitem">
+              <span class="mission-number">04</span>
+              <span class="mission-icon">◌</span>
+              <strong>Community</strong>
+              <small>Telegram e notifiche</small>
+              <i class="mission-state">Online</i>
+            </button>
+          </div>
+
+          <div class="selected-action">
+            <div>
+              <span class="micro-label">Selected mission</span>
+              <strong data-selected-title>League</strong>
+              <p data-selected-desc>La porta d’ingresso alla ProFantasy League 26/27.</p>
+            </div>
+            <a class="btn-play" href="iscriviti.html" data-analytics="cta_league" data-selected-link>
+              <span data-selected-action>Pre-iscriviti</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-side-panel" data-reveal>
+          <div class="panel-orbit">
+            <span></span><span></span><span></span>
+            <div class="core-badge">
+              <b>PF</b>
+              <small>HQ</small>
+            </div>
+          </div>
+
+          <div class="side-stats">
+            <div>
+              <span>Mode</span>
+              <strong>Fantacalcio</strong>
+            </div>
+            <div>
+              <span>Access</span>
+              <strong>Mobile First</strong>
+            </div>
+            <div>
+              <span>Status</span>
+              <strong>Loading Season</strong>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+
+      <section class="league-section" id="league">
+        <div class="league-bg" aria-hidden="true"></div>
+        <div class="league-glow league-glow-a" aria-hidden="true"></div>
+        <div class="league-glow league-glow-b" aria-hidden="true"></div>
+
+        <div class="league-inner">
+          <div class="league-head" data-reveal>
+            <span class="section-kicker">PROFANTASY LEAGUE 26/27</span>
+            <h2>Scegli la tua modalità di gioco.</h2>
+            <p>
+              Due percorsi, una sola arena: entra nella League, costruisci la tua stagione
+              e preparati a competere con fantallenatori da tutta Italia.
+            </p>
+          </div>
+
+          <div class="league-mode-stage" data-reveal>
+            <article class="league-mode-card open-mode is-selected" data-mode-card data-mode="open">
+              <div class="mode-bg mode-bg-open" aria-hidden="true"></div>
+              <div class="mode-shine" aria-hidden="true"></div>
+
+              <div class="mode-content">
+                <div class="mode-topline">
+                  <span>01</span>
+                  <small>Open Mode</small>
+                </div>
+
+                <h3>Torneo Open</h3>
+                <p>
+                  La modalità aperta a tutti: entri, prepari la tua rosa e provi a scalare
+                  la classifica generale della community ProFantasy.
+                </p>
+
+                <ul>
+                  <li>Accesso aperto</li>
+                  <li>Competizione nazionale</li>
+                  <li>Premi fisici e benefit</li>
+                </ul>
+
+                <a href="iscriviti.html" data-analytics="cta_league" class="mode-cta">
+                  Pre-iscriviti
+                  <span>→</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="league-mode-card exclusive-mode" data-mode-card data-mode="exclusive">
+              <div class="mode-bg mode-bg-exclusive" aria-hidden="true"></div>
+              <div class="mode-shine" aria-hidden="true"></div>
+
+              <div class="mode-content">
+                <div class="mode-topline">
+                  <span>02</span>
+                  <small>Exclusive Mode</small>
+                </div>
+
+                <h3>Torneo Exclusive</h3>
+                <p>
+                  La modalità premium a posti limitati: massimo 500 player, atmosfera più
+                  competitiva e una corsa pensata per chi vuole il livello più alto.
+                </p>
+
+                <ul>
+                  <li>Max 500 partecipanti</li>
+                  <li>Accesso limitato</li>
+                  <li>Premi premium</li>
+                </ul>
+
+                <a href="iscriviti.html" data-analytics="cta_league" class="mode-cta exclusive">
+                  Candidati
+                  <span>→</span>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="league-console" data-reveal>
+            <div>
+              <span class="micro-label">League briefing</span>
+              <strong data-league-title>Torneo Open</strong>
+              <p data-league-desc>
+                Perfetto per partire subito: aperto a tutti, competitivo, semplice da capire e ideale per far crescere la community.
+              </p>
+            </div>
+            <div class="league-console-actions">
+              <a href="iscriviti.html" data-analytics="cta_league">Entra nella League</a>
+              <a href="tools.html" data-analytics="cta_tools" class="ghost-link">Scopri i Tools+</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="tools-preview-section" id="tools-preview">
+        <div class="tools-preview-bg" aria-hidden="true"></div>
+
+        <div class="section-split-head" data-reveal>
+          <div>
+            <span class="section-kicker">TOOLS PREVIEW</span>
+            <h2>Leggi i giocatori prima degli altri.</h2>
+          </div>
           <p>
-            Analisi, format fantasy e contenuti che stanno già spingendo la crescita di ProFantasy.
+            Un assaggio del mondo Tools+: comparatore, radar, classifiche e dati veloci
+            per aiutarti a preparare asta, scambi e stagione.
+          </p>
+        </div>
+
+        <div class="tools-preview-grid">
+          <div class="player-compare-card" data-reveal>
+            <div class="compare-header">
+              <div>
+                <span class="micro-label">Player comparison</span>
+                <strong>Comparatore giocatori</strong>
+              </div>
+              <a href="tools.html" data-analytics="cta_tools">Apri Tools+</a>
+            </div>
+
+            <div class="compare-selects">
+              <label>
+                Giocatore 1
+                <select id="playerOne">
+                  <option value="leao">Rafael Leão</option>
+                  <option value="lautaro">Lautaro Martínez</option>
+                  <option value="koopmeiners">Teun Koopmeiners</option>
+                  <option value="kvaratskhelia">Khvicha Kvaratskhelia</option>
+                </select>
+              </label>
+
+              <label>
+                Giocatore 2
+                <select id="playerTwo">
+                  <option value="lautaro">Lautaro Martínez</option>
+                  <option value="leao">Rafael Leão</option>
+                  <option value="koopmeiners">Teun Koopmeiners</option>
+                  <option value="kvaratskhelia">Khvicha Kvaratskhelia</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="radar-wrap">
+              <canvas id="radarCanvas" width="620" height="520" aria-label="Radar comparazione giocatori"></canvas>
+              <div class="radar-legend">
+                <span><i class="legend-a"></i><b data-p1-name>Rafael Leão</b></span>
+                <span><i class="legend-b"></i><b data-p2-name>Lautaro Martínez</b></span>
+              </div>
+            </div>
+
+            <div class="stat-chips">
+              <span>Finalizzazione</span>
+              <span>Assist</span>
+              <span>Titolarità</span>
+              <span>Media voto</span>
+              <span>Bonus</span>
+              <span>Forma</span>
+            </div>
+          </div>
+
+          <aside class="live-board-card" data-reveal>
+            <div class="board-tabs" role="tablist" aria-label="Dati Serie A">
+              <button class="is-active" type="button" data-board-tab="ranking">Classifica</button>
+              <button type="button" data-board-tab="scorers">Marcatori</button>
+              <button type="button" data-board-tab="assists">Assist</button>
+            </div>
+
+            <div class="board-panel">
+              <div class="board-title">
+                <span data-board-kicker>Serie A</span>
+                <strong data-board-title>Classifica</strong>
+              </div>
+
+              <div class="board-list" data-board-list></div>
+
+              <a href="tools.html" data-analytics="cta_tools" class="board-link">
+                Scopri tutti i tools
+                <span>→</span>
+              </a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="transfer-section" id="transfer-preview">
+        <div class="transfer-bg" aria-hidden="true"></div>
+        <div class="transfer-route" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="transfer-card" data-reveal>
+          <span class="section-kicker">TRANSFER CENTER</span>
+          <h2>Il mercato diventa leggibile.</h2>
+          <p>
+            Una control room sempre aperta su acquisti, cessioni, rumors e impatto
+            fantacalcistico: meno caos da feed, più segnali utili per l’asta.
           </p>
 
-          <a
-            href="https://www.tiktok.com/@ciro_profantasy"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="pf-community-cta-mini-link"
-          >
-            Vai a TikTok →
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- =========================================
-     PROFANTASY FOOTER
-========================================= -->
-<footer class="pf-site-footer">
-  <div class="pf-site-footer-container">
-
-    <div class="pf-site-footer-top">
-      <div class="pf-site-footer-brand">
-        <span class="pf-site-footer-kicker">ProFantasy</span>
-
-        <h3 class="pf-site-footer-logo">ProFantasy</h3>
-
-        <p class="pf-site-footer-description">
-          Fantasy football, World Cup, mercato, tools e community:
-          un ecosistema pensato per chi vuole vivere il gioco con più visione,
-          più strategia e più coinvolgimento.
-        </p>
-      </div>
-
-      <div class="pf-site-footer-nav-wrap">
-        <div class="pf-site-footer-nav">
-          <h4>Navigazione</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="world-cup.html">World Cup</a></li>
-            <li><a href="transfer.html">Transfers</a></li>
-            <li><a href="tools.html">Tools</a></li>
-            <li><a href="community.html">Community</a></li>
-            <li><a href="legal.html">Legal</a></li>
-          </ul>
-        </div>
-
-        <div class="pf-site-footer-nav">
-          <h4>Aree chiave</h4>
-          <ul>
-            <li><a href="world-cup.html">World Cup Games</a></li>
-            <li><a href="transfer.html">Transfers Live</a></li>
-            <li><a href="tools.html">Tools Hub</a></li>
-            <li><a href="community.html">ProFantasy Community</a></li>
-          </ul>
-        </div>
-
-        <div class="pf-site-footer-nav">
-          <h4>Social</h4>
-          <ul>
-            <li>
-              <a
-                href="https://t.me/+hpq210YBS18yN2E8"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Telegram
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.tiktok.com/@ciro_profantasy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                TikTok
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="pf-site-footer-bottom">
-      <p>© 2026 ProFantasy. Tutti i diritti riservati.</p>
-
-      <div class="pf-site-footer-bottom-links">
-        <a href="index.html">Home</a>
-        <a href="community.html">Community</a>
-        <a href="legal.html">Legal</a>
-        <a
-          href="https://t.me/+hpq210YBS18yN2E8"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Telegram
-        </a>
-        <a
-          href="https://www.tiktok.com/@ciro_profantasy"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          TikTok
-        </a>
-      </div>
-    </div>
-
-  </div>
-</footer>
-
-  <div id="news-modal" class="modal">
-    <div class="modal-content">
-      <button class="modal-close" type="button">&times;</button>
-      <img id="modal-image" src="" alt="" class="modal-image">
-      <div class="modal-body">
-        <h2 id="modal-title"></h2>
-        <p id="modal-subtitle" class="modal-subtitle"></p>
-        <p id="modal-content" class="modal-text"></p>
-      </div>
-    </div>
-  </div>
-
-  <div id="infortunio-modal" class="modal">
-    <div class="modal-content">
-      <button class="modal-close" type="button">&times;</button>
-      <div class="modal-body">
-        <h3 id="modal-giocatore"></h3>
-        <p id="modal-club"></p>
-        <div class="modal-details">
-          <p><strong>Status:</strong> <span id="modal-status"></span></p>
-          <p><strong>Tipo Infortunio:</strong> <span id="modal-infortunio"></span></p>
-          <p><strong>Ritorno previsto:</strong> <span id="modal-ritorno"></span></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="classifica-modal" class="modal">
-    <div class="modal-content modal-content-wide">
-      <button class="modal-close" type="button">&times;</button>
-      <div class="modal-body">
-        <h2>Classifica completa Serie A</h2>
-        <p class="modal-subtitle">Tutte le squadre, dati aggiornati al Google Sheets.</p>
-        <div class="modal-table-wrapper">
-          <table class="table classifica-table">
-            <thead>
-              <tr>
-                <th>Pos</th>
-                <th></th>
-                <th>Squadra</th>
-                <th>PG</th>
-                <th>xG</th>
-                <th>Punti</th>
-              </tr>
-            </thead>
-            <tbody id="classifica-full-body"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="marcatori-modal" class="modal">
-    <div class="modal-content modal-content-wide">
-      <button class="modal-close" type="button">&times;</button>
-      <div class="modal-body">
-        <h2>Classifica completa marcatori</h2>
-        <p class="modal-subtitle">Tutti i marcatori della stagione.</p>
-        <div class="modal-table-wrapper">
-          <table class="dashboard-table">
-            <thead>
-              <tr>
-                <th>Pos</th>
-                <th>Giocatore</th>
-                <th>Club</th>
-                <th>Gol</th>
-              </tr>
-            </thead>
-            <tbody id="marcatori-full-body"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="infortunati-modal" class="modal">
-    <div class="modal-content modal-content-wide">
-      <button class="modal-close" type="button">&times;</button>
-      <div class="modal-body">
-        <h2>Lista completa indisponibili</h2>
-        <p class="modal-subtitle">Tutti gli infortunati con rientro previsto.</p>
-        <div class="modal-table-wrapper">
-          <table class="dashboard-table">
-            <thead>
-              <tr>
-                <th>Giocatore</th>
-                <th>Club</th>
-                <th>Rientro Previsto</th>
-                <th>Tipo Infortunio</th>
-              </tr>
-            </thead>
-            <tbody id="infortunati-full-body"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal neo-modal" id="join-modal" aria-hidden="true">
-    <div class="modal-content neo-modal-content">
-      <button class="modal-close neo-modal-close" type="button" aria-label="Chiudi">×</button>
-
-      <div class="modal-body neo-modal-body">
-        <h2>Lascia la tua email</h2>
-        <p>Ti avviso quando sblocchiamo nuove funzioni, nuovi tornei e iniziative ProFantasy.</p>
-
-        <form id="join-form">
-          <div class="form-group">
-            <label for="join-email">Email</label>
-            <input id="join-email" name="email" type="email" required>
+          <div class="transfer-points">
+            <span>Acquisti Serie A</span>
+            <span>Rumors verificati</span>
+            <span>Ruoli e listone</span>
+            <span>Impatto fantasy</span>
           </div>
 
-          <label class="neo-consent">
-            <input id="join-consent" type="checkbox" required>
-            Acconsento a ricevere email su nuove funzioni e iniziative ProFantasy.
-            Ho letto la <a href="/privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
-          </label>
+          <a href="transfer.html" data-analytics="cta_transfer" class="big-section-cta">
+            Apri Transfer Center
+            <span>→</span>
+          </a>
+        </div>
 
-          <button class="neo-btn" type="submit">Invia</button>
-        </form>
-      </div>
-    </div>
+        <div class="market-console" data-reveal>
+          <div class="market-console-head">
+            <span>Market Pulse</span>
+            <strong>Live Board</strong>
+          </div>
+
+          <div class="market-scan-card is-active">
+            <i></i>
+            <div>
+              <small>Movimento caldo</small>
+              <strong>Nuovo acquisto da valutare</strong>
+              <p>Focus su ruolo, titolarità e prezzo d’asta.</p>
+            </div>
+          </div>
+
+          <div class="market-scan-card">
+            <i></i>
+            <div>
+              <small>Rumor Watch</small>
+              <strong>Possibile cambio gerarchie</strong>
+              <p>Monitoraggio squadra, modulo e concorrenza.</p>
+            </div>
+          </div>
+
+          <div class="market-scan-card">
+            <i></i>
+            <div>
+              <small>Asta Radar</small>
+              <strong>Valore in crescita</strong>
+              <p>Nome da salvare prima che diventi hype.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="telegram-section" id="telegram">
+        <div class="telegram-bg" aria-hidden="true"></div>
+        <div class="telegram-bolts" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+
+        <div class="telegram-content" data-reveal>
+          <span class="section-kicker">COMMUNITY</span>
+          <h2>Entra nel canale che ti avvisa prima degli altri.</h2>
+          <p>
+            Alert mercato, reminder League, update veloci e contenuti flash:
+            Telegram è il collegamento diretto con l’universo ProFantasy.
+          </p>
+
+          <div class="telegram-benefits">
+            <span>Alert live</span>
+            <span>Mercato</span>
+            <span>League</span>
+            <span>Tools+</span>
+          </div>
+
+          <div class="telegram-actions">
+            <a href="https://t.me/+hpq210YBS18yN2E8" data-analytics="cta_telegram" target="_blank" rel="noopener noreferrer" class="big-section-cta telegram-cta">
+              Entra su Telegram
+              <span>→</span>
+            </a>
+            <small class="telegram-note">Accesso rapido, notifiche utili, zero dispersione.</small>
+          </div>
+        </div>
+
+        <div class="telegram-showcase" data-reveal>
+          <div class="telegram-logo-card">
+            <div class="tg-ring tg-ring-a"></div>
+            <div class="tg-ring tg-ring-b"></div>
+            <div class="tg-bolt bolt-a">⚡</div>
+            <div class="tg-bolt bolt-b">⚡</div>
+            <div class="telegram-logo-core">
+              <div class="telegram-logo-plane">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M21.2 4.6L3.8 11.4c-1.2.5-1.2 1.2-.2 1.5l4.5 1.4 1.7 5.2c.2.6.1.8.8.8.5 0 .7-.2 1-.5l2.2-2.1 4.6 3.4c.8.4 1.4.2 1.6-.8l3-14.2c.4-1.2-.4-1.8-1.1-1.5zM9 13.9l9.1-5.8c.4-.2.8-.1.5.2l-7.5 6.8-.3 3.2L9 13.9z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="telegram-logo-label">PROFANTASY TELEGRAM</div>
+          </div>
+
+          <div class="telegram-info-grid">
+            <div class="telegram-info-card is-cyan">
+              <small>live alert</small>
+              <strong>Mercato in tempo reale</strong>
+              <p>Segnali rapidi da leggere in pochi secondi.</p>
+            </div>
+            <div class="telegram-info-card is-purple">
+              <small>league</small>
+              <strong>Reminder e avvisi utili</strong>
+              <p>Open, Exclusive e aggiornamenti della stagione.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================
+           PROFANTASY FOOTER
+      ========================================= -->
+      <footer class="pf-site-footer">
+        <div class="pf-site-footer-container">
+
+          <div class="pf-site-footer-top">
+            <div class="pf-site-footer-brand">
+              <span class="pf-site-footer-kicker">ProFantasy</span>
+
+              <h3 class="pf-site-footer-logo">ProFantasy</h3>
+
+              <p class="pf-site-footer-description">
+                Fantasy football, World Cup, mercato, tools e community:
+                un ecosistema pensato per chi vuole vivere il gioco con più visione,
+                più strategia e più coinvolgimento.
+              </p>
+            </div>
+
+            <div class="pf-site-footer-nav-wrap">
+              <div class="pf-site-footer-nav">
+                <h4>Navigazione</h4>
+                <ul>
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="world-cup.html" data-analytics="cta_worldcup">World Cup</a></li>
+                  <li><a href="transfer.html" data-analytics="cta_transfer">Transfers</a></li>
+                  <li><a href="tools.html" data-analytics="cta_tools">Tools</a></li>
+                  <li><a href="community.html">Community</a></li>
+                  <li><a href="legal.html">Legal</a></li>
+                </ul>
+              </div>
+
+              <div class="pf-site-footer-nav">
+                <h4>Aree chiave</h4>
+                <ul>
+                  <li><a href="world-cup.html" data-analytics="cta_worldcup">World Cup Games</a></li>
+                  <li><a href="transfer.html" data-analytics="cta_transfer">Transfers Live</a></li>
+                  <li><a href="tools.html" data-analytics="cta_tools">Tools Hub</a></li>
+                  <li><a href="community.html">ProFantasy Community</a></li>
+                </ul>
+              </div>
+
+              <div class="pf-site-footer-nav">
+                <h4>Social</h4>
+                <ul>
+                  <li>
+                    <a href="https://t.me/+hpq210YBS18yN2E8" data-analytics="cta_telegram" target="_blank" rel="noopener noreferrer">
+                      Telegram
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer">
+                      TikTok
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="pf-site-footer-bottom">
+            <p>© 2026 ProFantasy. Tutti i diritti riservati.</p>
+
+            <div class="pf-site-footer-bottom-links">
+              <a href="index.html">Home</a>
+              <a href="community.html">Community</a>
+              <a href="legal.html">Legal</a>
+              <a href="https://t.me/+hpq210YBS18yN2E8" data-analytics="cta_telegram" target="_blank" rel="noopener noreferrer">Telegram</a>
+              <a href="https://www.tiktok.com/@ciro_profantasy" target="_blank" rel="noopener noreferrer">TikTok</a>
+            </div>
+          </div>
+
+        </div>
+      </footer>
+
+    </main>
   </div>
 
-  <script>
-    (function () {
-      const targetDate = new Date('2026-06-11T20:00:00+02:00').getTime();
-
-      const daysEl = document.getElementById('pfDays');
-      const hoursEl = document.getElementById('pfHours');
-      const minutesEl = document.getElementById('pfMinutes');
-      const secondsEl = document.getElementById('pfSeconds');
-
-      if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
-
-      function pad(n) {
-        return String(n).padStart(2, '0');
-      }
-
-      function updateCountdown() {
-        const now = Date.now();
-        const diff = targetDate - now;
-
-        if (diff <= 0) {
-          daysEl.textContent = '00';
-          hoursEl.textContent = '00';
-          minutesEl.textContent = '00';
-          secondsEl.textContent = '00';
-          return;
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / (1000 * 60)) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-
-        daysEl.textContent = pad(days);
-        hoursEl.textContent = pad(hours);
-        minutesEl.textContent = pad(minutes);
-        secondsEl.textContent = pad(seconds);
-      }
-
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-    })();
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js?v=auth-return-flow-v1"></script>
-  <script src="js/world-cup-profile-bridge.js?v=auth-return-flow-v1"></script>
-  <script src="js/main.js" defer></script>
+  <script src="assets/hero.js"></script>
 </body>
 </html>
-
-
-

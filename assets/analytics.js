@@ -1,242 +1,110 @@
-(function () {
-  const config = window.PF_CONFIG || {};
-  const measurementId = String(config.GA4_MEASUREMENT_ID || "").trim();
-  const debugMode = Boolean(config.GA4_DEBUG_MODE);
-  const enabled = Boolean(
-    config.GA4_ENABLED !== false &&
-    /^G-[A-Z0-9]+$/i.test(measurementId) &&
-    !measurementId.includes("INSERISCI")
-  );
+/* =========================================
+   ProFantasy GA4 Analytics
+   Replace window.PF_GA4_ID in index.html with your Measurement ID, e.g. G-ABC123XYZ
+========================================= */
 
-  const state = {
-    formTouched: false,
-    signupSuccess: false,
-    scrollDepthsSent: new Set(),
-    formStartSent: false,
-    loadedAt: Date.now()
-  };
+(function () {
+  const id = window.PF_GA4_ID;
+
+  const isValidId = typeof id === "string" && /^G-[A-Z0-9]+$/i.test(id) && id !== "G-XXXXXXXXXX";
 
   window.dataLayer = window.dataLayer || [];
-  window.gtag = window.gtag || function () {
-    window.dataLayer.push(arguments);
-  };
+  function gtag(){ window.dataLayer.push(arguments); }
+  window.gtag = window.gtag || gtag;
 
-  function log(...args) {
-    if (debugMode) console.log("[PF Analytics]", ...args);
-  }
-
-  function loadGtag() {
-    if (!enabled) {
-      log("GA4 disattivato o measurement ID non configurato.");
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
-    document.head.appendChild(script);
-
-    window.gtag("js", new Date());
-
-    // Impostazione conservativa: niente advertising signals.
-    window.gtag("config", measurementId, {
-      page_title: document.title,
-      page_location: window.location.href,
-      page_path: window.location.pathname,
-      send_page_view: true,
-      debug_mode: debugMode,
-      allow_google_signals: false,
-      allow_ad_personalization_signals: false
-    });
-
-    log("GA4 caricato", measurementId);
-  }
-
-  function track(eventName, params) {
-    const safeParams = sanitizeParams(params || {});
-
-    if (!enabled) {
-      log("Evento non inviato perché GA4 non è attivo", eventName, safeParams);
-      return;
-    }
-
-    window.gtag("event", eventName, {
-      page_path: window.location.pathname,
-      page_title: document.title,
-      page_location: window.location.href,
-      ...safeParams
-    });
-
-    log("Evento inviato", eventName, safeParams);
-  }
-
-  function sanitizeParams(params) {
-    const blockedKeys = new Set([
-      "email",
-      "mail",
-      "phone",
-      "telefono",
-      "whatsapp",
-      "first_name",
-      "last_name",
-      "name",
-      "nome",
-      "cognome"
-    ]);
-
-    return Object.fromEntries(
-      Object.entries(params)
-        .filter(([key]) => !blockedKeys.has(String(key).toLowerCase()))
-        .map(([key, value]) => {
-          if (typeof value === "string") return [key, value.slice(0, 100)];
-          return [key, value];
-        })
-    );
-  }
-
-  function getSelectedTournament() {
-    const selected = document.querySelector("input[name='tournament_interest']:checked");
-    return selected ? selected.value : "unknown";
-  }
-
-  function getFilledFieldsCount() {
-    const form = document.getElementById("leagueSignupForm");
-    if (!form) return 0;
-
-    const fields = Array.from(form.querySelectorAll("input, select, textarea"));
-    return fields.filter((field) => {
-      if (field.type === "checkbox" || field.type === "radio") return field.checked;
-      return String(field.value || "").trim().length > 0;
-    }).length;
-  }
-
-  function initFormTracking() {
-    const form = document.getElementById("leagueSignupForm");
-    if (!form) return;
-
-    form.addEventListener("focusin", () => markFormStart(), { once: true });
-    form.addEventListener("input", () => markFormTouched());
-    form.addEventListener("change", () => markFormTouched());
-  }
-
-  function markFormTouched() {
-    state.formTouched = true;
-  }
-
-  function markFormStart() {
-    if (state.formStartSent) return;
-    state.formTouched = true;
-    state.formStartSent = true;
-    track("pf_signup_form_start", {
-      tournament_interest: getSelectedTournament()
-    });
-  }
-
-  function initScrollTracking() {
-    const thresholds = [25, 50, 75, 90];
-
-    function onScroll() {
-      const doc = document.documentElement;
-      const scrollTop = window.scrollY || doc.scrollTop || 0;
-      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
-      const percent = Math.round((scrollTop / maxScroll) * 100);
-
-      thresholds.forEach((threshold) => {
-        if (percent >= threshold && !state.scrollDepthsSent.has(threshold)) {
-          state.scrollDepthsSent.add(threshold);
-          track("pf_scroll_depth", { percent: threshold });
-        }
-      });
-    }
-
-    window.addEventListener("scroll", throttle(onScroll, 400), { passive: true });
-    onScroll();
-  }
-
-  function initClickTracking() {
-    document.addEventListener("click", (event) => {
-      const target = event.target.closest("a, button, [data-tournament-card]");
-      if (!target) return;
-
-      if (target.matches("[data-tournament-card]")) return;
-
-      const text = cleanText(target.textContent);
-      const href = target.getAttribute("href") || "";
-      const area = target.closest(".modal-actions") ? "success_modal" :
-        target.closest(".topbar") ? "topbar" :
-        target.closest(".signup-card") ? "signup_card" : "page";
-
-      track("pf_cta_click", {
-        cta_text: text,
-        cta_href: href,
-        cta_area: area
-      });
-    });
-  }
-
-  function initAbandonTracking() {
-    function sendAbandon() {
-      if (!state.formTouched || state.signupSuccess) return;
-
-      track("pf_signup_abandon", {
-        tournament_interest: getSelectedTournament(),
-        filled_fields_count: getFilledFieldsCount(),
-        time_on_page_seconds: Math.round((Date.now() - state.loadedAt) / 1000),
-        transport_type: "beacon"
-      });
-    }
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "hidden") sendAbandon();
-    });
-
-    window.addEventListener("pagehide", sendAbandon);
-  }
-
-  function cleanText(value) {
-    return String(value || "").replace(/\s+/g, " ").trim().slice(0, 80);
-  }
-
-  function throttle(fn, delay) {
-    let last = 0;
-    let timeout = null;
-
-    return function throttled(...args) {
-      const now = Date.now();
-      const remaining = delay - (now - last);
-
-      if (remaining <= 0) {
-        if (timeout) window.clearTimeout(timeout);
-        timeout = null;
-        last = now;
-        fn.apply(this, args);
-        return;
-      }
-
-      if (!timeout) {
-        timeout = window.setTimeout(() => {
-          last = Date.now();
-          timeout = null;
-          fn.apply(this, args);
-        }, remaining);
-      }
+  if (!isValidId) {
+    window.pfTrack = function (eventName, params = {}) {
+      console.info("[PF Analytics preview]", eventName, params);
     };
+    console.info("[PF Analytics] GA4 non attivo: inserisci un Measurement ID valido in index.html.");
+    return;
   }
 
-  window.PFAnalytics = {
-    enabled,
-    track,
-    markSignupSuccess() {
-      state.signupSuccess = true;
-    },
-    markFormTouched
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
+  document.head.appendChild(script);
+
+  gtag("js", new Date());
+  gtag("config", id, {
+    page_title: document.title,
+    page_location: window.location.href,
+    send_page_view: true
+  });
+
+  window.pfTrack = function (eventName, params = {}) {
+    gtag("event", eventName, {
+      page_path: window.location.pathname,
+      ...params
+    });
   };
 
-  document.addEventListener("DOMContentLoaded", () => {
-    loadGtag();
-    initFormTracking();
-    initScrollTracking();
-    initClickTracking();
-    initAbandonTracking();
+  function track(eventName, params = {}) {
+    window.pfTrack(eventName, params);
+  }
+
+  document.addEventListener("click", function (event) {
+    const target = event.target.closest("[data-analytics], a, button");
+    if (!target) return;
+
+    const label =
+      target.getAttribute("data-analytics") ||
+      target.textContent.trim().replace(/\s+/g, " ").slice(0, 80) ||
+      target.getAttribute("href") ||
+      "unknown";
+
+    const href = target.getAttribute("href") || "";
+    track("pf_click", {
+      click_label: label,
+      click_href: href
+    });
   });
+
+  document.addEventListener("change", function (event) {
+    if (event.target && event.target.matches("#playerOne, #playerTwo")) {
+      track("pf_compare_change", {
+        field: event.target.id,
+        value: event.target.value
+      });
+    }
+  });
+
+  const boardTabs = document.querySelectorAll("[data-board-tab]");
+  boardTabs.forEach((button) => {
+    button.addEventListener("click", () => {
+      track("pf_board_tab", {
+        tab_name: button.dataset.boardTab || button.textContent.trim()
+      });
+    });
+  });
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const id = entry.target.id || entry.target.className || "section";
+      track("pf_section_view", { section_id: String(id).slice(0, 80) });
+      sectionObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.45 });
+
+  document.querySelectorAll("section[id]").forEach((section) => sectionObserver.observe(section));
+
+  const depths = [25, 50, 75, 90];
+  const reached = new Set();
+
+  window.addEventListener("scroll", function () {
+    const doc = document.documentElement;
+    const scrollTop = window.scrollY || doc.scrollTop;
+    const height = doc.scrollHeight - window.innerHeight;
+    if (height <= 0) return;
+
+    const percent = Math.round((scrollTop / height) * 100);
+
+    depths.forEach((depth) => {
+      if (percent >= depth && !reached.has(depth)) {
+        reached.add(depth);
+        track("pf_scroll_depth", { depth });
+      }
+    });
+  }, { passive: true });
 })();
