@@ -8,13 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/home.css?v=20260714-5" />
   <link rel="icon" href="img/profantasy-logo.jpg" />
   <!-- GA4: sostituisci G-XXXXXXXXXX con il tuo Measurement ID -->
   <script>
     window.PF_GA4_ID = "G-CY7LK0E6M4";
   </script>
-  <script src="js/analytics.js" defer></script>
+  <script src="js/analytics.js?v=20260714-5" defer></script>
 </head>
 <body>
   <div class="page-shell">
@@ -443,6 +443,10 @@
             </div>
 
             <div class="radar-wrap">
+              <div class="radar-ambient" aria-hidden="true">
+                <canvas id="radarAmbientCanvas"></canvas>
+                <span class="radar-core-pulse"></span>
+              </div>
               <canvas id="radarCanvas" width="620" height="520" aria-label="Radar comparazione giocatori"></canvas>
               <div class="radar-legend">
                 <span><i class="legend-a"></i><b data-p1-name>Rafael Leão</b></span>
@@ -693,6 +697,6 @@
     </main>
   </div>
 
-  <script src="js/home.js"></script>
+  <script src="js/home.js?v=20260714-5"></script>
 </body>
 </html>
