@@ -1,0 +1,191 @@
+:root {
+  --bg: #040813;
+  --panel: rgba(9, 16, 31, .88);
+  --panel-soft: rgba(16, 27, 49, .84);
+  --line: rgba(255,255,255,.1);
+  --text: #f6f8ff;
+  --muted: #9aa8c0;
+  --cyan: #2ad7ff;
+  --blue: #3977ff;
+  --purple: #9e58ff;
+  --gold: #ffb34a;
+  --red: #ff546b;
+  --green: #37e5b2;
+  --shadow: 0 28px 90px rgba(0,0,0,.5);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body {
+  margin: 0; min-width: 320px; min-height: 100vh; color: var(--text);
+  background: var(--bg); font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow-x: hidden;
+}
+body.modal-open, body.lightbox-open { overflow: hidden; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button, input, select { font: inherit; }
+
+.bg-image { position: fixed; inset: 0; z-index: -4; background: linear-gradient(180deg,rgba(4,8,19,.4),rgba(4,8,19,.92)), url('../img/league-bg-desktop.jpg') center/cover no-repeat; }
+.bg-vignette { position: fixed; inset: 0; z-index: -3; background: radial-gradient(circle at 50% 12%, transparent 0 18%, rgba(2,4,11,.8) 76%); }
+.grid-noise { position: fixed; inset: 0; z-index: -2; opacity: .34; background-image: linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size: 54px 54px; mask-image: linear-gradient(#000,transparent 88%); }
+
+.topbar { position: sticky; top: 12px; z-index: 50; width: min(calc(100% - 28px), 1240px); margin: 12px auto 0; min-height: 72px; display: flex; align-items: center; gap: 24px; padding: 9px 12px 9px 15px; background: rgba(5,9,18,.82); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,.1); border-radius: 22px; box-shadow: 0 14px 48px rgba(0,0,0,.28); }
+.brand { display: flex; align-items: center; flex: 0 0 auto; }
+.brand img { width: 49px; height: 49px; border-radius: 14px; object-fit: cover; border: 1px solid rgba(255,255,255,.13); }
+.nav-links { margin: 0 auto; display: flex; gap: 6px; align-items: center; }
+.nav-links a { padding: 10px 12px; border-radius: 11px; color: #aebad0; font-size: 12px; font-weight: 800; transition: .2s; }
+.nav-links a:hover { background: rgba(255,255,255,.07); color: #fff; }
+.top-cta { display: grid; gap: 3px; min-width: 162px; padding: 9px 14px; border-radius: 13px; background: linear-gradient(135deg,var(--cyan),var(--blue)); color: #06101d; text-align: center; }
+.top-cta span { font-size: 9px; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; }
+.top-cta b { font: 900 14px/1 Rajdhani; }
+
+.page-shell { width: min(calc(100% - 28px), 1180px); margin: 35px auto 90px; }
+.countdown-panel { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 22px 25px; border: 1px solid rgba(255,255,255,.1); border-radius: 22px; background: rgba(6,12,24,.78); backdrop-filter: blur(15px); box-shadow: var(--shadow); }
+.countdown-copy p { margin: 0 0 7px; color: var(--cyan); font: 800 10px/1 Rajdhani; text-transform: uppercase; letter-spacing: .2em; }
+.countdown-copy h2 { margin: 0; font: 900 29px/1 "Barlow Condensed"; text-transform: uppercase; }
+.countdown-grid { display: grid; grid-template-columns: repeat(4,72px); gap: 8px; }
+.countdown-cell { padding: 10px 8px; border-radius: 13px; text-align: center; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.08); }
+.countdown-cell strong { display: block; color: #fff; font: 900 25px/1 Rajdhani; }
+.countdown-cell span { color: #73829d; font-size: 8px; text-transform: uppercase; letter-spacing: .13em; }
+
+.signup-stage { position: relative; margin-top: 20px; }
+.stage-glow { position: absolute; inset: -50px -90px auto; height: 350px; z-index: -1; background: radial-gradient(circle at 25% 50%,rgba(42,215,255,.18),transparent 40%),radial-gradient(circle at 80% 40%,rgba(158,88,255,.18),transparent 38%); filter: blur(15px); }
+.signup-card { position: relative; overflow: hidden; padding: clamp(23px,4vw,48px); border-radius: 32px; background: linear-gradient(145deg,rgba(8,15,29,.97),rgba(5,9,19,.97)); border: 1px solid rgba(255,255,255,.1); box-shadow: var(--shadow); }
+.signup-card::before { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(130deg,rgba(42,215,255,.06),transparent 35%,rgba(158,88,255,.055)); }
+.card-hud-line { position: absolute; top: 0; left: 10%; right: 10%; height: 2px; background: linear-gradient(90deg,transparent,var(--cyan),var(--purple),transparent); box-shadow: 0 0 24px rgba(42,215,255,.55); }
+.intro-block, form, .signup-prizes { position: relative; z-index: 1; }
+.kicker { margin: 0; color: var(--cyan); font: 800 11px/1 Rajdhani; letter-spacing: .2em; text-transform: uppercase; }
+.intro-block h1 { margin: 14px 0 12px; font: 900 clamp(48px,6vw,78px)/.9 "Barlow Condensed"; text-transform: uppercase; letter-spacing: -.03em; }
+.intro-block h1 span, .signup-prizes-head h2 span { color: transparent; background: linear-gradient(90deg,var(--cyan),#b46cff); background-clip: text; -webkit-background-clip: text; }
+.subtitle { max-width: 800px; margin: 0; color: #a9b6cb; font-size: 14px; line-height: 1.68; }
+.quick-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 21px; }
+.quick-badges span { padding: 8px 10px; border-radius: 999px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: #c7d5e9; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); }
+
+.signup-prizes { margin: 36px 0 32px; padding: 25px; border-radius: 24px; background: linear-gradient(145deg,rgba(20,32,58,.8),rgba(8,12,25,.9)); border: 1px solid rgba(255,255,255,.09); }
+.signup-prizes-head { display: grid; grid-template-columns: 1fr auto; gap: 25px; align-items: end; }
+.signup-prizes-head h2 { margin: 10px 0 0; font: 900 clamp(35px,4vw,53px)/.94 "Barlow Condensed"; text-transform: uppercase; }
+.rules-download { min-width: 210px; min-height: 53px; padding: 10px 14px; display: grid; align-content: center; gap: 4px; border-radius: 13px; background: rgba(42,215,255,.09); border: 1px solid rgba(42,215,255,.2); transition: .2s; }
+.rules-download:hover { transform: translateY(-2px); background: rgba(42,215,255,.14); }
+.rules-download span { color: #8da2ba; font-size: 9px; text-transform: uppercase; letter-spacing: .12em; }
+.rules-download b { color: var(--cyan); font: 900 14px/1 Rajdhani; }
+.signup-prize-tabs { display: flex; gap: 8px; margin: 22px 0 15px; }
+.signup-prize-tabs button { min-width: 125px; padding: 11px 18px; border-radius: 11px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.035); color: #8998b0; font-weight: 900; cursor: pointer; }
+.signup-prize-tabs button.is-active { background: linear-gradient(90deg,var(--cyan),#8aeaff); color: #06101b; border-color: transparent; }
+.signup-prize-panel { display: grid; grid-template-columns: minmax(220px,340px) 1fr; gap: 25px; align-items: center; }
+.signup-prize-panel[hidden] { display: none; }
+.signup-prize-visual { position: relative; padding: 0; border: 0; overflow: hidden; border-radius: 19px; background: #050914; cursor: zoom-in; aspect-ratio: 4/5; box-shadow: 0 18px 45px rgba(0,0,0,.35); }
+.signup-prize-visual img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+.signup-prize-visual:hover img { transform: scale(1.035); }
+.signup-prize-visual::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg,transparent 65%,rgba(2,5,12,.8)); }
+.signup-prize-visual span { position:absolute; z-index:2; left:13px; bottom:12px; padding:7px 9px; border-radius:8px; background:rgba(4,8,17,.8); border:1px solid rgba(255,255,255,.13); color:#fff; font-size:9px; font-weight:800; }
+.signup-prize-copy { padding-right: 7px; }
+.mode-label { display: inline-flex; font: 800 10px/1 Rajdhani; text-transform: uppercase; letter-spacing: .14em; }
+.mode-label.open { color: var(--red); }
+.mode-label.exclusive { color: #c28bff; }
+.signup-prize-copy h3 { margin: 10px 0 14px; font: 900 34px/1 "Barlow Condensed"; text-transform: uppercase; }
+.signup-prize-copy ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
+.signup-prize-copy li { padding: 10px 12px; border-radius: 11px; color: #aab7ca; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.055); font-size: 11px; line-height: 1.45; }
+.signup-prize-copy li b { color: #fff; }
+.prize-terms { margin-top: 17px; display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.prize-terms span { padding: 10px; border-radius: 10px; color: #78879f; background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.05); font-size: 9px; line-height: 1.45; }
+
+form { display: grid; gap: 18px; }
+.field-grid { display: grid; gap: 14px; }
+.field-grid.two { grid-template-columns: repeat(2,1fr); }
+.field { display: grid; gap: 8px; }
+.field > span, .tournament-fieldset legend { color: #c6d1e3; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
+.field input, .field select { width: 100%; min-height: 52px; padding: 0 14px; border-radius: 13px; color: #fff; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.1); outline: none; transition: border .2s, box-shadow .2s, background .2s; }
+.field input::placeholder { color: #61708a; }
+.field input:focus, .field select:focus { border-color: rgba(42,215,255,.6); box-shadow: 0 0 0 4px rgba(42,215,255,.08); background: rgba(42,215,255,.045); }
+.field input.is-invalid, .field select.is-invalid { border-color: rgba(255,84,107,.7); box-shadow: 0 0 0 4px rgba(255,84,107,.08); }
+.field select option { color: #101522; }
+.tournament-fieldset { margin: 3px 0 0; padding: 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,.09); }
+.tournament-fieldset legend { padding: 0 8px; }
+.tournament-options { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+.tournament-card { position: relative; min-height: 148px; padding: 19px; border-radius: 16px; cursor: pointer; overflow: hidden; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.09); transition: .22s; }
+.tournament-card input { position: absolute; opacity: 0; pointer-events: none; }
+.tournament-card::after { content:""; position:absolute; width:150px; height:150px; border-radius:50%; right:-65px; bottom:-75px; background: radial-gradient(circle,rgba(42,215,255,.25),transparent 68%); opacity:0; transition:.2s; }
+.tournament-card:hover, .tournament-card.selected { transform: translateY(-3px); border-color: rgba(42,215,255,.42); background: rgba(42,215,255,.075); }
+.tournament-card.selected::after { opacity:1; }
+.tournament-card.exclusive::after { background: radial-gradient(circle,rgba(158,88,255,.28),transparent 68%); }
+.tournament-card.exclusive.selected { border-color: rgba(158,88,255,.5); background: rgba(158,88,255,.08); }
+.tournament-icon { display: grid; place-items: center; width: 39px; height: 39px; border-radius: 12px; font-size: 20px; background: rgba(255,255,255,.07); }
+.tournament-card strong { display: block; margin: 15px 0 5px; font: 800 22px/1 Rajdhani; }
+.tournament-card strong b { color: var(--cyan); }
+.tournament-card.exclusive strong b { color: #c18aff; }
+.tournament-card em { display: block; color: #8998b0; font-size: 10px; font-style: normal; }
+.tournament-card small { display: block; margin-top: 9px; color: #77869e; font-size: 9px; }
+.tournament-card small b { color: #fff; }
+.rules-card { display: grid; grid-template-columns: 46px 1fr auto; gap: 14px; align-items: center; padding: 16px; border-radius: 16px; background: linear-gradient(110deg,rgba(42,215,255,.075),rgba(158,88,255,.05)); border: 1px solid rgba(42,215,255,.16); }
+.rules-icon { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 13px; color: var(--cyan); font: 900 25px/1 Rajdhani; background: rgba(42,215,255,.09); border: 1px solid rgba(42,215,255,.16); }
+.rules-card strong { font: 800 15px/1.2 Rajdhani; }
+.rules-card p { margin: 5px 0 0; color: #8291a8; font-size: 9px; line-height: 1.5; }
+.rules-card a { display: inline-flex; align-items: center; gap: 8px; min-height: 43px; padding: 0 13px; border-radius: 11px; color: #06101b; background: var(--cyan); font-size: 10px; font-weight: 900; }
+.legal-box { display: grid; gap: 11px; padding: 17px; border-radius: 16px; background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.075); }
+.checkline { display: flex; align-items: flex-start; gap: 10px; color: #9aa8bd; font-size: 10px; line-height: 1.48; cursor: pointer; }
+.checkline input { width: 17px; height: 17px; flex: 0 0 17px; accent-color: var(--cyan); }
+.form-message { display: none; margin: 0; padding: 12px 13px; border-radius: 11px; font-size: 10px; line-height: 1.5; }
+.form-message.is-visible { display: block; }
+.form-message.is-error { color: #ffd3d9; background: rgba(255,84,107,.1); border: 1px solid rgba(255,84,107,.22); }
+.form-message.is-success { color: #c9faea; background: rgba(55,229,178,.1); border: 1px solid rgba(55,229,178,.22); }
+.submit-btn { min-height: 58px; display: flex; align-items: center; justify-content: center; gap: 14px; border: 0; border-radius: 15px; cursor: pointer; background: linear-gradient(135deg,var(--cyan),var(--blue)); color: #03101c; font-weight: 900; box-shadow: 0 18px 35px rgba(42,215,255,.18); transition: .2s; }
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 22px 40px rgba(42,215,255,.26); }
+.submit-btn:disabled { opacity: .55; cursor: wait; transform: none; }
+.submit-btn i { font-style: normal; font-size: 25px; }
+.microcopy { margin: -4px 0 0; color: #6d7b93; text-align: center; font-size: 9px; line-height: 1.5; }
+
+.signup-image-lightbox, .modal-backdrop { position: fixed; inset: 0; z-index: 100; display: none; place-items: center; padding: 22px; background: rgba(1,3,8,.92); backdrop-filter: blur(14px); }
+.signup-image-lightbox.is-open, .modal-backdrop.is-open { display: grid; }
+.signup-image-lightbox img { max-height: 92vh; max-width: min(92vw,760px); border-radius: 20px; box-shadow: 0 30px 100px rgba(0,0,0,.75); }
+.signup-image-lightbox button { position: fixed; top: 18px; right: 22px; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.08); color: #fff; font-size: 28px; cursor: pointer; }
+.success-modal { position: relative; width: min(100%,540px); padding: 35px; border-radius: 27px; background: linear-gradient(145deg,#111d35,#070b16); border: 1px solid rgba(255,255,255,.12); box-shadow: var(--shadow); text-align: center; }
+.modal-close { position: absolute; top: 13px; right: 13px; width: 39px; height: 39px; border-radius: 50%; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); color: #fff; font-size: 23px; cursor: pointer; }
+.success-icon { width: 72px; height: 72px; margin: 0 auto 20px; display: grid; place-items: center; border-radius: 22px; color: #06101b; background: var(--green); font-size: 34px; font-weight: 900; box-shadow: 0 0 45px rgba(55,229,178,.25); }
+.success-modal h2 { margin: 11px 0; font: 900 42px/1 "Barlow Condensed"; text-transform: uppercase; }
+.success-modal > p:not(.kicker) { color: #9aa8bd; font-size: 12px; line-height: 1.65; }
+.modal-actions { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-top: 22px; }
+.modal-actions a { min-height: 48px; display: grid; place-items: center; border-radius: 12px; font-size: 10px; font-weight: 900; }
+.modal-primary { background: linear-gradient(135deg,var(--cyan),var(--blue)); color: #06101b; }
+.modal-secondary { background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.1); }
+
+@media (max-width: 840px) {
+  .nav-links { display: none; }
+  .topbar { justify-content: space-between; }
+  .countdown-panel { align-items: flex-start; flex-direction: column; }
+  .countdown-grid { width: 100%; grid-template-columns: repeat(4,1fr); }
+  .signup-prizes-head { grid-template-columns: 1fr; }
+  .rules-download { min-width: 0; }
+  .signup-prize-panel { grid-template-columns: 230px 1fr; }
+  .prize-terms { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .bg-image { background-image: linear-gradient(180deg,rgba(4,8,19,.4),rgba(4,8,19,.95)),url('../img/league-bg-mobile.jpg'); }
+  .topbar { top: 7px; width: calc(100% - 16px); margin-top: 7px; min-height: 62px; border-radius: 18px; }
+  .brand img { width: 42px; height: 42px; border-radius: 12px; }
+  .top-cta { min-width: 145px; }
+  .page-shell { width: calc(100% - 16px); margin-top: 18px; }
+  .countdown-panel { padding: 18px; border-radius: 19px; }
+  .countdown-copy h2 { font-size: 25px; }
+  .countdown-cell { padding: 9px 4px; }
+  .countdown-cell strong { font-size: 21px; }
+  .signup-card { padding: 22px 14px; border-radius: 24px; }
+  .intro-block h1 { font-size: 47px; }
+  .signup-prizes { padding: 16px; border-radius: 19px; }
+  .signup-prize-tabs button { flex: 1; min-width: 0; }
+  .signup-prize-panel { grid-template-columns: 1fr; }
+  .signup-prize-visual { width: min(100%,330px); margin: auto; }
+  .field-grid.two, .tournament-options { grid-template-columns: 1fr; }
+  .rules-card { grid-template-columns: 42px 1fr; }
+  .rules-card a { grid-column: 1/-1; justify-content: center; }
+  .modal-actions { grid-template-columns: 1fr; }
+  .success-modal { padding: 30px 20px 22px; }
+  .success-modal h2 { font-size: 36px; }
+}
+@media (max-width: 390px) {
+  .top-cta { min-width: 128px; padding-left: 9px; padding-right: 9px; }
+  .top-cta span { display: none; }
+  .countdown-cell span { font-size: 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

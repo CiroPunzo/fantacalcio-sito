@@ -3,15 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ProFantasy | Fantacalcio Premium Hub</title>
-  <meta name="description" content="ProFantasy: League, Transfer Center, Tools+, comparatore giocatori e community Telegram in una home premium dedicata al fantacalcio." />
-  <link rel="stylesheet" href="assets/hero.css" />
+  <title>ProFantasy League 2026/27 | Premi, iscrizioni e fantacalcio</title>
+  <meta name="description" content="Scopri la ProFantasy League 2026/27, i premi ufficiali Open ed Exclusive, il regolamento, le iscrizioni e gli strumenti dedicati al fantacalcio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/home.css" />
   <link rel="icon" href="img/profantasy-logo.jpg" />
   <!-- GA4: sostituisci G-XXXXXXXXXX con il tuo Measurement ID -->
   <script>
-    window.PF_GA4_ID = "G-XXXXXXXXXX";
+    window.PF_GA4_ID = "G-CY7LK0E6M4";
   </script>
-  <script src="assets/analytics.js" defer></script>
+  <script src="js/analytics.js" defer></script>
 </head>
 <body>
   <div class="page-shell">
@@ -34,6 +37,8 @@
       <nav class="desktop-nav" aria-label="Navigazione principale">
         <a href="index.html" class="active">Fantacalcio</a>
         <a href="iscriviti.html" data-analytics="cta_league">League</a>
+        <a href="#premi" data-analytics="cta_prizes">Premi</a>
+        <a href="Regolamento_Ufficiale_ProFantasy_League_2026-27_Premi_Materiali.pdf" target="_blank" rel="noopener" data-analytics="cta_rules">Regolamento</a>
         <a href="transfer.html" data-analytics="cta_transfer">Transfer</a>
         <a href="tools.html" data-analytics="cta_tools">Tools+</a>
         <a href="world-cup.html" data-analytics="cta_worldcup">World Cup</a>
@@ -48,6 +53,8 @@
     <div class="mobile-panel" aria-hidden="true">
       <a href="index.html">Fantacalcio</a>
       <a href="iscriviti.html" data-analytics="cta_league">League</a>
+      <a href="#premi" data-analytics="cta_prizes">Premi</a>
+      <a href="Regolamento_Ufficiale_ProFantasy_League_2026-27_Premi_Materiali.pdf" target="_blank" rel="noopener" data-analytics="cta_rules">Regolamento</a>
       <a href="transfer.html" data-analytics="cta_transfer">Transfer</a>
       <a href="tools.html" data-analytics="cta_tools">Tools+</a>
       <a href="world-cup.html" data-analytics="cta_worldcup">World Cup</a>
@@ -196,7 +203,7 @@
                 <ul>
                   <li>Accesso aperto</li>
                   <li>Competizione nazionale</li>
-                  <li>Premi fisici e benefit</li>
+                  <li>Premi ufficiali già definiti</li>
                 </ul>
 
                 <a href="iscriviti.html" data-analytics="cta_league" class="mode-cta">
@@ -225,7 +232,7 @@
                 <ul>
                   <li>Max 500 partecipanti</li>
                   <li>Accesso limitato</li>
-                  <li>Premi premium</li>
+                  <li>Setup, tech ed esperienze premium</li>
                 </ul>
 
                 <a href="iscriviti.html" data-analytics="cta_league" class="mode-cta exclusive">
@@ -246,11 +253,147 @@
             </div>
             <div class="league-console-actions">
               <a href="iscriviti.html" data-analytics="cta_league">Entra nella League</a>
-              <a href="tools.html" data-analytics="cta_tools" class="ghost-link">Scopri i Tools+</a>
+              <a href="#premi" data-analytics="cta_prizes" class="ghost-link">Guarda i premi</a>
             </div>
           </div>
         </div>
       </section>
+
+
+      <section class="prizes-showcase" id="premi" aria-labelledby="prizes-title">
+        <div class="prizes-ambient" aria-hidden="true"></div>
+        <div class="prizes-header" data-reveal>
+          <div>
+            <span class="section-kicker">PIANO PREMI UFFICIALE 2026/27</span>
+            <h2 id="prizes-title">Non semplici ricompense. <span>Premi da mostrare.</span></h2>
+            <p>
+              Setup gaming, tecnologia premium, esperienze allo stadio e premi ufficiali:
+              scopri una selezione dei riconoscimenti della ProFantasy League.
+            </p>
+          </div>
+          <div class="prizes-head-actions">
+            <a class="prizes-rules-btn" href="Regolamento_Ufficiale_ProFantasy_League_2026-27_Premi_Materiali.pdf" target="_blank" rel="noopener" download data-analytics="cta_rules">
+              Scarica il regolamento
+              <span>↓</span>
+            </a>
+            <a class="prizes-signup-btn" href="iscriviti.html" data-analytics="cta_league">Iscriviti alla League <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="prizes-filter" role="tablist" aria-label="Filtra premi" data-reveal>
+          <button class="is-active" type="button" role="tab" aria-selected="true" data-prize-filter="exclusive">Exclusive</button>
+          <button type="button" role="tab" aria-selected="false" data-prize-filter="open">Open</button>
+        </div>
+
+        <div class="prizes-track-wrap" data-reveal>
+          <button class="prize-arrow prize-arrow-prev" type="button" aria-label="Premio precedente" data-prize-prev>‹</button>
+          <div class="prizes-track" data-prizes-track>
+            <article class="prize-card prize-card-featured" data-prize-group="exclusive">
+              <button class="prize-image-button" type="button" data-prize-image="IG Prize/champions_primo.png" data-prize-alt="Primo premio Champions League: Top PlayStation Setup">
+                <img src="IG Prize/champions_primo.png" alt="Top PlayStation Setup, primo premio Champions League" loading="lazy" />
+                <span class="prize-zoom">Apri grafica</span>
+              </button>
+              <div class="prize-card-copy">
+                <span class="prize-competition champions">Champions League · 1°</span>
+                <h3>Top PlayStation Setup</h3>
+                <p>PS5 Pro, Smart TV Samsung 4K, Sony Pulse Elite e trofeo ufficiale.</p>
+              </div>
+            </article>
+
+            <article class="prize-card" data-prize-group="exclusive">
+              <button class="prize-image-button" type="button" data-prize-image="IG Prize/champions_secondo.png" data-prize-alt="Secondo premio Champions League: MacBook Air 15 pollici">
+                <img src="IG Prize/champions_secondo.png" alt="MacBook Air 15 pollici, secondo premio Champions League" loading="lazy" />
+                <span class="prize-zoom">Apri grafica</span>
+              </button>
+              <div class="prize-card-copy"><span class="prize-competition champions">Champions League · 2°</span><h3>MacBook Air 15″</h3><p>MacBook Air di ultima generazione e medaglia ufficiale.</p></div>
+            </article>
+
+            <article class="prize-card" data-prize-group="exclusive">
+              <button class="prize-image-button" type="button" data-prize-image="IG Prize/europa_primo.png" data-prize-alt="Primo premio Europa League: Gaming Laptop Pack">
+                <img src="IG Prize/europa_primo.png" alt="Gaming Laptop Pack, primo premio Europa League" loading="lazy" />
+                <span class="prize-zoom">Apri grafica</span>
+              </button>
+              <div class="prize-card-copy"><span class="prize-competition europa">Europa League · 1°</span><h3>Gaming Laptop Pack</h3><p>ASUS 16″, RTX 5060, 16 GB RAM, SSD 1 TB, Logitech G733 e trofeo.</p></div>
+            </article>
+
+            <article class="prize-card" data-prize-group="exclusive">
+              <button class="prize-image-button" type="button" data-prize-image="IG Prize/conference_primo.png" data-prize-alt="Primo premio Conference League: GoPro Creator Adventure Pack">
+                <img src="IG Prize/conference_primo.png" alt="GoPro Creator Adventure Pack, primo premio Conference League" loading="lazy" />
+                <span class="prize-zoom">Apri grafica</span>
+              </button>
+              <div class="prize-card-copy"><span class="prize-competition conference">Conference League · 1°</span><h3>GoPro Creator Adventure Pack</h3><p>Creator Edition, microSD, batterie, custodia e trofeo ufficiale.</p></div>
+            </article>
+
+            <article class="prize-card" data-prize-group="exclusive">
+              <button class="prize-image-button" type="button" data-prize-image="IG Prize/winter_champion.png" data-prize-alt="ProFantasy Winter Champion: Xbox Series X Digital e trofeo">
+                <img src="IG Prize/winter_champion.png" alt="Xbox Series X Digital, premio Winter Champion" loading="lazy" />
+                <span class="prize-zoom">Apri grafica</span>
+              </button>
+              <div class="prize-card-copy"><span class="prize-competition winter">Winter Champion</span><h3>Xbox Series X Digital</h3><p>Console da 1 TB, controller wireless e trofeo ufficiale.</p></div>
+            </article>
+
+            <article class="prize-card" data-prize-group="exclusive">
+              <button class="prize-image-button" type="button" data-prize-image="IG Prize/coppa_italia_primo.png" data-prize-alt="Coppa Italia: ProFantasy Matchday Experience">
+                <img src="IG Prize/coppa_italia_primo.png" alt="ProFantasy Matchday Experience, premio Coppa Italia" loading="lazy" />
+                <span class="prize-zoom">Apri grafica</span>
+              </button>
+              <div class="prize-card-copy"><span class="prize-competition coppa">Coppa Italia · Vincitore</span><h3>Matchday Experience</h3><p>Due biglietti, una notte per due, maglia ufficiale e trofeo.</p></div>
+            </article>
+
+            <article class="prize-card prize-card-featured" data-prize-group="open" hidden>
+              <button class="prize-image-button" type="button" data-prize-image="IG Prize/open_primo.png" data-prize-alt="Primo premio Open: MacBook Neo 13 pollici">
+                <img src="IG Prize/open_primo.png" alt="MacBook Neo 13 pollici, primo premio Open" loading="lazy" />
+                <span class="prize-zoom">Apri grafica</span>
+              </button>
+              <div class="prize-card-copy"><span class="prize-competition open">Open · 1°</span><h3>MacBook Neo 13″</h3><p>Configurazione da 256 GB o modello equivalente o successivo.</p></div>
+            </article>
+
+            <article class="prize-card" data-prize-group="open" hidden>
+              <button class="prize-image-button" type="button" data-prize-image="IG Prize/open_secondo.png" data-prize-alt="Secondo premio Open: Sony WH-1000XM6">
+                <img src="IG Prize/open_secondo.png" alt="Sony WH-1000XM6, secondo premio Open" loading="lazy" />
+                <span class="prize-zoom">Apri grafica</span>
+              </button>
+              <div class="prize-card-copy"><span class="prize-competition open">Open · 2°</span><h3>Sony WH-1000XM6</h3><p>Cuffie wireless premium con cancellazione attiva del rumore.</p></div>
+            </article>
+
+            <article class="prize-card" data-prize-group="open" hidden>
+              <button class="prize-image-button" type="button" data-prize-image="IG Prize/open_terzo.png" data-prize-alt="Terzo premio Open: Serie A Authentic Mini Pack">
+                <img src="IG Prize/open_terzo.png" alt="Serie A Authentic Mini Pack, terzo premio Open" loading="lazy" />
+                <span class="prize-zoom">Apri grafica</span>
+              </button>
+              <div class="prize-card-copy"><span class="prize-competition open">Open · 3°</span><h3>Serie A Authentic Mini Pack</h3><p>Maglia Authentic della squadra scelta e sciarpa ufficiale.</p></div>
+            </article>
+
+            <article class="prize-card" data-prize-group="open" hidden>
+              <button class="prize-image-button" type="button" data-prize-image="IG Prize/open_quarto.png" data-prize-alt="Quarto premio Open: PlayStation Controller Pack">
+                <img src="IG Prize/open_quarto.png" alt="PlayStation Controller Pack, quarto premio Open" loading="lazy" />
+                <span class="prize-zoom">Apri grafica</span>
+              </button>
+              <div class="prize-card-copy"><span class="prize-competition open">Open · 4°</span><h3>PlayStation Controller Pack</h3><p>Controller wireless DualSense e base di ricarica ufficiale.</p></div>
+            </article>
+
+            <article class="prize-card" data-prize-group="open" hidden>
+              <button class="prize-image-button" type="button" data-prize-image="IG Prize/totm.png" data-prize-alt="PF Team of the Month: buoni digitali da 25 euro">
+                <img src="IG Prize/totm.png" alt="PF Team of the Month, buoni digitali da 25 euro" loading="lazy" />
+                <span class="prize-zoom">Apri grafica</span>
+              </button>
+              <div class="prize-card-copy"><span class="prize-competition totm">PF Team of the Month</span><h3>Buono digitale da 25 €</h3><p>Scelta tra Spotify, Amazon, PSN, Microsoft/Xbox e Apple/iTunes.</p></div>
+            </article>
+          </div>
+          <button class="prize-arrow prize-arrow-next" type="button" aria-label="Premio successivo" data-prize-next>›</button>
+        </div>
+
+        <div class="prizes-disclaimer" data-reveal>
+          <span>Modelli equivalenti o successivi in caso di indisponibilità.</span>
+          <span>Trofei, medaglie e spedizioni non riducono il valore del premio.</span>
+          <span>Piano definitivo comunicato prima dell'inizio.</span>
+        </div>
+      </section>
+
+      <div class="prize-lightbox" data-prize-lightbox aria-hidden="true">
+        <button type="button" class="prize-lightbox-close" aria-label="Chiudi grafica" data-prize-close>×</button>
+        <img src="" alt="" data-prize-lightbox-image />
+      </div>
 
 
       <section class="tools-preview-section" id="tools-preview">
@@ -409,56 +552,58 @@
           <span></span><span></span><span></span>
         </div>
 
-        <div class="telegram-content" data-reveal>
-          <span class="section-kicker">COMMUNITY</span>
-          <h2>Entra nel canale che ti avvisa prima degli altri.</h2>
-          <p>
-            Alert mercato, reminder League, update veloci e contenuti flash:
-            Telegram è il collegamento diretto con l’universo ProFantasy.
-          </p>
-
-          <div class="telegram-benefits">
-            <span>Alert live</span>
-            <span>Mercato</span>
-            <span>League</span>
-            <span>Tools+</span>
+        <div class="telegram-panel" data-reveal>
+          <div class="telegram-showcase">
+            <div class="telegram-logo-card">
+              <div class="tg-ring tg-ring-a"></div>
+              <div class="tg-ring tg-ring-b"></div>
+              <div class="tg-bolt bolt-a">⚡</div>
+              <div class="tg-bolt bolt-b">⚡</div>
+              <div class="telegram-logo-core">
+                <div class="telegram-logo-plane">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor" d="M21.2 4.6L3.8 11.4c-1.2.5-1.2 1.2-.2 1.5l4.5 1.4 1.7 5.2c.2.6.1.8.8.8.5 0 .7-.2 1-.5l2.2-2.1 4.6 3.4c.8.4 1.4.2 1.6-.8l3-14.2c.4-1.2-.4-1.8-1.1-1.5zM9 13.9l9.1-5.8c.4-.2.8-.1.5.2l-7.5 6.8-.3 3.2L9 13.9z"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="telegram-logo-label">PROFANTASY TELEGRAM</div>
+            </div>
           </div>
 
-          <div class="telegram-actions">
-            <a href="https://t.me/+hpq210YBS18yN2E8" data-analytics="cta_telegram" target="_blank" rel="noopener noreferrer" class="big-section-cta telegram-cta">
-              Entra su Telegram
-              <span>→</span>
-            </a>
-            <small class="telegram-note">Accesso rapido, notifiche utili, zero dispersione.</small>
-          </div>
-        </div>
+          <div class="telegram-content">
+            <span class="section-kicker">COMMUNITY</span>
+            <h2>Entra nel canale che ti avvisa prima degli altri.</h2>
+            <p>
+              Alert mercato, reminder League, update veloci e contenuti flash:
+              Telegram è il collegamento diretto con l’universo ProFantasy.
+            </p>
 
-        <div class="telegram-showcase" data-reveal>
-          <div class="telegram-logo-card">
-            <div class="tg-ring tg-ring-a"></div>
-            <div class="tg-ring tg-ring-b"></div>
-            <div class="tg-bolt bolt-a">⚡</div>
-            <div class="tg-bolt bolt-b">⚡</div>
-            <div class="telegram-logo-core">
-              <div class="telegram-logo-plane">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill="currentColor" d="M21.2 4.6L3.8 11.4c-1.2.5-1.2 1.2-.2 1.5l4.5 1.4 1.7 5.2c.2.6.1.8.8.8.5 0 .7-.2 1-.5l2.2-2.1 4.6 3.4c.8.4 1.4.2 1.6-.8l3-14.2c.4-1.2-.4-1.8-1.1-1.5zM9 13.9l9.1-5.8c.4-.2.8-.1.5.2l-7.5 6.8-.3 3.2L9 13.9z"/>
-                </svg>
+            <div class="telegram-benefits">
+              <span>Alert live</span>
+              <span>Mercato</span>
+              <span>League</span>
+              <span>Tools+</span>
+            </div>
+
+            <div class="telegram-info-grid">
+              <div class="telegram-info-card is-cyan">
+                <small>live alert</small>
+                <strong>Mercato in tempo reale</strong>
+                <p>Segnali rapidi da leggere in pochi secondi.</p>
+              </div>
+              <div class="telegram-info-card is-purple">
+                <small>league</small>
+                <strong>Reminder e avvisi utili</strong>
+                <p>Open, Exclusive e aggiornamenti della stagione.</p>
               </div>
             </div>
-            <div class="telegram-logo-label">PROFANTASY TELEGRAM</div>
-          </div>
 
-          <div class="telegram-info-grid">
-            <div class="telegram-info-card is-cyan">
-              <small>live alert</small>
-              <strong>Mercato in tempo reale</strong>
-              <p>Segnali rapidi da leggere in pochi secondi.</p>
-            </div>
-            <div class="telegram-info-card is-purple">
-              <small>league</small>
-              <strong>Reminder e avvisi utili</strong>
-              <p>Open, Exclusive e aggiornamenti della stagione.</p>
+            <div class="telegram-actions">
+              <a href="https://t.me/+hpq210YBS18yN2E8" data-analytics="cta_telegram" target="_blank" rel="noopener noreferrer" class="big-section-cta telegram-cta">
+                Entra su Telegram
+                <span>→</span>
+              </a>
+              <small class="telegram-note">Accesso rapido, notifiche utili, zero dispersione.</small>
             </div>
           </div>
         </div>
@@ -488,6 +633,9 @@
                 <h4>Navigazione</h4>
                 <ul>
                   <li><a href="index.html">Home</a></li>
+                  <li><a href="iscriviti.html" data-analytics="cta_league">League</a></li>
+                  <li><a href="#premi" data-analytics="cta_prizes">Premi</a></li>
+                  <li><a href="Regolamento_Ufficiale_ProFantasy_League_2026-27_Premi_Materiali.pdf" target="_blank" rel="noopener" data-analytics="cta_rules">Regolamento</a></li>
                   <li><a href="world-cup.html" data-analytics="cta_worldcup">World Cup</a></li>
                   <li><a href="transfer.html" data-analytics="cta_transfer">Transfers</a></li>
                   <li><a href="tools.html" data-analytics="cta_tools">Tools</a></li>
@@ -529,6 +677,9 @@
 
             <div class="pf-site-footer-bottom-links">
               <a href="index.html">Home</a>
+              <a href="iscriviti.html">League</a>
+              <a href="#premi">Premi</a>
+              <a href="Regolamento_Ufficiale_ProFantasy_League_2026-27_Premi_Materiali.pdf" target="_blank" rel="noopener">Regolamento</a>
               <a href="community.html">Community</a>
               <a href="legal.html">Legal</a>
               <a href="https://t.me/+hpq210YBS18yN2E8" data-analytics="cta_telegram" target="_blank" rel="noopener noreferrer">Telegram</a>
@@ -542,6 +693,6 @@
     </main>
   </div>
 
-  <script src="assets/hero.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>

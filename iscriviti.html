@@ -10,12 +10,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="icon" href="assets/pf-mark.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="img/profantasy-logo.jpg" type="image/jpeg" />
+  <link rel="stylesheet" href="css/iscriviti.css" />
 
-  <script defer src="assets/config.js?v=24"></script>
-  <script defer src="assets/analytics.js?v=24"></script>
-  <script defer src="assets/app.js?v=24"></script>
+  <script>window.PF_GA4_ID = "G-CY7LK0E6M4";</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="js/analytics.js"></script>
+  <script defer src="js/supabase-config.js"></script>
+  <script defer src="js/iscriviti.js"></script>
 </head>
 <body>
   <div class="bg-image" aria-hidden="true"></div>
@@ -23,15 +25,17 @@
   <div class="grid-noise" aria-hidden="true"></div>
 
   <header class="topbar">
-    <a class="brand" href="/" aria-label="Vai alla home ProFantasy">
-      <img src="img/profantasy-logo.png" onerror="this.onerror=null; this.src='assets/pf-mark.svg'; this.classList.add('logo-fallback');" alt="ProFantasy" />
+    <a class="brand" href="index.html" aria-label="Vai alla home ProFantasy">
+      <img src="img/profantasy-logo.jpg" alt="ProFantasy" />
     </a>
 
     <nav class="nav-links" aria-label="Navigazione ProFantasy League">
       <a href="#tornei">Tornei</a>
+      <a href="#premi">Premi</a>
+      <a href="Regolamento_Ufficiale_ProFantasy_League_2026-27_Premi_Materiali.pdf" target="_blank" rel="noopener" data-analytics="cta_rules">Regolamento</a>
       <a href="#signup">Iscrizione</a>
-      <a href="/transfer.html">Transfer</a>
-      <a href="/tools.html">Tools+</a>
+      <a href="transfer.html">Transfer</a>
+      <a href="tools.html">Tools+</a>
     </nav>
 
     <a class="top-cta" href="#signup">
@@ -82,9 +86,70 @@
           <div class="quick-badges" aria-label="Dettagli principali">
             <span>Zero pagamenti ora</span>
             <span>Premi fisici e buoni</span>
-            <span>Regolamento in arrivo</span>
+            <span>Regolamento ufficiale disponibile</span>
           </div>
         </div>
+
+        <section class="signup-prizes" id="premi" aria-labelledby="signup-prizes-title">
+          <div class="signup-prizes-head">
+            <div>
+              <p class="kicker">Premi ufficiali 2026/27</p>
+              <h2 id="signup-prizes-title">Scegli il torneo. <span>Guarda cosa puoi vincere.</span></h2>
+            </div>
+            <a class="rules-download" href="Regolamento_Ufficiale_ProFantasy_League_2026-27_Premi_Materiali.pdf" target="_blank" rel="noopener" download data-analytics="cta_rules">
+              <span>Regolamento ufficiale</span>
+              <b>Scarica PDF ↓</b>
+            </a>
+          </div>
+
+          <div class="signup-prize-tabs" role="tablist" aria-label="Anteprima premi dei tornei">
+            <button type="button" class="is-active" data-signup-prize-tab="open" role="tab" aria-selected="true">Open</button>
+            <button type="button" data-signup-prize-tab="exclusive" role="tab" aria-selected="false">Exclusive</button>
+          </div>
+
+          <div class="signup-prize-panel is-active" data-signup-prize-panel="open">
+            <button class="signup-prize-visual" type="button" data-preview-image="IG Prize/open_primo.png" data-preview-alt="Primo premio Open: MacBook Neo 13 pollici">
+              <img src="IG Prize/open_primo.png" alt="MacBook Neo 13 pollici, primo premio Open" loading="lazy" />
+              <span>Apri la grafica</span>
+            </button>
+            <div class="signup-prize-copy">
+              <span class="mode-label open">Torneo Open</span>
+              <h3>Premi chiari, concreti e immediati.</h3>
+              <ul>
+                <li><b>1°:</b> MacBook Neo 13″, 256 GB</li>
+                <li><b>2°:</b> Sony WH-1000XM6</li>
+                <li><b>3°:</b> Serie A Authentic Mini Pack</li>
+                <li><b>4°–5°:</b> PlayStation Controller Pack e DualSense</li>
+                <li><b>Team of the Month:</b> buono digitale da 25 €</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="signup-prize-panel" data-signup-prize-panel="exclusive" hidden>
+            <button class="signup-prize-visual" type="button" data-preview-image="IG Prize/champions_primo.png" data-preview-alt="Primo premio Champions League: Top PlayStation Setup">
+              <img src="IG Prize/champions_primo.png" alt="Top PlayStation Setup, primo premio Champions League" loading="lazy" />
+              <span>Apri la grafica</span>
+            </button>
+            <div class="signup-prize-copy">
+              <span class="mode-label exclusive">Torneo Exclusive</span>
+              <h3>Una stagione costruita come una vera competizione europea.</h3>
+              <ul>
+                <li><b>Champions:</b> Top PlayStation Setup, MacBook Air e iPad Air Creator Pack</li>
+                <li><b>Europa:</b> Gaming Laptop Pack, Nintendo Switch 2 Pro Pack e Apple Watch</li>
+                <li><b>Conference e Challenger:</b> creator pack, console, fan pack e tech</li>
+                <li><b>Coppa Italia:</b> ProFantasy Matchday Experience</li>
+                <li><b>Winter Champion:</b> Xbox Series X Digital + trofeo</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="prize-terms">
+            <span>Exclusive: premi standard calcolati su 200 squadre convalidate.</span>
+            <span>Open: premi standard calcolati su 100 squadre convalidate.</span>
+            <span>Modelli equivalenti o successivi in caso di indisponibilità.</span>
+          </div>
+        </section>
+
 
         <form id="leagueSignupForm" novalidate>
           <div class="field-grid two">
@@ -162,6 +227,15 @@
             </div>
           </fieldset>
 
+          <aside class="rules-card" aria-label="Regolamento ufficiale">
+            <div class="rules-icon" aria-hidden="true">§</div>
+            <div>
+              <strong>Regolamento Ufficiale ProFantasy League 2026/27</strong>
+              <p>Consulta tornei, qualificazioni, premi, criteri di riduzione proporzionale, consegna e clausole complete.</p>
+            </div>
+            <a href="Regolamento_Ufficiale_ProFantasy_League_2026-27_Premi_Materiali.pdf" target="_blank" rel="noopener" data-analytics="cta_rules">Apri PDF <span>↗</span></a>
+          </aside>
+
           <div class="legal-box">
             <label class="checkline">
               <input type="checkbox" name="age_confirmed" required />
@@ -187,12 +261,17 @@
           </button>
 
           <p class="microcopy">
-            In questa fase stai inviando una candidatura gratuita e non vincolante. Pagamenti, premi fisici, buoni e modalità definitive saranno comunicati solo con regolamento ufficiale.
+            In questa fase stai inviando una candidatura gratuita e non vincolante. La candidatura resta gratuita e non vincolante. Il regolamento ufficiale e il piano premi sono già disponibili; pagamento e convalida verranno richiesti solo nella fase successiva.
           </p>
         </form>
       </section>
     </section>
   </main>
+
+  <div class="signup-image-lightbox" data-signup-lightbox aria-hidden="true">
+    <button type="button" data-signup-lightbox-close aria-label="Chiudi">×</button>
+    <img src="" alt="" data-signup-lightbox-image />
+  </div>
 
   <div class="modal-backdrop" id="successModal" aria-hidden="true">
     <div class="success-modal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
@@ -201,11 +280,11 @@
       <p class="kicker">Richiesta inviata</p>
       <h2 id="successTitle">Sei dentro l'arena ProFantasy.</h2>
       <p>
-        Complimenti, hai inviato correttamente la tua richiesta di iscrizione. Verrai presto contattato dal team con regolamento, dettagli ufficiali e prossimi step.
+        Complimenti, hai inviato correttamente la tua richiesta di iscrizione. Verrai presto contattato dal team con i prossimi step. Nel frattempo puoi consultare il regolamento ufficiale e il piano premi completo.
       </p>
       <div class="modal-actions">
-        <a class="modal-primary" data-home-link href="/">Esplora il sito web</a>
-        <a class="modal-secondary" data-transfer-link href="/transfer.html">Vai al Transfer Center</a>
+        <a class="modal-primary" data-home-link href="index.html">Esplora il sito web</a>
+        <a class="modal-secondary" href="Regolamento_Ufficiale_ProFantasy_League_2026-27_Premi_Materiali.pdf" target="_blank" rel="noopener">Apri il regolamento</a>
       </div>
     </div>
   </div>
