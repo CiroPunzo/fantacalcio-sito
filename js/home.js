@@ -169,20 +169,218 @@
   lightbox?.addEventListener('click', (event) => { if (event.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeLightbox(); });
 
-  // Player comparison radar + animated orbital background
-  const players = {
-    leao: { name: 'Rafael Leão', values: [88, 76, 86, 82, 84, 79] },
-    lautaro: { name: 'Lautaro Martínez', values: [93, 79, 94, 89, 92, 88] },
-    koopmeiners: { name: 'Teun Koopmeiners', values: [80, 86, 90, 86, 84, 81] },
-    kvaratskhelia: { name: 'Khvicha Kvaratskhelia', values: [86, 84, 89, 85, 88, 83] }
+  // Live Google Sheets data: FantasyRatings + classifiche Serie A
+  const HOME_SHEET_ID = window.PROFANTASY_SHEET_ID || '1ujW6Mth_rdRfsXQCI16cnW5oIg9djjVZnpffPhi7f48';
+  const HOME_SHEETS = {
+    ratings: 'FantasyRatings',
+    ranking: 'Classifica',
+    scorers: 'ClassificaMarcatori',
+    assists: 'ClassificaAssist'
   };
-  const radarLabels = ['Finalizz.', 'Assist', 'Titolarità', 'Media voto', 'Bonus', 'Forma'];
+  const SHEET_CACHE_TTL = 5 * 60 * 1000;
+
+  const normalizeSearch = (value) => String(value ?? '')
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+
+  const normalizeColumn = (value) => normalizeSearch(value).replace(/\s+/g, '_');
+
+  const rowValue = (row, keys, fallback = '') => {
+    if (!row) return fallback;
+    const normalized = {};
+    Object.entries(row).forEach(([key, value]) => { normalized[normalizeColumn(key)] = value; });
+    for (const key of keys) {
+      const value = normalized[normalizeColumn(key)];
+      if (value !== undefined && value !== null && String(value).trim() !== '') return value;
+    }
+    return fallback;
+  };
+
+  const toNumber = (value, fallback = NaN) => {
+    if (typeof value === 'number') return Number.isFinite(value) ? value : fallback;
+    const cleaned = String(value ?? '')
+      .trim()
+      .replace(',', '.')
+      .replace(/[^0-9.+-]/g, '');
+    if (!cleaned || ['+', '-', '.', '+.', '-.'].includes(cleaned)) return fallback;
+    const numeric = Number(cleaned);
+    return Number.isFinite(numeric) ? numeric : fallback;
+  };
+
+  const clamp = (value, min = 0, max = 100) => Math.min(max, Math.max(min, Number(value) || 0));
+  const escapeHTML = (value) => String(value ?? '').replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  })[char]);
+
+  const parseGvizTable = (json) => {
+    if (!json?.table) return [];
+    const columns = (json.table.cols || []).map((col, index) => String(col.label || col.id || `Col${index + 1}`).trim());
+    return (json.table.rows || []).map((row) => {
+      const item = {};
+      columns.forEach((column, index) => {
+        const cell = row.c?.[index];
+        item[column] = cell?.f ?? cell?.v ?? '';
+      });
+      return item;
+    }).filter((row) => Object.values(row).some((value) => String(value ?? '').trim() !== ''));
+  };
+
+  const cacheKeyFor = (sheetName) => `pf_home_sheet_v2_${normalizeColumn(sheetName)}`;
+  const readSheetCache = (sheetName, allowStale = false) => {
+    try {
+      const cached = JSON.parse(localStorage.getItem(cacheKeyFor(sheetName)) || 'null');
+      if (!cached?.rows || !Array.isArray(cached.rows)) return null;
+      if (!allowStale && Date.now() - Number(cached.savedAt || 0) > SHEET_CACHE_TTL) return null;
+      return cached.rows;
+    } catch (_) { return null; }
+  };
+  const saveSheetCache = (sheetName, rows) => {
+    try { localStorage.setItem(cacheKeyFor(sheetName), JSON.stringify({ savedAt: Date.now(), rows })); } catch (_) {}
+  };
+
+  const fetchSheetRows = (sheetName) => new Promise((resolve, reject) => {
+    const freshCache = readSheetCache(sheetName);
+    if (freshCache) { resolve(freshCache); return; }
+
+    const callbackName = `__pfHomeSheet_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    const script = document.createElement('script');
+    const timeout = window.setTimeout(() => {
+      cleanup();
+      const stale = readSheetCache(sheetName, true);
+      if (stale) resolve(stale);
+      else reject(new Error(`Timeout Google Sheets: ${sheetName}`));
+    }, 15000);
+
+    const cleanup = () => {
+      window.clearTimeout(timeout);
+      try { delete window[callbackName]; } catch (_) { window[callbackName] = undefined; }
+      script.remove();
+    };
+
+    window[callbackName] = (json) => {
+      cleanup();
+      if (json?.status === 'error') {
+        const stale = readSheetCache(sheetName, true);
+        if (stale) { resolve(stale); return; }
+        reject(new Error(json.errors?.[0]?.detailed_message || `Errore Google Sheets: ${sheetName}`));
+        return;
+      }
+      const rows = parseGvizTable(json);
+      saveSheetCache(sheetName, rows);
+      resolve(rows);
+    };
+
+    const tqx = `out:json;responseHandler:${callbackName}`;
+    script.src = `https://docs.google.com/spreadsheets/d/${HOME_SHEET_ID}/gviz/tq?tqx=${encodeURIComponent(tqx)}&tq=${encodeURIComponent('select *')}&headers=1&sheet=${encodeURIComponent(sheetName)}&t=${Date.now()}`;
+    script.async = true;
+    script.onerror = () => {
+      cleanup();
+      const stale = readSheetCache(sheetName, true);
+      if (stale) resolve(stale);
+      else reject(new Error(`Google Sheets non raggiungibile: ${sheetName}`));
+    };
+    document.head.appendChild(script);
+  });
+
+  const radarMetrics = [
+    { key: 'fantaindex', label: 'FantaIndex', short: 'FantaIndex' },
+    { key: 'titolarita', label: 'Titolarità', short: 'Titolarità' },
+    { key: 'bonus', label: 'Bonus', short: 'Bonus' },
+    { key: 'rischio', label: 'Rischio', short: 'Rischio' },
+    { key: 'impatto_minuti', label: 'Impatto minuti', short: 'Impatto min.' },
+    { key: 'bonus_potenziali_totali', label: 'Bonus potenziali totali', short: 'Bonus pot.' }
+  ];
+
+  let players = [];
+  let playersById = new Map();
+  let bonusPotentialScale = 1;
+  const selectedPlayers = { one: null, two: null };
   const playerOne = qs('#playerOne');
   const playerTwo = qs('#playerTwo');
+  const playerOneSearch = qs('#playerOneSearch');
+  const playerTwoSearch = qs('#playerTwoSearch');
   const radarCanvas = qs('#radarCanvas');
 
+  const formatStat = (value) => {
+    if (!Number.isFinite(value)) return '—';
+    return Math.abs(value - Math.round(value)) < .01 ? String(Math.round(value)) : value.toFixed(1);
+  };
+
+  const radarValueFor = (player, metric) => {
+    const raw = Number(player?.stats?.[metric.key]);
+    if (!Number.isFinite(raw)) return 0;
+    if (metric.key === 'bonus_potenziali_totali') return clamp(raw / bonusPotentialScale * 100);
+    return clamp(raw);
+  };
+
+  const buildPlayers = (rows) => {
+    const mapped = rows.map((row, index) => {
+      const name = String(rowValue(row, ['player_id', 'player_name', 'giocatore', 'nome_giocatore', 'nome'], '')).trim();
+      const team = String(rowValue(row, ['team_id', 'team', 'squadra', 'club'], 'Squadra non indicata')).trim();
+      const stats = {};
+      radarMetrics.forEach((metric) => { stats[metric.key] = toNumber(rowValue(row, [metric.key], ''), NaN); });
+      const hasStats = radarMetrics.some((metric) => Number.isFinite(stats[metric.key]));
+      if (!name || !hasStats) return null;
+      const baseId = `${normalizeSearch(name).replace(/\s+/g, '-')}-${normalizeSearch(team).replace(/\s+/g, '-')}`;
+      return {
+        id: `${baseId || 'player'}-${index}`,
+        name,
+        team,
+        stats,
+        search: normalizeSearch(`${name} ${team}`)
+      };
+    }).filter(Boolean);
+
+    const potentialValues = mapped
+      .map((player) => player.stats.bonus_potenziali_totali)
+      .filter(Number.isFinite)
+      .sort((a, b) => a - b);
+    if (potentialValues.length) {
+      const p95Index = Math.min(potentialValues.length - 1, Math.floor((potentialValues.length - 1) * .95));
+      bonusPotentialScale = Math.max(1, potentialValues[p95Index]);
+    }
+
+    mapped.sort((a, b) => {
+      const indexDiff = (Number(b.stats.fantaindex) || 0) - (Number(a.stats.fantaindex) || 0);
+      return indexDiff || a.name.localeCompare(b.name, 'it');
+    });
+    return mapped;
+  };
+
+  const initialsFor = (name) => String(name || '')
+    .replace(/[^A-Za-zÀ-ÿ0-9 ]/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join('')
+    .toUpperCase();
+
+  const renderStats = () => {
+    const host = qs('[data-stat-chips]');
+    if (!host) return;
+    const first = selectedPlayers.one;
+    const second = selectedPlayers.two;
+    if (!first || !second) {
+      host.innerHTML = '<span class="stat-chip-loading">Seleziona due giocatori per confrontare i valori.</span>';
+      return;
+    }
+    host.innerHTML = radarMetrics.map((metric) => `
+      <span class="stat-chip-live" title="${escapeHTML(metric.label)}">
+        <span class="stat-chip-label">${escapeHTML(metric.label)}</span>
+        <b class="stat-chip-value is-a">${escapeHTML(formatStat(first.stats[metric.key]))}</b>
+        <b class="stat-chip-value is-b">${escapeHTML(formatStat(second.stats[metric.key]))}</b>
+      </span>`).join('');
+  };
+
   const drawRadar = () => {
-    if (!radarCanvas || !playerOne || !playerTwo) return;
+    if (!radarCanvas) return;
+    const first = selectedPlayers.one;
+    const second = selectedPlayers.two;
     const ctx = radarCanvas.getContext('2d');
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
     const width = radarCanvas.clientWidth || 620;
@@ -195,10 +393,9 @@
     const centerX = width / 2;
     const centerY = height / 2 - 1;
     const radius = Math.min(width, height) * .33;
-    const axes = radarLabels.length;
-    const angle = (Math.PI * 2) / axes;
+    const axes = radarMetrics.length;
+    const angle = Math.PI * 2 / axes;
 
-    // Grid with luminous outer levels.
     for (let level = 1; level <= 5; level += 1) {
       ctx.beginPath();
       for (let i = 0; i < axes; i += 1) {
@@ -210,10 +407,7 @@
       ctx.closePath();
       ctx.strokeStyle = level === 5 ? 'rgba(117,205,255,.27)' : `rgba(160,196,235,${.045 + level * .018})`;
       ctx.lineWidth = level === 5 ? 1.35 : 1;
-      if (level === 5) {
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = 'rgba(41,215,255,.2)';
-      }
+      if (level === 5) { ctx.shadowBlur = 12; ctx.shadowColor = 'rgba(41,215,255,.2)'; }
       ctx.stroke();
       ctx.shadowBlur = 0;
     }
@@ -230,17 +424,19 @@
       const labelRadius = radius + (width < 520 ? 20 : 27);
       const lx = centerX + Math.cos(theta) * labelRadius;
       const ly = centerY + Math.sin(theta) * labelRadius;
-      ctx.fillStyle = 'rgba(184,207,235,.72)';
+      ctx.fillStyle = 'rgba(184,207,235,.76)';
       ctx.font = `${width < 520 ? 8 : 9}px Inter, sans-serif`;
       ctx.textAlign = Math.cos(theta) > .25 ? 'left' : Math.cos(theta) < -.25 ? 'right' : 'center';
       ctx.textBaseline = Math.sin(theta) > .45 ? 'top' : Math.sin(theta) < -.45 ? 'bottom' : 'middle';
-      ctx.fillText(radarLabels[i], lx, ly);
+      ctx.fillText(radarMetrics[i].short, lx, ly);
     }
 
-    const drawSeries = (values, stroke, fillStart, fillEnd) => {
-      const points = values.map((value, i) => {
+    const drawSeries = (player, stroke, fillStart, fillEnd) => {
+      if (!player) return;
+      const values = radarMetrics.map((metric) => radarValueFor(player, metric));
+      const points = values.map((value, index) => {
         const r = radius * value / 100;
-        const theta = -Math.PI / 2 + i * angle;
+        const theta = -Math.PI / 2 + index * angle;
         return { x: centerX + Math.cos(theta) * r, y: centerY + Math.sin(theta) * r };
       });
       const gradient = ctx.createRadialGradient(centerX, centerY, 5, centerX, centerY, radius);
@@ -269,14 +465,111 @@
       });
     };
 
-    const p1 = players[playerOne.value];
-    const p2 = players[playerTwo.value];
-    drawSeries(p1.values, '#37e2ff', 'rgba(41,215,255,.22)', 'rgba(41,215,255,.055)');
-    drawSeries(p2.values, '#a85bff', 'rgba(159,77,255,.19)', 'rgba(159,77,255,.04)');
-    qs('[data-p1-name]')?.replaceChildren(document.createTextNode(p1.name));
-    qs('[data-p2-name]')?.replaceChildren(document.createTextNode(p2.name));
+    drawSeries(first, '#37e2ff', 'rgba(41,215,255,.22)', 'rgba(41,215,255,.055)');
+    drawSeries(second, '#a85bff', 'rgba(159,77,255,.19)', 'rgba(159,77,255,.04)');
+    qs('[data-p1-name]')?.replaceChildren(document.createTextNode(first?.name || 'Giocatore 1'));
+    qs('[data-p2-name]')?.replaceChildren(document.createTextNode(second?.name || 'Giocatore 2'));
+    renderStats();
   };
 
+  const setupPlayerPicker = (slot, input, hidden, resultsHost, statusHost) => {
+    if (!input || !hidden || !resultsHost || !statusHost) return;
+    let activeIndex = -1;
+    let visiblePlayers = [];
+
+    const close = () => {
+      resultsHost.classList.remove('is-open');
+      input.setAttribute('aria-expanded', 'false');
+      activeIndex = -1;
+    };
+
+    const scoreMatch = (player, query, tokens) => {
+      if (!tokens.every((token) => player.search.includes(token))) return 999;
+      const name = normalizeSearch(player.name);
+      const team = normalizeSearch(player.team);
+      if (name === query) return 0;
+      if (name.startsWith(query)) return 1;
+      if (name.split(' ').some((word) => word.startsWith(query))) return 2;
+      if (team.startsWith(query)) return 3;
+      return 4;
+    };
+
+    const choose = (player) => {
+      selectedPlayers[slot] = player;
+      hidden.value = player.id;
+      input.value = player.name;
+      statusHost.textContent = `${player.team} • FantaIndex ${formatStat(player.stats.fantaindex)}`;
+      statusHost.classList.remove('is-error');
+      close();
+      drawRadar();
+    };
+
+    const renderResults = (queryValue = input.value) => {
+      const query = normalizeSearch(queryValue);
+      const tokens = query.split(' ').filter(Boolean);
+      visiblePlayers = players
+        .map((player) => ({ player, score: query ? scoreMatch(player, query, tokens) : 5 }))
+        .filter((item) => item.score < 999)
+        .sort((a, b) => a.score - b.score || (Number(b.player.stats.fantaindex) || 0) - (Number(a.player.stats.fantaindex) || 0) || a.player.name.localeCompare(b.player.name, 'it'))
+        .slice(0, 12)
+        .map((item) => item.player);
+
+      resultsHost.innerHTML = '';
+      if (!visiblePlayers.length) {
+        resultsHost.innerHTML = '<div class="player-result-empty">Nessun giocatore trovato. Prova con cognome o squadra.</div>';
+      } else {
+        visiblePlayers.forEach((player, index) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = `player-result${index === activeIndex ? ' is-active' : ''}`;
+          button.setAttribute('role', 'option');
+          button.setAttribute('aria-selected', index === activeIndex ? 'true' : 'false');
+          button.innerHTML = `
+            <span class="player-result-mark">${escapeHTML(initialsFor(player.team) || initialsFor(player.name))}</span>
+            <span class="player-result-copy"><strong>${escapeHTML(player.name)}</strong><small>${escapeHTML(player.team)}</small></span>
+            <span class="player-result-index">${escapeHTML(formatStat(player.stats.fantaindex))}</span>`;
+          button.addEventListener('mousedown', (event) => event.preventDefault());
+          button.addEventListener('click', () => choose(player));
+          resultsHost.appendChild(button);
+        });
+      }
+      resultsHost.classList.add('is-open');
+      input.setAttribute('aria-expanded', 'true');
+      if (query) statusHost.textContent = `${visiblePlayers.length} risultati mostrati`;
+    };
+
+    input.addEventListener('focus', () => renderResults(input.value === selectedPlayers[slot]?.name ? '' : input.value));
+    input.addEventListener('input', () => { activeIndex = -1; renderResults(input.value); });
+    input.addEventListener('keydown', (event) => {
+      if (!resultsHost.classList.contains('is-open') && ['ArrowDown', 'ArrowUp'].includes(event.key)) renderResults(input.value);
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        activeIndex = Math.min(visiblePlayers.length - 1, activeIndex + 1);
+        renderResults(input.value);
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        activeIndex = Math.max(0, activeIndex - 1);
+        renderResults(input.value);
+      } else if (event.key === 'Enter' && activeIndex >= 0 && visiblePlayers[activeIndex]) {
+        event.preventDefault(); choose(visiblePlayers[activeIndex]);
+      } else if (event.key === 'Escape') {
+        close();
+      }
+    });
+    input.addEventListener('blur', () => {
+      window.setTimeout(() => {
+        close();
+        if (selectedPlayers[slot] && input.value.trim() !== selectedPlayers[slot].name) input.value = selectedPlayers[slot].name;
+      }, 110);
+    });
+
+    return { choose };
+  };
+
+  const pickerOne = setupPlayerPicker('one', playerOneSearch, playerOne, qs('#playerOneResults'), qs('[data-player-one-status]'));
+  const pickerTwo = setupPlayerPicker('two', playerTwoSearch, playerTwo, qs('#playerTwoResults'), qs('[data-player-two-status]'));
+
+  // Animated orbital background behind the radar.
   const ambientCanvas = qs('#radarAmbientCanvas');
   if (ambientCanvas) {
     const ambientCtx = ambientCanvas.getContext('2d');
@@ -324,7 +617,6 @@
       const cy = ambientHeight * .48;
       const base = Math.min(ambientWidth, ambientHeight);
 
-      // Three elliptical orbits and moving light nodes.
       [0, 1, 2].forEach((orbit) => {
         const rx = base * (.29 + orbit * .085);
         const ry = rx * (.43 + orbit * .035);
@@ -380,62 +672,137 @@
     window.addEventListener('beforeunload', () => cancelAnimationFrame(animationFrame), { once: true });
   }
 
-  playerOne?.addEventListener('change', drawRadar);
-  playerTwo?.addEventListener('change', drawRadar);
   window.addEventListener('resize', drawRadar);
-  drawRadar();
 
-  // Data board
+  // Real standings / scorers / assists from the workbook.
   const boardData = {
-    ranking: {
-      kicker: 'Serie A 26/27', title: 'Classifica', unit: 'PT', rowLabel: 'Squadra',
-      rows: [['1','Inter','92'],['2','Napoli','84'],['3','Milan','79'],['4','Juventus','74'],['5','Roma','70']]
-    },
-    scorers: {
-      kicker: 'Top player', title: 'Marcatori', unit: 'GOL', rowLabel: 'Bomber',
-      rows: [['1','M. Retegui','25'],['2','M. Thuram','19'],['3','L. Martínez','18'],['4','R. Orsolini','15'],['5','A. Lookman','15']]
-    },
-    assists: {
-      kicker: 'Top player', title: 'Assist', unit: 'AST', rowLabel: 'Assistman',
-      rows: [['1','N. Paz','12'],['2','F. Dimarco','11'],['3','C. Pulisic','10'],['4','M. Zaccagni','9'],['5','P. Dybala','9']]
-    }
+    ranking: { kicker: 'Serie A 26/27', title: 'Classifica', unit: 'PT', rows: [], loading: true },
+    scorers: { kicker: 'Top player', title: 'Marcatori', unit: 'GOL', rows: [], loading: true },
+    assists: { kicker: 'Top player', title: 'Assist', unit: 'AST', rows: [], loading: true }
   };
-  const initialsFor = (name) => name
-    .replace(/[^A-Za-zÀ-ÿ0-9 ]/g, ' ')
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join('')
-    .toUpperCase();
+  let activeBoard = 'ranking';
 
-  const renderBoard = (key) => {
+  const renderBoard = (key, animate = true) => {
+    activeBoard = key;
     const data = boardData[key];
-    if (!data) return;
     const list = qs('[data-board-list]');
-    if (!list) return;
-    const maxValue = Math.max(...data.rows.map((row) => Number(row[2]) || 0), 1);
-    list.classList.add('is-updating');
+    if (!data || !list) return;
+    qsa('[data-board-tab]').forEach((button) => button.classList.toggle('is-active', button.dataset.boardTab === key));
+    qs('[data-board-kicker]').textContent = data.kicker;
+    qs('[data-board-title]').textContent = data.title;
+
+    if (data.loading) {
+      list.innerHTML = '<div class="board-loading">Connessione al ProFantasy Sheet…</div>';
+      return;
+    }
+    if (data.error) {
+      list.innerHTML = `<div class="board-error">${escapeHTML(data.error)}</div>`;
+      return;
+    }
+    if (!data.rows.length) {
+      list.innerHTML = '<div class="board-empty">Nessun dato disponibile nel foglio.</div>';
+      return;
+    }
+
+    const maxValue = Math.max(...data.rows.map((row) => Number(row.value) || 0), 1);
+    if (animate) list.classList.add('is-updating');
     window.setTimeout(() => {
-      qs('[data-board-kicker]').textContent = data.kicker;
-      qs('[data-board-title]').textContent = data.title;
-      list.innerHTML = data.rows.map(([pos, name, value]) => {
-        const progress = Math.max(18, Math.round((Number(value) / maxValue) * 100));
-        const padded = String(pos).padStart(2, '0');
-        return `<div class="board-row board-rank-${pos}">
-          <span class="board-position">${padded}</span>
-          <span class="board-club-mark">${initialsFor(name)}</span>
-          <span class="board-identity"><strong>${name}</strong><small>${data.rowLabel}</small></span>
-          <span class="board-metric"><b>${value}</b><small>${data.unit}</small></span>
+      list.innerHTML = data.rows.map((row) => {
+        const progress = Math.max(18, Math.round((Number(row.value) / maxValue) * 100));
+        const pos = Number(row.pos) || 0;
+        const padded = String(pos || '—').padStart(2, '0');
+        return `<div class="board-row board-rank-${pos} is-live">
+          <span class="board-position">${escapeHTML(padded)}</span>
+          <span class="board-club-mark">${escapeHTML(initialsFor(row.mark || row.name))}</span>
+          <span class="board-identity"><strong>${escapeHTML(row.name)}</strong><small>${escapeHTML(row.sub || '')}</small></span>
+          <span class="board-metric"><b>${escapeHTML(formatStat(Number(row.value)))}</b><small>${escapeHTML(data.unit)}</small></span>
           <span class="board-progress"><i style="--board-progress:${progress}%"></i></span>
         </div>`;
       }).join('');
       list.classList.remove('is-updating');
-    }, 105);
-    qsa('[data-board-tab]').forEach((button) => button.classList.toggle('is-active', button.dataset.boardTab === key));
+    }, animate ? 105 : 0);
   };
+
   qsa('[data-board-tab]').forEach((button) => button.addEventListener('click', () => renderBoard(button.dataset.boardTab)));
-  renderBoard('ranking');
+  renderBoard('ranking', false);
+
+  const mapRanking = (rows) => rows.map((row, index) => ({
+    pos: toNumber(rowValue(row, ['Posizione', 'Pos', 'Rank', '#'], index + 1), index + 1),
+    name: String(rowValue(row, ['Squadra', 'Team', 'Club'], '—')).trim(),
+    mark: String(rowValue(row, ['Squadra', 'Team', 'Club'], '')).trim(),
+    sub: 'Squadra',
+    value: toNumber(rowValue(row, ['Punti', 'Pt', 'Points'], 0), 0)
+  })).filter((row) => row.name !== '—').sort((a, b) => a.pos - b.pos || b.value - a.value).slice(0, 5);
+
+  const mapScorers = (rows) => rows.map((row, index) => ({
+    pos: toNumber(rowValue(row, ['Posizione', 'Pos', 'Rank', '#'], index + 1), index + 1),
+    name: String(rowValue(row, ['Nome Giocatore', 'Giocatore', 'Player', 'Calciatore', 'Nome'], '—')).trim(),
+    mark: String(rowValue(row, ['Squadra', 'Club', 'Team'], '')).trim(),
+    sub: String(rowValue(row, ['Squadra', 'Club', 'Team'], 'Serie A')).trim(),
+    value: toNumber(rowValue(row, ['Gol', 'Goal', 'Goals', 'Reti'], 0), 0)
+  })).filter((row) => row.name !== '—').sort((a, b) => a.pos - b.pos || b.value - a.value).slice(0, 5);
+
+  const mapAssists = (rows) => rows.map((row, index) => ({
+    pos: toNumber(rowValue(row, ['Posizione', 'Pos', 'Rank', '#'], index + 1), index + 1),
+    name: String(rowValue(row, ['Nome Giocatore', 'Giocatore', 'Player', 'Calciatore', 'Nome'], '—')).trim(),
+    mark: String(rowValue(row, ['Squadra', 'Club', 'Team'], '')).trim(),
+    sub: String(rowValue(row, ['Squadra', 'Club', 'Team'], 'Serie A')).trim(),
+    value: toNumber(rowValue(row, ['Assist', 'A', 'Ass', 'Tot Assist', 'N. Assist'], 0), 0)
+  })).filter((row) => row.name !== '—').sort((a, b) => a.pos - b.pos || b.value - a.value).slice(0, 5);
+
+  const setBoardResult = (key, result, mapper) => {
+    boardData[key].loading = false;
+    if (result.status === 'fulfilled') boardData[key].rows = mapper(result.value);
+    else boardData[key].error = 'Dati momentaneamente non disponibili.';
+    if (activeBoard === key) renderBoard(key, false);
+  };
+
+  const initLiveHomeData = async () => {
+    const ratingsStatusOne = qs('[data-player-one-status]');
+    const ratingsStatusTwo = qs('[data-player-two-status]');
+    const [ratingsResult, rankingResult, scorersResult, assistsResult] = await Promise.allSettled([
+      fetchSheetRows(HOME_SHEETS.ratings),
+      fetchSheetRows(HOME_SHEETS.ranking),
+      fetchSheetRows(HOME_SHEETS.scorers),
+      fetchSheetRows(HOME_SHEETS.assists)
+    ]);
+
+    setBoardResult('ranking', rankingResult, mapRanking);
+    setBoardResult('scorers', scorersResult, mapScorers);
+    setBoardResult('assists', assistsResult, mapAssists);
+
+    if (ratingsResult.status === 'fulfilled') {
+      players = buildPlayers(ratingsResult.value);
+      playersById = new Map(players.map((player) => [player.id, player]));
+      if (!players.length) throw new Error('FantasyRatings non contiene profili validi.');
+      [playerOneSearch, playerTwoSearch].forEach((input) => { if (input) input.disabled = false; });
+      const first = players[0];
+      const second = players[1] || players[0];
+      pickerOne?.choose(first);
+      pickerTwo?.choose(second);
+      if (ratingsStatusOne) ratingsStatusOne.textContent = `${first.team} • ${players.length} profili disponibili`;
+      if (ratingsStatusTwo) ratingsStatusTwo.textContent = `${second.team} • ${players.length} profili disponibili`;
+    } else {
+      [ratingsStatusOne, ratingsStatusTwo].forEach((status) => {
+        if (!status) return;
+        status.textContent = 'FantasyRatings non raggiungibile. Verifica la condivisione del foglio.';
+        status.classList.add('is-error');
+      });
+      const chips = qs('[data-stat-chips]');
+      if (chips) chips.innerHTML = '<span class="stat-chip-loading">Dati giocatori momentaneamente non disponibili.</span>';
+      console.error('ProFantasy FantasyRatings:', ratingsResult.reason);
+    }
+  };
+
+  initLiveHomeData().catch((error) => {
+    console.error('ProFantasy live data:', error);
+    [qs('[data-player-one-status]'), qs('[data-player-two-status]')].forEach((status) => {
+      if (!status) return;
+      status.textContent = error.message || 'Errore nel caricamento dei giocatori.';
+      status.classList.add('is-error');
+    });
+  });
+
 
   // Market pulse
   const marketCards = qsa('.market-scan-card');

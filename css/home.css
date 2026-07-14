@@ -1104,3 +1104,236 @@ body {
   .board-panel { padding: 17px 13px 15px; }
   .board-row { grid-template-columns: 29px 31px minmax(0,1fr) auto; padding-left: 9px; padding-right: 9px; }
 }
+
+
+/* =========================================================
+   LIVE DATA 26/27 — searchable FantasyRatings + Sheets board
+   ========================================================= */
+.compare-selects {
+  align-items: start;
+  overflow: visible;
+}
+.player-picker {
+  position: relative;
+  min-width: 0;
+}
+.player-picker > span {
+  display: block;
+  margin-bottom: 7px;
+}
+.player-combobox {
+  position: relative;
+  z-index: 12;
+}
+.player-combobox input[type="search"] {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 42px 12px 14px;
+  color: #f5f9ff;
+  background:
+    linear-gradient(145deg, rgba(18,34,64,.98), rgba(8,15,31,.98));
+  border: 1px solid rgba(124,188,255,.21);
+  border-radius: 13px;
+  outline: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 12px 28px rgba(0,0,0,.18);
+  font: 700 12px/1.2 Inter, sans-serif;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  -webkit-appearance: none;
+}
+.player-combobox input[type="search"]::-webkit-search-cancel-button { opacity: .65; }
+.player-combobox input[type="search"]:focus {
+  border-color: rgba(75,226,255,.66);
+  background: linear-gradient(145deg, rgba(20,41,76,.99), rgba(8,17,36,.99));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 0 0 3px rgba(41,215,255,.08),
+    0 16px 34px rgba(0,0,0,.24);
+}
+.player-combobox input[type="search"]:disabled {
+  cursor: progress;
+  opacity: .68;
+}
+.player-combobox::after {
+  content: "⌕";
+  position: absolute;
+  top: 13px;
+  right: 14px;
+  z-index: 1;
+  color: var(--cyan);
+  font: 800 19px/1 Rajdhani, sans-serif;
+  pointer-events: none;
+  filter: drop-shadow(0 0 8px rgba(41,215,255,.28));
+}
+.player-search-status {
+  display: block;
+  min-height: 15px;
+  padding: 6px 4px 0;
+  overflow: hidden;
+  color: #7587a2;
+  font: 700 8px/1.25 Inter, sans-serif;
+  letter-spacing: .05em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: none;
+}
+.player-search-status.is-error { color: #ff8e9e; }
+.player-search-results {
+  position: absolute;
+  top: calc(100% - 14px);
+  left: 0;
+  right: 0;
+  z-index: 80;
+  display: none;
+  max-height: 285px;
+  padding: 7px;
+  overflow: auto;
+  border: 1px solid rgba(112,196,255,.22);
+  border-radius: 14px;
+  background: rgba(5,12,27,.985);
+  box-shadow: 0 24px 60px rgba(0,0,0,.52), inset 0 1px 0 rgba(255,255,255,.04);
+  backdrop-filter: blur(18px);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(41,215,255,.36) transparent;
+}
+.player-search-results.is-open { display: grid; gap: 4px; animation: playerResultsIn .16s ease both; }
+@keyframes playerResultsIn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:none; } }
+.player-result {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 34px minmax(0,1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 10px;
+  color: #dce9fa;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background .16s ease, transform .16s ease;
+}
+.player-result:hover,
+.player-result.is-active {
+  background: linear-gradient(100deg, rgba(41,215,255,.11), rgba(159,77,255,.06));
+  transform: translateX(2px);
+}
+.player-result-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  color: #d9faff;
+  background: linear-gradient(145deg, rgba(41,215,255,.15), rgba(159,77,255,.12));
+  border: 1px solid rgba(120,207,255,.14);
+  font: 900 9px/1 Rajdhani, sans-serif;
+}
+.player-result-copy { min-width: 0; display: grid; gap: 3px; }
+.player-result-copy strong {
+  overflow: hidden;
+  color: #f2f7ff;
+  font: 800 11px/1.15 Inter, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.player-result-copy small {
+  overflow: hidden;
+  color: #7386a2;
+  font: 700 8px/1 Inter, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.player-result-index {
+  min-width: 31px;
+  color: var(--cyan);
+  font: 900 13px/1 Rajdhani, sans-serif;
+  text-align: right;
+}
+.player-result-empty {
+  padding: 16px 12px;
+  color: #7486a1;
+  font: 700 9px/1.4 Inter, sans-serif;
+  text-align: center;
+}
+
+.stat-chips {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 8px;
+}
+.stat-chips .stat-chip-live {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto auto;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 10px;
+  border-radius: 11px;
+  background: linear-gradient(145deg, rgba(255,255,255,.052), rgba(255,255,255,.016));
+  border: 1px solid rgba(127,186,255,.105);
+  color: #9fb0c9;
+}
+.stat-chip-label {
+  min-width: 0;
+  overflow: hidden;
+  font: 750 8px/1.15 Inter, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.stat-chip-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #eaf7ff;
+  font: 900 11px/1 Rajdhani, sans-serif;
+}
+.stat-chip-value::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.stat-chip-value.is-a::before { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+.stat-chip-value.is-b::before { background: var(--purple); box-shadow: 0 0 8px var(--purple); }
+.stat-chip-loading {
+  grid-column: 1 / -1;
+  justify-content: center;
+  color: #7386a2 !important;
+  text-align: center;
+}
+
+.board-loading,
+.board-error,
+.board-empty {
+  padding: 22px 12px;
+  border: 1px dashed rgba(122,183,231,.14);
+  border-radius: 13px;
+  color: #778aa6;
+  background: rgba(255,255,255,.018);
+  font: 700 9px/1.45 Inter, sans-serif;
+  text-align: center;
+}
+.board-error { color: #ff9aaa; border-color: rgba(255,102,132,.18); }
+.board-row.is-live::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 9px rgba(54,240,189,.7);
+}
+.live-board-card .board-title::after { content: "LIVE SHEET"; }
+
+@media (max-width: 980px) {
+  .stat-chips { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 560px) {
+  .player-search-results { max-height: 245px; }
+  .stat-chips { grid-template-columns: 1fr; }
+  .stat-chips .stat-chip-live { grid-template-columns: minmax(0,1fr) auto auto; }
+}

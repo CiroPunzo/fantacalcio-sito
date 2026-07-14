@@ -8,13 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/home.css?v=20260714-5" />
+  <link rel="stylesheet" href="css/home.css?v=20260714-6" />
   <link rel="icon" href="img/profantasy-logo.jpg" />
   <!-- GA4: sostituisci G-XXXXXXXXXX con il tuo Measurement ID -->
   <script>
     window.PF_GA4_ID = "G-CY7LK0E6M4";
   </script>
-  <script src="js/analytics.js?v=20260714-5" defer></script>
+  <script src="js/analytics.js?v=20260714-6" defer></script>
 </head>
 <body>
   <div class="page-shell">
@@ -420,25 +420,47 @@
               <a href="tools.html" data-analytics="cta_tools">Apri Tools+</a>
             </div>
 
-            <div class="compare-selects">
-              <label>
-                Giocatore 1
-                <select id="playerOne">
-                  <option value="leao">Rafael Leão</option>
-                  <option value="lautaro">Lautaro Martínez</option>
-                  <option value="koopmeiners">Teun Koopmeiners</option>
-                  <option value="kvaratskhelia">Khvicha Kvaratskhelia</option>
-                </select>
+            <div class="compare-selects" aria-label="Ricerca e selezione giocatori">
+              <label class="player-picker" data-player-picker="one">
+                <span>Giocatore 1</span>
+                <div class="player-combobox">
+                  <input
+                    id="playerOneSearch"
+                    type="search"
+                    placeholder="Cerca nome, cognome o squadra…"
+                    autocomplete="off"
+                    spellcheck="false"
+                    role="combobox"
+                    aria-autocomplete="list"
+                    aria-expanded="false"
+                    aria-controls="playerOneResults"
+                    disabled
+                  />
+                  <input id="playerOne" type="hidden" />
+                  <span class="player-search-status" data-player-one-status>Caricamento giocatori…</span>
+                  <div id="playerOneResults" class="player-search-results" role="listbox" aria-label="Risultati giocatore 1"></div>
+                </div>
               </label>
 
-              <label>
-                Giocatore 2
-                <select id="playerTwo">
-                  <option value="lautaro">Lautaro Martínez</option>
-                  <option value="leao">Rafael Leão</option>
-                  <option value="koopmeiners">Teun Koopmeiners</option>
-                  <option value="kvaratskhelia">Khvicha Kvaratskhelia</option>
-                </select>
+              <label class="player-picker" data-player-picker="two">
+                <span>Giocatore 2</span>
+                <div class="player-combobox">
+                  <input
+                    id="playerTwoSearch"
+                    type="search"
+                    placeholder="Cerca nome, cognome o squadra…"
+                    autocomplete="off"
+                    spellcheck="false"
+                    role="combobox"
+                    aria-autocomplete="list"
+                    aria-expanded="false"
+                    aria-controls="playerTwoResults"
+                    disabled
+                  />
+                  <input id="playerTwo" type="hidden" />
+                  <span class="player-search-status" data-player-two-status>Caricamento giocatori…</span>
+                  <div id="playerTwoResults" class="player-search-results" role="listbox" aria-label="Risultati giocatore 2"></div>
+                </div>
               </label>
             </div>
 
@@ -449,18 +471,13 @@
               </div>
               <canvas id="radarCanvas" width="620" height="520" aria-label="Radar comparazione giocatori"></canvas>
               <div class="radar-legend">
-                <span><i class="legend-a"></i><b data-p1-name>Rafael Leão</b></span>
-                <span><i class="legend-b"></i><b data-p2-name>Lautaro Martínez</b></span>
+                <span><i class="legend-a"></i><b data-p1-name>Giocatore 1</b></span>
+                <span><i class="legend-b"></i><b data-p2-name>Giocatore 2</b></span>
               </div>
             </div>
 
-            <div class="stat-chips">
-              <span>Finalizzazione</span>
-              <span>Assist</span>
-              <span>Titolarità</span>
-              <span>Media voto</span>
-              <span>Bonus</span>
-              <span>Forma</span>
+            <div class="stat-chips" data-stat-chips aria-live="polite">
+              <span class="stat-chip-loading">Connessione a FantasyRatings…</span>
             </div>
           </div>
 
@@ -477,7 +494,7 @@
                 <strong data-board-title>Classifica</strong>
               </div>
 
-              <div class="board-list" data-board-list></div>
+              <div class="board-list" data-board-list aria-live="polite"><div class="board-loading">Aggiornamento dati in corso…</div></div>
 
               <a href="tools.html" data-analytics="cta_tools" class="board-link">
                 Scopri tutti i tools
@@ -697,6 +714,6 @@
     </main>
   </div>
 
-  <script src="js/home.js?v=20260714-5"></script>
+  <script src="js/home.js?v=20260714-6"></script>
 </body>
 </html>
