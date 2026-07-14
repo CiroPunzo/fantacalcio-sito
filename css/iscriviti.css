@@ -189,3 +189,48 @@ form { display: grid; gap: 18px; }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* MOBILE SAFETY PATCH — prevents page-level horizontal scrolling */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  -webkit-text-size-adjust: 100%;
+}
+@supports (overflow: clip) {
+  html,
+  body,
+  .page-shell,
+  main { overflow-x: clip; }
+}
+@media (max-width: 620px) {
+  body { min-width: 0; touch-action: pan-y; }
+  .topbar,
+  .page-shell,
+  .signup-card,
+  .signup-prizes,
+  .signup-prize-panel,
+  form,
+  fieldset { max-width: 100%; min-width: 0; }
+  .topbar {
+    width: calc(100% - 16px) !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .page-shell { width: calc(100% - 16px) !important; }
+  .signup-card { overflow: hidden; }
+  .countdown-grid,
+  .field-grid,
+  .tournament-options,
+  .signup-prize-panel,
+  .prize-terms { width: 100%; min-width: 0; }
+  .field input,
+  .field select,
+  .rules-card,
+  .tournament-card { min-width: 0; max-width: 100%; }
+  .signup-prize-visual img { width: 100%; height: auto; }
+}
